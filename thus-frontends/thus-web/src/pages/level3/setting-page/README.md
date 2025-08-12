@@ -5,10 +5,10 @@
 
 ## 关于导出
 
-### `liubai-markdown.zip` 文件结构:
+### `thus-markdown.zip` 文件结构:
 
 ```
---- liubai-markdown.zip
+--- thus-markdown.zip
  |
  |--- metadata.json
  |
@@ -26,10 +26,10 @@
        |--- name.文件名后缀
 ```
 
-### `liubai-json.zip` 文件结构:
+### `thus-json.zip` 文件结构:
 
 ```
---- liubai-json.zip
+--- thus-json.zip
  |
  |--- metadata.json
  |

@@ -3,7 +3,7 @@
 
 ## 1. 复制链接
 
-`https://my.liubai.cc`
+`https://my.thus-note.com`
 
 <CopyButton />
 
@@ -41,6 +41,6 @@
 
 ## 6. 安装完成
 
-稍等片刻后，回到桌面上，应该就能看到留白记事了。
+稍等片刻后，回到桌面上，应该就能看到如是了。
 
 <img src="./assets-huawei/7.png" width="320" />

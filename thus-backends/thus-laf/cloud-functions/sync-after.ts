@@ -179,7 +179,7 @@ interface BackupStructure {
   desc: string
   title: string
   source: string
-  _from: "liubai"
+  _from: "thus"
 }
 
 export class BackupToOthers {
@@ -380,7 +380,7 @@ export class BackupToOthers {
     }
 
     // 2. generate basic auth
-    const basic_auth = `liubai:${webhook_password}`
+    const basic_auth = `thus:${webhook_password}`
     const b64_basic_auth = Buffer.from(basic_auth).toString("base64")
 
     // 3. fetch
@@ -461,7 +461,7 @@ export class BackupToOthers {
       desc,
       title: title ?? "",
       source: ideType ?? aiCharacter ?? "",
-      _from: "liubai",
+      _from: "thus",
     }
     return basicData
   }
@@ -807,8 +807,8 @@ class AiCluster {
     text: string,
     title: string,
   ) {
-    if(!title.includes("Liubai")) {
-      title = "Liubai " + title
+    if(!title.includes("Thus")) {
+    title = "Thus " + title
     }
     const reporter = new LiuReporter()
     reporter.send(text, title)

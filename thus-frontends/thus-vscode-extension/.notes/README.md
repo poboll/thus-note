@@ -56,13 +56,13 @@ mkcert localhost
 
 ### 在 VSCodium 中调试
 
-打开 VSCodium 后，`Cmd + Shift + P` 打开命令弹窗，选择 `Developer: Install Extension from Location...` 然后定位到本插件根目录 `liubai-vscode-extension` 这样即可完成本地安装！
+打开 VSCodium 后，`Cmd + Shift + P` 打开命令弹窗，选择 `Developer: Install Extension from Location...` 然后定位到本插件根目录 `thus-vscode-extension` 这样即可完成本地安装！
 
 这样安装好的插件，在 `VSCodium` 的顶部导航栏中选择 `Help / Toggle Developer Tools` 即可看到插件打印的日志。
 
 ### 打包
 
-全局安装 `pnpm i -g vsce` 之后，在 `liubai-vscode-extension` 目录下运行：
+全局安装 `pnpm i -g vsce` 之后，在 `thus-vscode-extension` 目录下运行：
 
 ```shell
 vsce package --no-dependencies

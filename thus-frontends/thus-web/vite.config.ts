@@ -72,7 +72,7 @@ const vitePlugins: UserConfig['plugins'] = [
   // visualize the result of building
   visualizer({
     filename: "analysis.html", // 文件名称
-    title: "Liubai Frontend Analysis",
+    title: "Thus Frontend Analysis",
   }) as unknown as PluginOption,
 
 ]

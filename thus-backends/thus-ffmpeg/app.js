@@ -108,7 +108,7 @@ app.get("/new", async (req, res) => {
 })
 
 app.get("/hello", (req, res) => {
-  res.send("this is liubai-ffmpeg with devbox & fluent-ffmpeg!")
+  res.send("this is thus-ffmpeg with devbox & fluent-ffmpeg!")
 })
 
 /**************************** check out dir ********************************/

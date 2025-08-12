@@ -26,48 +26,48 @@ export async function main(ctx: FunctionContext) {
 
 export const commonLang: LangAtom = {
   "zh-Hans": {
-    "appName": "留白记事",
+    "appName": "如是",
     "image": "图片",
     "file": "文件",
     "other": "其它",
-    "from_us": "来自留白记事",
+    "from_us": "来自如是",
   },
   "zh-Hant": {
-    "appName": "留白記事",
+    "appName": "如是",
     "image": "圖片",
     "file": "文件",
     "other": "其它",
-    "from_us": "來自留白記事",
+    "from_us": "來自如是",
   },
   "en": {
-    "appName": "Liubai",
+    "appName": "Thus",
     "image": "Image",
     "file": "File",
     "other": "Other",
-    "from_us": "From Liubai",
+    "from_us": "From Thus",
   }
 }
 
 export const subPlanLang: LangAtom = {
   "zh-Hans": {
-    "payment_title": "留白记事会员",
-    "monthly_payment_title": "留白月度会员",
+    "payment_title": "如是会员",
+    "monthly_payment_title": "如是月度会员",
     "annual_membership": "年度会员 Premium",
     "quarterly_membership": "季度会员 Premium",
     "monthly_membership": "月度会员 Premium",
     "seven_days_refund": "7天无理由退款",
   },
   "zh-Hant": {
-    "payment_title": "留白記事會員",
-    "monthly_payment_title": "留白月度會員",
+    "payment_title": "如是會員",
+    "monthly_payment_title": "如是月度會員",
     "annual_membership": "年度會員 Premium",
     "quarterly_membership": "季度會員 Premium",
     "monthly_membership": "月度會員 Premium",
     "seven_days_refund": "7天無理由退款",
   },
   "en": {
-    "payment_title": "Liubai Membership",
-    "monthly_payment_title": "Liubai Monthly Membership",
+    "payment_title": "Thus Membership",
+    "monthly_payment_title": "Thus Monthly Membership",
     "annual_membership": "Annual Membership (Premium)",
     "quarterly_membership": "Quarterly Membership (Premium)",
     "monthly_membership": "Monthly Membership (Premium)",
@@ -221,21 +221,21 @@ export const userLoginLang: LangAtom = {
 
 export const wecomLang: LangAtom = {
   "zh-Hans": {
-    "welcome_1": "Hi! 我是留小白，你已成功绑定账号 {account}\n在你的留白记事中，若存在需要提醒的卡片，我将在第一时间通知你！",
-    "welcome_2": "你好🥂，我是留小白！你的微信记录助手！我可以把你传给我的消息同步到留白记事上哦～\n\n请点击下方链接，完成帐号绑定。\n\n{link}",
-    "welcome_3": "你好，我是留小白！你的微信消息捕捉助手！\n\n我注意到你扫描的二维码似乎已过期或失效，请点击下方链接，重新绑定帐号。\n\n{link}",
-    "err_1": "绑定失败，该微信号已与其他留白记事帐号完成关联。请在原留白记事帐号上解除绑定后，再重新扫码。",
+    "welcome_1": "Hi! 我是如小白，你已成功绑定账号 {account}\n在你的如是中，若存在需要提醒的卡片，我将在第一时间通知你！",
+    "welcome_2": "你好🥂，我是如小白！你的微信记录助手！我可以把你传给我的消息同步到如是上哦～\n\n请点击下方链接，完成帐号绑定。\n\n{link}",
+    "welcome_3": "你好，我是如小白！你的微信消息捕捉助手！\n\n我注意到你扫描的二维码似乎已过期或失效，请点击下方链接，重新绑定帐号。\n\n{link}",
+    "err_1": "绑定失败，该微信号已与其他如是帐号完成关联。请在原如是帐号上解除绑定后，再重新扫码。",
   },
   "zh-Hant": {
-    "welcome_1": "Hi! 我是留小白，你已成功綁定帳號 {account}\n在你的留白記事中，若存在需要提醒的卡片，我將在第一時間通知你！",
-    "welcome_2": "你好🥂，我是留小白！你的微信記錄助理！我可以把你傳給我的訊息同步到留白記事上哦～\n\n請點擊下方連結，完成帳號綁定。\n\n{link}",
-    "welcome_3": "你好，我是留小白！你的微信訊息捕捉助理！\n\n我注意到你掃描的 QR Code 似乎已過期或失效，请點擊下方連結，重新綁定帳號。\n\n{link}",
-    "err_1": "綁定失敗，該微信號已與其他留白記事帳號完成綁定。請在原留白記事帳號上解除綁定後，再重新掃描 QR Code",
+    "welcome_1": "Hi! 我是如小白，你已成功綁定帳號 {account}\n在你的如是中，若存在需要提醒的卡片，我將在第一時間通知你！",
+    "welcome_2": "你好🥂，我是如小白！你的微信記錄助理！我可以把你傳給我的訊息同步到如是上哦～\n\n請點擊下方連結，完成帳號綁定。\n\n{link}",
+    "welcome_3": "你好，我是如小白！你的微信訊息捕捉助理！\n\n我注意到你掃描的 QR Code 似乎已過期或失效，请點擊下方連結，重新綁定帳號。\n\n{link}",
+    "err_1": "綁定失敗，該微信號已與其他如是帳號完成綁定。請在原如是帳號上解除綁定後，再重新掃描 QR Code",
   },
   "en": {
-    "welcome_1": "Hi! I am Tiny Liu! You have successfully bound your account {account}\nIf you have any card you want to remind, I will notify you in the first time!",
-    "welcome_2": "Hi🥂 I am Tiny Liu! Your Wechat Record Assistant! My duty is synchronising your message to your Liubai.\n\nNow, let's click the following link to bind your account. \n\n{link}",
-    "welcome_3": "Hi, I am Tiny Liu! Your Wechat Message Capture Assistant!\n\nI notice that your QR code has expired or is invalid. Please click the following link to rebind your account.\n\n{link}",
+    "welcome_1": "Hi! I am Tiny Thus! You have successfully bound your account {account}\nIf you have any card you want to remind, I will notify you in the first time!",
+    "welcome_2": "Hi🥂 I am Tiny Thus! Your Wechat Record Assistant! My duty is synchronising your message to your Thus.\n\nNow, let's click the following link to bind your account. \n\n{link}",
+    "welcome_3": "Hi, I am Tiny Thus! Your Wechat Message Capture Assistant!\n\nI notice that your QR code has expired or is invalid. Please click the following link to rebind your account.\n\n{link}",
     "err_1": "Binding failed. This Wechat number has already been bound to another account. Please unbind it from the original account first, then re-scan the QR code.",
   }
 }
@@ -243,7 +243,7 @@ export const wecomLang: LangAtom = {
 // Notes Calendar Task Todo
 export const wechatLang: LangAtom = {
   "zh-Hans": {
-    "welcome_1": "欢迎关注留白记事！\n\n留白记事 = AI 加持的备忘录📝 + 日历📆 + 任务📌 + 待办清单📂\n\n你可以在这里记录所有事情，所有“只属于你”的信息都将在这里汇聚。\n\n若这世界就是一个巨大的游乐园，请去体验，去创造🥂\n\n[未完待续]",
+    "welcome_1": "欢迎关注如是！\n\n如是 = AI 加持的备忘录📝 + 日历📆 + 任务📌 + 待办清单📂\n\n你可以在这里记录所有事情，所有'只属于你'的信息都将在这里汇聚。\n\n若这世界就是一个巨大的游乐园，请去体验，去创造🥂\n\n[未完待续]",
     "login_guide": "若你想要马上拥有三个超级 AI，欢迎使用<a href='{LIU_DOMAIN}/wechat-bind'>微信一键登录</a>\n\n登录后，你可以回复\n\n「召唤TY」: 让通义千问陪你聊天\n\n「召唤跃问」: 使用阶跃星辰开发的 AI 助手\n\n「踢掉xx」: xx替换为对应的 AI 名，它就会离开群聊\n\n「群聊状态」: 查看当前群里有谁",
     "already_bound": "当前微信已绑定帐号 {account}\n请先在原帐号上解绑后，再重新扫码。",
     "success_1": "绑定成功🎉\n\n小诀窍：<a href='https://mp.weixin.qq.com/s/3g1vn8wnps7nKntUKXIJuw'>如何避免漏接提醒</a>",
@@ -251,14 +251,14 @@ export const wechatLang: LangAtom = {
     "video_unsupported": "[暂不支持发送视频消息]",
     "link_unsupported": "🚧 暂不支持链接消息",
     "buy_time": "\n如果你急着需要，可以<a href='{LIU_CUSTOMER_SERVICE}'>与开发者联系</a>。买断他的时间，让他为你开发。",
-    "invitation_link": "您已成为留白记事 Premium 会员🎉\n邀请您加入<a href='{link}'>会员限定群聊</a>",
+    "invitation_link": "您已成为如是 Premium 会员🎉\n邀请您加入<a href='{link}'>会员限定群聊</a>",
     "go_back_to_app": "登录中，请返回 APP 内查看......",
-    "membership_1": "点击下方链接👇 成为\n<a href='{LIU_DOMAIN}/subscription'>留白记事 Premium 会员</a>",
+    "membership_1": "点击下方链接👇 成为\n<a href='{LIU_DOMAIN}/subscription'>如是 Premium 会员</a>",
     "membership_2": "你已是最可爱的 Premium 会员 🫶\n\n⏱️ 会员有效期至 {endDate}\n\n👉 <a href='{groupLink}'>戳我加入会员限定群聊</a>\n\n📊 回复“额度”查看使用情况",
     "find_coupon": "找优惠？👇\n<a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>翻抽屉呀！</a>"
   },
   "zh-Hant": {
-    "welcome_1": "歡迎追蹤留白記事！\n\n留白記事 = AI 加持的備忘錄📝 + 行事曆📆 + 任務📌 + 待辦清單📂\n\n你可以在這裡記錄所有事情，所有「只屬於你」的資訊都將在這裡匯聚。\n\n若這世界就是一個巨大的遊樂園，請去體驗、去創造🥂\n\n[未完待續]",
+    "welcome_1": "歡迎追蹤如是！\n\n如是 = AI 加持的備忘錄📝 + 行事曆📆 + 任務📌 + 待辦清單📂\n\n你可以在這裡記錄所有事情，所有「只屬於你」的資訊都將在這裡匯聚。\n\n若這世界就是一個巨大的遊樂園，請去體驗、去創造🥂\n\n[未完待續]",
     "login_guide": "若你想要馬上擁有三個強到爆的人工智慧，歡迎使用<a href='{LIU_DOMAIN}/wechat-bind'>微信一鍵登入</a>\n\n登入後，你可以回覆\n\n「召喚千問」: 讓通義千問陪你聊天\n\n「召喚躍問」: 使用階躍星辰開發的 AI 助手\n\n「踢掉xx」: xx替換為對應的 AI 名，它就會離開群聊\n\n「群聊狀態」: 查看目前群裡有誰",
     "already_bound": "當前微信已綁定帳號 {account}\n請先在原帳號上解綁後，再重新掃描 QR Code",
     "success_1": "綁定成功🎉\n\n小訣竅：<a href='https://mp.weixin.qq.com/s/3g1vn8wnps7nKntUKXIJuw'>如何避免漏接提醒</a>",
@@ -266,14 +266,14 @@ export const wechatLang: LangAtom = {
     "video_unsupported": "[暫不支援影片訊息]",
     "link_unsupported": "🚧 暫不支援連結訊息",
     "buy_time": "\n如果你急著需要，可以<a href='{LIU_CUSTOMER_SERVICE}'>與開發者聯絡</a>。買斷他的時間，讓他為你開發。",
-    "invitation_link": "您已成為留白記事 Premium 會員🎉\n邀請您加入<a href='{link}'>會員限定群組</a>",
+    "invitation_link": "您已成為如是 Premium 會員🎉\n邀請您加入<a href='{link}'>會員限定群組</a>",
     "go_back_to_app": "登入中，請返回 APP 內檢視......",
-    "membership_1": "輕觸下方連結👇 成為\n<a href='{LIU_DOMAIN}/subscription'>留白記事 Premium 會員</a>",
+    "membership_1": "輕觸下方連結👇 成為\n<a href='{LIU_DOMAIN}/subscription'>如是 Premium 會員</a>",
     "membership_2": "你已是最可愛的 Premium 會員 🫶\n\n⏱️ 會員有效期至 {endDate}\n\n👉 <a href='{groupLink}'>輕觸加入會員限定群組</a>\n\n📊 回覆「額度」查看使用情況",
     "find_coupon": "找優惠？👇\n<a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>快來翻抽屜！</a>"
   },
   "en": {
-    "welcome_1": "Welcome to follow Liubai!\n\nLiubai = Notes📝 + Calendar📆 + Tasks📌 + Todo📂 with AI\n\nYou can record all your life’s events, and all information you want is out here.\n\nIf this world is a giant playground, please experience it and create it 🥂\n\n[To be continued]",
+    "welcome_1": "Welcome to follow Thus!\n\nThus = Notes📝 + Calendar📆 + Tasks📌 + Todo📂 with AI\n\nYou can record all your life's events, and all information you want is out here.\n\nIf this world is a giant playground, please experience it and create it 🥂\n\n[To be continued]",
     "login_guide": "If you want to get three assistants immediately, welcome to <a href='{LIU_DOMAIN}/wechat-bind'>Continue with WeChat</a>\n\nAfter logging in, you can reply\n\n\"Call Qwen\": Let Qwen chat with you!\n\n\"Call yuewen\": Let AI from stepfun enter the chat room\n\n\"Kick xx\": xx is replaced with the corresponding AI name, and it will leave the group\n\n\"Status\": Check the current group status",
     "already_bound": "Current Wechat has already bound account {account}\nPlease unbind it from the original account first, then re-scan the QR code.",
     "success_1": "Binding successful🎉\n\nTip: <a href='https://mp.weixin.qq.com/s/3g1vn8wnps7nKntUKXIJuw'>How to avoid missing reminders</a>",
@@ -281,9 +281,9 @@ export const wechatLang: LangAtom = {
     "video_unsupported": "[Videos are not supported to send]",
     "link_unsupported": "🚧 Link message is still in development",
     "buy_time": "\nIf you want to use it urgently, you can <a href='{LIU_CUSTOMER_SERVICE}'>contact the developer</a>. Buy his time and let him develop for you.",
-    "invitation_link": "You have become a member of Liubai Premium🎉\nWelcome to join our <a href='{link}'>VIP exclusive group!</a>",
+    "invitation_link": "You have become a member of Thus Premium🎉\nWelcome to join our <a href='{link}'>VIP exclusive group!</a>",
     "go_back_to_app": "Logging in......\nPlease go back to our app to view",
-    "membership_1": "Tap the link👇\n<a href='{LIU_DOMAIN}/subscription'>Liubai Premium Membership</a>\nto have premium 🎁",
+    "membership_1": "Tap the link👇\n<a href='{LIU_DOMAIN}/subscription'>Thus Premium Membership</a>\nto have premium 🎁",
     "membership_2": "You are the most adorable Premium member 🫶\n\n⏱️ Membership will expire at {endDate}\n\n👉 <a href='{groupLink}'>Join VIP exclusive group</a>\n\n📊 Reply 'quota' to view usage",
     "find_coupon": "Get Coupons?👇\n<a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>All in the Drawer!</a>"
   }
@@ -300,8 +300,8 @@ export const aiLang: LangAtom = {
     "add": "召唤",
     "clear_context": "清空上文",
     "quota_warning_2": "您已使用 {membershipTimes} 轮会员版对话额度。续费会员，可将“已使用额度”归零！\n<a href='{link}'>立即续费</a>",
-    "quota_warning_4": "免费额度已用尽。\n现在你可以：\n\n1. <a href='{link1}'>购买会员 🎁</a>\n畅享一个月 {membershipTimes} 轮对话，同时解锁留白记事所有权益。\n\n2. <a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>观看视频 📺</a>\n兑换对话额度。",
-    "quota_warning_4_mock": "免费额度已用尽。\n现在你可以：\n\n1. <a href='{link1}'>购买会员 🎁</a>\n畅享一个月 {membershipTimes} 轮对话，同时解锁留白记事所有权益。\n\n2. <a href='{LIU_DOMAIN}'>观看视频 📺</a>\n兑换对话额度。",
+    "quota_warning_4": "免费额度已用尽。\n现在你可以：\n\n1. <a href='{link1}'>购买会员 🎁</a>\n畅享一个月 {membershipTimes} 轮对话，同时解锁如是所有权益。\n\n2. <a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>观看视频 📺</a>\n兑换对话额度。",
+    "quota_warning_4_mock": "免费额度已用尽。\n现在你可以：\n\n1. <a href='{link1}'>购买会员 🎁</a>\n畅享一个月 {membershipTimes} 轮对话，同时解锁如是所有权益。\n\n2. <a href='{LIU_DOMAIN}'>观看视频 📺</a>\n兑换对话额度。",
     "cannot_read_images": "我目前没有识图的能力",
     "history_cleared": "已清空前面的历史记录",
     "add_note_only_desc": "{botName}请求添加笔记:\n{desc}\n\n<a href='{agreeLink}'>🆗 同意</a>    <a href='{editLink}'>✏️ 编辑</a>",
@@ -548,8 +548,8 @@ export const aiLang: LangAtom = {
     "add": "Add ",
     "clear_context": "Clear context",
     "quota_warning_2": "You have used {membershipTimes} conversations of membership. Renew membership to reset the used quota!\n<a href='{link}'>Renew now</a>",
-    "quota_warning_4": "Free quota has been used up.\nNow you can: \n\n1. <a href='{link1}'>Purchase membership 🎁</a>\nEnjoy {membershipTimes} conversations per month, and unlock all Liubai rights.\n\n2. <a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>Watch video 📺</a>\nExchange conversation quota.",
-    "quota_warning_4_mock": "Free quota has been used up.\nNow you can: \n\n1. <a href='{link1}'>Purchase membership 🎁</a>\nEnjoy {membershipTimes} conversations per month, and unlock all Liubai rights.\n\n2. <a href='{LIU_DOMAIN}'>Watch video 📺</a>\nExchange conversation quota.",
+    "quota_warning_4": "Free quota has been used up.\nNow you can: \n\n1. <a href='{link1}'>Purchase membership 🎁</a>\nEnjoy {membershipTimes} conversations per month, and unlock all Thus rights.\n\n2. <a href='{LIU_DOMAIN}' data-miniprogram-appid='{appid}' data-miniprogram-path='{path}'>Watch video 📺</a>\nExchange conversation quota.",
+    "quota_warning_4_mock": "Free quota has been used up.\nNow you can: \n\n1. <a href='{link1}'>Purchase membership 🎁</a>\nEnjoy {membershipTimes} conversations per month, and unlock all Thus rights.\n\n2. <a href='{LIU_DOMAIN}'>Watch video 📺</a>\nExchange conversation quota.",
     "cannot_read_images": "I don't have the ability to read images yet",
     "history_cleared": "History cleared",
     "add_note_only_desc": "{botName} requests to add a note:\n{desc}\n\n<a href='{agreeLink}'>🆗 Agree</a>    <a href='{editLink}'>✏️ Edit</a>",
@@ -682,8 +682,7 @@ export const wxClickReplies: Record<string, Wx_Gzh_Send_Msg[]> = {
 📕 <a href="https://www.xiaohongshu.com/user/profile/5d1642d80000000011033c24">开发者的小红书</a>
 
 📦 <a href="{LIU_DOCS_DOMAIN}/guide/faq/">提问箱</a>
-
-🌐 <a href="https://github.com/yenche123/liubai">开源地址</a>
+| 🌐 <a href="https://github.com/poboll/thus-note">开源地址</a>
 
 🧘 <a href="{LIU_DOMAIN}/mine">我的</a>
 `,
@@ -710,7 +709,7 @@ export const wxClickReplies: Record<string, Wx_Gzh_Send_Msg[]> = {
     {
       msgtype: "text",
       text: {
-        content: '📨 期待你的来信！\n\n<a href="mailto:hi@liubai.cc">hi@liubai.cc</a>',
+        content: '📨 期待你的来信！\n\n<a href="mailto:hi@thus.cc">hi@thus.cc</a>',
       }
     },
     {
@@ -735,8 +734,7 @@ export const wxClickReplies: Record<string, Wx_Gzh_Send_Msg[]> = {
 📕 <a href="https://www.xiaohongshu.com/user/profile/5d1642d80000000011033c24">開發者的小紅書</a>
 
 📦 <a href="{LIU_DOCS_DOMAIN}/guide/faq/">提問箱</a>
-
-🌐 <a href="https://github.com/yenche123/liubai">開源網址</a>
+| 🌐 <a href="https://github.com/poboll/thus-note">開源網址</a>
 
 🧘 <a href="{LIU_DOMAIN}/mine">我的</a>
 `,
@@ -763,7 +761,7 @@ export const wxClickReplies: Record<string, Wx_Gzh_Send_Msg[]> = {
     {
       msgtype: "text",
       text: {
-        content: '📨 期待你的來信！\n\n<a href="mailto:hi@liubai.cc">hi@liubai.cc</a>',
+        content: '📨 期待你的來信！\n\n<a href="mailto:hi@thus.cc">hi@thus.cc</a>',
       }
     },
     {
@@ -788,8 +786,7 @@ export const wxClickReplies: Record<string, Wx_Gzh_Send_Msg[]> = {
 📕 <a href="https://www.xiaohongshu.com/user/profile/5d1642d80000000011033c24">Follow me on RED</a>
 
 📦 <a href="{LIU_DOCS_DOMAIN}/guide/faq/">AMA</a>
-
-🌐 <a href="https://github.com/yenche123/liubai">Open Source</a>
+| 🌐 <a href="https://github.com/poboll/thus-note">Open Source</a>
 
 🧘 <a href="{LIU_DOMAIN}/mine">Mine</a>
 `,
@@ -816,7 +813,7 @@ export const wxClickReplies: Record<string, Wx_Gzh_Send_Msg[]> = {
     {
       msgtype: "text",
       text: {
-        content: '📨 I am looking forward to your letter!\n\n<a href="mailto:hi@liubai.cc">hi@liubai.cc</a>',
+        content: '📨 I am looking forward to your letter!\n\n<a href="mailto:hi@thus.cc">hi@thus.cc</a>',
       }
     },
     {
@@ -874,7 +871,7 @@ export const wxTextRepliesItems: WxTextReplyItem[] = [
       {
         msgtype: "text",
         text: {
-          content: '📨 期待你的来信！\n\n<a href="mailto:hi@liubai.cc">hi@liubai.cc</a>',
+          content: '📨 期待你的来信！\n\n<a href="mailto:hi@thus.cc">hi@thus.cc</a>',
         }
       },
       {
@@ -891,7 +888,7 @@ export const wxTextRepliesItems: WxTextReplyItem[] = [
       {
         msgtype: "text",
         text: {
-          content: '📨 期待你的來信！\n\n<a href="mailto:hi@liubai.cc">hi@liubai.cc</a>',
+          content: '📨 期待你的來信！\n\n<a href="mailto:hi@thus.cc">hi@thus.cc</a>',
         }
       },
       {
@@ -908,7 +905,7 @@ export const wxTextRepliesItems: WxTextReplyItem[] = [
       {
         msgtype: "text",
         text: {
-          content: '📨 I am looking forward to your letter!\n\n<a href="mailto:hi@liubai.cc">hi@liubai.cc</a>',
+          content: '📨 I am looking forward to your letter!\n\n<a href="mailto:hi@thus.cc">hi@thus.cc</a>',
         }
       },
       {

@@ -18,7 +18,7 @@
 
 <img src="./assets-wps/wps-2.png" alt="重命名" width="450" />
 
-在弹出的窗口里，重命名文件为 `xxx的留白记事`，其中 `xxx` 替换为你的名字或昵称。
+在弹出的窗口里，重命名文件为 `xxx的如是`，其中 `xxx` 替换为你的名字或昵称。
 
 然后点击 `另存并打开`。
 
@@ -39,14 +39,14 @@
 
 <img src="./assets-wps/wps-5.png" alt="复制回调地址" width="650" />
 
-在新的窗口打开留白记事: https://my.liubai.cc/connect/wps
+在新的窗口打开如是: https://my.thus-note.com/connect/wps
 
 <img src="./assets-wps/wps-6.png" alt="设置回调地址" width="450" />
 
 启用 `备份到 WPS`，粘贴 `回调地址`，最后点击**保存**，如上图所示。
 
 ::: tip 小提示
-这一步打开的留白记事不要关闭，第 5 步还要用到。
+这一步打开的如是不要关闭，第 5 步还要用到。
 :::
 
 ### 4. 设置请求体
@@ -66,7 +66,7 @@
 
 ### 5. 设置鉴权方式
 
-回到留白记事上，复制`密码`。
+回到如是上，复制`密码`。
 
 <img src="./assets-wps/wps-8.png" alt="复制密码" width="450" />
 
@@ -76,7 +76,7 @@
 
 其中：
 - **鉴权方**: 选择 HTTP Basic Auth
-- **账户名**: 填入 `liubai`
+- **账户名**: 填入 `thus`
 - **密码**: 粘贴刚刚复制的密码
 
 ### 6. 完成 🎉
@@ -85,13 +85,13 @@
 
 <img src="./assets-wps/wps-10.png" alt="完成" width="650" />
 
-现在你可以回到 [留白记事](https://my.liubai.cc/) 上记录，同时观察 WPS 的多维表格有没有你的最新记录。
+现在你可以回到 [如是](https://my.thus-note.com/) 上记录，同时观察 WPS 的多维表格有没有你的最新记录。
 
 ## 进阶
 
-金山文档的多维表格似乎支持 DeepSeek R1 回复（分析）你表格的数据，有玩出花样的朋友，欢迎[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)或[邮件](mailto:hi@liubai.cc)告诉我们，我再把它整理到文档上来。
+金山文档的多维表格似乎支持 DeepSeek R1 回复（分析）你表格的数据，有玩出花样的朋友，欢迎[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)或[邮件](mailto:hi@thus-note.com)告诉我们，我再把它整理到文档上来。
 
-当然，你也可以直接在 [GitHub](https://github.com/yenche123/liubai/blob/cool/liubai-docs/docs/guide/connect/wps.md) 上编辑本页面，提交 PR 🙌
+当然，你也可以直接在 [GitHub](https://github.com/yenche123/thus-note/blob/cool/thus-docs/docs/guide/connect/wps.md) 上编辑本页面，提交 PR 🙌
 
 ## 常见问题
 

@@ -556,7 +556,7 @@ async function handleStatistics() {
     console.warn("fail to add row into statistics!")
     console.log(res7)
     const reporter = new LiuReporter()
-    reporter.send("Liubai: fail to add row into statistics", "Statistics Error")
+    reporter.send("Thus: fail to add row into statistics", "Statistics Error")
   }
 
   return res7

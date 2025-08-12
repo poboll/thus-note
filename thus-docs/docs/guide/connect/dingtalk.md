@@ -20,7 +20,7 @@
 
 ### 2. 编辑栏位
 
-左上角 ↖️，可以对多维表重新命名，建议命名为 `xxx的留白记事`，其中 `xxx` 替换为你的名字。
+左上角 ↖️，可以对多维表重新命名，建议命名为 `xxx的如是`，其中 `xxx` 替换为你的名字。
 
 ![重命名和编辑栏位](./assets-dingtalk/dingtalk-3.png)
 
@@ -60,7 +60,7 @@
 
 ### 4. Webhook
 
-在 **关键词1** 处，填入 `liubai`
+在 **关键词1** 处，填入 `thus`
 
 在 **参数格式** 处，选择 `JSON`
 
@@ -79,7 +79,7 @@
 
 接下来，按上图所示，我们点击 `复制`，把 Webhook 地址复制到剪贴板里。
 
-紧接着，将它粘贴到[留白记事](https://my.liubai.cc/connect/dingtalk)上，点击`保存`，如下图所示。
+紧接着，将它粘贴到[如是](https://my.thus-note.com/connect/dingtalk)上，点击`保存`，如下图所示。
 
 <img src="./assets-dingtalk/dingtalk-10.png" width="450" alt="粘贴 Webhook" />
 
@@ -122,13 +122,13 @@
 
 <img src="./assets-dingtalk/dingtalk-17.png" width="400" alt="保存并启用" />
 
-现在，你回到留白记事上做记录，测试一下新的记事是否能备份到钉钉上。
+现在，你回到如是上做记录，测试一下新的记事是否能备份到钉钉上。
 
 ## 进阶
 
-钉钉的多维表格似乎支持 DeepSeek R1 回复（分析）你表格的数据，有玩出花样的朋友，欢迎[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)或[邮件](mailto:hi@liubai.cc)告诉我们，我再把它整理到文档上来。
+钉钉的多维表格似乎支持 DeepSeek R1 回复（分析）你表格的数据，有玩出花样的朋友，欢迎[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)或[邮件](mailto:hi@thus-note.com)告诉我们，我再把它整理到文档上来。
 
-当然，你也可以直接在 [GitHub](https://github.com/yenche123/liubai/blob/cool/liubai-docs/docs/guide/connect/dingtalk.md) 上编辑本页面，提交 PR 🙌
+当然，你也可以直接在 [GitHub](https://github.com/yenche123/thus-note/blob/cool/thus-docs/docs/guide/connect/dingtalk.md) 上编辑本页面，提交 PR 🙌
 
 ## 常见问题
 

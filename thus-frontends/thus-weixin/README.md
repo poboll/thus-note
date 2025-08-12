@@ -1,6 +1,6 @@
-# 留小白的抽屉
+# 如是的抽屉
 
-> 留小白的抽屉，让你在微信上做任务管理！
+> 如是的抽屉，让你在微信上做任务管理！
 
 <img src="./images/minicode.png" width="200" />
 
@@ -24,7 +24,7 @@
 
 ### 前端（微信小程序）
 
-定位到当前目录 `liubai-weixin`，然后执行
+定位到当前目录 `thus-weixin`，然后执行
 
 ```shell
 pnpm i
@@ -37,7 +37,7 @@ pnpm pre-build
 
 ### 后端
 
-参见 [liubai-laf](https://github.com/yenche123/liubai/tree/cool/liubai-backends/liubai-laf)。
+参见 [thus-laf](https://github.com/yenche123/thus-note/tree/cool/thus-backends/thus-laf)。
 
 ## 开源协议
 

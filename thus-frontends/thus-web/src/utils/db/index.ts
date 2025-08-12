@@ -19,7 +19,7 @@ import { dbSchema, DB_VERSION } from './db-idx';
  *   4. 只提升 version 并不会造成原有数据丢失，除非 this.version(3).stores() 里头没有定义了
  */
 
-export class LiuDexie extends Dexie {
+export class ThusNoteDexie extends Dexie {
 
   users!: Table<UserLocalTable>
   workspaces!: Table<WorkspaceLocalTable>
@@ -37,5 +37,5 @@ export class LiuDexie extends Dexie {
 
 }
 
-export const db = new LiuDexie()
+export const db = new ThusNoteDexie()
 export type DexieTable<T> = Table<T>

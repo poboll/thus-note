@@ -56,7 +56,7 @@ title: 安装
 
 ## 🧑‍💻 IDE 插件
 
-留白记事支持在所有兼容 VS Code 的编辑器中运行，请点击 [IDE](../ide/index) 查看详情。
+如是支持在所有兼容 VS Code 的编辑器中运行，请点击 [IDE](../ide/index) 查看详情。
 
 
 

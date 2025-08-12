@@ -1,4 +1,4 @@
-# liubai-ffmpeg
+# thus-ffmpeg
 
 一个将 `.amr` 文件转为 `.mp3` 的后端服务。
 
@@ -11,13 +11,13 @@
 删掉里头的所有文件，然后运行：
 
 ```shell
-git clone https://github.com/yenche123/liubai.git
+git clone https://github.com/poboll/thus-note.git
 ```
 
 在根目录创建 `entrypoint.sh` 文件，复制贴上以下内容：
 
 ```shell
-cd ./liubai/liubai-backends/liubai-ffmpeg
+cd ./thus-note/thus-backends/thus-ffmpeg
 pnpm dev
 ```
 
@@ -25,7 +25,7 @@ pnpm dev
 
 ```shell
 chmod +x entrypoint.sh    # 为 entrypoint.sh 添加可执行的权限
-cd ./liubai/liubai-backends/liubai-ffmpeg
+cd ./thus-note/thus-backends/thus-ffmpeg
 pnpm i
 ```
 

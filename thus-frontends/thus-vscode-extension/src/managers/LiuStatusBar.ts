@@ -9,7 +9,7 @@ export class LiuStatusBar {
   private constructor() {
     const extId = liuInfo.getExtId()
     const statusBarItem = vscode.window.createStatusBarItem(
-      "liubai-logo",
+      "thus-logo",
       vscode.StatusBarAlignment.Left,
       100,
     )

@@ -64,7 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// 4. init recorder
 	LiuRecorder.initialize(context, authManager)
 
-	// 5. add Liubai in Status Bar
+	// 5. add Thus in Status Bar
 	LiuStatusBar.initialize()
 }
 

@@ -3,19 +3,19 @@
 layout: home
 
 hero:
-  name: "留白记事"
+  name: "如是"
   text: "留白文档中心"
   tagline: "放大你的能力！"
   actions:
     - theme: brand
       text: 立即开始
-      link: /guide/what-is-liubai
+      link: /guide/what-is-thus
     - theme: alt
       text: 前往安装
       link: /guide/install/index
   image: 
     src: /liu-assets/hero-image.png
-    alt: Liubai
+    alt: Thus
 
 features:
   - icon: 
@@ -53,6 +53,6 @@ features:
       light: /liu-assets/open_source_light_theme.svg
     title: "完全开源"
     details: "前后端都开源，你的第二大脑不应被私有化。"
-    link: "https://github.com/yenche123/liubai"
+    link: "https://github.com/yenche123/thus-note"
 ---
 

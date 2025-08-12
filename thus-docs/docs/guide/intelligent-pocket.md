@@ -1,8 +1,8 @@
 # 智能口袋
 
-微信提供 `置顶服务号` 和 `浮窗` 两个功能。搭配留白记事使用，会变得非常好用！
+微信提供 `置顶服务号` 和 `浮窗` 两个功能。搭配如是使用，会变得非常好用！
 
-<img src="./assets-community/weixin.png" alt="留白记事微信公众号" width="330">
+<img src="./assets-community/weixin.png" alt="如是微信公众号" width="330">
 
 如果你是 macOS 用户，还可以搭配 [全局侧边栏](#slidepad)，鼠标右划展开留白！
 
@@ -42,7 +42,7 @@
 
 ## 全局侧边栏 {#slidepad}
 
-如果你是 macOS 用户，安装 [Slidepad](https://slidepad.app/)（免费的），添加 `my.liubai.cc`，即可在电脑上，鼠标右滑（移动到屏幕边缘）展开留白。
+如果你是 macOS 用户，安装 [Slidepad](https://slidepad.app/)（免费的），添加 `my.thus-note.com`，即可在电脑上，鼠标右滑（移动到屏幕边缘）展开如是。
 
 <img src="./assets-intelligent-pocket/05.gif" />
 

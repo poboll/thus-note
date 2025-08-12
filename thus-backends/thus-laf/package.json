@@ -1,8 +1,8 @@
 {
-  "name": "thus-laf-backend",
+  "name": "thus-laf",
   "private": true,
   "version": "1.0.0",
-  "description": "如是记录后端服务 - 基于LAF云函数的后端实现",
+  "description": "Thus for LAF",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

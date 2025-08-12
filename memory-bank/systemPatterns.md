@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-### 1. Frontend Architecture (liubai-web)
+### 1. Frontend Architecture (thus-web)
 - **Framework**: Vue 3.x with TypeScript
 - **Build System**: Vite
 - **State Management**: Vue Composition API + stores
@@ -10,7 +10,7 @@
 - **UI Components**: Custom components + TipTap editor
 - **PWA Features**: Service Worker for offline capability
 
-### 2. Backend Architecture (liubai-laf)
+### 2. Backend Architecture (thus-laf)
 - **Platform**: Laf Cloud Functions
 - **Database**: MongoDB
 - **API Layer**: RESTful endpoints
@@ -18,7 +18,7 @@
 - **File Storage**: Cloud storage integration
 - **AI Integration**: Multiple AI model support
 
-### 3. VS Code Extension (liubai-vscode-extension)
+### 3. VS Code Extension (thus-vscode-extension)
 - **Build System**: esbuild
 - **Distribution**: VS Code Marketplace
 - **Integration**: VS Code Extension API

@@ -1,4 +1,4 @@
-# 如何使用留白记事 IDE 插件
+# 如何使用如是 IDE 插件
 
 ::: info 前情提要
 我们假设你已完成 [安装和登录](./index)。
@@ -11,7 +11,7 @@
 
 ## 快速记事 {#quick-note}
 
-点击窗口左下角的 `Liubai`，窗口中间会弹出一个输入框，你可以在这里记录任何事。
+点击窗口左下角的 `Thus`，窗口中间会弹出一个输入框，你可以在这里记录任何事。
 
 ![Quick Note](./assets-ide/shared-10.jpeg)
 
@@ -37,7 +37,7 @@
 
 ## 备注代码 {#code-note}
 
-在编辑区域，选中代码（文字），右键唤起菜单栏，点击 `Note (Liubai)`。
+在编辑区域，选中代码（文字），右键唤起菜单栏，点击 `Note (Thus)`。
 
 ![Note for code](./assets-ide/shared-12.jpeg)
 
@@ -51,11 +51,11 @@
 
 只有当你使用 `快速记事` 并且被 AI **成功**自动分类时，才会消耗一次 AI 自动分类的额度。
 
-免费版共有 10 次免费额度，[Premium 会员](https://my.liubai.cc/subscription)则享有每月 200 次额度。
+免费版共有 10 次免费额度，[Premium 会员](https://my.thus-note.com/subscription)则享有每月 200 次额度。
 
-关注 `留白记事` 微信服务号，回复 `AI` 或者 `额度`，即可获取当前已使用额度。
+关注 `如是` 微信服务号，回复 `AI` 或者 `额度`，即可获取当前已使用额度。
 
-值得一提的是，即使免费额度使用完毕，你**依然可以**使用 `快速记事`，只是系统不会继续往下运行 `自动分类` 的逻辑。
+值得注意的是，即使免费额度使用完毕，你**依然可以**使用 `快速记事`，只是系统不会继续往下运行 `自动分类` 的逻辑。
 
 为结果付费，我们率先尝试！
 
@@ -65,10 +65,10 @@
 
 请放心，任一供应商都无法得知你的确切个人信息（比如能定位身份的手机号、邮箱或 userId 等），他们仅能得知你在插件输入框中输入的那一句话。
 
-由于我们会随机调用在[列表](https://github.com/yenche123/liubai/blob/cool/liubai-backends/liubai-laf/cloud-functions/sync-after.ts#L35)中的一个或多个供应商，所以任一供应商获得的信息都是不全面的。
+由于我们会随机调用在[列表](https://github.com/yenche123/thus-note/blob/cool/thus-backends/thus-laf/cloud-functions/sync-after.ts#L35)中的一个或多个供应商，所以任一供应商获得的信息都是不全面的。
 
 另外，你的信息都是从我们的后端中发出，也就是从单一（或少量）端点的 IP 向大模型供应商发起请求。你和其他用户的共用一个端点，大模型供应商更加无法推测“你是谁了”，如下图所示。
 
 ![Privacy](./assets-ide/privacy-1.png)
 
-留白记事是开源的，你可以在 [sync-after.ts](https://github.com/yenche123/liubai/blob/cool/liubai-backends/liubai-laf/cloud-functions/sync-after.ts) 文件中，查看具体运作方式。
+如是是开源的，你可以在 [sync-after.ts](https://github.com/yenche123/thus-note/blob/cool/thus-backends/thus-laf/cloud-functions/sync-after.ts) 文件中，查看具体运作方式。

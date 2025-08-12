@@ -1,26 +1,35 @@
-# 如是记录 (Thus-Note) 项目规划
+# 如是 (Thus-Note) 项目规划
 
 ## 🎯 项目概述
 
-**如是记录** 是基于 [Liubai](https://github.com/yenche123/liubai) 进行二次开发的个人信息管理系统，致力于提供"如是记录，真实自我"的使用体验。
+**如是** 是基于 [Liubai](https://github.com/yenche123/thus-note) 进行二次开发的个人信息管理系统，致力于提供"如是记录，真实自我"的使用体验。
 
 - **项目仓库**: https://github.com/poboll/thus-note
+- **域名**: idrop.in
 - **开源协议**: AGPL-3.0-or-later
-- **开发状态**: 重新品牌化完成，功能迁移进行中
+- **开发状态**: 品牌化完成，功能优化进行中
 
 ## 📋 当前状态
 
 ### ✅ 已完成
-- [x] 项目重新品牌化 (Liubai → Thus-Note)
+- [x] 项目重新品牌化 (Liubai → Thus-Note → 如是)
 - [x] 目录结构重命名 (`liubai-*` → `thus-*`)
 - [x] 核心配置文件更新 (package.json, README.md)
 - [x] 项目归属声明 (NOTICE 文件)
 - [x] 前端页面信息更新 (index.html)
+- [x] 品牌词汇统一替换 ("留白记事" → "如是")
+- [x] 域名更新 (idrop.in)
+- [x] Favicon 更新 (使用用户指定的 pic.svg)
+- [x] PWA 配置更新 (manifest.json)
+- [x] 多语言文件更新 (zh-Hans.json, en.json)
+- [x] 数据库类名更新 (LiuDexie → ThusNoteDexie)
+- [x] 前端开发环境验证 (http://localhost:5175/)
 
 ### 🔄 进行中
-- [ ] GitHub 仓库初始化和首次提交
-- [ ] 前端代码深度品牌化调整
-- [ ] 后端服务器迁移规划
+- [ ] 后端品牌化调整
+- [ ] 文档站点品牌化更新
+- [ ] VS Code 插件品牌化
+- [ ] 微信小程序品牌化
 
 ### 📅 计划中
 - [ ] 新后端架构实现

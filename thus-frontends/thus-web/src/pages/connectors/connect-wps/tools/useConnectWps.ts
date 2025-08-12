@@ -66,7 +66,7 @@ export function useConnectWps() {
   }
 
   const onTapConfigMethod = () => {
-    const link = "https://docs.liubai.cc/guide/connect/wps"
+    const link = "https://docs.idrop.in/guide/connect/wps"
     window.open(link, "_blank")
   }
   

@@ -1,10 +1,10 @@
 export default {
   "hello": {
-    "appName": "留白記事"
+    "appName": "如是"
   },
   "index": {
-    "slogan": "用留白記事，消滅所有雜事！",
-    "powered_by": "用留白記事，消滅所有雜事",
+    "slogan": "用如是，消滅所有雜事！",
+    "powered_by": "用如是，消滅所有雜事",
     "find_coupon": "找優惠",
     "create_task": "建任務",
     "pc_not_supported": "暫不支援在電腦上使用",

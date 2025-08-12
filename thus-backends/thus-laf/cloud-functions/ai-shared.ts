@@ -3424,7 +3424,7 @@ export class TransformContent {
     else {
       baiduSp.set("content", t2("from_us"))
     }
-    baiduSp.set("src", "webapp.ptsd.liubai")
+    baiduSp.set("src", "webapp.ptsd.thus")
     baiduSp.set("output", "html")
     baiduSp.set("coord_type", "gcj02")
     const baiduLink = baiduUrl.toString()

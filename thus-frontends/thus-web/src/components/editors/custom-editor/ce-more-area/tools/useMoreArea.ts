@@ -27,7 +27,7 @@ export function useMoreArea(
     scDisabled: false,
     aiReadable: "Y",
     aiReadDisabled: false,
-    privacyLink: "https://docs.liubai.cc/guide/privacy#local-only",
+    privacyLink: "https://docs.idrop.in/guide/privacy#local-only",
     remindType: "later",
   })
 

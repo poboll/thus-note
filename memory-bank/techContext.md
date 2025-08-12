@@ -24,7 +24,7 @@
 
 ## Technology Stack
 
-### Frontend (liubai-web)
+### Frontend (thus-web)
 ```
 Vue 3.x
 ├── TypeScript (Type safety)
@@ -35,7 +35,7 @@ Vue 3.x
 └── PWA capabilities
 ```
 
-### Backend (liubai-laf)
+### Backend (thus-laf)
 ```
 Laf Cloud Functions
 ├── MongoDB (Database)
@@ -91,17 +91,17 @@ VS Code Extension API
 ### Local Development
 ```bash
 # Frontend
-cd liubai-frontends/liubai-web
+cd thus-frontends/thus-web
 pnpm i
 pnpm dev
 
 # VS Code Extension
-cd liubai-frontends/liubai-vscode-extension
+cd thus-frontends/thus-vscode-extension
 pnpm i
 pnpm watch
 
 # Backend
-cd liubai-backends/liubai-laf
+cd thus-backends/thus-laf
 pnpm i
 # Deploy to Laf
 ```

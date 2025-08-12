@@ -1,7 +1,7 @@
 
 <div align="center">
 
-  <img src="./assets/cover_for_github.jpeg" width="600">
+  <img src="./thus-frontends/thus-web/public/favicon.svg" width="120">
 
   <h3>如是 (Thus-Note)</h3>
 
@@ -15,7 +15,7 @@
 
 ## 项目说明 📢
 
-> 本项目基于 [Liubai](https://github.com/yenche123/liubai) 开源项目进行二次开发，遵循 AGPL-3.0 开源协议。
+> 本项目基于 [Thus](https://github.com/yenche123/thus-note) 开源项目进行二次开发，遵循 AGPL-3.0 开源协议。
 > 
 > 感谢原作者 [@yenche123](https://github.com/yenche123) 的优秀工作！
 
@@ -239,7 +239,7 @@ thus-note/
 
 本项目基于 [AGPL-3.0](./LICENSE) 开源协议。
 
-**原项目归属**: 本项目基于 [Liubai](https://github.com/yenche123/liubai) 进行二次开发，感谢原作者的贡献。
+**原项目归属**: 本项目基于 [Thus](https://github.com/yenche123/thus-note) 进行二次开发，感谢原作者的贡献。
 
 ---
 

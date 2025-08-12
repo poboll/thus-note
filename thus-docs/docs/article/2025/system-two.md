@@ -21,7 +21,7 @@
 
 
 ## 要解决的问题
-当前，人们在留白记事微信服务号上与基于直觉的 AI 助手们（以下统称这类助手为系统一）沟通时，系统一常出现幻觉现象，一本正经地胡言乱语。
+当前，人们在如是微信服务号上与基于直觉的 AI 助手们（以下统称这类助手为系统一）沟通时，系统一常出现幻觉现象，一本正经地胡言乱语。
 
 下两图是用户发送一篇关于“模型即产品”的文章链接，系统一的 AI 却引入了无关的信息，或仅凭借链接的“样貌”猜测里头在讲什么，而不是主动调用联网或链接解析工具再做回答。
 
@@ -58,7 +58,7 @@
 
 没有更多了。
 
-以上我向你所描述的，你都可以在 [ai-system-two.ts](https://github.com/yenche123/liubai/blob/cool/liubai-backends/liubai-laf/cloud-functions/ai-system-two.ts) 文件中找到，这份文件就是系统二的所有组成。
+以上我向你所描述的，你都可以在 [ai-system-two.ts](https://github.com/yenche123/thus-note/blob/cool/thus-backends/thus-laf/cloud-functions/ai-system-two.ts) 文件中找到，这份文件就是系统二的所有组成。
 
 
 ## 与系统二对话

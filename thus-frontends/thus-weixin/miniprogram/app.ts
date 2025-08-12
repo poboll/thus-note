@@ -4,7 +4,7 @@ import { useApp, useForwardMaterials } from "./utils/useApp"
 App({
   
   globalData: {
-    appName: "liubai",
+    appName: "thus",
   },
 
   onLaunch() {

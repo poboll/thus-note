@@ -54,7 +54,7 @@ export function useConnectVika() {
   }, 100)
 
   const onTapConfigMethod = () => {
-    const link = "https://docs.liubai.cc/guide/connect/vika"
+    const link = "https://docs.idrop.in/guide/connect/vika"
     window.open(link, "_blank")
   }
   

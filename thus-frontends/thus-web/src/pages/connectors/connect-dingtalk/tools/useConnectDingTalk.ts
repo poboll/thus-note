@@ -53,7 +53,7 @@ export function useConnectDingTalk() {
   }
 
   const onTapConfigMethod = () => {
-    const link = "https://docs.liubai.cc/guide/connect/dingtalk"
+    const link = "https://docs.idrop.in/guide/connect/dingtalk"
     window.open(link, "_blank")
   }
   

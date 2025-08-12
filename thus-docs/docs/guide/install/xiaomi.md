@@ -2,7 +2,7 @@
 
 ## 1. 复制链接
 
-`https://my.liubai.cc`
+`https://my.thus-note.com`
 
 <CopyButton />
 

@@ -7,7 +7,7 @@ const _env = loadEnv(nodeEnv ?? "", process.cwd())
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: "zh-CN",
-  title: "留白记事",
+  title: "如是",
   description: "AI Native + Local First 的超级效率工具",
   head: [
     ['link', { rel: 'icon', href: '/logo_512x512_v2.png' }],
@@ -23,13 +23,13 @@ export default defineConfig({
     },
 
     nav: [
-      { text: "指南", link: "/guide/what-is-liubai", activeMatch: "/guide/" },
+      { text: "指南", link: "/guide/what-is-thus", activeMatch: "/guide/" },
       { 
         text: "文章", 
         link: "/article/2025/weixin-task", 
         activeMatch: "/(tool-review|article)/"
       },
-      { text: "网页版", link: "https://my.liubai.cc" },
+      { text: "网页版", link: "https://my.idrop.in" },
     ],
 
     sidebar: {
@@ -37,7 +37,7 @@ export default defineConfig({
         {
           text: "欢迎",
           items: [
-            { text: "简介", link: "/guide/what-is-liubai" },
+            { text: "简介", link: "/guide/what-is-thus" },
             { text: "社区", link: "/guide/community" },
             { text: "AI 说明书", link: "/guide/three-assistants" },
             { 
@@ -170,7 +170,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yenche123/liubai' }
+      { icon: 'github', link: 'https://github.com/yenche123/thus-note' }
     ],
 
     search: {
@@ -200,7 +200,7 @@ export default defineConfig({
     },
 
     footer: {
-      copyright: "Copyright © 2025 <a href='https://my.liubai.cc'>Liubai</a>",
+      copyright: "Copyright © 2025 <a href='https://my.idrop.in'>Thus</a>",
     },
 
     docFooter: {
@@ -209,7 +209,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: "https://github.com/yenche123/liubai/tree/cool/liubai-docs/docs/:path",
+      pattern: "https://github.com/yenche123/thus-note/tree/cool/thus-docs/docs/:path",
       text: "在 GitHub 上编辑此页面",
     },
     darkModeSwitchLabel: "外观",

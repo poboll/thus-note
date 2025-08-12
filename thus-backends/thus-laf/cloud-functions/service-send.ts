@@ -622,7 +622,7 @@ export class WxGzhSender {
 export class LiuReporter {
   
   private _dingtalkUrl?: string
-  private _dingtalkKeyword = "Liubai"
+  private _dingtalkKeyword = "Thus"
 
   constructor() {
     const _env = process.env
@@ -694,7 +694,7 @@ export class LiuReporter {
     }
     if(!hasKeyword) {
       hasKeyword = text.includes(keyword)
-      if(!hasKeyword) text += "\n\nfrom Liubai"
+      if(!hasKeyword) text += "\n\nfrom Thus"
     }
 
     const msgtype = Boolean(title) ? "markdown" : "text"

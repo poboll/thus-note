@@ -5,13 +5,13 @@
 
 ### 1. 搜索
 
-你可以尝试 [点击这个链接](vscode:extension/ptsd.liubai-vscode-extension)，直接在 VS Code 中安装。
+你可以尝试 [点击这个链接](vscode:extension/ptsd.thus-vscode-extension)，直接在 VS Code 中安装。
 
 如果上述链接无法打开，你可以手动切换至 VS Code 中的 `Extensions: Marketplace`：
 
 ![Marketplace](./assets-vscode/1.png)
 
-搜索 `Liubai` 再点击 `Install`。
+搜索 `Thus` 再点击 `Install`。
 
 ### 2. 信任
 
@@ -20,7 +20,7 @@
 点击 `Trust Publisher and Install`。
 
 ::: tip
-留白记事是完全开源的，本插件的源代码位于 [liubai-vscode-extension](https://github.com/yenche123/liubai/tree/cool/liubai-frontends/liubai-vscode-extension) 目录下，欢迎你审计。
+如是是完全开源的，本插件的源代码位于 [thus-vscode-extension](https://github.com/yenche123/thus-note/tree/cool/thus-frontends/thus-vscode-extension) 目录下，欢迎你审计。
 :::
 
 ## 登录 {#login}
@@ -29,7 +29,7 @@
 
 ![登录](./assets-vscode/3.png)
 
-安装完毕，插件会弹通知请求你登录；若没有出现通知，点击窗口左下角的 `Liubai` 按钮，也可以登录。如上图所示。
+安装完毕，插件会弹通知请求你登录；若没有出现通知，点击窗口左下角的 `Thus` 按钮，也可以登录。如上图所示。
 
 ### 2. 跳转到留白
 
@@ -41,7 +41,7 @@
 
 ![授权](./assets-vscode/5.png)
 
-该插件是留白记事官方维护的，你可以放心授权。
+该插件是如是官方维护的，你可以放心授权。
 
 ### 4. 返回 VS Code
 
@@ -49,7 +49,7 @@
 
 点击 `打开Visual Studio Code`。
 
-### 5. 允许 Liubai 插件接收登录信息
+### 5. 允许 Thus 插件接收登录信息
 
 ![Allow](./assets-vscode/7.png)
 
