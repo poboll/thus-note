@@ -2,20 +2,16 @@
   "scope": "/",
   "display": "standalone",
   "start_url": "/",
-  "name": "Liubai",
-  "short_name": "Liubai",
-  "description": "Your Notes, Calendar, Tasks, and To-Do List with AI",
+  "name": "如是记录",
+  "short_name": "如是记录",
+  "description": "如是记录，真实自我 - 个人信息管理系统 | idrop.in",
   "theme_color": "#2a6885",
   "background_color": "#eaecef",
   "orientation": "natural",
   "related_applications": [
     {
       "platform": "webapp",
-      "url": "https://alpha.liubai.cc/manifest.json"
-    },
-    {
-      "platform": "webapp",
-      "url": "https://test.liubai.cc/manifest.json"
+      "url": "https://idrop.in/manifest.json"
     }
   ],
   "prefer_related_applications": false,
@@ -81,28 +77,28 @@
       "type": "image/jpeg",
       "sizes": "1280x700",
       "form_factor": "wide",
-      "label": "Liubai for PC"
+      "label": "如是记录 for PC"
     },
     {
       "src": "/images/screenshot-mobile.jpg",
       "type": "image/jpeg",
       "sizes": "750x1334",
       "form_factor": "narrow",
-      "label": "Liubai for mobile"
+      "label": "如是记录 for mobile"
     },
     {
       "src": "/images/screenshot-pc2.jpg",
       "type": "image/jpeg",
       "sizes": "1280x700",
       "form_factor": "wide",
-      "label": "Liubai on PC"
+      "label": "如是记录 on PC"
     },
     {
       "src": "/images/screenshot-mobile2.jpg",
       "type": "image/jpeg",
       "sizes": "750x1334",
       "form_factor": "narrow",
-      "label": "Liubai on mobile"
+      "label": "如是记录 on mobile"
     }
   ],
   "edge_side_panel": {
