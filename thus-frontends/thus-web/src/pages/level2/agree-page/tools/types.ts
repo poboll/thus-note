@@ -1,0 +1,10 @@
+import type { PageState } from "~/types/types-atom";
+import type { SyncOperateAPI } from "~/types/types-cloud";
+
+export interface ApData {
+  pageState: PageState
+  chatId?: string
+  contentId?: string
+  contentType: SyncOperateAPI.ContentType
+  showNaviBar: boolean
+}

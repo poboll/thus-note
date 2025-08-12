@@ -1,0 +1,180 @@
+/** 深色系 */
+
+.theme-dark {
+  --primary-color: #88d1ff;   /**  88c4e3 */
+  --on-primary: #003354;
+  --primary-hover: #68c4f3;
+  --primary-active: #48abdd;
+  --inverse-primary: #2a6885;
+
+  --card-bg: #232323;
+  --bg-color: #2a2c2e;
+  --main-text: #e7e9ea;
+  --main-normal: #c7c9ca;
+  --main-code: #ababab;
+  --main-note: #686868;
+  --main-tip: #4e4e4e;
+  --on-main-code: rgba(171, 171, 171, .1);
+  --scrollbar-thumb: #484848;
+  --popup-bg: rgba(98, 100, 102, 0.8);
+
+  /** we have to set opacity to 0.99
+  * https://stackoverflow.com/questions/71567352/how-do-you-fix-the-darkened-text-selection-color-in-safari-css
+  */
+  --select-bg: rgba(61, 82, 89, 0.99);
+  --select-bg-2: rgba(77, 98, 105, 0.99);
+  --select-code: rgba(38, 79, 120, 0.99);
+  
+  --card-hover: #25272a;
+
+  --secondary-color: #3f5c68;
+  --secondary-hover: #4d6671;
+  --secondary-active: #586f79;
+  --secondary-shadow: 0 10px 14px -3px rgba(42, 104, 133, .52);
+  --secondary-shadow-hover: 0 6px 10px -3px rgba(42, 104, 133, .52);
+
+  --sidebar-bg: #232323;
+  --sidebar-scrollbar-thumb: #484848;
+
+  /** light box */
+  --light-box: #88d1ff;
+
+  --line-default: #313335;
+  --line-bottom: #434343;
+  --line-hover: #585858;
+  --line-active: #7c7c7c;
+
+  --other-btn-bg: #303030;
+  --other-btn-text: #a9a9a9;
+  --other-btn-hover: #393939;
+
+  --card-shadow: 0 4px 6px -2px rgba(212, 212, 212, .1);
+  --card-shadow-2: 0 6px 4px -3px rgba(212, 212, 212, .03);
+  --card-shadow2-hover: 0 12px 5px -6px rgba(212, 212, 212, .07);
+  --editor-shadow: 0 24px 4px -12px rgba(222, 222, 222, .04);
+  --floating-shadow: 0 6px 24px rgba(222, 222, 222, .15);
+  --kanban-header-shadow: 0 12px 6px -6px rgba(222, 222, 222, .1);
+  --liu-hr: #2e2e2e;   /** 卡片里的分割线 bar */
+  --liu-hr2: #3e3e3e;  /** 卡片里的分割线 for bg-color，blockquote 的左侧 bar */
+  --liu-quote: #a0a0a0;  /** 引用里的文字色 */
+  --liu-image: #2a2a2a;
+
+  /** 一些比较少用到的 css 变量 */
+  --vice-bg: #2a2c2e;
+  --vice-shadow: -7px 0 14px 1px rgba(255, 255, 255, .11);
+  --vice-scrollbar-thumb: #6a6a6a;
+  --navi-normal: #989898;            /** 侧边栏链接 默认颜色 */
+  --drag-bg: #3d5259;        /** 拖动时的背景色 */
+  --drag-border: #3a8289;    /** 拖动时的边框色 */
+  --gradient-one: linear-gradient(90deg, rgba(35, 35, 35, 0) 10%, rgba(35, 35, 35, 1) 96%);
+  --gradient-two: linear-gradient(0deg, rgba(35, 35, 35, 1) 28%, rgba(35, 35, 35, 0) 76%);
+  --gradient-three: linear-gradient(90deg, rgba(35, 35, 35, 0) 5%, rgba(35, 35, 35, .5) 15%, rgba(35, 35, 35, 1) 50%);
+  --cool-bg: linear-gradient(30deg, #8e95b7, #10635f);
+  --checkbox-bg: linear-gradient(30deg, #88d1ff, #48abdd);
+  --tag-bg: #2a2c2e;
+  --tag-hover: linear-gradient(30deg, #37393b, #25272a 70%);
+  --tooltip-shadow: 0 4px 12px -1px rgba(255, 255, 255, .1);
+  --shortcut-text: #989898;
+  --avatar-bg: #a6bbc5;
+  --avatar-color: #1f1f1f;
+  --comment-hover-one: #2f3134;  /** 评论区里的 hover 颜色  */
+
+  /** 自定义组件 */
+  --cui-loading: rgba(66, 68, 72, .91);
+  --on-cui-loading: #e8e8e8;
+  --cui-loading-shadow: 0 10px 28px -1px rgba(222, 222, 222, .28);
+
+  /** bubble-menu */
+  --bubble-menu-bg: #3a3a3a;
+  --bubble-menu-color: #efefef;
+  --bubble-menu-shadow: 0 6px 12px rgba(0, 0, 0, .14);
+
+  /** 自定义组件: modal */
+  --cui-modal: rgba(29, 29, 29, .9);
+  --cui-modal-other-btn-bg: #1a1a1a;
+  --cui-modal-other-btn-hover: #2f2f2f;
+
+  /** 自定义组件: snackbar */
+  --cui-snackbar: #dae3f2;
+  --on-cui-snackbar: #2a2c2e;
+  --cui-snackbar-shadow: 0 6px 12px rgba(255, 255, 255, .14);
+
+  /** 自定义组件: 通用 popup */
+  --cui-popup-shadow: 0 -12px 32px rgba(255, 255, 255, .12);
+
+  /** preview-image 预览图片 */
+  --preview-image-bg: rgba(0, 0, 0, 1);        /** 移动端的背景，没有透明读 */
+  --preview-image-bg-2: rgba(0, 0, 0, .86);    /** 电脑端的背景，具备一定透明度 */
+
+  /** 自定义组件: action-sheet，但希望这个组件的颜色是通用的 */
+  --cui-actionsheet-bg: #272727;
+
+  /** 毛玻璃背景 */
+  --blur-radius: 3px;
+  --frosted-glass: rgba(5, 5, 5, .75);   /** 盖在 sidebar 上，让侧边栏的绚彩模糊 */
+  --frosted-glass-2: rgba(36, 38, 40, .8);  /** spotlight 模态框的背景色 */
+  /** 跟随 --bg-color 的背景色 */
+  --frosted-glass-3: linear-gradient(0deg, rgba(41, 43, 45, .86) 50%, rgba(41, 43, 45, .75) 90%);
+  --frosted-glass-4: rgba(35, 35, 35, .66);
+  --frosted-glass-5: linear-gradient(0deg, rgba(41, 43, 45, .86) 50%, rgba(41, 43, 45, .75) 90%);
+
+  /** for bottom-navi-bar */
+  --frosted-glass-6: linear-gradient(
+    0deg, 
+    rgba(41, 43, 45, .92) 10%, 
+    rgba(41, 43, 45, .97) 30%,
+    rgba(41, 43, 45, .99) 50%
+  );
+
+  /********* 导入页: 「查看更多」的背景 *******/
+  --mask-bg: linear-gradient(0deg, rgba(42, 44, 46, 1) 40%, rgba(42, 44, 46, 0) 95%);
+
+  /** drag-handle */
+  --liu-drag-handle: #505359;
+
+  /** shiny button */
+  --shiny-cta-bg: #080808;
+  --shiny-cta-bg-subtle: #181818;
+  --shiny-cta-fg: #fafafa;
+  --shiny-cta-highlight: #48abdd;
+  --shiny-cta-highlight-subtle: #2a6885;
+
+  /** ai characters */
+  --baixiaoying-color: #FF933A;
+  --deepseek-color: #4D6BFE;
+  --ds-reasoner-color: #afbff1;
+  --hailuo-color: #FE603C;
+  --hunyuan-color: #00BCFF;
+  --kimi-color: #2f8bec;
+  --tongyi-qwen-color: #837ef1;
+  --wanzhi-color: #08F400;
+  --yuewen-color: #36DBFF;
+  --zhipu-color: #76A8F6;
+
+  /** ide types */
+  --liu-ide-bg: linear-gradient(-30deg, #202120, #101110);
+  --liu-cnb-cool-font: #c05e09;
+  --liu-cursor-font: #989898;
+  --liu-github-font: #989898;
+  --liu-gitpod-font: #bf690d;
+  --liu-project-idx-font: #6e49cc;
+  --liu-stackblitz-font: #1068c0;
+  --liu-tencent-cloud-studio-font: #4b7bce;
+  --liu-trae-font: #ad4c41;
+  --liu-vscode-font: #046bb0;
+  --liu-vscode-insiders-font: #058b75;
+  --liu-vscodium-font: #215eae;
+  --liu-windsurf-font: #B9B3A9;
+
+  /** 状态色 */
+  --liu-state-1: #C3BBB3;
+  --liu-state-2: #b3b788;
+  --liu-state-3: #f37e6c;
+  --liu-state-4: #AA87B0;
+  --liu-state-5: #b99678;
+  --liu-state-6: #8DB1BF;
+  --liu-state-7: #5e957c;
+  --liu-state-8: #d5769d;
+  --liu-state-9: #759bce;
+  --liu-state-10: #FFD194;
+}

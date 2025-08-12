@@ -1,0 +1,22 @@
+{
+  "name": "liubai-weixin",
+  "version": "0.19.1",
+  "description": "Liubai for Weixin",
+  "scripts": {
+    "pre-build": "tsx build/pre-build.ts"
+  },
+  "keywords": [
+    "task",
+    "weixin-miniprogram",
+    "chat-tool"
+  ],
+  "author": "yenche123 <tsuiyenche@outlook.com> (https://github.com/yenche123)",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "dotenv": "^17.2.1",
+    "miniprogram-api-typings": "^4.1.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2"
+  }
+}

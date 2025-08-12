@@ -1,0 +1,27 @@
+/** showcase.wxss */
+
+.showcase-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 500px;
+}
+
+.showcase-image-container {
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.showcase-footer-box {
+  width: 80%;
+  max-width: 450px;
+}
+
+.showcase-virtual {
+  width: 100%;
+  height: 50px;
+}
