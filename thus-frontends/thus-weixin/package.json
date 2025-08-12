@@ -1,7 +1,7 @@
 {
-  "name": "liubai-weixin",
+  "name": "thus-weixin",
   "version": "0.19.1",
-  "description": "Liubai for Weixin",
+  "description": "Thus for Weixin",
   "scripts": {
     "pre-build": "tsx build/pre-build.ts"
   },

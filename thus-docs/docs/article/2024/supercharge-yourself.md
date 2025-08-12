@@ -8,7 +8,7 @@
 
 ## 一句话介绍 {#intro}
 
-留白记事 = 给你三个助手的超级记事本！
+如是 = 给你三个助手的超级记事本！
 
 <br>
 
@@ -135,7 +135,7 @@
 
 到底怎么使用？
 
-关注「留白记事」微信公众号👇，三个助手就在你的微信对话框里。
+关注「如是」微信公众号👇，三个助手就在你的微信对话框里。
 
 <img src="./assets1220/weixin.png" width="380" alt="follow on weixin" style="margin-block-end: 10px;">
 
@@ -221,7 +221,7 @@
 
 访问：
 
-[https://github.com/yenche123/liubai](https://github.com/yenche123/liubai)
+[https://github.com/yenche123/thus-note](https://github.com/yenche123/thus-note)
 
 查看源代码。
 
@@ -237,4 +237,4 @@
 
 <br>
 
-**留白记事，就是要放大你的能力。**
+**如是，就是要放大你的能力。**

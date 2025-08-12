@@ -1,10 +1,10 @@
 # 集成第三方应用
 
-留白记事连接一切！
+如是连接一切！
 
 你可以根据需要：
 
-- 在卡片需要被提醒时，通知到 [微信](https://my.liubai.cc/connect/wechat) 上；
+- 在卡片需要被提醒时，通知到 [微信](https://my.thus-note.com/connect/wechat) 上；
 - 将你的记录，实时备份到 [WPS](./wps) 上；
 - 将你的记录，实时备份到 [钉钉](./dingtalk) 上；
 - 将你的记录，实时备份到 [维格云](./vika) 上。

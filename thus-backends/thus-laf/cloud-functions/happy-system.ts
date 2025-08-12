@@ -1006,7 +1006,7 @@ class CouponBaseManager {
     data: Table_HappyCoupon,
     otherInfo?: string,
   ) {
-    const title = "Liubai Coupon"
+    const title = "Thus Coupon"
     const userId = data.owner ?? "unknown"
     const couponId = data._id
     let footer = ""

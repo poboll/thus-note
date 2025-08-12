@@ -1,16 +1,16 @@
-# liubai-web
+# thus-web
 
-这里是留白记事前端根目录。
+这里是如是前端根目录。
 
 ## 开箱即用
 
-留白记事支持完全离线使用。
+如是支持完全离线使用。
 
 你只需要以下 4 行命令：
 
 ```bash
-git clone git@github.com:yenche123/liubai.git
-cd liubai/liubai-frontends/liubai-web/
+git clone git@github.com:yenche123/thus-note.git
+cd thus-note/thus-frontends/thus-web/
 pnpm i
 pnpm dev
 ```

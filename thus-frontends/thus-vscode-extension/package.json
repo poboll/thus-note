@@ -1,5 +1,5 @@
 {
-  "name": "liubai-vscode-extension",
+  "name": "thus-vscode-extension",
   "displayName": "%package.displayName%",
   "description": "%package.description%",
   "publisher": "ptsd",
@@ -14,7 +14,7 @@
     "vscode": "^1.84.0"
   },
   "bugs": {
-    "url": "https://github.com/yenche123/liubai/issues"
+    "url": "https://github.com/yenche123/thus-note/issues"
   },
   "categories": [
     "AI",
@@ -40,45 +40,45 @@
   "contributes": {
     "commands": [
       {
-        "command": "ptsd.liubai-vscode-extension.record",
-        "title": "%liubai.record.title%",
-        "category": "Liubai"
+        "command": "ptsd.thus-vscode-extension.record",
+        "title": "%thus.record.title%",
+        "category": "Thus"
       },
       {
-        "command": "ptsd.liubai-vscode-extension.recordWithCode",
-        "title": "%liubai.record_with_code.title%",
-        "category": "Liubai"
+        "command": "ptsd.thus-vscode-extension.record_with_code",
+        "title": "%thus.record_with_code.title%",
+        "category": "Thus"
       },
       {
-        "command": "ptsd.liubai-vscode-extension.recordWithCode2",
-        "title": "%liubai.record_with_code2.title%",
-        "category": "Liubai"
+        "command": "ptsd.thus-vscode-extension.record_with_code2",
+        "title": "%thus.record_with_code2.title%",
+        "category": "Thus"
       },
       {
-        "command": "ptsd.liubai-vscode-extension.loginOrLogout",
-        "title": "%liubai.login_or_logout.title%",
-        "category": "Liubai"
+        "command": "ptsd.thus-vscode-extension.login_or_logout",
+        "title": "%thus.login_or_logout.title%",
+        "category": "Thus"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "ptsd.liubai-vscode-extension.recordWithCode",
+          "command": "ptsd.thus-vscode-extension.recordWithCode",
           "when": "editorHasSelection",
           "group": "9_cutcopypaste"
         }
       ],
       "commandPalette": [
         {
-          "command": "ptsd.liubai-vscode-extension.recordWithCode",
+          "command": "ptsd.thus-vscode-extension.recordWithCode",
           "when": "false"
         },
         {
-          "command": "ptsd.liubai-vscode-extension.recordWithCode2",
+          "command": "ptsd.thus-vscode-extension.recordWithCode2",
           "when": "editorHasSelection"
         },
         {
-          "command": "ptsd.liubai-vscode-extension.record",
+          "command": "ptsd.thus-vscode-extension.record",
           "when": "!editorHasSelection"
         }
       ]
@@ -122,8 +122,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yenche123/liubai.git",
-    "directory": "liubai-frontends/liubai-vscode-extension"
+    "url": "https://github.com/yenche123/thus-note.git",
+    "directory": "thus-frontends/thus-vscode-extension"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [

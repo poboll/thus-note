@@ -22,7 +22,7 @@
 
 打开 [vika.cn](https://vika.cn/)，找到你刚刚另存的多维表格。
 
-点开你的副本，在顶部的位置，点一下名称，如下图所示，可以重命名。建议修改为 `xxx的留白记事`，其中 `xxx` 替换为你的名字或昵称。
+点开你的副本，在顶部的位置，点一下名称，如下图所示，可以重命名。建议修改为 `xxx的如是`，其中 `xxx` 替换为你的名字或昵称。
 
 <img src="./assets-vika/vika-2.png" alt="重命名" width="650" />
 
@@ -36,7 +36,7 @@
 
 <img src="./assets-vika/vika-4.png" alt="复制 api token & datasheetId" width="450" />
 
-将它们分别粘贴到 [留白记事](https://my.liubai.cc/connect/vika) 上：
+将它们分别粘贴到 [如是](https://my.thus-note.com/connect/vika) 上：
 
 <img src="./assets-vika/vika-5.png" alt="粘贴 api token & datasheetId" width="450" />
 
@@ -50,7 +50,7 @@ dataSheetId 在 `https://api.vika.cn/fusion/v1/datasheets/` 右边，以 `dst` �
 
 ### 4. 完成 🎉
 
-现在你可以回到 [留白记事](https://my.liubai.cc/) 上记录，同时观察你的 vika 有没有来自留白的记事！
+现在你可以回到 [如是](https://my.thus-note.com/) 上记录，同时观察你的 vika 有没有来自如是的记事！
 
 ## 常见问题
 

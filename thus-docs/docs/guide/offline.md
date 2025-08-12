@@ -1,11 +1,11 @@
 # 离线可用
 
 > [!IMPORTANT]
-> 离线可用的前提是你已 [安装](./install/index) 留白记事。
+> 离线可用的前提是你已 [安装](./install/index) 如是。
 > 
 > 值得注意的是，我们的 IDE 插件是不支持离线使用的，因为它背后配置了 [AI 结构化处理](./ide/how-to-use-vscode-ext#quick-note)，使用场景不同。
 
-留白记事是本地优先的，你可以在断网的环境下使用留白记事。
+如是是本地优先的，你可以在断网的环境下使用如是。
 
 <img src="../article/2024/assets1220/21.gif" width="400" alt="offline" />
 

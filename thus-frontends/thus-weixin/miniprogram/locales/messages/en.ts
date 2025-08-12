@@ -2,11 +2,11 @@
 
 export default {
   "hello": {
-    "appName": "Liubai"
+    "appName": "Thus"
   },
   "index": {
-    "slogan": "Done everything using Liubai!",
-    "powered_by": "Done everything using Liubai",
+    "slogan": "Done everything using Thus!",
+    "powered_by": "Done everything using Thus",
     "find_coupon": "Find Coupons",
     "create_task": "Create Tasks",
     "pc_not_supported": "It's not supported on PC",
@@ -50,7 +50,7 @@ export default {
     "tip_2": "Let's manange them!",
     "tip_3": "This will read your clipboard content, helping you upload quickly!",
     "manage": "Manage",
-    "slogan": "All you coupons are received by Liubai!",
+    "slogan": "All you coupons are received by Thus!",
     "try_1": "Try to Input",
     "try_2": '"Luckin Coffee"\n"Chagee Tea"\n......',
     "got_it": "Got it",

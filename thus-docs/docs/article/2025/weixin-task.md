@@ -30,7 +30,7 @@
 
 <img src="./assets0723/reminderr.gif" width="400" style="margin-bottom: 20px" alt="一键提醒" />
 
-所有的任务不顺，请全责怪给留白记事！
+所有的任务不顺，请全责怪给如是！
 
 > 这怎么会是你的问题呢！
 
@@ -49,13 +49,13 @@
 
 ## 🤲 快速找回
 
-### 方法一: 置顶留白记事（推荐）
+### 方法一: 置顶如是（推荐）
 
-<img src="../../guide/assets-community/weixin.png" width="360" style="margin-top: 20px" alt="留白记事服务号二维码" />
+<img src="../../guide/assets-community/weixin.png" width="360" style="margin-top: 20px" alt="如是服务号二维码" />
 
-微信扫一扫 ⬆️ 卡片，再如下图所示，置顶留白记事。
+微信扫一扫 ⬆️ 卡片，再如下图所示，置顶如是。
 
-<img src="./assets0723/pin.png" width="360" alt="置顶留白记事" />
+<img src="./assets0723/pin.png" width="360" alt="置顶如是" />
 
 以后，你只需要在菜单栏上选择 `记事 // 给别人的` 即可快速新建任务。
 
@@ -69,9 +69,9 @@
 
 ## ⛵ 结语
 
-我们在 [官网](../../guide/what-is-liubai) 上写着一句话介绍：
+我们在 [官网](../../guide/what-is-thus) 上写着一句话介绍：
 
-> 留白记事 = 备忘录📝 + 日历📆 + 任务📌 + 待办清单📂 
+> 如是 = 备忘录📝 + 日历📆 + 任务📌 + 待办清单📂 
 
 现在，我们全面开启任务协作的时代，就是要让你超能打！
 

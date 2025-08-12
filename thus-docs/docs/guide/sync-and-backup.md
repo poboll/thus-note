@@ -2,7 +2,7 @@
 
 ## 多端同步
 
-留白记事自带多端同步，让你无需任何配置就能在各设备间流转数据。
+如是自带多端同步，让你无需任何配置就能在各设备间流转数据。
 
 ::: info 🤩 救命
 终于不用再配置 Git, iCloud, or 其他 xxx sync 了！
@@ -16,7 +16,7 @@
 
 <img src="./assets-sync-backup/02.png" width="400" />
 
-另外，你还可以在 [设置](https://my.liubai.cc/settings/more) 中，批量导出和导入你的记事：
+另外，你还可以在 [设置](https://my.thus-note.com/settings/more) 中，批量导出和导入你的记事：
 
 <img src="./assets-sync-backup/03.png" width="400" />
 

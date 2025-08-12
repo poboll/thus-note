@@ -138,7 +138,7 @@ declare global {
       LIU_TENCENT_SMS_REGION?: string        // 腾讯云 SMS 所属的地域，有值 "ap-guangzhou"
       LIU_TENCENT_SMS_SDKAPPID?: string
       LIU_TENCENT_SMS_APPKEY?: string
-      LIU_TENCENT_SMS_SIGNNAME?: string      // 签名内容，like "留白记事公众号"
+      LIU_TENCENT_SMS_SIGNNAME?: string      // 签名内容，like "如是公众号"
       LIU_TENCENT_SMS_TEMPLATEID_1?: string  // 登录时的短信模板
 
       // 支付宝

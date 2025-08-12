@@ -6,7 +6,7 @@
 若你点击 `.` 没有生效，请试着将输入法切换至英语模式。
 :::
 
-留白记事 vscode 插件支持在浏览器环境中运行，下面为你介绍如何在 [github.dev](https://github.dev/) 上进行安装和登录。
+如是 vscode 插件支持在浏览器环境中运行，下面为你介绍如何在 [github.dev](https://github.dev/) 上进行安装和登录。
 
 ## 安装 {#install}
 
@@ -14,7 +14,7 @@
 
 ![Marketplace](./assets-github-dev/1.png)
 
-将选项卡切换至 `扩展: 商店`，搜索 `Liubai`，并点击 `安装`。
+将选项卡切换至 `扩展: 商店`，搜索 `Thus`，并点击 `安装`。
 
 ### 2. 信任
 
@@ -23,7 +23,7 @@
 点击 `信任发布者和安装`
 
 ::: tip
-留白记事是完全开源的，本插件的源代码位于 [liubai-vscode-extension](https://github.com/yenche123/liubai/tree/cool/liubai-frontends/liubai-vscode-extension) 目录下，欢迎你审计。
+如是是完全开源的，本插件的源代码位于 [thus-vscode-extension](https://github.com/yenche123/thus-note/tree/cool/thus-frontends/thus-vscode-extension) 目录下，欢迎你审计。
 :::
 
 ## 登录 {#login}
@@ -44,7 +44,7 @@
 
 ![授权](./assets-github-dev/5.png)
 
-该插件是留白记事官方维护的，你可以放心授权。
+该插件是如是官方维护的，你可以放心授权。
 
 ### 4. 返回 github.dev
 

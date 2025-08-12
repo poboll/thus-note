@@ -157,7 +157,7 @@ const system_prompt = `
 <log>
   <role>human</role>
   <content>
-    <image_url>https://my.liubai.cc/logos/logo_256x256_v3.png</image_url>
+    <image_url>https://my.thus.cc/logos/logo_256x256_v3.png</image_url>
   </content>
   <time>2025-02-06 14:47:05</time>
 </log>
@@ -1064,7 +1064,7 @@ class SystemTwo {
 
   private _toReporter(
     markdown: string,
-    title = "Liubai System Two",
+    title = "Thus System Two",
   ) {
     // 1. add more info into markdown
     const { user, room, chats, member } = this._ctx

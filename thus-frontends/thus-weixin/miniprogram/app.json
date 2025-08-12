@@ -44,7 +44,7 @@
     "backgroundTextStyle": "dark",
     "backgroundColor": "#ffffff",
     "navigationBarBackgroundColor": "#2a6885",
-    "navigationBarTitleText": "Liubai Note",
+    "navigationBarTitleText": "Thus Note",
     "navigationBarTextStyle": "white",
     "navigationStyle": "custom",
     "initialRenderingCache": "static"

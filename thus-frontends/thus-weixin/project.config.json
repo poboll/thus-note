@@ -1,6 +1,6 @@
 {
-  "projectname": "liubai-weixin",
-  "description": "这是 Liubai for Weixin 项目配置文件",
+  "projectname": "thus-weixin",
+"description": "这是 如是 for Weixin 项目配置文件",
   "miniprogramRoot": "miniprogram/",
   "compileType": "miniprogram",
   "setting": {

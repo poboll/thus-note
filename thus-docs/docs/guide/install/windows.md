@@ -9,7 +9,7 @@
 
 ### 1. 复制链接
 
-`https://my.liubai.cc`
+`https://my.thus-note.com`
 
 <CopyButton />
 
@@ -29,7 +29,7 @@
 
 <img src="./assets-windows/2_2.png" width="350" />
 
-- 如果没有，点击窗口右上角的 `...` 更多按钮，选择 `投放、保存和分享`，点击 `安装“Liubai”...`
+- 如果没有，点击窗口右上角的 `...` 更多按钮，选择 `投放、保存和分享`，点击 `安装"Thus"...`
 
 <img src="./assets-windows/3.png" width="350" style="margin-block-end: 8px;" />
 
@@ -43,7 +43,7 @@
 
 ### 5. 固定到任务栏
 
-安装完成后，Windows 可能会弹窗提示 `是否将Liubai固定到任务栏？`，点击 `是`。
+安装完成后，Windows 可能会弹窗提示 `是否将Thus固定到任务栏？`，点击 `是`。
 
 <img src="./assets-windows/6.png" width="350" />
 
@@ -59,7 +59,7 @@
 
 ### 1. 复制链接
 
-`https://my.liubai.cc`
+`https://my.thus-note.com`
 
 <CopyButton />
 
@@ -79,7 +79,7 @@
 
 <img src="./assets-windows/2_edge_2.png" width="350" />
 
-- 如果没有，点击窗口右上角的“...”更多按钮，选择 `应用`，点击 `安装 Liubai`
+- 如果没有，点击窗口右上角的"..."更多按钮，选择 `应用`，点击 `安装 Thus`
 
 <img src="./assets-windows/3_edge.png" width="450" style="margin-block-end: 8px;" />
 
@@ -105,7 +105,7 @@
 
 <img src="./assets-windows/5_edge_2.png" width="350" style="margin-bottom: 16px;" />
 
-紧接着，Windows 可能会弹窗提示 `是否将Liubai固定到任务栏？`，点击 `是`。
+紧接着，Windows 可能会弹窗提示 `是否将Thus固定到任务栏？`，点击 `是`。
 
 <img src="./assets-windows/6.png" width="350" />
 

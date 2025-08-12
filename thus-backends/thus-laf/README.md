@@ -1,6 +1,6 @@
-# liubai-laf
+# Thus for LAF
 
-这里是 `liubai` 基于 `laf` 的后端根目录
+如是的后端，基于 [LAF](https://laf.dev/) 云函数开发。
 
 
 ## 补全

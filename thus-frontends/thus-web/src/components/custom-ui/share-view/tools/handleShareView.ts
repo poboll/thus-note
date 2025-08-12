@@ -185,7 +185,7 @@ async function handleIcs(
   }
 
   const receiveIcs = (plainText: string) => {
-    const file = new File([plainText], "liubai.ics", { type: "text/calendar" })
+    const file = new File([plainText], "thus.ics", { type: "text/calendar" })
     const [url] = liuUtil.createObjURLs([file])
     console.log("receiveIcs:   ")
     console.log(url)

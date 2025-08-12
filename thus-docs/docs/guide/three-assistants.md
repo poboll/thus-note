@@ -1,12 +1,12 @@
 # AI 使用说明书
 
-留白记事当前的 AI 功能叫作“三个助手”，它让你直接在微信上和多个大模型互动，最多同时与 3 名 AI 聊天！
+如是当前的 AI 功能叫作"三个助手"，它让你直接在微信上和多个大模型互动，最多同时与 3 名 AI 聊天！
 
 <img src="../article/2024/assets1220/10.gif" width="330">
 
 ## 使用方法 {#how-to-use}
 
-在微信上搜索“留白记事”（或者扫描下方二维码），关注“留白记事”服务号。
+在微信上搜索"如是"（或者扫描下方二维码），关注"如是"服务号。
 
 <img src="./assets-community/weixin.png" width="330">
 
@@ -90,9 +90,9 @@ DeepSeek 因其官方资源紧张 + 开源的原因，我们使用到了来自�
 
 许多朋友询问如何快速找到留白，这里教大家一个实用的小技巧：置顶留白。
 
-<img src="./assets-three-assistants/pin-liubai.png" width="400">
+<img src="./assets-three-assistants/pin-thus.png" width="400">
 
-如上图所示，在关注留白记事的页面，点击右上角 `...` 按钮，再点击 `置顶服务号` 即可在微信消息列表里找到留白。
+如上图所示，在关注如是的页面，点击右上角 `...` 按钮，再点击 `置顶服务号` 即可在微信消息列表里找到如是。
 
 另外，如果你想**避免漏接日程提醒**，你还可以“[关闭消息免打扰](https://mp.weixin.qq.com/s/3g1vn8wnps7nKntUKXIJuw)”。
 
@@ -102,15 +102,15 @@ DeepSeek 因其官方资源紧张 + 开源的原因，我们使用到了来自�
 
 <img src="./assets-three-assistants/hallucination.png" width="500">
 
-上图中，只有头像为留白记事 Logo 的消息（表示系统消息）是真实有效的✅，其他都在胡说八道🤬。你可以凭此区分谁在为你工作，谁又在胡言乱语。
+上图中，只有头像为如是 Logo 的消息（表示系统消息）是真实有效的✅，其他都在胡说八道🤬。你可以凭此区分谁在为你工作，谁又在胡言乱语。
 
-随着 AI 技术的快速发展，这类被称为幻觉的现象将逐步降低。你可以关注留白记事，第一时间感受它所带来的变化。
+随着 AI 技术的快速发展，这类被称为幻觉的现象将逐步降低。你可以关注如是，第一时间感受它所带来的变化。
 
 ## 微信的 Bug {#bugs-from-weixin}
 
 在微信电脑版上使用“三个助手”，你可能会遇到:
 
-1. 助手们的头像都展示为留白记事 Logo
+1. 助手们的头像都展示为如是 Logo
 
 <img src="./assets-three-assistants/bug-1.png" width="600" style="margin-block-end: 20px">
 
@@ -128,4 +128,4 @@ DeepSeek 因其官方资源紧张 + 开源的原因，我们使用到了来自�
 
 关于计费方式，请参阅 [提问箱](./faq/index)。
 
-想购买会员支持我们，请查看 [会员中心](https://my.liubai.cc/subscription)。
+想购买会员支持我们，请查看 [会员中心](https://my.thus-note.com/subscription)。
