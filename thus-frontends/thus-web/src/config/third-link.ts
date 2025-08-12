@@ -146,6 +146,6 @@ export default {
   REACT_NATIVE: "https://reactnative.dev/",
 
   RED_FOLLOW_URL: "https://www.xiaohongshu.com/user/profile/5d1642d80000000011033c24",
-  OPEN_SOURCE_URL: "https://github.com/yenche123/liubai",
+  OPEN_SOURCE_URL: "https://github.com/poboll/thus-note",
   
 }

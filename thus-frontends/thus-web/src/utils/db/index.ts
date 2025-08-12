@@ -31,7 +31,7 @@ export class LiuDexie extends Dexie {
   upload_tasks!: Table<UploadTaskLocalTable>
 
   constructor() {
-    super('LiubaiDatabase')
+    super('ThusNoteDatabase')
     this.version(DB_VERSION).stores(dbSchema)
   }
 
