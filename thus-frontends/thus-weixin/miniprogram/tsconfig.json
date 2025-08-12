@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "rootDir": ".",
+    "types": ["miniprogram-api-typings"],
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}

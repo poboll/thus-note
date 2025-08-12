@@ -1,0 +1,32 @@
+{
+  "name": "thus-note",
+  "private": true,
+  "version": "1.0.0",
+  "description": "如是记录，真实自我 - 个人信息管理系统",
+  "author": {
+    "name": "Thus-Note Team",
+    "email": "contact@thus-note.com",
+    "url": "https://github.com/your-username/thus-note"
+  },
+  "license": "AGPL-3.0-or-later",
+  "homepage": "https://github.com/your-username/thus-note",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/thus-note.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/thus-note/issues"
+  },
+  "keywords": [
+    "note-taking",
+    "personal-information-management",
+    "ai-assistant",
+    "vue",
+    "typescript",
+    "pwa",
+    "cross-platform"
+  ],
+  "devDependencies": {
+    "lerna": "^8.2.1"
+  }
+}

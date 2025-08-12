@@ -1,0 +1,291 @@
+
+:root {
+  font-family: "SF Pro Text", "SF Pro Icons", Inter, Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  color-scheme: light dark;
+
+  /** 标准页宽 竖列模式 */
+  --standard-max-px: 500px;
+
+  /** 卡片宽度 */
+  --card-min: 200px;
+  --card-max: 580px;
+  --card-percent: 92%;
+  --vice-percent: 90%;     /** 适用于侧边栏的导航栏宽度 */
+
+  /** 常用按钮尺寸 */
+  --btn-max: 250px;
+
+  /** about custom-editor */
+  --ce-border-radius: 20px;
+}
+
+/** font-size: L */
+.liu-font-large {
+  --big-word-style: 36px;
+  --head-font: 28px;
+  --title-font: 22px;
+  --desc-font: 20px;
+  --inline-code-font: 18px;
+  --btn-font: 17px;
+  --mini-font: 15px;
+  --state-font: 13px;
+
+  --detail-font: 19px;
+  --detail-inline-code: 17px;
+
+  --comment-font: 18px;
+  --comment-inline-code: 16px;
+}
+
+.liu-font-medium {
+  --big-word-style: 30px;
+  --head-font: 24px;
+  --title-font: 20px;
+  --desc-font: 18px;
+  --inline-code-font: 16px;
+  --btn-font: 16px;
+  --mini-font: 14px;
+  --state-font: 13px;
+
+  --detail-font: 17px;
+  --detail-inline-code: 15px;
+
+  --comment-font: 16px;
+  --comment-inline-code: 15px;
+}
+
+
+
+@media screen and (max-width: 340px) {
+  :root {
+    --vice-percent: 92%;
+  }
+}
+
+
+@media screen and (min-width: 1000px) {
+  :root {
+    --card-min: 200px;
+    --card-max: 630px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --card-min: 200px;
+    --card-max: 700px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  :root {
+    --card-min: 220px;
+    --card-max: 800px;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  :root {
+    --card-min: 250px;
+    --card-max: 880px;
+  }
+}
+
+
+/** reset CSS */
+html, body, h1, h2, h3, h4, h5, h6,
+button, input {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+a {
+  color: var(--primary-color);
+  outline: none;
+}
+
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+a:active {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+button {
+  background-color: transparent;
+}
+
+input {
+  background: transparent;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+/**************** 一些常用的 css **************/
+
+/** xxx-content 的 layout */
+.liu-mc-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  container-type: inline-size;
+  container-name: liu-mc-container;
+}
+
+.liu-mc-container > .liu-tc-virtual {
+  width: 100%;
+  height: 10px;
+}
+
+.liu-mc-container > .liu-mc-box {
+  width: var(--card-percent);
+  max-width: var(--card-max);
+  min-width: var(--card-min);
+  position: relative;
+  transition: .3s;
+}
+
+@container liu-mc-container (min-width: 460px) {
+  .liu-mc-container > .liu-mc-box {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width: 460px) {
+  :root {
+    --card-percent: 90%;
+  }
+}
+
+
+@container liu-mc-container (min-width: 500px) {
+  .liu-mc-container > .liu-mc-box {
+    width: 88%;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  :root {
+    --card-percent: 88%;
+  }
+}
+
+@container liu-mc-container (min-width: 560px) {
+  .liu-mc-container > .liu-mc-box {
+    width: 85%;
+  }
+}
+
+@media screen and (min-width: 560px) {
+  :root {
+    --card-percent: 85%;
+  }
+}
+
+
+@container liu-mc-container (min-width: 610px) {
+  .liu-mc-container > .liu-mc-box {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 610px) {
+  :root {
+    --card-percent: 90%;
+  }
+}
+
+
+.liu-mc-box > .liu-mc-spacing {
+  width: 100%;
+  height: 10px;
+}
+
+
+/** 一些页面顶部，会出现的置顶提示 highlight 框 */
+.liu-highlight-box {
+  width: 100%;
+  position: relative;
+  padding: 30px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: var(--primary-color);
+  font-size: var(--mini-font);
+  margin-block-end: 20px;
+  overflow: hidden;
+  background-color: var(--card-bg);
+}
+
+.liu-highlight-box::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--primary-color);
+  opacity: .19;
+  pointer-events: none;
+}
+
+
+/** 页面内的自定义 view 盒子 */
+.liu-view {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+
+/** 伸缩圈圈: 当鼠标移动上去时，会弹出圆圈的效果 
+*     通常用于鼠标浮在 "x" 图标上时
+*/
+.liu-flexible-dot_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.liu-flexible-dot_circle {
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  opacity: .07;
+  transition: .2s;
+  transition-timing-function: cubic-bezier(0.05, 1, 1, 1);
+  flex: none;
+}

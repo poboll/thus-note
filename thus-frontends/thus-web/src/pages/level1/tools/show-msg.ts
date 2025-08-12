@@ -1,0 +1,149 @@
+import cui from "~/components/custom-ui";
+import type { LiuErrReturn } from "~/requests/tools/types";
+import liuApi from "~/utils/liu-api";
+import liuEnv from "~/utils/liu-env";
+
+export function isEverythingOkay(
+  initCode?: string
+) {
+  if(initCode === "B0001") {
+    cui.showModal({
+      title: "🧑‍🔧",
+      content_key: "tip.maintaining_1",
+      showCancel: false,
+      isTitleEqualToEmoji: true,
+    })
+    return false
+  }
+  if(initCode && initCode !== "0000") {
+    cui.showModal({
+      title: "🥲",
+      content_key: "tip.err_1",
+      content_opt: { code: initCode },
+      showCancel: false,
+      isTitleEqualToEmoji: true,
+    })
+    return false
+  }
+  return true
+}
+
+export function showDisableTip(thirdParty: string) {
+  cui.showModal({
+    title_key: "tip.tip",
+    content_key: "login.cannot_login_via",
+    content_opt: { thirdParty },
+    showCancel: false,
+  })
+}
+
+export async function showOtherTip(
+  content_key: string,
+  reload = false
+) {
+  await cui.showModal({
+    title_key: "login.err_login",
+    content_key,
+    showCancel: false,
+  })
+  if(reload) {
+    liuApi.route.reload()
+  }
+}
+
+export async function showEmojiTip(
+  content_key: string,
+  title: string,
+) {
+  await cui.showModal({
+    title,
+    content_key,
+    showCancel: false,
+    isTitleEqualToEmoji: true,
+  })
+  return true
+}
+
+export async function showContactDev(
+  content_key: string,
+  title: string,
+) {
+  let contactWay = ""
+  const _env = liuEnv.getEnv()
+  const contactWecom = _env.CUSTOMER_SERVICE
+  const devEmail = LIU_ENV.author?.email
+  if(contactWecom) {
+    contactWay = "wecom"
+  }
+  else if(devEmail) {
+    contactWay = "email"
+  }
+
+  const hasContactWay = Boolean(contactWay)
+
+  const res = await cui.showModal({
+    title,
+    content_key,
+    showCancel: hasContactWay,
+    confirm_key: hasContactWay ? "common.to_contact" : undefined,
+    isTitleEqualToEmoji: true,
+  })
+
+  if(res.confirm && contactWay) {
+    if(contactWay === "wecom") {
+      window.open(contactWecom, "_blank")
+    }
+    else if(contactWay === "email"){
+      location.href = `mailto:${devEmail}`
+    }
+  }
+}
+
+export async function showErrMsg(
+  theType: "order" | "login" | "refund" | "other",
+  res: LiuErrReturn,
+) {
+  const code = res.code
+  const errMsg = res.errMsg
+  const showMsg = res.showMsg
+
+  let content_key = "tip.try_again_later"
+  let content_opt: Record<string, string> | undefined
+  if(showMsg) {
+    content_key = "tip.err_2"
+    content_opt = { errMsg: showMsg, code }
+  }
+  else if(errMsg) {
+    content_key = "tip.err_2"
+    content_opt = { errMsg, code }
+  }
+  else if(code) {
+    content_key = "tip.err_1"
+    content_opt = { code }
+  }
+  else {
+    console.warn("code is empty!")
+    console.log(code)
+    console.log(" ")
+    return false
+  }
+
+  let title_key = "err.unknown_err"
+  if(theType === "refund") {
+    title_key = "payment.err_2"
+  }
+  else if(theType === "login") {
+    title_key = "login.err_login"
+  }
+  else if(theType === "order") {
+    title_key = "payment.err_1"
+  }
+
+  await cui.showModal({
+    title_key,
+    content_key,
+    content_opt,
+    showCancel: false,
+  })
+  return true
+}

@@ -1,0 +1,75 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/showcase/showcase",
+    "pages/article/article"
+  ],
+  "subPackages": [
+    {
+      "root": "packageA",
+      "name": "packageA",
+      "pages": [
+        "pages/watch-video/watch-video"
+      ]
+    },
+    {
+      "root": "packageB",
+      "name": "packageB",
+      "pages": [
+        "pages/task-create/task-create",
+        "pages/task-detail/task-detail",
+        "pages/article/article",
+        "pages/landing-premium/landing-premium"
+      ],
+      "independent": true,
+      "entry": "entry.js",
+      "componentFramework": "glass-easel",
+      "renderer": "skyline"
+    }
+  ],
+  "chatTools": [
+    {
+      "root": "packageB",
+      "entryPagePath": "pages/task-create/task-create",
+      "desc": "用微信群做任务管理"
+    }
+  ],
+  "usingComponents": {
+    "placeholder-view": "/components/placeholder-view/placeholder-view",
+    "custom-button": "/components/custom-button/custom-button",
+    "custom-navibar": "/components/custom-navibar/custom-navibar",
+    "virtual-navibar": "/components/virtual-navibar/virtual-navibar"
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#2a6885",
+    "navigationBarTitleText": "Liubai Note",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom",
+    "initialRenderingCache": "static"
+  },
+  "singlePage": {
+    "navigationBarFit": "float"
+  },
+  "halfPage": {
+    "firstPageNavigationStyle": "custom"
+  },
+  "darkmode": true,
+  "resizable": true,
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents",
+  "resolveAlias": {
+    "~/*": "/*"
+  },
+  "rendererOptions": {
+    "skyline": {
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.1",
+      "sdkVersionEnd": "15.255.255",
+      "defaultDisplayBlock": true,
+      "defaultContentBox": true
+    }
+  },
+  "renderer": "skyline"
+}

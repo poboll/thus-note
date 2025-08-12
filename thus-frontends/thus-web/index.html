@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    
+    <!-- 开屏加载 -->
+    <link rel="stylesheet" href="/styles/liu-splash-screen.css">
+    <link rel="preload" href="/styles/liu-splash-screen.css" as="style" >
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>如是记录 - Thus Note</title>
+    <meta name="author" content="Thus-Note Team" />
+    <meta name="description" content="如是记录，真实自我 - 个人信息管理系统" />
+
+    <meta property="og:title" content="如是记录 - Thus Note">
+    <meta property="og:description" content="如是记录，真实自我 - 个人信息管理系统">
+    <meta property="og:site_name" content="如是记录" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="如是记录 - Thus Note" />
+    <meta name="twitter:description" content="如是记录，真实自我 - 个人信息管理系统" />
+
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="如是记录" />
+    <meta name="color-scheme" content="light dark">
+
+    <!-- languages and no translation by default -->
+    <meta http-equiv="Content-Language" content="en, zh-Hans, zh-Hant">
+    <meta name="google" content="notranslate">
+
+    <!-- logos -->
+    <link rel="icon" type="image/png" sizes="256x256" href="/logos/logo_256x256_v3.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/logos/logo_32x32_v2.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/logos/logo_16x16_v2.png">
+    <link rel="mask-icon" href="/logos/safari-pinned-tab.svg" color="#2a6885">
+
+    <!-- theme color -->
+     <!-- it will be changed by useSystemStore.ts -->
+    <meta name="theme-color" content="#435964">
+
+    <!-- <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+      var vConsole = new window.VConsole();
+      console.log("this is index.html, 0.1.19.3");
+    </script> -->
+
+    <!-- manifest -->
+    <link rel="manifest" id="manifest">
+    <script>
+      let manifestHref = "/manifest.json"
+      try {
+        const ua = navigator.userAgent.toLowerCase()
+        if(ua.includes("iphone") || ua.includes("ipad") || ua.includes("ios")) {
+          manifestHref = "/manifest-ios.json"
+        }
+      }
+      catch(e) {}
+      document.querySelector("#manifest").setAttribute("href", manifestHref)
+    </script>
+
+  </head>
+  <body class="liu-font-large theme-common theme-light">
+
+    <!-- splash screen waiting for document loaded -->
+    <div class="liu-splash-screen">
+      <div class="liuss-container">
+        <div class="liuss-slice"></div>
+        <div class="liuss-slice"></div>
+        <div class="liuss-slice"></div>
+        <div class="liuss-slice"></div>
+        <div class="liuss-slice"></div>
+        <div class="liuss-slice"></div>
+      </div>
+    </div>
+
+
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

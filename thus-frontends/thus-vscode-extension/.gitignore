@@ -1,0 +1,5 @@
+.vscode-test-web
+.vscode-test
+out/
+*.local
+*.vsix

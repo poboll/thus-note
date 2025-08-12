@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "footer-box": "../../components/footer-box/footer-box",
+    "custom-image": "../../components/custom-image/custom-image"
+  }
+}

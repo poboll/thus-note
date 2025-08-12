@@ -1,0 +1,194 @@
+/** 浅色系 */
+
+.theme-light {
+  --primary-color: #2a6885;   /** 皇家蓝 #00416A */
+  --on-primary: #fafafa;
+  --primary-hover: #1c5671;
+  --primary-active: #15455e;
+  --inverse-primary: #88d1ff;
+
+  --card-bg: #ffffff;
+  --bg-color: #eaecef;
+  --main-text: #1f2429;
+  --main-normal: #3f4549;
+  --main-code: #686868;
+  --main-note: #ababab;
+  --main-tip: #bfbfbf;
+  --on-main-code: rgba(104, 104, 104, .1);
+  --scrollbar-thumb: #c3c3c3;
+  --popup-bg: rgba(0, 0, 0, .8);
+
+  --select-bg: rgba(221, 242, 249, 0.99);
+  --select-bg-2: rgba(188, 224, 235, 0.99);
+  --select-code: rgba(38, 79, 120, 0.99);
+  
+  --card-hover: #f5f7fa;
+
+  --secondary-color: #bfdfed;
+  --secondary-hover: #afd6e7;
+  --secondary-active: #a9cfdf;
+  --secondary-shadow: 0 10px 16px -3px rgba(42, 104, 133, .52);
+  --secondary-shadow-hover: 0 6px 11px -3px rgba(42, 104, 133, .52);
+
+  --sidebar-bg: #ffffff;
+  --sidebar-scrollbar-thumb: #dcd7d5;
+
+  /** light box */
+  --light-box: #ffffff;
+  
+  --line-default: #e2e3e4;    /** 浅浅的分割线 */
+  --line-bottom: #dedede;
+  --line-hover: #d1d1d1;
+  --line-active: #ababab;
+
+  --other-btn-bg: #f3f3f3;
+  --other-btn-text: #565656;
+  --other-btn-hover: #e9e9e9;
+
+  --card-shadow: 0 4px 6px -2px rgba(0, 0, 0, .1);
+  --card-shadow-2: 0 2px 2px -0.5px rgba(0, 0, 0, .04);
+  --card-shadow2-hover: 0 10px 5px -6px rgba(0, 0, 0, .07);
+  --editor-shadow: 0 24px 4px -12px rgba(0, 0, 0, .04);
+  --floating-shadow: 0 6px 24px rgba(0, 0, 0, .15);
+  --kanban-header-shadow: 0 12px 6px -6px rgba(0, 0, 0, .1);
+  --liu-hr: #eee;   /** 卡片里的分割线 bar */
+  --liu-hr2: #d3d3d3;  /** 卡片里的分割线 for bg-color，blockquote 的左侧 bar */
+  --liu-quote: #868686;  /** 引用里的文字色 */
+  --liu-image: #f7f7f7;
+
+  /** 一些组合，在深色模式和浅色模式下，值为一样的东西
+  * 故 --always 开头的 css 变量，无需在 dark 文件中做定义
+  */
+  --always-a1: linear-gradient(60deg, #2a6885, #15455e);
+  --always-a2: #fafafa;
+
+  /** 一些比较少用到的 css 变量 */
+  --vice-bg: #eaecef;
+  --vice-shadow: -7px 0 14px 1px rgba(0,0,0,.11);
+  --vice-scrollbar-thumb: #bababa;
+  --navi-normal: #4f5559;            /** 侧边栏链接 默认颜色 */
+  --drag-bg: #ddf2f9;        /** 拖动时的背景色 */
+  --drag-border: #aaf2f9;    /** 拖动时的边框色 */
+  --gradient-one: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 1) 96%);
+  --gradient-two: linear-gradient(0deg, rgba(255, 255, 255, 1) 28%, rgba(255, 255, 255, 0) 76%);
+  --gradient-three: linear-gradient(90deg, rgba(255, 255, 255, 0) 5%, rgba(255, 255, 255, .5) 15%, rgba(255, 255, 255, 1) 50%);
+  --cool-bg: linear-gradient(30deg, #ACB6E5, #70ded9);
+  --checkbox-bg: linear-gradient(30deg, #2a6885, #15455e);
+  --tag-bg: #f2f4f7;
+  --tag-hover: linear-gradient(-60deg, #eaecf1, #f7f9fc 70%);
+  --tooltip-shadow: 0 8px 18px 1px rgba(0,0,0,.28);
+  --shortcut-text: #9e9e9e;
+  --avatar-bg: #435964;
+  --avatar-color: #f1f1f1;
+  --comment-hover-one: #e2e5e8;  /** 评论区里的 hover 颜色  */
+  
+
+  /** 自定义组件: 加载框 */
+  --cui-loading: rgba(46, 46, 46, .91);
+  --on-cui-loading: #eeeeee;
+  --cui-loading-shadow: 0 10px 20px 1px rgba(0,0,0,.38);
+
+  /** bubble-menu */
+  --bubble-menu-bg: #333;
+  --bubble-menu-color: #fafafa;
+  --bubble-menu-shadow: 0 6px 12px rgba(0, 0, 0, .38);
+
+  /** 自定义组件: modal */
+  --cui-modal: rgba(250, 250, 250, .82);
+  --cui-modal-other-btn-bg: #f5f5f5;
+  --cui-modal-other-btn-hover: #e5e7ea;
+
+  /** 自定义组件: snackbar */
+  --cui-snackbar: #362f2f;
+  --on-cui-snackbar: #ffffff;
+  --cui-snackbar-shadow: 0 6px 12px rgba(0, 0, 0, .18);
+  
+  /** 自定义组件: 通用 popup */
+  --cui-popup-shadow: 0 -6px 18px rgba(0, 0, 0, .09);
+
+  /** preview-image 预览图片 */
+  --preview-image-bg: rgba(255, 255, 255, 1);
+  --preview-image-bg-2: rgba(255, 255, 255, .93);
+
+  /** 自定义组件: action-sheet，但希望这个组件的颜色是通用的 */
+  --cui-actionsheet-bg: #fafafa;
+
+  /********* 毛玻璃背景 **********/
+  --blur-radius: 7.5px;                           /** 盖在 sidebar 上的模糊半径 */
+  --frosted-glass: linear-gradient(124deg, rgba(255, 255, 255, .86), rgba(255, 255, 255, .48) 90%);    /** 盖在 sidebar 上，让侧边栏的绚彩模糊 */
+  --frosted-glass-2: rgba(255, 255, 255, .85);  /** spotlight 模态框的背景色 */
+  /** 跟随 --bg-color 的背景色 */
+  --frosted-glass-3: linear-gradient(0deg, rgba(234, 236, 239, .82) 50%, rgba(234, 236, 239, .7) 90%);
+  --frosted-glass-4: rgba(255, 255, 255, .66);
+  /** 跟随 --vice-bg 的背景色 */
+  --frosted-glass-5: linear-gradient(0deg, rgba(234, 236, 239, .82) 50%, rgba(234, 236, 239, .7) 90%);
+
+  /** for bottom-navi-bar */
+  --frosted-glass-6: linear-gradient(
+    0deg, 
+    rgba(234, 236, 239, .92) 10%, 
+    rgba(234, 236, 239, .97) 30%,
+    rgba(234, 236, 239, .99) 50%
+  );
+
+  /********* 导入页: 「查看更多」的背景 *******/
+  --mask-bg: linear-gradient(0deg, rgba(234, 236, 239, 1) 50%, rgba(234, 236, 239, 0) 85%);
+  
+  /** drag-handle */
+  --liu-drag-handle: #c3c6cc;
+
+  /** shiny button */
+  --shiny-cta-bg: #15455e;
+  --shiny-cta-bg-subtle: #435964;
+  --shiny-cta-fg: #fafafa;
+  --shiny-cta-highlight: #88d1ff;
+  --shiny-cta-highlight-subtle: #bfdfed;
+
+  /** third-party */
+  --wechat-green: #03C160;
+  --wechat-green-hover: #02a34e;
+  --alpay-blue: #1777FF;
+  --alpay-blue-hover: #156ae0;
+
+  /** ai characters */
+  --baixiaoying-color: #FF6933;
+  --deepseek-color: #4D6BFE;
+  --ds-reasoner-color: #29418e;
+  --hailuo-color: #F23F5D;
+  --hunyuan-color: #0053e0;
+  --kimi-color: #007AFF;
+  --tongyi-qwen-color: #615ced;
+  --wanzhi-color: #003422;
+  --yuewen-color: #015AFF;
+  --zhipu-color: #2C58E0;
+
+  /** ide types */
+  --liu-ide-bg: linear-gradient(-30deg, #E9E9E9, #FEFEFE);
+  --liu-cnb-cool-font: #FF7C5D;
+  --liu-cursor-font: #696969;
+  --liu-github-font: #696969;
+  --liu-gitpod-font: #FF8F15;
+  --liu-project-idx-font: #8963E8;
+  --liu-stackblitz-font: #1389FD;
+  --liu-tencent-cloud-studio-font: #4983F7;
+  --liu-trae-font: #ee786b;
+  --liu-vscode-font: #1F9CF0;
+  --liu-vscode-insiders-font: #24BFA5;
+  --liu-vscodium-font: #4988D6;
+  --liu-windsurf-font: #4F4F4F;
+  
+  /** 状态色 */
+  --liu-state-1: #7f766f;
+  --liu-state-2: #7a8d2b;
+  --liu-state-3: #b93d32;
+  --liu-state-4: #6f5892;
+  --liu-state-5: #825e4d;
+  --liu-state-6: #5E7B87;
+  --liu-state-7: #51816B;
+  --liu-state-8: #804c68;
+  --liu-state-9: #5976BA;
+  --liu-state-10: #c18e19;
+
+  /** 再最后给 body 添加背景色 */
+  background-color: var(--bg-color);
+}
