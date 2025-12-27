@@ -3,7 +3,7 @@ import WhoAreYou from "./components/level1/who-are-you/who-are-you.vue"
 import TrustDetection from "./components/level1/trust-detection/trust-detection.vue"
 import GlobalLoading from "./components/loaders/global-loading/global-loading.vue"
 import { useApp } from "./hooks/useApp";
-import { initLiuRouter } from "./routes/liu-router"
+import { initThusRouter } from "./routes/liu-router"
 import { defineAsyncComponent } from "vue"
 import time from "~/utils/basic/time"
 
@@ -14,7 +14,7 @@ const CustomUi = defineAsyncComponent(() => {
 })
 
 const { cha } = useApp()
-const { route } = initLiuRouter()
+const { route } = initThusRouter()
 const ios_ipad = Boolean(cha.isIOS || cha.isIPadOS)
 
 </script>

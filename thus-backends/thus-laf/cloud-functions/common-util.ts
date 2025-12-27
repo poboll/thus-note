@@ -4,7 +4,7 @@
 import cloud from '@lafjs/cloud'
 import * as crypto from "crypto"
 import type { 
-  LiuSpaceAndMember,
+  ThusSpaceAndMember,
   MemberAggSpaces,
   LocalTheme,
   LocalLocale,
@@ -16,7 +16,7 @@ import type {
   Table_User,
   LiuUserInfo,
   SupportedClient,
-  LiuRqReturn,
+  ThusRqReturn,
   CryptoCipherAndIV,
   LiuPlainText,
   Cloud_ImageStore,
@@ -24,7 +24,7 @@ import type {
   LiuContent,
   VerifyTokenRes_A,
   VerifyTokenRes_B,
-  LiuRqOpt,
+  ThusRqOpt,
   Table_Config,
   CommonPass,
   Table_Member,
@@ -51,10 +51,10 @@ import type {
   Alipay_Refund_Param,
   Res_Alipay_Refund,
   SyncOperateAPI,
-  LiuRemindMe,
+  ThusRemindMe,
   AiToolAddCalendarParam,
   AiToolAddCalendarSpecificDate,
-  LiuAtomState,
+  ThusAtomState,
   LiuStateConfig,
   SyncGetTable,
   Wx_Res_GzhSnsUserInfo,
@@ -443,7 +443,7 @@ export async function liuFetch<T = any>(
   url: string,
   reqInit: RequestInit,
   body?: Record<string, any>,
-): Promise<LiuRqReturn<Res_LiuFetch<T>>> {
+): Promise<ThusRqReturn<Res_LiuFetch<T>>> {
   let res: Response
 
   if(body) {
@@ -507,8 +507,8 @@ export async function liuFetch<T = any>(
 export async function liuReq<T = any>(
   url: string,
   body?: Record<string, any>,
-  opt?: LiuRqOpt,
-): Promise<LiuRqReturn<T>> {
+  opt?: ThusRqOpt,
+): Promise<ThusRqReturn<T>> {
 
   const init: RequestInit = {
     method: opt?.method ?? "POST",
@@ -867,7 +867,7 @@ export function getLiuDoman() {
 /********************* 封装函数 *****************/
 
 /** 将聚合搜索（联表查询）到的 member 和 workspace 信息打包装 
- * 成 LiuSpaceAndMember(LSAM)
+ * 成 ThusSpaceAndMember(LSAM)
  * @param data 聚合搜素后的 res.data
  * @param filterMemberLeft 是否过滤掉成员已退出，默认为 true
 */
@@ -883,7 +883,7 @@ function turnMemberAggsIntoLSAMs(
     return []
   }
 
-  const list: LiuSpaceAndMember[] = []
+  const list: ThusSpaceAndMember[] = []
 
   for(let i=0; i<len1; i++) {
     const v = data[i] as MemberAggSpaces
@@ -898,7 +898,7 @@ function turnMemberAggsIntoLSAMs(
     if(space_oState !== "OK") continue
 
     const member_name = getUserName(user, v)
-    const obj: LiuSpaceAndMember = {
+    const obj: ThusSpaceAndMember = {
       memberId: v._id,
       member_name,
       member_avatar: v.avatar,
@@ -1506,7 +1506,7 @@ function isFilesLegal(files?: Cloud_FileStore[]) {
 // LiuContent 最大嵌套层数
 const LIU_CONTENT_NESTING_MAX = 6
 
-/** 检测 liuDesc 是否合法 */
+/** 检测 thusDesc 是否合法 */
 function isLiuContentArr(
   list?: LiuContent[],
   level?: number
@@ -1996,7 +1996,7 @@ export class SpaceUtil {
 
   private static _getDefaultStates() {
     const now = getNowStamp()
-    const defaultStates: LiuAtomState[] = [
+    const defaultStates: ThusAtomState[] = [
       {
         id: "TODO",
         showInIndex: true,
@@ -2214,7 +2214,7 @@ export function encryptDataWithAES(
 
 
 interface GetDecryptedBodyRes {
-  rqReturn?: LiuRqReturn
+  rqReturn?: ThusRqReturn
   newBody?: Record<string, any>
 }
 
@@ -2376,7 +2376,7 @@ interface EncData {
 export interface DecryptEncData_B {
   pass: true
   title?: string
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
 }
@@ -2393,7 +2393,7 @@ export function decryptEncData(e: EncData): DecryptEncDataRes {
   // desc
   const d_desc = decryptCloudData<LiuContent[]>(e.enc_desc)
   if(!d_desc.pass) return d_desc
-  const liuDesc = d_desc.data
+  const thusDesc = d_desc.data
 
   // images
   const d_images = decryptCloudData<Cloud_ImageStore[]>(e.enc_images)
@@ -2405,7 +2405,7 @@ export function decryptEncData(e: EncData): DecryptEncDataRes {
   if(!d_files.pass) return d_files
   const files = d_files.data
 
-  return { pass: true, title, liuDesc, images, files }
+  return { pass: true, title, thusDesc, images, files }
 }
 
 
@@ -2776,7 +2776,7 @@ export class WxMiniHandler {
   ) {
     const _env = process.env
     const appid = _env.LIU_WX_MINI_APPID
-    const is_test =  _env.LIU_ENV_STATE === "dev"
+    const is_test =  _env.THUS_ENV_STATE === "dev"
     const obj = {
       appid,
       openid,
@@ -3403,7 +3403,7 @@ export class AiToolUtil {
   static turnTextToLiuDesc(text: string) {
     if(!text) return
     let list = text.split("\n")
-    const liuDesc: LiuContent[] = []
+    const thusDesc: LiuContent[] = []
     for(let i=0; i<list.length; i++) {
       const v = list[i]
       const obj: LiuContent = {
@@ -3412,9 +3412,9 @@ export class AiToolUtil {
       if(v) {
         obj.content = [{ type: "text", text: v }]
       }
-      liuDesc.push(obj)
+      thusDesc.push(obj)
     }
-    return liuDesc
+    return thusDesc
   }
 
   private static _turnSpecificDateToWhenStamp(
@@ -3485,18 +3485,18 @@ export class AiToolUtil {
       earlyMinute: strEarlyMinute,
       laterHour: strLaterHour,
     } = funcJson as AiToolAddCalendarParam
-    const liuDesc = this.turnTextToLiuDesc(description)
-    if(!liuDesc || liuDesc.length === 0) {
-      console.warn("cannot get liuDesc1 in _turnCalendarJsonToWaitingData!")
+    const thusDesc = this.turnTextToLiuDesc(description)
+    if(!thusDesc || thusDesc.length === 0) {
+      console.warn("cannot get thusDesc1 in _turnCalendarJsonToWaitingData!")
       console.log(funcJson)
-      errRes.err.errMsg = "fail to turn text into liuDesc for description"
+      errRes.err.errMsg = "fail to turn text into thusDesc for description"
       return errRes
     }
     let userTimezone = user?.timezone
     let calendarStamp: number | undefined
     let remindStamp: number | undefined
     let whenStamp: number | undefined
-    let remindMe: LiuRemindMe | undefined
+    let remindMe: ThusRemindMe | undefined
     const resEarlyMinute = ValueTransform.str2Num(strEarlyMinute)
     const earlyMinute = resEarlyMinute.pass ? resEarlyMinute.data : undefined
     const resLaterHour = ValueTransform.str2Num(strLaterHour)
@@ -3590,7 +3590,7 @@ export class AiToolUtil {
     // 9. return data
     const waitingData: SyncOperateAPI.WaitingData = {
       title,
-      liuDesc,
+      thusDesc,
       calendarStamp,
       remindStamp,
       whenStamp,
@@ -3642,15 +3642,15 @@ export class AiToolUtil {
     }
 
     const { title } = funcJson
-    const liuDesc2 = this.turnTextToLiuDesc(title)
-    if(!liuDesc2 || liuDesc2.length === 0) {
-      console.warn("cannot get liuDesc2 in add_todo!")
+    const thusDesc2 = this.turnTextToLiuDesc(title)
+    if(!thusDesc2 || thusDesc2.length === 0) {
+      console.warn("cannot get thusDesc2 in add_todo!")
       console.log(funcJson)
-      errRes.err.errMsg = "fail to get liuDesc2 from title in add_todo"
+      errRes.err.errMsg = "fail to get thusDesc2 from title in add_todo"
       return errRes
     }
     const d2: SyncOperateAPI.WaitingData = {
-      liuDesc: liuDesc2,
+      thusDesc: thusDesc2,
     }
     return { pass: true, data: d2 }
   }
@@ -3674,16 +3674,16 @@ export class AiToolUtil {
     }
     
     const { title, description } = funcJson
-    const liuDesc1 = this.turnTextToLiuDesc(description)
-    if(!liuDesc1 || liuDesc1.length === 0) {
-      console.warn("cannot get liuDesc1 in add_note!")
+    const thusDesc1 = this.turnTextToLiuDesc(description)
+    if(!thusDesc1 || thusDesc1.length === 0) {
+      console.warn("cannot get thusDesc1 in add_note!")
       console.log(funcJson)
-      errRes.err.errMsg = "fail to get liuDesc1 from description in add_note"
+      errRes.err.errMsg = "fail to get thusDesc1 from description in add_note"
       return errRes
     }
     const d1: SyncOperateAPI.WaitingData = {
       title,
-      liuDesc: liuDesc1,
+      thusDesc: thusDesc1,
     }
     return { pass: true, data: d1 }
   }

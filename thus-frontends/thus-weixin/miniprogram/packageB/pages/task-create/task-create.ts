@@ -8,7 +8,7 @@ import { LiuApi } from "~/packageB/utils/LiuApi";
 import { prePost } from "../shared/useTaskCreate";
 import { pageBehavior } from "../../behaviors/page-behavior";
 import { checkNameExisted } from "../shared/some-funcs";
-import { LiuUtil } from "~/packageB/utils/liu-util/index";
+import { LiuUtil } from "~/packageB/utils/thus-util/index";
 import { ShowTip } from "~/packageB/utils/managers/ShowTip";
 
 Component({

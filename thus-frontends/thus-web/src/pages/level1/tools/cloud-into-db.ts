@@ -1,7 +1,7 @@
 // 用户远端登录成功后
-// 把远端信息 LiuSpaceAndMember 分别存入 users workspaces members 中
+// 把远端信息 ThusSpaceAndMember 分别存入 users workspaces members 中
 
-import type { LiuSpaceAndMember } from "~/types/types-cloud";
+import type { ThusSpaceAndMember } from "~/types/types-cloud";
 import type { 
   UserLocalTable, 
   WorkspaceLocalTable, 
@@ -41,7 +41,7 @@ export async function handleUser(
 
 export async function handleSpaceAndMembers(
   userId: string,
-  spaceMemberList: LiuSpaceAndMember[],
+  spaceMemberList: ThusSpaceAndMember[],
 ) {
   for(let i=0; i<spaceMemberList.length; i++) {
     const v = spaceMemberList[i]
@@ -71,7 +71,7 @@ export async function handleSpaceAndMembers(
 }
 
 async function createSpace(
-  v: LiuSpaceAndMember,
+  v: ThusSpaceAndMember,
 ) {
   const { image: avatar, useCloud } = CloudFiler.imageFromCloudToStore(v.space_avatar)
   const t = time.getTime()
@@ -107,7 +107,7 @@ async function createSpace(
 
 async function createMember(
   userId: string,
-  v: LiuSpaceAndMember,
+  v: ThusSpaceAndMember,
 ) {
   const { image: avatar, useCloud } = CloudFiler.imageFromCloudToStore(v.member_avatar)
   const b1 = time.getBasicStampWhileAdding()

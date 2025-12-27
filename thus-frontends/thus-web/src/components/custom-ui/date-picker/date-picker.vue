@@ -4,7 +4,7 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { SupportedLocale } from '~/types/types-locale';
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { initDatePicker } from "./index"
 import { useSystemStore } from '~/hooks/stores/useSystemStore';
 import { storeToRefs } from 'pinia';
@@ -47,7 +47,7 @@ const previewDate = computed(() => {
 <template>
 
   <div v-if="enable"
-    class="liu-no-user-select liu-dp-container"
+    class="thus-no-user-select liu-dp-container"
     :class="{ 'liu-dp-container_show': show }"
   >
     <div class="liu-dp-bg" @click.stop="onTapCancel"></div>
@@ -77,11 +77,11 @@ const previewDate = computed(() => {
       <!-- 按钮区域 -->
       <template #action-buttons>
         <div class="liu-dp-btns">
-          <div class="liu-hover liu-dp-btn liu-dp-cancel" @click="onTapCancel">
+          <div class="thus-hover liu-dp-btn liu-dp-cancel" @click="onTapCancel">
             <span>{{ t("common.cancel") }}</span>
           </div>
 
-          <div class="liu-hover liu-dp-btn liu-dp-confirm" @click="onTapConfirm">
+          <div class="thus-hover liu-dp-btn liu-dp-confirm" @click="onTapConfirm">
             <span>{{ t("common.confirm") }}</span>
           </div>
 

@@ -1,5 +1,5 @@
 import type { LiuContent } from "~/types/types-atom";
-import type { LiuFileStore } from "~/types"
+import type { ThusFileStore } from "~/types"
 import type { StateShow } from "~/types/types-content"
 import { getBriefing } from "./briefing"
 import { listToText } from "~/utils/transfer-util/text";
@@ -8,15 +8,15 @@ import valTool from "~/utils/basic/val-tool";
 import { addSomethingWhenBrowsing } from "./show-content"
 
 /**
- *  进一步封装 liuDesc
- *  1. 对 liuDesc 做一些加工，比如解析手机号等等
+ *  进一步封装 thusDesc
+ *  1. 对 thusDesc 做一些加工，比如解析手机号等等
  *  2. 添加 title (如果有的话)
  */
 function packLiuDesc(
-  liuDesc: LiuContent[] | undefined,
+  thusDesc: LiuContent[] | undefined,
   title?: string,
 ) {
-  let newDesc = liuDesc ? valTool.copyObject(liuDesc) : []
+  let newDesc = thusDesc ? valTool.copyObject(thusDesc) : []
   newDesc = addSomethingWhenBrowsing(newDesc)
 
   if(!title) return newDesc
@@ -42,7 +42,7 @@ function packLiuDesc(
  */
 function getSummary(
   content: LiuContent[] | undefined,
-  files: LiuFileStore[] | undefined,
+  files: ThusFileStore[] | undefined,
 ) {
   let text = ""
   if(content && content.length > 0) {
@@ -84,11 +84,11 @@ function getStateShow(
   // 处理颜色
   let color = stateData.color
   if(!color) {
-    if(stateId === "TODO") color = "--liu-state-1"
-    else if(stateId === "FINISHED") color = "--liu-state-2"
+    if(stateId === "TODO") color = "--thus-state-1"
+    else if(stateId === "FINISHED") color = "--thus-state-2"
   }
   if(!color) return
-  if(color.includes("--liu-state")) color = `var(${color})`
+  if(color.includes("--thus-state")) color = `var(${color})`
 
   const obj: StateShow = {
     text,

@@ -1,13 +1,13 @@
 import { onActivated, watch, reactive, onMounted } from "vue";
 import type { LocationQuery } from "vue-router";
-import { useRouteAndLiuRouter } from '~/routes/liu-router';
+import { useRouteAndThusRouter } from '~/routes/liu-router';
 import valTool from "~/utils/basic/val-tool";
 import type { VcState, VcCtx, VcData, VcThirdParty, VcEmits } from "./types"
 import thirdLink from "~/config/third-link";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { useVvLinkStore } from "~/hooks/stores/useVvLinkStore";
 import { useVvFileStore } from "~/hooks/stores/useVvFileStore";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import cui from "~/components/custom-ui"
 
 const _hasVal = valTool.isStringWithVal
@@ -15,7 +15,7 @@ const _hasVal = valTool.isStringWithVal
 export function useViceContent(
   emits: VcEmits
 ) {
-  const { route, router } = useRouteAndLiuRouter()
+  const { route, router } = useRouteAndThusRouter()
   const vvLinkStore = useVvLinkStore()
   const vvFileStore = useVvFileStore()
 

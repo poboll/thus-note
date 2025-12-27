@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MemberShow } from '~/types/types-content';
 import type { PropType } from 'vue';
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 
 defineProps({
   profile: {
@@ -14,11 +14,11 @@ defineProps({
 <template>
 
   <div class="sc-avatar-name">
-    <LiuAvatar v-if="profile" :member-show="profile" class="sc-avatar" 
+    <ThusAvatar v-if="profile" :member-show="profile" class="sc-avatar" 
       font-size="14px"
-    ></LiuAvatar>
+    ></ThusAvatar>
 
-    <div class="liu-no-user-select sc-title" v-if="profile?.name">
+    <div class="thus-no-user-select sc-title" v-if="profile?.name">
       <span>{{ profile.name }}</span>
     </div>
   </div>

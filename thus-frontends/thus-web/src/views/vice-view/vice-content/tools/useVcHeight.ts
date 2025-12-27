@@ -1,10 +1,10 @@
 import { ref, watch } from "vue";
 import { useWindowSize } from "~/hooks/useVueUse";
 import cfg from "~/config"
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 
 export function useVcHeight() {
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
   const vcHeight = ref(0)     // 等于窗口的高度
   const vcHeight2 = ref(0)    // 窗口高度 扣除 导航栏的高度
   const maskMarginTop = ref(0)

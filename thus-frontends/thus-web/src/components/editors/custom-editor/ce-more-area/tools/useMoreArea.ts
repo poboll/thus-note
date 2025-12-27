@@ -1,12 +1,12 @@
 import { computed, reactive, watch } from "vue";
 import cui from "~/components/custom-ui";
-import type { LiuRemindMe, LiuRemindEarly, LiuRemindLater } from "~/types/types-atom"
-import liuUtil from "~/utils/liu-util";
+import type { ThusRemindMe, LiuRemindEarly, LiuRemindLater } from "~/types/types-atom"
+import liuUtil from "~/utils/thus-util";
 import type { MenuItem } from "~/components/common/liu-menu/tools/types"
 import { REMIND_LATER, REMIND_EARLY } from "~/config/atom"
 import type { SwitchChangeEmitOpt } from "~/components/common/liu-switch/types"
 import type { MaData, MoreAreaEmits, MaContext, CmaProps } from "./types-cma"
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { storeToRefs } from "pinia";
 import commonPack from "~/utils/controllers/tools/common-pack";
@@ -240,7 +240,7 @@ function setNewRemind(ctx: MaContext, item?: MenuItem, index?: number) {
     return
   }
 
-  const r: LiuRemindMe = {
+  const r: ThusRemindMe = {
     type: remindType,
     early_minute: remindType === "early" ? (v as LiuRemindEarly) : undefined,
     later: remindType === "later" ? (v as LiuRemindLater) : undefined
@@ -252,7 +252,7 @@ function setNewRemind(ctx: MaContext, item?: MenuItem, index?: number) {
 async function toSelectSpecificRemind(ctx: MaContext) {
   const res = await cui.showDatePicker({ minDate: new Date() })
   if(!res.confirm || !res.date) return
-  const r: LiuRemindMe = {
+  const r: ThusRemindMe = {
     type: "specific_time",
     specific_stamp: res.date.getTime()
   }

@@ -18,7 +18,7 @@ defineEmits<{
   <div class="cc-reactions" v-if="reactions?.length">
 
     <template v-for="(item, index) in reactions" :key="item.emojiEncoded">
-      <div class="liu-no-user-select ccr-item" 
+      <div class="thus-no-user-select ccr-item" 
         :class="{ 'ccr-item_selected': item.chosen }"
         @click.stop="$emit('tapreaction', item.emojiEncoded, item.chosen)"
       >

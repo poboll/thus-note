@@ -1,8 +1,8 @@
 {
   "package.displayName": "如是",
   "package.description": "在 VS Code / Windsurf / Cursor 等 vscode-based IDE 中使用如是",
-  "thus.record.title": "記一件事",
-  "thus.record_with_code.title": "備註 (如是)",
-  "thus.record_with_code2.title": "備註程式",
-  "thus.login_or_logout.title": "登入 / 登出"
+  "liubai.record.title": "記一件事",
+  "liubai.record_with_code.title": "備註 (如是)",
+  "liubai.record_with_code2.title": "備註程式",
+  "liubai.login_or_logout.title": "登入 / 登出"
 }

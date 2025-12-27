@@ -29,14 +29,14 @@ const {
 <template>
 
   <!-- Big Title: Login -->
-  <div class="liu-no-user-select lpm-title">
+  <div class="thus-no-user-select lpm-title">
     <span>{{ t('common.login') }}</span>
   </div>
 
   <div class="lpm-selects" ref="lpSelectsEl">
 
     <!-- Email or Phone -->
-    <div class="liu-no-user-select lpms-item lps-item-1" 
+    <div class="thus-no-user-select lpms-item lps-item-1" 
       @click.stop="onTapSelect(1)"
       :class="{ 'lpms-item_active': lpmData.current === 1 }"
     >
@@ -45,7 +45,7 @@ const {
     </div>
 
     <!-- Third Party -->
-    <div class="liu-no-user-select lpms-item lps-item-2" 
+    <div class="thus-no-user-select lpms-item lps-item-2" 
       @click.stop="onTapSelect(2)" 
       :class="{ 'lpms-item_active': lpmData.current === 2 }"
     >
@@ -83,7 +83,7 @@ const {
       :shaking-num="lpmData.agreeShakingNum"
     ></AgreeBox>
 
-    <div v-if="lpmData.phoneEnabled" class="liu-no-user-select lpm-change-box">
+    <div v-if="lpmData.phoneEnabled" class="thus-no-user-select lpm-change-box">
       <div class="lpm-change-btn" @click.stop="onToggleEmailPhone">
         <span>{{ t('login.turn_into_phone') }}</span>
       </div>
@@ -136,7 +136,7 @@ const {
       :shaking-num="lpmData.agreeShakingNum"
     ></AgreeBox>
 
-    <div v-if="lpmData.emailEnabled" class="liu-no-user-select lpm-change-box">
+    <div v-if="lpmData.emailEnabled" class="thus-no-user-select lpm-change-box">
       <div class="lpm-change-btn" @click.stop="onToggleEmailPhone">
         <span>{{ t('login.turn_into_email') }}</span>
       </div>
@@ -150,7 +150,7 @@ const {
 
     <!-- wechat -->
     <div v-if="lpmData.wechatEnabled"
-      class="liu-no-user-select liu-hover lpv-btn" 
+      class="thus-no-user-select thus-hover lpv-btn" 
       @click.stop="onTapThirdParty('wechat')"
     >
       <div class="lpv-icon">
@@ -163,7 +163,7 @@ const {
 
     <!-- google -->
     <div v-if="lpmData.googleEnabled"
-      class="liu-no-user-select liu-hover lpv-btn" 
+      class="thus-no-user-select thus-hover lpv-btn" 
       @click.stop="onTapThirdParty('google')"
     >
       <div class="lpv-icon">
@@ -179,7 +179,7 @@ const {
 
     <!-- github -->
     <div v-if="lpmData.githubEnabled"
-      class="liu-no-user-select liu-hover lpv-btn" 
+      class="thus-no-user-select thus-hover lpv-btn" 
       @click.stop="onTapThirdParty('github')"
     >
       <div class="lpv-icon">
@@ -194,7 +194,7 @@ const {
     </div>
 
     <!-- Apple -->
-    <!-- <div class="liu-hover lpv-btn" @click.stop="onTapThirdParty('apple')">
+    <!-- <div class="thus-hover lpv-btn" @click.stop="onTapThirdParty('apple')">
       <div class="lpv-icon">
         <svg-icon name="logos-apple" 
           color="var(--main-text)"

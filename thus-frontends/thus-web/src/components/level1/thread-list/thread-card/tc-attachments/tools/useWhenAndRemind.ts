@@ -1,7 +1,7 @@
 import { computed, onActivated, onDeactivated, ref, toRef, watch } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { useI18n } from "vue-i18n";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import type { SupportedLocale } from "~/types/types-locale"; 
 import time from "~/utils/basic/time";
 import type { TcaProps } from "./types"
@@ -12,9 +12,9 @@ import threadOperate from "~/hooks/thread/thread-operate";
 import checker from "~/utils/other/checker";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import type { SnackbarRes } from "~/types/other/types-snackbar"
-import type { LiuRemindMe } from "~/types/types-atom"
+import type { ThusRemindMe } from "~/types/types-atom"
 import type { ContentConfig } from "~/types/other/types-custom";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import { useDateStore } from "~/hooks/stores/useDateStore";
 import { storeToRefs } from "pinia";
 
@@ -87,7 +87,7 @@ function handleCountdown(
   countdownStr: Ref<string>,
   contentCfg: ComputedRef<ContentConfig | undefined>
 ) {
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
 
   const _clearTimeout = () => {
     if(timeout) {
@@ -159,11 +159,11 @@ function handleCountdown(
 
 function handleRemind(
   remindStamp: ComputedRef<number | undefined>,
-  remindMe: ComputedRef<LiuRemindMe | undefined>,
+  remindMe: ComputedRef<ThusRemindMe | undefined>,
   remindStr: Ref<string>,
 ) {
 
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
 
   const _clearTimeout = () => {
     if(timeout) {
@@ -174,7 +174,7 @@ function handleRemind(
 
   const _setRemindStr = (
     rStamp: number,
-    rMe: LiuRemindMe,
+    rMe: ThusRemindMe,
   ) => {
     const now = time.getTime()
     const diff = rStamp - now

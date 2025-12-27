@@ -1,10 +1,10 @@
 import type { 
-  LiuDownloadParcel,
+  ThusDownloadParcel,
 } from "~/types/cloud/sync-get/types";
 import type { CommentShow, ThreadShow } from "~/types/types-content";
 
 function getIdsForCheckingContents(
-  res1: LiuDownloadParcel[],
+  res1: ThusDownloadParcel[],
   local_list: CommentShow[] | ThreadShow[],
 ) {
 

@@ -23,7 +23,7 @@ const color = "#c7c9ca"
       <svg-icon name="add" class="cdz-add-icon" :color="color"></svg-icon>
     </div>
 
-    <div class="liu-no-user-select cdz-title">
+    <div class="thus-no-user-select cdz-title">
       <span>{{ t('dnd.add_tip') }}</span>
     </div>
     

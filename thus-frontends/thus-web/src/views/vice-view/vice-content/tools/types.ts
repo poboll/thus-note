@@ -1,6 +1,6 @@
 import type { ParticularScript } from "~/types/types-atom"
 import type { RouteLocationNormalizedLoaded } from "vue-router";
-import type { LiuRouter } from "~/routes/liu-router"
+import type { ThusRouter } from "~/routes/liu-router"
 import type { BasicView } from "~/types/types-view"
 
 export type VcState = "thread" | "comment" | "iframe" | "srcdoc" | "third" | ""
@@ -40,6 +40,6 @@ export interface VcEmits {
 export interface VcCtx {
   emits: VcEmits
   route: RouteLocationNormalizedLoaded
-  router: LiuRouter
+  router: ThusRouter
   vcData: VcData
 }

@@ -3,9 +3,9 @@ import type {
   LiuDownloadCollection,
   LiuDownloadContent, 
   LiuDownloadDraft, 
-  LiuDownloadParcel, 
-  LiuDownloadParcel_A, 
-  LiuDownloadParcel_B,
+  ThusDownloadParcel, 
+  ThusDownloadParcel_A, 
+  ThusDownloadParcel_B,
 } from "~/types/cloud/sync-get/types";
 import type { 
   CollectionInfoType, 
@@ -42,13 +42,13 @@ let update_collections: Bulk_Collection[] = []
 let new_drafts: DraftLocalTable[] = []
 let update_drafts: Bulk_Draft[] = []
 
-export async function handleLiuDownloadParcels(
-  list: LiuDownloadParcel[]
+export async function handleThusDownloadParcels(
+  list: ThusDownloadParcel[]
 ) {
   if(list.length < 1) return
 
-  const parcels_1: LiuDownloadParcel_A[] = []
-  const parcels_2: LiuDownloadParcel_B[] = []
+  const parcels_1: ThusDownloadParcel_A[] = []
+  const parcels_2: ThusDownloadParcel_B[] = []
   list.forEach(v => {
     const p = v.parcelType
     if(p === "content") parcels_1.push(v)
@@ -146,7 +146,7 @@ function reset() {
 }
 
 async function handleContentParcels(
-  list: LiuDownloadParcel_A[],
+  list: ThusDownloadParcel_A[],
 ) {
   let content_ids: string[] = []
   let collection_ids: string[] = []
@@ -225,7 +225,7 @@ async function handleContentParcels(
 
 
 async function handleDraftParcels(
-  list: LiuDownloadParcel_B[],
+  list: ThusDownloadParcel_B[],
 ) {
   for(let i=0; i<list.length; i++) {
     const v = list[i]
@@ -327,7 +327,7 @@ async function mergeDraft(
   g.visScope = d.visScope
 
   g.title = d.title
-  g.liuDesc = d.liuDesc
+  g.thusDesc = d.thusDesc
   g.aiReadable = d.aiReadable
   const imgRes = CloudFiler.updateImages(d.images)
   if(imgRes.updated) {
@@ -389,7 +389,7 @@ function createDraft(
     storageState,
 
     title: d.title,
-    liuDesc: d.liuDesc,
+    thusDesc: d.thusDesc,
     images,
     files,
 
@@ -495,7 +495,7 @@ async function mergeContent(
 
     g.visScope = d.visScope
     g.title = d.title
-    g.liuDesc = d.liuDesc 
+    g.thusDesc = d.thusDesc 
     g.aiCharacter = d.aiCharacter
     g.aiReadable = d.aiReadable
     g.stateId = d.stateId
@@ -521,7 +521,7 @@ async function mergeContent(
       g.search_title = d.title.toLowerCase()
     }
     if(!d.search_other) {
-      g.search_other = transferUtil.packSearchOther(d.liuDesc, fileRes.files)
+      g.search_other = transferUtil.packSearchOther(d.thusDesc, fileRes.files)
     }
 
   }
@@ -646,7 +646,7 @@ function createContent(
     storageState: d.storageState,
 
     title: d.title,
-    liuDesc: d.liuDesc,
+    thusDesc: d.thusDesc,
     images,
     files,
 
@@ -687,7 +687,7 @@ function createContent(
     c.search_title = c.title.toLowerCase()
   }
   if(!c.search_other) {
-    c.search_other = transferUtil.packSearchOther(c.liuDesc, files)
+    c.search_other = transferUtil.packSearchOther(c.thusDesc, files)
   }
   
   new_contents.push(c)

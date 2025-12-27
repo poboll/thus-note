@@ -23,8 +23,8 @@ const { t } = useI18n()
 </script>
 <template>
   <div class="highlight-container" :class="{ 'highlight-container_shown': show }">
-    <div class="liu-highlight-box highlight-box">
-      <div class="liu-no-user-select highlight-tip">
+    <div class="thus-highlight-box highlight-box">
+      <div class="thus-no-user-select highlight-tip">
         <span v-if="titleKeyOpt">{{ t(titleKey, titleKeyOpt) }}</span>
         <span v-else>{{ t(titleKey) }}</span>
       </div>

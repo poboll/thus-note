@@ -41,7 +41,7 @@
 
 授权完毕后，点击 `打开Cursor` 以返回。
 
-### 5. 允许 Thus 插件接收登录信息
+### 5. 允许 Liubai 插件接收登录信息
 
 ![Allow](./assets-cursor/6.png)
 

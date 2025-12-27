@@ -12,7 +12,7 @@ const createUserId = () => {
   return "u0" + _createId(14)
 }
 
-/** 生成 LiuAtomState 的 id */
+/** 生成 ThusAtomState 的 id */
 const createStateId = () => {
   return "s0" + _createId(16)
 }

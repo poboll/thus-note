@@ -1,6 +1,6 @@
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
-import type { LiuAuthStatus } from "~/types";
+import liuReq from "~/requests/thus-req";
+import type { ThusAuthStatus } from "~/types";
 import { UserSettingsAPI } from "~/types/types-req";
 import time from "~/utils/basic/time";
 import { getMyDataFromSpaceMemberList } from "./common-tools";
@@ -20,7 +20,7 @@ export class RefreshAuth {
   }
 
   public async refreshToken(
-    authStatus: LiuAuthStatus,
+    authStatus: ThusAuthStatus,
     duration: RefreshDuration,
   ) {
     // 1. check out if it is within a week
@@ -53,7 +53,7 @@ export class RefreshAuth {
 
   private async _toSaveNewAuthStatus(
     newData: UserSettingsAPI.Res_Enter,
-    oldAuthStatus: LiuAuthStatus,
+    oldAuthStatus: ThusAuthStatus,
   ) {
     const { 
       new_serial, 
@@ -62,7 +62,7 @@ export class RefreshAuth {
     } = newData
   
     let updated = false
-    const newPartialStatus: Partial<LiuAuthStatus> = {}
+    const newPartialStatus: Partial<ThusAuthStatus> = {}
   
     // 1. check out new serial and token
     if(new_serial && new_token) {
@@ -79,7 +79,7 @@ export class RefreshAuth {
     }
   
     // 3. to update
-    const newAuthStatus: LiuAuthStatus = {
+    const newAuthStatus: ThusAuthStatus = {
       ...oldAuthStatus,
       ...newPartialStatus,
       updated_stamp: time.getTime(),

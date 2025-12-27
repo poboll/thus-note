@@ -10,14 +10,14 @@ import type {
 import { initExtensions } from "./init-extensions"
 import { useEcHashtag } from "./useEcHashtag"
 import { editorSetKey } from '~/utils/provide-keys'
-import type { LiuTimeout } from '~/utils/basic/type-tool'
+import type { ThusTimeout } from '~/utils/basic/type-tool'
 import valTool from '~/utils/basic/val-tool'
 import { handlePaste } from './handle-paste'
 
 interface EcContext {
   lastEmpty: boolean
   lastText: string
-  lastTriggetUpdate: LiuTimeout
+  lastTriggetUpdate: ThusTimeout
 }
 
 export function useEditorCore(

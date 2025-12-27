@@ -6,8 +6,8 @@ import {
 import type { CeData } from "./types"
 import { storeToRefs } from "pinia";
 import { watch } from "vue";
-import liuEnv from "~/utils/liu-env";
-import type { LiuFileStore, LiuImageStore } from "~/types";
+import liuEnv from "~/utils/thus-env";
+import type { ThusFileStore, ThusImageStore } from "~/types";
 import time from "~/utils/basic/time";
 
 export function useDraftIdChanged(
@@ -39,7 +39,7 @@ function handleCloudUrls(
   ceData.lastLockStamp = time.getTime()
 
   // 2. to find
-  const _find = (v1: LiuFileStore | LiuImageStore) => {
+  const _find = (v1: ThusFileStore | ThusImageStore) => {
     const id = v1.id
     const d = items.find(v2 => v2.file_id === id)
     if(!d) return

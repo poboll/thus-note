@@ -36,13 +36,13 @@ const showMore = computed(() => {
 })
 
 const moreColor = `var(--main-normal)`
-const iconColor = `var(--liu-quote)`
+const iconColor = `var(--thus-quote)`
 
 </script>
 <template>
 
   <div class="ir-first-bar">
-    <div class="liu-no-user-select irf-title">
+    <div class="thus-no-user-select irf-title">
       <span>{{ t('import.parse_result') }}</span>
     </div>
   </div>
@@ -54,7 +54,7 @@ const iconColor = `var(--liu-quote)`
         <div class="iri-top">
 
           <!-- 状态: 新的动态、需要更新、没有变化 -->
-          <div class="liu-no-user-select iri-status"
+          <div class="thus-no-user-select iri-status"
             :class="{ 
               'iri-status_new': item.status === 'new',
               'iri-status_update': item.status === 'update_required',
@@ -69,7 +69,7 @@ const iconColor = `var(--liu-quote)`
           </div>
 
           <!-- 清除按钮 -->
-          <div class="liu-hover iri-clear-btn" @click.stop="$emit('tapclear', index)">
+          <div class="thus-hover iri-clear-btn" @click.stop="$emit('tapclear', index)">
             <svg-icon name="close" class="iricb-svg" :color="iconColor"></svg-icon>
           </div>
 
@@ -111,7 +111,7 @@ const iconColor = `var(--liu-quote)`
     </div>
   </div>
 
-  <!-- 导入动态 & 底部操作按钮们 的留白空间 -->
+  <!-- 导入动态 & 底部操作按钮们 的如是空间 -->
   <div class="ir-virtual" />
 
   <div class="ir-btns">
@@ -168,13 +168,13 @@ const iconColor = `var(--liu-quote)`
   padding: 4px 12px;
   border-radius: 2px;
   font-size: var(--mini-font);
-  color: var(--liu-state-1);
+  color: var(--thus-state-1);
   margin-inline-end: 6px;
   position: relative;
   overflow: hidden;
 
   &::before {
-    background-color: var(--liu-state-1);
+    background-color: var(--thus-state-1);
     opacity: .2;
     position: absolute;
     content: "";
@@ -186,18 +186,18 @@ const iconColor = `var(--liu-quote)`
 }
 
 .iri-status_new {
-  color: var(--liu-state-2);
+  color: var(--thus-state-2);
 
   &::before {
-    background-color: var(--liu-state-2);
+    background-color: var(--thus-state-2);
   }
 }
 
 .iri-status_update {
-  color: var(--liu-state-10);
+  color: var(--thus-state-10);
 
   &::before {
-    background-color: var(--liu-state-10);
+    background-color: var(--thus-state-10);
   }
 }
 
@@ -325,7 +325,7 @@ const iconColor = `var(--liu-quote)`
 
 }
 
-@container liu-mc-container (max-width: 450px) {
+@container thus-mc-container (max-width: 450px) {
   .ir-btns {
     padding: 0 0 50px;
     justify-content: space-between;

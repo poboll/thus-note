@@ -14,15 +14,15 @@ import {
 import type { OpenType } from "~/types/types-view";
 import { useLayoutStore } from "../../useLayoutStore";
 import cfg from "~/config";
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { LocationQuery } from "vue-router"
 import { useWindowSize } from "~/hooks/useVueUse"
 import time from "~/utils/basic/time";
 import valTool from "~/utils/basic/val-tool";
 import { outterWidthKey, tapMainViewStampKey } from "~/utils/provide-keys"
-import liuApi from "~/utils/liu-api";
-import liuUtil from "~/utils/liu-util";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import liuApi from "~/utils/thus-api";
+import liuUtil from "~/utils/thus-util";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import type { VvData, VvEmits } from "./types";
 import { useWindowLoaded } from "~/hooks/useCommon";
 
@@ -70,7 +70,7 @@ export function useViceView(emits: VvEmits) {
 function handleMainViewTapped(
   vvData: VvData,
 ) {
-  const { route, router } = useRouteAndLiuRouter()
+  const { route, router } = useRouteAndThusRouter()
 
   // 接收来自 page 的 tapMvStamp，當 tapMvStamp 變化時，代表有被點選
   const tapMvStamp = inject(tapMainViewStampKey, ref(0))
@@ -124,7 +124,7 @@ function initViceView() {
 function initMouse(
   vvData: VvData,
 ) {
-  let lastLeave: LiuTimeout
+  let lastLeave: ThusTimeout
   const onVvMouseEnter = () => {
     if(lastLeave) clearTimeout(lastLeave)
   }
@@ -152,7 +152,7 @@ function initResizing(
   vvData: VvData, 
   emits: VvEmits,
 ) {
-  let lastResizeTimeout: LiuTimeout
+  let lastResizeTimeout: ThusTimeout
 
   const _isJustParentChange = (): boolean => {
     const now = time.getLocalTime()
@@ -193,7 +193,7 @@ function listenRouteChange(
   emits: VvEmits,
 ) {
   let located = ""
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
 
   const whenQueryChange = (
     newQuery: LocationQuery,

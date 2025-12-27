@@ -1,13 +1,13 @@
 import { reactive } from "vue"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import type { ScTopItemKey, SbcCursorInfo, SbProps } from "./types"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 export function useSbcCursor(
   props: SbProps,
 ) {
 
-  let closeCursorStamp: LiuTimeout
+  let closeCursorStamp: ThusTimeout
   const cursorInfo = reactive<SbcCursorInfo>({
     enable: false,
     show: false,

@@ -2,7 +2,7 @@
 import cfg from "~/config"
 import type { VcState } from "../tools/types"
 import { computed, type PropType } from "vue";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import { useVcNaviBar } from "./tools/useVcNaviBar"
 
 const props = defineProps({
@@ -35,15 +35,15 @@ const {
 </script>
 <template>
 
-  <div class="liu-frosted-glass vcliu-navi-bar">
+  <div class="thus-frosted-glass vcliu-navi-bar">
 
     <!-- Button to go back -->
-    <div class="liu-hover vcliu-navi-btn" @click.stop="$emit('tapback')">
+    <div class="thus-hover vcliu-navi-btn" @click.stop="$emit('tapback')">
       <svg-icon class="vcliu-navi-icon" name="arrow-back" :color="iconColor"></svg-icon>
     </div>
 
     <!-- Button to close -->
-    <div class="liu-hover vcliu-navi-btn" 
+    <div class="thus-hover vcliu-navi-btn" 
       @click.stop="$emit('tapclose')"
       v-show="vnbData.showCloseBtn"
     >
@@ -54,7 +54,7 @@ const {
     <!-- Expand the iframe in center peek while it's a srcdoc -->
     <div v-if="vcState === 'srcdoc'" class="vcliu-navi-footer">
       <div v-if="!isMobile"
-        class="liu-hover vcliu-navi-btn vcliu-nv-open" 
+        class="thus-hover vcliu-navi-btn vcliu-nv-open" 
         @click.stop="$emit('tapexpand')"
       >
         <svg-icon class="vcn-expand" 
@@ -65,7 +65,7 @@ const {
 
     <!-- Open with a new tab -->
     <div v-else class="vcliu-navi-footer">
-      <div class="liu-hover vcliu-navi-btn" 
+      <div class="thus-hover vcliu-navi-btn" 
         @click.stop="$emit('tapopeninnew')"
         :class="{ 'vcliu-nv-open': !isMobile }"
       >
@@ -104,7 +104,7 @@ const {
   height: v-bind("cfg.vice_navi_height + 'px'");
 }
 
-.liu-hover::before {
+.thus-hover::before {
   border-radius: 0;
 }
 

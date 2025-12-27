@@ -26,7 +26,7 @@ const { t } = useI18n()
   <!-- 主视图 -->
   <main-view :enable-drop-files="true">
     <template v-for="(item, index) in dpData.list" :key="item.id">
-      <div class="liu-view" v-show="item.show">
+      <div class="thus-view" v-show="item.show">
         <scroll-view 
           :hidden-scroll-bar="item.show && hiddenScrollBar" 
           :show-txt="(String(item.show) as TrueOrFalse)"

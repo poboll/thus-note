@@ -1,7 +1,7 @@
 
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import { initSpace } from "./tools/init-space"
-import liuEnv from "../liu-env"
+import liuEnv from "../thus-env"
 import { initCycle } from "./tools/init-cycle"
 import { initForPureLocalMode } from "./tools/init-for-pure-local-mode"
 import { CloudFiler } from "../cloud/CloudFiler"

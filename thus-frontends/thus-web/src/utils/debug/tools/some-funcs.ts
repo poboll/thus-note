@@ -1,4 +1,4 @@
-import liuEnv from "../../liu-env";
+import liuEnv from "../../thus-env";
 
 const getSentry = async () => {
   const Sentry = await import("@sentry/vue")

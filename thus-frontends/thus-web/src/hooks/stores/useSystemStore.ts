@@ -7,7 +7,7 @@ import type {
   LocalFontSize,
 } from "~/types/types-atom";
 import type { LocalLocale, SupportedLocale } from "~/types/types-locale";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import localCache from "~/utils/system/local-cache";
 import { i18n } from "~/locales";
 import middleBridge from "~/utils/middle-bridge";
@@ -130,8 +130,8 @@ function setClassForTheme(
   const val = t === "dark"
   body?.classList.toggle("theme-dark", val)
 
-  // 2. 在 document 的根目录上: 当深色模式时，添加 .liu-dark，否则移除 .liu-dark
-  document.documentElement.classList.toggle("liu-dark", val)
+  // 2. 在 document 的根目录上: 当深色模式时，添加 .thus-dark，否则移除 .thus-dark
+  document.documentElement.classList.toggle("thus-dark", val)
 
   // 3. change meta name="theme-color"
   const color = cfg.title_bar_colors[t]

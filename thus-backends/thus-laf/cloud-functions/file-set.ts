@@ -9,7 +9,7 @@ import {
   LiuDateUtil,
 } from "@/common-util"
 import type { 
-  LiuRqReturn,
+  ThusRqReturn,
   CloudStorageService,
   Table_User,
   FileSetAPI,
@@ -25,7 +25,7 @@ export async function main(ctx: FunctionContext) {
   const body = ctx.request?.body ?? {}
 
   const oT = body.operateType
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(oT === "get-upload-token") {
     res = await getUploadToken(ctx, body)
   }
@@ -51,7 +51,7 @@ async function getUploadToken(
 
   // 3. 选择使用哪个云存储服务
   const res2 = getTheRightService()
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(res2 === "qiniu") {
     res = getUploadTokenViaQiniu(user, newBody)
   }
@@ -70,12 +70,12 @@ async function getUploadToken(
 function getUploadTokenViaQiniu(
   user: Table_User,
   body: FileSetAPI.Param,
-): LiuRqReturn<FileSetAPI.Res_UploadToken> {
+): ThusRqReturn<FileSetAPI.Res_UploadToken> {
   const hasSubscribed = checkIfUserSubscribed(user)
 
   // 1.1 构造鉴权对象 mac
   const _env = process.env
-  const isDev = _env.LIU_ENV_STATE === "dev"
+  const isDev = _env.THUS_ENV_STATE === "dev"
   const folderPrefix = isDev ? "dev" : "prod"
   const qiniu_access_key = _env.LIU_QINIU_ACCESS_KEY ?? ""
   const qiniu_secret_key = _env.LIU_QINIU_SECRET_KEY ?? ""
@@ -132,7 +132,7 @@ function getUploadTokenViaQiniu(
   }
 }
 
-function preCheckForUploadToken(): LiuRqReturn | undefined {
+function preCheckForUploadToken(): ThusRqReturn | undefined {
   const _env = process.env
   const qiniu_access_key = _env.LIU_QINIU_ACCESS_KEY
   const qiniu_secret_key = _env.LIU_QINIU_SECRET_KEY

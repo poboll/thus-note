@@ -1,8 +1,8 @@
 import cui from "~/components/custom-ui";
 import { db } from "~/utils/db";
-import liuConsole from "~/utils/debug/liu-console";
-import liuApi from "~/utils/liu-api";
-import liuEnv from "~/utils/liu-env";
+import liuConsole from "~/utils/debug/thus-console";
+import liuApi from "~/utils/thus-api";
+import liuEnv from "~/utils/thus-env";
 import { canReload, toReload } from "./handle-err";
 
 function _redirectToCustomerService() {
@@ -16,7 +16,7 @@ function _redirectToCustomerService() {
     return
   }
   
-  const email = LIU_ENV.author?.email
+  const email = THUS_ENV.author?.email
   if(!email) return
   link = `mailto:${email}`
   console.log("link 222 ", link)

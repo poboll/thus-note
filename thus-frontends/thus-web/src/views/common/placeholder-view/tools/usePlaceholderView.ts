@@ -2,7 +2,7 @@ import { reactive, toRef, watch } from "vue"
 import type { PageState } from "~/types/types-atom"
 import type { PvData, PvProps } from "./types"
 import { pageStates } from "~/utils/atom"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import cfg from "~/config"
 
 

@@ -29,7 +29,7 @@ const { t } = useI18n()
 
       <!-- title + close button -->
       <div class="bp-first-bar">
-        <div class="liu-no-user-select bp-title">
+        <div class="thus-no-user-select bp-title">
           <span v-if="bpData.bindType === 'email'">{{ t('bind.email_title') }}</span>
           <span v-else>{{ t('bind.phone_title') }}</span>
         </div>
@@ -41,7 +41,7 @@ const { t } = useI18n()
       </div>
 
       <!-- compliance tip -->
-      <div v-if="bpData.compliance" class="liu-no-user-select bp-compliance">
+      <div v-if="bpData.compliance" class="thus-no-user-select bp-compliance">
         <span>{{ t('bind.compliance') }}</span>
       </div>
 
@@ -66,7 +66,7 @@ const { t } = useI18n()
         />
       </div>
 
-      <div class="liu-no-user-select bp-err" 
+      <div class="thus-no-user-select bp-err" 
         :class="{ 'bp-err_show': bpData.firstErr }"
       >
         <span>{{ bpData.firstErr ?? " " }}</span>
@@ -89,7 +89,7 @@ const { t } = useI18n()
 
       </div>
 
-      <div class="liu-no-user-select bp-err" 
+      <div class="thus-no-user-select bp-err" 
         :class="{ 'bp-err_show': bpData.secondErr }"
       >
         <span v-if="bpData.secondErr">{{ bpData.secondErr }}</span>
@@ -104,7 +104,7 @@ const { t } = useI18n()
         <span>{{ t('common.confirm') }}</span>
       </CustomBtn>
 
-      <div class="liu-no-user-select bp-err bp-err_btn" 
+      <div class="thus-no-user-select bp-err bp-err_btn" 
         :class="{ 'bp-err_show': bpData.btnErr }"
       >
         <span>{{ bpData.btnErr ?? " " }}</span>
@@ -252,7 +252,7 @@ const { t } = useI18n()
   box-sizing: border-box;
   opacity: 0;
   transition: .3s;
-  color: var(--liu-state-3);
+  color: var(--thus-state-3);
   font-size: var(--mini-font);
   max-height: 0;
   overflow: hidden;

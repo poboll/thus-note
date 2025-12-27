@@ -1,11 +1,11 @@
 import type { PropType } from "vue"
 import type { PageState } from "~/types/types-atom"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 
 export interface PvData {
   enable: boolean
   show: boolean
-  toggleTimeout: LiuTimeout
+  toggleTimeout: ThusTimeout
 }
 
 export interface PvProps {

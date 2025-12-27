@@ -2,8 +2,8 @@
 import type { TagView } from '~/types/types-atom';
 import type { PropType } from 'vue';
 import type { LiuTagTreeStat } from '~/types';
-import liuApi from '~/utils/liu-api';
-import LiuMenu from "~/components/common/liu-menu/liu-menu.vue";
+import liuApi from '~/utils/thus-api';
+import ThusMenu from "~/components/common/liu-menu/liu-menu.vue";
 import type { MenuItem } from '~/components/common/liu-menu/tools/types';
 
 defineProps({
@@ -32,11 +32,11 @@ defineEmits<{
 </script>
 <template>
 
-  <div class="liu-hover tag-container" @click.stop="$emit('tapitem')">
+  <div class="thus-hover tag-container" @click.stop="$emit('tapitem')">
 
     <!-- tag 所在的该行 -->
-    <div class="liu-no-user-select tag-box">
-      <div class="liu-hover tag-arrow" :class="{ 'tag-arrow_unhover': !stat.children.length }"
+    <div class="thus-no-user-select tag-box">
+      <div class="thus-hover tag-arrow" :class="{ 'tag-arrow_unhover': !stat.children.length }"
         @click.stop.prevent="$emit('taptagarrow', $event, node, stat)">
         <SvgIcon v-if="stat.children.length" class="tag-arrow-icon" 
           :class="{ 'tag-arrow-icon_open': stat.open }"
@@ -47,20 +47,20 @@ defineEmits<{
       <div v-if="node.icon" class="tag-icon">
         <span>{{ liuApi.decode_URI_component(node.icon) }}</span>
       </div>
-      <div class="liu-no-user-select tag-title">
+      <div class="thus-no-user-select tag-title">
         <span>{{ node.text }}</span>
       </div>
 
       <!-- menu -->
-      <LiuMenu :menu="stat.level < 3 ? menuList2 : menuList"
+      <ThusMenu :menu="stat.level < 3 ? menuList2 : menuList"
         min-width-str="100px"
         placement="bottom-end"
         @tapitem="(item2, index2) => $emit('tapmenuitem', item2, index2, node, stat)"
       >
-        <div class="liu-hover tag-more">
+        <div class="thus-hover tag-more">
           <svg-icon class="tag-more-icon" name="more" color="var(--main-normal)"></svg-icon>
         </div>
-      </LiuMenu>
+      </ThusMenu>
 
     </div>
 

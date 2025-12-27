@@ -25,7 +25,7 @@ const { t } = useI18n()
       
       <div class="bc-code-header">
         <div class="bc-lang-tag" v-if="bcData.language">
-          <span class="liu-no-user-select">{{ bcData.language }}</span>
+          <span class="thus-no-user-select">{{ bcData.language }}</span>
         </div>
         <div class="bc-copy-btn" @click.stop="onTapCopy">
           <svg-icon name="copy" color="#bbb"

@@ -2,7 +2,7 @@
 
 ## 1. 复制链接
 
-`https://my.thus-note.com`
+`https://my.liubai.cc`
 
 <CopyButton />
 
@@ -40,6 +40,6 @@
 
 ## 6. 安装完成
 
-回到桌面上，留白应该已经在那等你了！
+回到桌面上，如是应该已经在那等你了！
 
 <img src="./assets-opera/8.jpg" width="250" />

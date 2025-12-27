@@ -2,7 +2,7 @@
 import ImportResults from "./import-results/import-results.vue";
 import { useI18n } from "vue-i18n";
 import { useImportContent } from "./tools/useImportContent";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 const { t } = useI18n()
 
@@ -23,7 +23,7 @@ const { APP_NAME } = liuEnv.getEnv()
   <div class="sc-box">
 
     <!-- 从专有格式导入 -->
-    <div class="liu-no-user-select liu-hover sc-bar">
+    <div class="thus-no-user-select thus-hover sc-bar">
       <div class="scb-hd">
         <span>{{ t('import.t1', { appName: APP_NAME }) }}</span>
       </div>

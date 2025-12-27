@@ -30,7 +30,7 @@ const icon_color = `var(--main-normal)`
     <div class="sv-box">
 
       <!-- export -->
-      <div class="liu-no-user-select sv-bar sv-hover"
+      <div class="thus-no-user-select sv-bar sv-hover"
         @click.stop="() => svData.openExport = !svData.openExport"
       >
         <div class="svb-icon-box">
@@ -59,7 +59,7 @@ const icon_color = `var(--main-normal)`
         <div class="svb-bar sv-hover"
           @click.stop="() => onTapShareItem('markdown', 'file')"
         >
-          <div class="liu-no-user-select svb-title">
+          <div class="thus-no-user-select svb-title">
             <span>{{ t('share_related.markdown_format') }}</span>
           </div>
           <div class="svb-footer">
@@ -75,7 +75,7 @@ const icon_color = `var(--main-normal)`
         <div class="svb-bar sv-hover"
           @click.stop="() => onTapShareItem('text', 'file')"
         >
-          <div class="liu-no-user-select svb-title">
+          <div class="thus-no-user-select svb-title">
             <span>{{ t('share_related.txt_format') }}</span>
           </div>
           <div class="svb-footer">
@@ -89,7 +89,7 @@ const icon_color = `var(--main-normal)`
       </div>
 
       <!-- copy -->
-      <div class="liu-no-user-select sv-bar sv-hover"
+      <div class="thus-no-user-select sv-bar sv-hover"
         @click.stop="() => svData.openCopy = !svData.openCopy"
       >
         <div class="svb-icon-box">
@@ -119,7 +119,7 @@ const icon_color = `var(--main-normal)`
         <div class="svb-bar sv-hover" 
           @click.stop="() => onTapShareItem('markdown', 'copy')"
         >
-          <div class="liu-no-user-select svb-title">
+          <div class="thus-no-user-select svb-title">
             <span>{{ t('share_related.markdown_format') }}</span>
           </div>
           <div class="svb-footer">
@@ -135,7 +135,7 @@ const icon_color = `var(--main-normal)`
         <div class="svb-bar sv-hover"
           @click.stop="() => onTapShareItem('text', 'copy')"
         >
-          <div class="liu-no-user-select svb-title">
+          <div class="thus-no-user-select svb-title">
             <span>{{ t('share_related.txt_format') }}</span>
           </div>
           <div class="svb-footer">
@@ -149,7 +149,7 @@ const icon_color = `var(--main-normal)`
       </div>
 
       <!-- share to -->
-      <div class="liu-no-user-select sv-bar" style="cursor: default;">
+      <div class="thus-no-user-select sv-bar" style="cursor: default;">
         <div class="svb-hd">
           <span>{{ t('share_related.share_to') }}</span>
         </div>
@@ -157,7 +157,7 @@ const icon_color = `var(--main-normal)`
       <!-- third-party apps' btns -->
       <div class="sv-apps">
 
-        <a class="liu-no-user-select liu-hover sv-app-item" target="_blank" :href="svData.outlookLink"
+        <a class="thus-no-user-select thus-hover sv-app-item" target="_blank" :href="svData.outlookLink"
           title="Outlook"
         >
           <svg-icon name="logos-outlook" :coverFillStroke="false"
@@ -167,7 +167,7 @@ const icon_color = `var(--main-normal)`
 
         <a 
           v-if="svData.icsLink"
-          class="liu-no-user-select liu-hover sv-app-item"
+          class="thus-no-user-select thus-hover sv-app-item"
           :href="svData.icsLink"
           :title="t('share_related.download_ics')"
           @click.stop.prevent="onTapIcs"
@@ -177,7 +177,7 @@ const icon_color = `var(--main-normal)`
           ></svg-icon>
         </a>
 
-        <a class="liu-no-user-select liu-hover sv-app-item" target="_blank" 
+        <a class="thus-no-user-select thus-hover sv-app-item" target="_blank" 
           v-if="svData.emailLink"
           :href="svData.emailLink"
           title="Email"

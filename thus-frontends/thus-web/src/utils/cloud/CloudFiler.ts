@@ -1,13 +1,13 @@
 import type { Cloud_ImageStore, Cloud_FileStore } from "~/types/types-cloud";
 import type { 
-  LiuImageStore,
-  LiuFileStore,
+  ThusImageStore,
+  ThusFileStore,
   FileShow, 
   ImageShow,
 } from "~/types";
 import type { LiuTable } from "~/types/types-atom"
 import { watch } from "vue";
-import type { LiuTimeout } from "../basic/type-tool";
+import type { ThusTimeout } from "../basic/type-tool";
 import type {
   ImageTransferedRes,
   FileTransferedRes,
@@ -140,7 +140,7 @@ class CloudFiler {
   }
 
   /** 通知函数里调用 putTasksIntoIndexedDB 的延时 */
-  private static timeoutOfNotify: LiuTimeout
+  private static timeoutOfNotify: ThusTimeout
 
   /** 告知 CloudFiler 哪个表、哪一行 
    * 需要从网络下载文件（图片），存到 IndexedDB 中
@@ -172,7 +172,7 @@ class CloudFiler {
   */
   static imageFromCloudToStore(
     cloudImage?: Cloud_ImageStore,
-    localImage?: LiuImageStore,
+    localImage?: ThusImageStore,
   ): ImageTransferedRes {
     if(!cloudImage) return { useCloud: false }
 
@@ -184,7 +184,7 @@ class CloudFiler {
     }
 
     // 否则，一律使用云端的
-    const newImage: LiuImageStore = {
+    const newImage: ThusImageStore = {
       id: cloudImage.id,
       name: cloudImage.name,
       lastModified: cloudImage.lastModified,
@@ -206,7 +206,7 @@ class CloudFiler {
   */
   static fileFromCloudToStore(
     cloudFile?: Cloud_FileStore,
-    localFile?: LiuFileStore,
+    localFile?: ThusFileStore,
   ): FileTransferedRes {
     if(!cloudFile) return { useCloud: false }
 
@@ -217,7 +217,7 @@ class CloudFiler {
       }
     }
 
-    const newFile: LiuFileStore = {
+    const newFile: ThusFileStore = {
       id: cloudFile.id,
       name: cloudFile.name,
       lastModified: cloudFile.lastModified,
@@ -259,7 +259,7 @@ class CloudFiler {
   /** 转换多张云端图片至本地格式 */
   static updateImages(
     new_images?: Cloud_ImageStore[],
-    old_images?: LiuImageStore[],
+    old_images?: ThusImageStore[],
   ): UpdateImagesRes {
     const _this = this
     const len1 = new_images?.length ?? 0
@@ -274,7 +274,7 @@ class CloudFiler {
     const new_images2 = new_images as Cloud_ImageStore[]
     const old_images2 = old_images ?? []
   
-    const list: LiuImageStore[] = []
+    const list: ThusImageStore[] = []
     for(let i=0; i<len1; i++) {
       const v1 = new_images2[i]
       const v2 = old_images2[i]
@@ -289,7 +289,7 @@ class CloudFiler {
   /** 转换多个文件至本地格式 */
   static updateFiles(
     new_files?: Cloud_FileStore[],
-    old_files?: LiuFileStore[],
+    old_files?: ThusFileStore[],
   ): UpdateFilesRes {
     const _this = this
     const len1 = new_files?.length ?? 0
@@ -304,7 +304,7 @@ class CloudFiler {
     const new_files2 = new_files as Cloud_FileStore[]
     const old_files2 = old_files ?? []
   
-    const list: LiuFileStore[] = []
+    const list: ThusFileStore[] = []
     for(let i=0; i<len1; i++) {
       const v1 = new_files2[i]
       const v2 = old_files2[i]

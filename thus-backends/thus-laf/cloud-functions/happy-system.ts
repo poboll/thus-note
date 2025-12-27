@@ -16,7 +16,7 @@ import {
 } from "@/common-util"
 import type { 
   LiuAi,
-  LiuRqReturn,
+  ThusRqReturn,
   OaiPrompt,
   OState_Cool,
   Partial_Id,
@@ -68,7 +68,7 @@ export async function main(ctx: FunctionContext) {
   }
 
   // 2. decide which path to go
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(oT === "get-showcase") {
     res = await get_showcase(body)
   }
@@ -204,7 +204,7 @@ async function post_weixin_ad(
 
 async function get_weixin_ad(
   body: Record<string, any>,
-): Promise<LiuRqReturn<HappySystemAPI.Res_GetWeixinAd>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_GetWeixinAd>> {
   // 1. check out params
   const roomId = body.room
   if(!valTool.isStringWithVal(roomId)) {
@@ -276,7 +276,7 @@ async function get_weixin_ad(
 
 async function get_showcase(
   body: Record<string, any>,
-): Promise<LiuRqReturn<HappySystemAPI.Res_GetShowcase>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_GetShowcase>> {
   // 1. check out params
   const key = body.key
   if(!valTool.isStringWithVal(key)) {
@@ -316,7 +316,7 @@ async function get_showcase(
 async function coupon_update(
   body: HappySystemAPI.Param_CouponUpdate,
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   // 1. check out body
   const res1 = vbot.safeParse(HappySystemAPI.Sch_Param_CouponUpdate, body)
   if(!res1.success) {
@@ -414,7 +414,7 @@ async function coupon_delete(
 
 async function coupon_detail(
   ctx: FunctionContext,
-): Promise<LiuRqReturn<HappySystemAPI.Res_CouponDetail>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_CouponDetail>> {
   // 1. check out params
   const body = ctx.body ?? {}
   const couponId = body.couponId
@@ -463,7 +463,7 @@ async function coupon_detail(
 
 async function coupon_mine(
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<HappySystemAPI.Res_CouponMine>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_CouponMine>> {
   // 1. get user id
   const userId = vRes.userData._id
   const max_drawn = 9
@@ -515,7 +515,7 @@ async function coupon_mine(
 async function coupon_check(
   ctx: FunctionContext,
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<HappySystemAPI.Res_CouponCheck>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_CouponCheck>> {
   // 1. check out params
   const ip = getIp(ctx)
   console.log("ip in coupon_check: ", ip)
@@ -604,7 +604,7 @@ async function coupon_check(
 async function coupon_status(
   body: Record<string, any>,
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<HappySystemAPI.Res_CouponStatus>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_CouponStatus>> {
   // 1. check if i can use the coupon system
   const userId = vRes.userData._id
   const uCol = db.collection("User")
@@ -670,7 +670,7 @@ async function coupon_search(
 
   // 2. fast or deep
   const mode = body.mode
-  let res: LiuRqReturn = { code: "E4000", errMsg: "Invalid params in coupon_search" }
+  let res: ThusRqReturn = { code: "E4000", errMsg: "Invalid params in coupon_search" }
   if(mode === "fast") {
     const fastSearch = new CouponFastSearch()
     if(body.texts) {
@@ -700,7 +700,7 @@ export class CouponFastSearch {
 
   async texts(
     strs: string[]
-  ): Promise<LiuRqReturn<HappySystemAPI.Res_FastSearch>> {
+  ): Promise<ThusRqReturn<HappySystemAPI.Res_FastSearch>> {
     const sLength = strs.length
     if(sLength < 1) {
       return { code: "E4000", errMsg: "strs is empty" }
@@ -771,7 +771,7 @@ export class CouponFastSearch {
 
   private _returnQueryData(
     list: Table_HappyCoupon[]
-  ): LiuRqReturn<HappySystemAPI.Res_FastSearch> {
+  ): ThusRqReturn<HappySystemAPI.Res_FastSearch> {
     list = this._sortList(list)
     this._setMaxLength(list)
     const ids = valTool.uniqueArray(list.map(v => v._id))
@@ -808,7 +808,7 @@ export class CouponFastSearch {
 
   async image(
     image_url: string
-  ): Promise<LiuRqReturn<HappySystemAPI.Res_FastSearch>> {
+  ): Promise<ThusRqReturn<HappySystemAPI.Res_FastSearch>> {
     const res = await this._getDataFromCache(undefined, image_url)
     if(res) return { code: "0000", data: res }
     return { code: "E4004" }
@@ -892,7 +892,7 @@ export class CouponFastSearch {
 async function coupon_post(
   body: Record<string, any>,
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<HappySystemAPI.Res_CouponPost>> {
+): Promise<ThusRqReturn<HappySystemAPI.Res_CouponPost>> {
   // 1.1 check out days
   const availableDays = body.availableDays ?? 7
   if(typeof availableDays !== "number") {
@@ -1179,7 +1179,7 @@ class CouponUpdateManager {
     return true
   }
 
-  async addAvailableDays(): Promise<LiuRqReturn> {
+  async addAvailableDays(): Promise<ThusRqReturn> {
     // 1. check out availableDays
     const MONTH_THREE = 92 * DAY
     const threshold = this._coupon.insertedStamp + MONTH_THREE
@@ -1464,7 +1464,7 @@ export class CouponAddManager {
 
   async addIntoVectorDB(
     partialData: Partial<Vector_happy_coupons>,
-  ): Promise<LiuRqReturn> {
+  ): Promise<ThusRqReturn> {
     // 1. get doc data
     const couponId = this._couponId as string
     const hcCol = db.collection("HappyCoupon")

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
-import LiuMenu from "~/components/common/liu-menu/liu-menu.vue"
+import ThusMenu from "~/components/common/liu-menu/liu-menu.vue"
 import type { MenuItem } from "~/components/common/liu-menu/tools/types";
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 
 defineProps({
   isPC: {
@@ -35,11 +35,11 @@ defineEmits<{
 </script>
 <template>
 
-  <div class="liu-hover tag-container" :class="{ 'tag-container_selected': node.tagId === currentTagId }">
+  <div class="thus-hover tag-container" :class="{ 'tag-container_selected': node.tagId === currentTagId }">
 
     <!-- tag 所在的该行 -->
-    <div class="liu-no-user-select tag-box">
-      <div class="liu-hover tag-arrow" :class="{ 'tag-arrow_unhover': !stat.children.length }"
+    <div class="thus-no-user-select tag-box">
+      <div class="thus-hover tag-arrow" :class="{ 'tag-arrow_unhover': !stat.children.length }"
         @click.stop.prevent="$emit('taptagarrow', $event, node, stat)">
         <SvgIcon v-if="stat.children.length" class="tag-arrow-icon" 
           :class="{ 'tag-arrow-icon_open': stat.open }"
@@ -50,7 +50,7 @@ defineEmits<{
       <div v-if="node.icon" class="tag-icon">
         <span>{{ liuApi.decode_URI_component(node.icon) }}</span>
       </div>
-      <div class="liu-no-user-select tag-title">
+      <div class="thus-no-user-select tag-title">
         <span>{{ node.text }}</span>
       </div>
 
@@ -58,12 +58,12 @@ defineEmits<{
     </div>
 
     <!-- 更多 -->
-    <LiuMenu :menu="stat.level < 3 ? menuList2 : menuList" min-width-str="100px"
+    <ThusMenu :menu="stat.level < 3 ? menuList2 : menuList" min-width-str="100px"
       @tapitem="(item2, index2) => $emit('tapmenuitem', item2, index2, node, stat)">
-      <div class="liu-hover tag-more" :class="{ 'tag-more_always': !isPC }">
+      <div class="thus-hover tag-more" :class="{ 'tag-more_always': !isPC }">
         <svg-icon class="tag-more-icon" name="more" color="var(--main-normal)"></svg-icon>
       </div>
-    </LiuMenu>
+    </ThusMenu>
 
 
   </div>

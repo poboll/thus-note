@@ -1,12 +1,12 @@
 import { toRef, ref, inject } from "vue";
-import { useLiuWatch } from "~/hooks/useLiuWatch";
+import { useThusWatch } from "~/hooks/useThusWatch";
 import time from "~/utils/basic/time";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore"
 import type { ImageShow } from '~/types';
 import cui from "~/components/custom-ui";
 import { mainViewWidthKey, viceViewWidthKey } from "~/utils/provide-keys"
 import { getViewTranNames } from "~/utils/other/transition-related";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import type { EditingCoversProps } from "./types"
 
 export function useEditingCovers(props: EditingCoversProps) {
@@ -32,7 +32,7 @@ export function useEditingCovers(props: EditingCoversProps) {
     }
     sortList.value = tmpList
   }
-  useLiuWatch(modelValue, whenPropChange, true)
+  useThusWatch(modelValue, whenPropChange, true)
 
 
   const { axis } = initAxis(props, imgWidth)
@@ -100,7 +100,7 @@ function initAxis(
         if(newV > breakpoint) axis.value = "xy"
         else axis.value = "y"
       }
-      useLiuWatch(w, _getAxis)
+      useThusWatch(w, _getAxis)
     }
   }
 

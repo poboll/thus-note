@@ -5,7 +5,7 @@ import { fetchGet } from "./tools/useWatchVideo";
 import { LiuTime } from "~/utils/LiuTime";
 import valTool from "~/utils/val-tool";
 import { themeBehavior } from "~/packageA/behaviors/theme-behavior";
-import { LiuUtil } from "~/utils/liu-util/index";
+import { LiuUtil } from "~/utils/thus-util/index";
 import { LiuApi } from "~/utils/LiuApi";
 import {
   initRewardedVideoAd,

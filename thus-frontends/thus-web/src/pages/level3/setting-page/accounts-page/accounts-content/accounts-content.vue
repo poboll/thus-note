@@ -28,37 +28,37 @@ const menus2: MenuItem[] = [{ text_key: "setting.modify" }, { text_key: "setting
   <div v-if="acData.pageState < 0" class="ac-container">
 
     <!-- Phone -->
-    <LiuMenu :menu="menus2" v-if="acData.phone_pixelated" min-width-str="90px"
+    <ThusMenu :menu="menus2" v-if="acData.phone_pixelated" min-width-str="90px"
       @tapitem="onMenuItemForPhone"
     >
-      <div class="liu-no-user-select liu-hover ac-item">
+      <div class="thus-no-user-select thus-hover ac-item">
         <AcItem icon-name="emojis-mobile_phone_color"
           :hd="t('setting.phone')"
           :bd="acData.phone_pixelated"
         ></AcItem>
       </div>
-    </LiuMenu>
-    <div class="liu-no-user-select liu-hover ac-item" v-else @click.stop="onTapPhone">
+    </ThusMenu>
+    <div class="thus-no-user-select thus-hover ac-item" v-else @click.stop="onTapPhone">
       <AcItem icon-name="emojis-mobile_phone_color" :hd="t('setting.phone')"></AcItem>
     </div>
 
     <!-- WeChat -->
-    <LiuMenu :menu="menus1" v-if="acData.wx_gzh_openid" min-width-str="90px"
+    <ThusMenu :menu="menus1" v-if="acData.wx_gzh_openid" min-width-str="90px"
       @tapitem="onMenuItemForWeChat"
     >
-      <div class="liu-no-user-select liu-hover ac-item">
+      <div class="thus-no-user-select thus-hover ac-item">
         <AcItem wechat-logo
           :hd="t('setting.wechat')"
           :bd="acData.wx_gzh_nickname || t('setting.bound')"
         ></AcItem>
       </div>
-    </LiuMenu>
-    <div class="liu-no-user-select liu-hover ac-item" v-else @click.stop="onTapWeChat">
+    </ThusMenu>
+    <div class="thus-no-user-select thus-hover ac-item" v-else @click.stop="onTapWeChat">
       <AcItem wechat-logo :hd="t('setting.wechat')"></AcItem>
     </div>
 
     <!-- Email -->
-    <div class="liu-no-user-select liu-hover ac-item" @click.stop="onTapEmail">
+    <div class="thus-no-user-select thus-hover ac-item" @click.stop="onTapEmail">
       <AcItem icon-name="emojis-e_mail_color" :hd="t('setting.email')"
         :bd="acData.email"
       ></AcItem>

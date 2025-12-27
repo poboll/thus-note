@@ -50,7 +50,7 @@ const iconColor = "var(--main-code)"
 
 </script>
 <template>
-  <div class="liu-no-user-select si-container"
+  <div class="thus-no-user-select si-container"
     :class="{ 'si-container_selected': isSelected }"
     @mouseenter="onMouseEnter"
     @click.stop="onTapItem"
@@ -144,7 +144,7 @@ const iconColor = "var(--main-code)"
       :class="{ 'si-footer_show': showClear }"
       @click.stop="onTapClear"
     >
-      <div class="liu-hover si-clear">
+      <div class="thus-hover si-clear">
         <svg-icon name="close" class="si-clear-icon" :color="iconColor"></svg-icon>
       </div>
     </div>
@@ -253,13 +253,13 @@ const iconColor = "var(--main-code)"
   padding-block: 4px;
 
   .si-placeholder {
-    color: var(--liu-quote);
+    color: var(--thus-quote);
   }
 }
 
 .si-desc {
   font-size: var(--mini-font);
-  color: var(--liu-quote);
+  color: var(--thus-quote);
   max-width: 100%;
   display: inline-block;
   white-space: nowrap;

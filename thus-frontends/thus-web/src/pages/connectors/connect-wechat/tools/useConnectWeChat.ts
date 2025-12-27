@@ -1,16 +1,16 @@
 import { onDeactivated, reactive, watch } from "vue"
 import type { CwcData } from "./types"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import { pageStates } from "~/utils/atom"
 import { useAwakeNum } from "~/hooks/useCommon"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import type { Res_OC_GetWeChat } from "~/requests/req-types"
 import cui from "~/components/custom-ui"
 import { 
-  useRouteAndLiuRouter,
-  type RouteAndLiuRouter,
+  useRouteAndThusRouter,
+  type RouteAndThusRouter,
 } from "~/routes/liu-router"
 import { useDebounceFn } from "~/hooks/useVueUse"
 import valTool from "~/utils/basic/val-tool"
@@ -21,7 +21,7 @@ let checkoutNum = 0
 export function useConnectWeChat() {
 
   const hasBE = liuEnv.hasBackend()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const cwcData = reactive<CwcData>({
     pageState: hasBE ? pageStates.LOADING : pageStates.NEED_BACKEND,
@@ -90,7 +90,7 @@ async function toChangeWeChatRemind(
 
 async function checkoutData(
   cwcData: CwcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. checking out network
   // const nStore = useNetworkStore()
@@ -148,7 +148,7 @@ async function checkoutData(
 
 async function checkoutQuery(
   cwcData: CwcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. get query and bind fr
   const query = rr.route.query

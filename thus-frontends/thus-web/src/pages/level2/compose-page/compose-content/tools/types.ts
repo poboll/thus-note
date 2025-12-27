@@ -1,5 +1,5 @@
 import type { ShallowRef } from "vue";
-import type { RouteAndLiuRouter } from "~/routes/liu-router";
+import type { RouteAndThusRouter } from "~/routes/liu-router";
 import type { ComposingData, PageState } from "~/types/types-atom";
 
 export interface CcData {
@@ -9,6 +9,6 @@ export interface CcData {
 
 export interface CcContext {
   ccData: CcData
-  rr: RouteAndLiuRouter
+  rr: RouteAndThusRouter
   composingDataRef: ShallowRef<ComposingData | undefined>
 }

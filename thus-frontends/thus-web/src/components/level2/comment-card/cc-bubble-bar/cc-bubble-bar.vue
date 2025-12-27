@@ -44,7 +44,7 @@ const { t } = useI18n()
   >
 
     <!-- 表态按钮 -->
-    <div class="liu-hover ccbb-box"
+    <div class="thus-hover ccbb-box"
       :aria-label="t('common.reaction')"
       @click.stop="$emit('newoperation', 'emoji')"
     >
@@ -64,7 +64,7 @@ const { t } = useI18n()
     </div>
 
     <!-- 回复按钮 -->
-    <div class="liu-hover ccbb-box"
+    <div class="thus-hover ccbb-box"
       :aria-label="t('common.reply')"
       @click.stop="$emit('newoperation', 'comment')"
     >
@@ -73,13 +73,13 @@ const { t } = useI18n()
           :color="default_color"
         ></svg-icon>
       </div>
-      <span class="liu-no-user-select ccbb-text"
+      <span class="thus-no-user-select ccbb-text"
          v-if="cs.commentNum"
         >{{ cs.commentNum }}</span>
     </div>
 
     <!-- 分享按钮 -->
-    <!-- <div class="liu-hover ccbb-box"
+    <!-- <div class="thus-hover ccbb-box"
       :aria-label="t('common.share')"
       @click.stop="$emit('newoperation', 'share')"
     >
@@ -91,7 +91,7 @@ const { t } = useI18n()
     </div> -->
 
     <!-- 编辑按钮 -->
-    <div class="liu-hover ccbb-box"
+    <div class="thus-hover ccbb-box"
       v-if="cs.isMine"
       :aria-label="t('common.edit')"
       @click.stop="$emit('newoperation', 'edit')"
@@ -104,7 +104,7 @@ const { t } = useI18n()
     </div>
 
     <!-- 删除按钮 -->
-    <div class="liu-hover liu-hover_last ccbb-box"
+    <div class="thus-hover thus-hover_last ccbb-box"
       v-if="cs.isMine"
       :aria-label="t('common.delete')"
       @click.stop="$emit('newoperation', 'delete')"
@@ -117,7 +117,7 @@ const { t } = useI18n()
     </div>
 
     <!-- 举报按钮 -->
-    <div class="liu-hover liu-hover_last ccbb-box"
+    <div class="thus-hover thus-hover_last ccbb-box"
       v-else
       :aria-label="t('common.report')"
       @click.stop="$emit('newoperation', 'report')"

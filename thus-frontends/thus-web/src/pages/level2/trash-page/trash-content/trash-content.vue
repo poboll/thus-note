@@ -7,12 +7,12 @@ const { t } = useI18n()
 </script>
 <template>
 
-  <div class="liu-mc-container">
+  <div class="thus-mc-container">
     <div class="liu-tc-virtual"></div>
-    <div class="liu-mc-box">
+    <div class="thus-mc-box">
 
-      <div class="liu-highlight-box">
-        <span class="liu-selection">{{ t('tip.delete_banner') }}</span>
+      <div class="thus-highlight-box">
+        <span class="thus-selection">{{ t('tip.delete_banner') }}</span>
       </div>
 
       <thread-list

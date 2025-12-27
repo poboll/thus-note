@@ -1,6 +1,6 @@
 import type { 
   SyncGetAtom, 
-  LiuDownloadParcel,
+  ThusDownloadParcel,
 } from "~/types/cloud/sync-get/types"
 import type { DexieBulkUpdateAtom } from "~/types/other/types-dexie"
 import type { 
@@ -8,14 +8,14 @@ import type {
   ContentLocalTable,
   DraftLocalTable,
 } from "~/types/types-table"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 
-export type CmResolver = (list?: LiuDownloadParcel[]) => void
+export type CmResolver = (list?: ThusDownloadParcel[]) => void
 
 export interface CmTask {
   data: SyncGetAtom
   resolver: CmResolver
-  timeout: LiuTimeout
+  timeout: ThusTimeout
 }
 
 export interface CmOpt {

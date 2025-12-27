@@ -1,5 +1,5 @@
 import type { JSZipObject } from "jszip"
-import type { LiuFileStore, LiuImageStore } from "~/types"
+import type { ThusFileStore, ThusImageStore } from "~/types"
 import type { 
   CommentShow,
   ThreadShow 
@@ -9,7 +9,7 @@ import type {
 } from "~/types/types-table"
 
 
-export interface LiuJSZip {
+export interface ThusJSZip {
   relativePath: string
   file: JSZipObject
 }
@@ -37,6 +37,6 @@ export interface ImportedAsset {
 }
 
 export interface ImgsFiles {
-  images: LiuImageStore[]
-  files: LiuFileStore[]
+  images: ThusImageStore[]
+  files: ThusFileStore[]
 }

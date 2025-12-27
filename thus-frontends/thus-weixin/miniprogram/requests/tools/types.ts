@@ -5,7 +5,7 @@ export interface LiuReqOptions {
   timeout?: number           // 超时的毫秒数，默认为 10000
 }
 
-export interface LiuRqReturn<T> {
+export interface ThusRqReturn<T> {
   code: string
   errMsg?: string
   showMsg?: string

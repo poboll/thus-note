@@ -6,7 +6,7 @@ import { db } from "~/utils/db";
 import type { ContentConfig } from "~/types/other/types-custom"
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
 import type { LiuUploadTask } from "~/types/types-atom";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 async function collect(
   thread: ThreadShow, 
@@ -188,7 +188,7 @@ async function deleteForever(
     oState: "DELETED",
     updatedStamp: now1,
     title: "",
-    liuDesc: [],
+    thusDesc: [],
     images: [],
     files: [],
     tagIds: [],

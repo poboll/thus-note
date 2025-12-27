@@ -1,5 +1,5 @@
 import { nextTick, toRef, useTemplateRef, watch } from "vue";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import type { TagItem } from "../../tools/types";
 
 interface HtlProps {

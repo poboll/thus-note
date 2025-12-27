@@ -1,6 +1,6 @@
-import type { LiuAppType } from "~/types/types-atom";
+import type { ThusAppType } from "~/types/types-atom";
 
-export const appMap: Record<LiuAppType, string> = {
+export const appMap: Record<ThusAppType, string> = {
   "vscode": "VS Code",
   "vscode-insiders": "VS Code - Insiders",
   "cursor": "Cursor",

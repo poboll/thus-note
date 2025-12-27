@@ -4,7 +4,7 @@
     <!-- 编辑模式 -->
     <div v-if="editor.isEditable" class="cb-right-top">
 
-      <div class="liu-no-user-select code-block-tip"
+      <div class="thus-no-user-select code-block-tip"
         v-if="!isMobile"
         :class="{ 
           'code-block-tip_hidden': !editor.isActive('codeBlock') || !editor.isFocused
@@ -31,7 +31,7 @@
     <div v-else class="cb-right-top_read">
 
       <!-- Language, for example, TypeScript -->
-      <div v-if="!showVisualize" class="liu-no-user-select cbrt-tip">
+      <div v-if="!showVisualize" class="thus-no-user-select cbrt-tip">
         <span v-if="langDisplayed">{{ langDisplayed }}</span>
         <span v-else>Auto</span>
       </div>
@@ -39,7 +39,7 @@
 
       <!-- Visualize -->
       <div v-if="showVisualize && canInteract" 
-        class="liu-hover cbrt-tip cbrt-visualize"
+        class="thus-hover cbrt-tip cbrt-visualize"
         @click.stop="onTapVisualize"
       >
         <span>{{ t('editor.one_click') }}</span>
@@ -53,7 +53,7 @@
         @click.stop="onTapCopyCode"
       >
         <svg-icon name="copy" color="var(--code-btn-text)" class="cbrt-btn-svg"></svg-icon>
-        <div class="liu-no-user-select cbrt-btn-text">
+        <div class="thus-no-user-select cbrt-btn-text">
           <span 
             v-if="selectedLanguage === 'plaintext' || selectedLanguage === 'markdown'"
           >{{ t('editor.copy_text') }}</span>
@@ -62,7 +62,7 @@
 
         <div class="cbrt-copied" :class="{ 'cbrt-copied_show': showCopied }">
           <svg-icon name="check" color="var(--code-btn-text)" class="cbrt-btn-svg"></svg-icon>
-          <div class="liu-no-user-select cbrt-btn-text">
+          <div class="thus-no-user-select cbrt-btn-text">
             <span>{{ t('common.copied') }}</span>
           </div>
         </div>
@@ -87,7 +87,7 @@
 
 <script lang="ts">
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import liuUtil from '~/utils/liu-util'
+import liuUtil from '~/utils/thus-util'
 import { useI18n } from 'vue-i18n'
 import { computed, ref, inject } from 'vue'
 import { 
@@ -99,10 +99,10 @@ import type {
   CbcLang,
   CbcFragment,
 } from "./tools/types"
-import liuApi from '~/utils/liu-api'
-import type { LiuTimeout } from '~/utils/basic/type-tool'
+import liuApi from '~/utils/thus-api'
+import type { ThusTimeout } from '~/utils/basic/type-tool'
 import { editorBriefingKey, editorCanInteractKey } from "~/utils/provide-keys"
-import { useRouteAndLiuRouter } from '~/routes/liu-router'
+import { useRouteAndThusRouter } from '~/routes/liu-router'
 import { deviceChaKey } from '~/utils/provide-keys'
 import cui from '~/components/custom-ui'
 
@@ -119,7 +119,7 @@ export default {
     const leaveTip = liuUtil.getHelpTip("Mod_Enter")
     const languages = showProgrammingLanguages()
     const cha = inject(deviceChaKey)
-    const rr = useRouteAndLiuRouter()
+    const rr = useRouteAndThusRouter()
 
     const isBriefing = inject(editorBriefingKey, ref(false))
 
@@ -149,7 +149,7 @@ export default {
       return Boolean(lang === "HTML")
     })
 
-    let copiedTimeout: LiuTimeout
+    let copiedTimeout: ThusTimeout
     const showCopied = ref(false)
 
     const _getCodePlainText = () => {

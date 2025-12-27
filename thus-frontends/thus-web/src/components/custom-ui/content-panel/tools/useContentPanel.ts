@@ -1,5 +1,5 @@
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
 import { onMounted, reactive, watch } from "vue"
 import type { 
@@ -10,11 +10,11 @@ import type {
 } from "./types"
 import { emojiList } from "~/config/emoji-list"
 import { i18n } from "~/locales"
-import liuApi from "~/utils/liu-api"
-import liuUtil from "~/utils/liu-util"
+import liuApi from "~/utils/thus-api"
+import liuUtil from "~/utils/thus-util"
 import contentOperate from "~/hooks/content/content-operate"
 import type { ContentInfoType } from "~/types/types-atom";
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
 
 let _resolve: ContentPanelResolver | undefined
@@ -29,10 +29,10 @@ const cpData = reactive<ContentPanelData>({
   title: "",
 })
 
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 export function initContentPanel() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
   
   onMounted(() => {
@@ -193,7 +193,7 @@ function toResolve(res: ContentPanelRes) {
   _resolve = undefined
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(cpData.show) return
   if(toggleTimeout) {

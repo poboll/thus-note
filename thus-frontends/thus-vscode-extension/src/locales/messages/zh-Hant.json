@@ -9,7 +9,7 @@
   "login.input_auth_code": "填入認證碼",
   "login.logging": "登入中...",
   "login.logged_in": "Hi {nickname}, 歡迎你！",
-  "login.title": "登入如是",
+  "login.title": "登入如是記事",
   "login.placeHolder": "請黏貼認證碼",
   "login.code_tip": "格式舉例: \"ABCD-1234\"",
   "logout.title": "登出",

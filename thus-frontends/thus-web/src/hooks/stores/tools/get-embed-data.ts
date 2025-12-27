@@ -1,6 +1,6 @@
 import thirdLink from "~/config/third-link"
 import valTool from "~/utils/basic/val-tool"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { mastodonDomains } from "~/config/domain-list"
 import { useSystemStore } from "../useSystemStore"
 

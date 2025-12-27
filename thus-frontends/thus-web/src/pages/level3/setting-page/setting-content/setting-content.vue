@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLink from '~/components/common/app-link/app-link.vue';
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 import { useI18n } from "vue-i18n";
 import { useSettingContent } from "./tools/useSettingContent";
 import { useWindowSize } from '~/hooks/useVueUse';
@@ -60,8 +60,8 @@ const iconColor = "var(--main-normal)"
 </script>
 <template>
 
-  <div class="liu-mc-container">
-    <div class="liu-mc-box">
+  <div class="thus-mc-container">
+    <div class="thus-mc-box">
       <div class="liu-mc-spacing"></div>
       
       <!-- profile + membership + accounts -->
@@ -69,13 +69,13 @@ const iconColor = "var(--main-normal)"
 
         <!-- avatar + nickname -->
         <div class="sc-avatar-nickname" v-if="myProfile">
-          <div class="liu-hover sc-avatar-box" @click.stop="onTapAvatar">
-            <LiuAvatar 
+          <div class="thus-hover sc-avatar-box" @click.stop="onTapAvatar">
+            <ThusAvatar 
               :member-show="myProfile" 
               class="sc-avatar"
-            ></LiuAvatar>
+            ></ThusAvatar>
           </div>
-          <div class="liu-no-user-select liu-hover sc-nickname-box"
+          <div class="thus-no-user-select thus-hover sc-nickname-box"
             @click.stop="onTapNickname"
           >
             <div class="sc-nickname">
@@ -93,7 +93,7 @@ const iconColor = "var(--main-normal)"
 
         <!-- membership -->
         <AppLink to="/subscription">
-          <div class="liu-no-user-select liu-hover sc-bar">
+          <div class="thus-no-user-select thus-hover sc-bar">
             <div class="scb-hd">
               <span>{{ t('setting.membership') }}</span>
             </div>
@@ -110,7 +110,7 @@ const iconColor = "var(--main-normal)"
 
         <!-- accounts -->
         <AppLink to="/accounts">
-          <div class="liu-no-user-select liu-hover sc-bar">
+          <div class="thus-no-user-select thus-hover sc-bar">
             <div class="scb-hd">
               <span>{{ t('setting.accounts') }}</span>
             </div>
@@ -128,12 +128,12 @@ const iconColor = "var(--main-normal)"
       </div>
 
       <!-- preference -->
-      <div class="liu-no-user-select sc-title">
+      <div class="thus-no-user-select sc-title">
         <span>{{ t('setting.preference') }}</span>
       </div>
       <div class="sc-box">
         <!-- theme -->
-        <div class="liu-no-user-select liu-hover sc-bar" 
+        <div class="thus-no-user-select thus-hover sc-bar" 
           @click.stop="onTapTheme"
         >
           <div class="scb-hd">
@@ -171,7 +171,7 @@ const iconColor = "var(--main-normal)"
         </div>
 
         <!-- language -->
-        <div class="liu-no-user-select liu-hover sc-bar" 
+        <div class="thus-no-user-select thus-hover sc-bar" 
           @click.stop="onTapLanguage"
         >
           <div class="scb-hd">
@@ -193,7 +193,7 @@ const iconColor = "var(--main-normal)"
         </div>
 
         <!-- font size -->
-        <div class="liu-no-user-select liu-hover sc-bar" 
+        <div class="thus-no-user-select thus-hover sc-bar" 
           @click.stop="onTapFontSize"
         >
           <div class="scb-hd">
@@ -223,12 +223,12 @@ const iconColor = "var(--main-normal)"
       </div>
 
       <!-- Community -->
-      <div class="liu-no-user-select sc-title">
+      <div class="thus-no-user-select sc-title">
         <span>{{ t('setting.community') }}</span>
       </div>
       <div class="sc-box">
         <!-- RED -->
-        <a class="liu-no-user-select liu-hover sc-bar" 
+        <a class="thus-no-user-select thus-hover sc-bar" 
           :href="data.redLink" target="_blank"
         >
           <div class="scb-hd">
@@ -245,7 +245,7 @@ const iconColor = "var(--main-normal)"
         </a>
 
         <!-- wechat gzh -->
-        <div class="liu-no-user-select liu-hover sc-bar"
+        <div class="thus-no-user-select thus-hover sc-bar"
           @click.stop="onTapWxGzh"
         >
           <div class="scb-hd">
@@ -263,7 +263,7 @@ const iconColor = "var(--main-normal)"
 
         <!-- help center -->
         <a v-if="data.documentationLink"
-          class="liu-no-user-select liu-hover sc-bar" 
+          class="thus-no-user-select thus-hover sc-bar" 
           :href="data.documentationLink" target="_blank"
         >
           <div class="scb-hd">
@@ -280,7 +280,7 @@ const iconColor = "var(--main-normal)"
         </a>
 
         <!-- GitHub -->
-        <a class="liu-no-user-select liu-hover sc-bar" 
+        <a class="thus-no-user-select thus-hover sc-bar" 
           :href="data.openSourceLink" target="_blank"
         >
           <div class="scb-hd">
@@ -303,7 +303,7 @@ const iconColor = "var(--main-normal)"
 
         <!-- 开发调试 -->
         <div v-if="data.debugBtn" 
-          class="liu-no-user-select liu-hover sc-bar" 
+          class="thus-no-user-select thus-hover sc-bar" 
           @click.stop="onTapDebug"
         >
           <div class="scb-hd">
@@ -326,7 +326,7 @@ const iconColor = "var(--main-normal)"
           <div class="sc-pad-box" :class="{ 'sc-pad-box_opened': data.openDebug }">
 
             <!-- 移动端调试 -->
-            <div class="liu-no-user-select liu-hover sc-pad-item" 
+            <div class="thus-no-user-select thus-hover sc-pad-item" 
               @click.stop="onToggleMobileDebug(!data.mobileDebug)"
             >
               <div class="sc-pad-title">
@@ -340,7 +340,7 @@ const iconColor = "var(--main-normal)"
             </div>
 
             <!-- 清除缓存 -->
-            <div class="liu-no-user-select liu-hover sc-pad-item" 
+            <div class="thus-no-user-select thus-hover sc-pad-item" 
               @click.stop="onTapClearCache"
             >
               <div class="sc-pad-title">
@@ -357,7 +357,7 @@ const iconColor = "var(--main-normal)"
         </div>
 
         <!-- Add to Home Screen -->
-        <div class="liu-no-user-select liu-hover sc-bar"
+        <div class="thus-no-user-select thus-hover sc-bar"
           v-if="data.showA2HS"
           @click.stop="onTapA2HS"
         >
@@ -375,7 +375,7 @@ const iconColor = "var(--main-normal)"
         </div>
 
         <!-- Version Update -->
-        <div class="liu-no-user-select liu-hover sc-bar"
+        <div class="thus-no-user-select thus-hover sc-bar"
           v-if="hasNewVersion || !data.showA2HS"
           @click.stop="onTapVersionUpdate"
         >
@@ -393,7 +393,7 @@ const iconColor = "var(--main-normal)"
         </div>
         
         <!-- Contact -->
-        <div v-if="data.contactLink" class="liu-no-user-select liu-hover sc-bar"
+        <div v-if="data.contactLink" class="thus-no-user-select thus-hover sc-bar"
           @click.stop="onTapContact"
         >
           <div class="scb-hd">
@@ -408,7 +408,7 @@ const iconColor = "var(--main-normal)"
             </div>
           </div>
         </div>
-        <a v-else-if="data.emailLink" class="liu-no-user-select liu-hover sc-bar" 
+        <a v-else-if="data.emailLink" class="thus-no-user-select thus-hover sc-bar" 
           :href="data.emailLink"
         >
           <div class="scb-hd">
@@ -426,7 +426,7 @@ const iconColor = "var(--main-normal)"
 
         <!-- membership -->
         <AppLink to="/settings/more">
-          <div class="liu-no-user-select liu-hover sc-bar">
+          <div class="thus-no-user-select thus-hover sc-bar">
             <div class="scb-hd">
               <span>{{ t('common.more') }}</span>
             </div>
@@ -442,7 +442,7 @@ const iconColor = "var(--main-normal)"
         </AppLink>
 
         <!-- Logout -->
-        <div class="liu-no-user-select liu-hover sc-bar" 
+        <div class="thus-no-user-select thus-hover sc-bar" 
           @click.stop="onTapLogout"
         >
           <div class="scb-hd">
@@ -462,7 +462,7 @@ const iconColor = "var(--main-normal)"
 
     </div>
 
-    <div class="liu-no-user-select sc-footer" @click.stop="onTapFooter">
+    <div class="thus-no-user-select sc-footer" @click.stop="onTapFooter">
       <span translate="no">Powered by {{appName}} @ {{ version }}</span>
     </div>
 
@@ -471,7 +471,7 @@ const iconColor = "var(--main-normal)"
 </template>
 <style scoped lang="scss">
 
-.liu-mc-box {
+.thus-mc-box {
   min-height: calc(100vh - 60px);
   min-height: calc(100dvh - 60px);
 }
@@ -745,25 +745,25 @@ const iconColor = "var(--main-normal)"
 </style>
 <style>
 
-.liu-switching-theme::view-transition-old(root),
-.liu-switching-theme::view-transition-new(root) {
+.thus-switching-theme::view-transition-old(root),
+.thus-switching-theme::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 
-.liu-switching-theme::view-transition-old(root) {
+.thus-switching-theme::view-transition-old(root) {
   z-index: 9999;
 }
 
-.liu-switching-theme::view-transition-new(root) {
+.thus-switching-theme::view-transition-new(root) {
   z-index: 1;
 }
 
-.liu-switching-theme.liu-dark::view-transition-old(root) {
+.thus-switching-theme.thus-dark::view-transition-old(root) {
   z-index: 1;
 }
 
-.liu-switching-theme.liu-dark::view-transition-new(root) {
+.thus-switching-theme.thus-dark::view-transition-new(root) {
   z-index: 9999;
 }
 

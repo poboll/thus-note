@@ -10,7 +10,7 @@ import APIs from "~/requests/APIs"
 import type { FileSetAPI } from "~/requests/req-types"
 import type { LiuUploadTask } from "~/types/types-atom"
 import { uploadViaQiniu } from "./tools/upload-via-qiniu"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import type { 
   UploadFileAtom, 
   WhenAFileCompleted, 

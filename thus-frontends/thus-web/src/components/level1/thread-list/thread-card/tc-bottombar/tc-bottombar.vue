@@ -25,7 +25,7 @@ const { footerMenu, onTapMenuItem } = useTcBottombar(props, emit)
 <template>
 
   <div class="tcb-container">
-    <div class="liu-no-user-select tcb-time">
+    <div class="thus-no-user-select tcb-time">
       <span v-if="threadData.removedStr">{{ t('thread_related.deleted_at', { date: threadData.removedStr }) }}</span>
       <span v-else-if="threadData.editedStr">{{ t('thread_related.edited_at', { date: threadData.editedStr }) }}</span>
       <span v-else>{{ t('thread_related.created_at', { date: threadData.createdStr }) }}</span>
@@ -34,16 +34,16 @@ const { footerMenu, onTapMenuItem } = useTcBottombar(props, emit)
     <!-- 更多 -->
     <div class="tcb-footer">
       <div class="tcbf-box">
-        <LiuMenu
+        <ThusMenu
           :menu="footerMenu"
           min-width-str="100px"
           placement="top-end"
           @tapitem="onTapMenuItem"
         >
-          <div class="liu-hover tcbf-icon-box">
+          <div class="thus-hover tcbf-icon-box">
             <svg-icon name="more" class="tcbf-icon" :color="default_color"></svg-icon>
           </div>
-        </LiuMenu>
+        </ThusMenu>
       </div>
     </div>
   </div>

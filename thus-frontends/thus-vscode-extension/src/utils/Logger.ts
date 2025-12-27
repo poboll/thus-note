@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import liuEnv from './liu-env'
+import liuEnv from './thus-env'
 
 const customEnv = liuEnv.getEnv()
 

@@ -1,5 +1,5 @@
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
-import type { LiuStateConfig, LiuAtomState } from "~/types/types-atom"
+import type { LiuStateConfig, ThusAtomState } from "~/types/types-atom"
 import type { AddUploadTaskOpt } from "~/utils/cloud/tools/types"
 import type { TcListOption } from "../thread-controller/type"
 import time from "~/utils/basic/time"
@@ -77,7 +77,7 @@ async function stateListSorted(
   newStateIds: string[]
 ) {
   const tmpList = getStates()
-  const newList: LiuAtomState[] = []
+  const newList: ThusAtomState[] = []
   for(let i=0; i<newStateIds.length; i++) {
     const id = newStateIds[i]
     const data = tmpList.find(v => v.id === id)
@@ -90,7 +90,7 @@ async function stateListSorted(
 
 // 设置新的 stateList 进 stateConfig 里
 async function setNewStateList(
-  newList: LiuAtomState[],
+  newList: ThusAtomState[],
   opt?: AddUploadTaskOpt,
 ) {
   const wStore = useWorkspaceStore()

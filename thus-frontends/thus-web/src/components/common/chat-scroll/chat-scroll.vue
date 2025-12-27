@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { type CsEmits, csProps } from "./tools/types"
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import middleBridge from '~/utils/middle-bridge';
 import { useChatScroll } from "./tools/useChatScroll";
 

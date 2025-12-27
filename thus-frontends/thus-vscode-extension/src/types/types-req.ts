@@ -1,6 +1,6 @@
-import type { LiuContent, LiuRemindMe, LiuUploadTask } from "./types-atom"
+import type { LiuContent, ThusRemindMe, LiuUploadTask } from "./types-atom"
 import type { BaseIsOn, OState } from "./types-basic"
-import type { Cloud_ImageStore, LiuSpaceAndMember } from "./types-cloud"
+import type { Cloud_ImageStore, ThusSpaceAndMember } from "./types-cloud"
 import type { EmojiData } from "./types-content"
 import type { ContentConfig } from "./types-custom"
 
@@ -40,7 +40,7 @@ export namespace UserLoginAPI {
   }
 
   export interface Res_Normal {
-    spaceMemberList?: LiuSpaceAndMember[]
+    spaceMemberList?: ThusSpaceAndMember[]
     serial_id?: string
     token?: string
     userId?: string
@@ -54,7 +54,7 @@ export namespace UserSettingsAPI {
     email?: string
     github_id?: number
     open_id?: string
-    spaceMemberList: LiuSpaceAndMember[]
+    spaceMemberList: ThusSpaceAndMember[]
   
     new_serial?: string
     new_token?: string
@@ -71,7 +71,7 @@ export namespace SyncSetAPI {
     first_id?: string    // 能传就传
     spaceId?: string     // 发表时，必填，表示存到哪个工作区
   
-    liuDesc?: LiuContent[]
+    thusDesc?: LiuContent[]
     images?: Cloud_ImageStore[]
 
     editedStamp?: number
@@ -86,7 +86,7 @@ export namespace SyncSetAPI {
     calendarStamp?: number
     remindStamp?: number
     whenStamp?: number
-    remindMe?: LiuRemindMe
+    remindMe?: ThusRemindMe
     pinStamp?: number
   
     createdStamp?: number

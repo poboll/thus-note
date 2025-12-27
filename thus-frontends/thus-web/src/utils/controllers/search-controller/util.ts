@@ -61,7 +61,7 @@ function _getTitleAndDesc(
   let title = v.title ?? ""
   let desc = ""
 
-  const content = transferUtil.tiptapToText(v.liuDesc ?? [])
+  const content = transferUtil.tiptapToText(v.thusDesc ?? [])
   const fileName = _getFileName(v)
 
   if(!title) {

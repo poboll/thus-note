@@ -1,7 +1,7 @@
-# Project Brief: Thus-Note
+# Project Brief: Liubai
 
 ## Core Purpose
-Thus-Note (如是) is a comprehensive personal information management system that combines notes, calendar, tasks, and to-do lists with AI capabilities. The name "Thus-Note" (如是) emphasizes authentic recording and true self-expression.
+Liubai (如是) is a comprehensive personal information management system that combines notes, calendar, tasks, and to-do lists with AI capabilities. The name "Liubai" (如是) emphasizes the importance of "leaving space" - both in design and in life.
 
 ## Primary Goals
 1. Create a unified platform for personal information management
@@ -31,7 +31,7 @@ Thus-Note (如是) is a comprehensive personal information management system tha
 ## Repository Structure
 ```
 .
-├─ thus-backends
+├─ liubai-backends
 │  └─ thus-laf (Backend services)
 │  └─ thus-ffmpeg (Media processing)
 ├─ thus-docs (Documentation)

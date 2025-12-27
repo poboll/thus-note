@@ -35,7 +35,7 @@ const { t } = useI18n()
       'background-color': stateColor
     }"></div>
 
-    <div class="liu-no-user-select tct-state-box" :style="{
+    <div class="thus-no-user-select tct-state-box" :style="{
       'color': stateColor,
     }" @click.stop="$emit('tapstate')">
       <div class="tctsb-bg" :style="{

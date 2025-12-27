@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import NaviLink from "~/components/common/navi-link/navi-link.vue";
 import AppLink from "~/components/common/app-link/app-link.vue";
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 import { useMineContent } from "./tools/useMineContent"
 import { useI18n } from 'vue-i18n';
 import { chooseAvatar } from "~/hooks/shared/chooseAvatar";
@@ -25,13 +25,13 @@ const { onTapAvatar } = chooseAvatar()
   <div class="mc-me">
 
     <!-- avatar -->
-    <LiuAvatar v-if="myProfile" :member-show="myProfile"
+    <ThusAvatar v-if="myProfile" :member-show="myProfile"
       class="mc-me-avatar"
       @click.stop="onTapAvatar"
-    ></LiuAvatar>
+    ></ThusAvatar>
 
     <!-- name -->
-    <div v-if="myProfile?.name" class="liu-no-user-select mc-me-name">
+    <div v-if="myProfile?.name" class="thus-no-user-select mc-me-name">
       <span>{{ myProfile.name }}</span>
     </div>
 
@@ -42,7 +42,7 @@ const { onTapAvatar } = chooseAvatar()
         :distance="4"
         :aria-label="t('premium.badge_tip')"
       >
-        <div class="liu-no-user-select liu-premium">
+        <div class="thus-no-user-select liu-premium">
           <span>🥂</span>
           <span class="liu-premium-text">Premium</span>
         </div>
@@ -58,7 +58,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- favorite -->
     <NaviLink :to="prefix + 'favorite'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="star" class="mci-icon"
             style="padding-block-end: 3px;"
@@ -77,7 +77,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- tags -->
     <NaviLink :to="prefix + 'tags'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="tag" class="mci-icon"
             style="padding-block-end: 3px;"
@@ -96,7 +96,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- kanban -->
     <NaviLink :to="prefix + 'state'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="priority" class="mci-icon"></SvgIcon>
         </div>
@@ -113,7 +113,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- schedule -->
     <NaviLink :to="prefix + 'schedule'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="schedule" class="mci-icon"></SvgIcon>
         </div>
@@ -135,7 +135,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- membership -->
     <NaviLink v-if="CONNECTORS" to="/subscription">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="membership" class="mci-icon"></SvgIcon>
         </div>
@@ -152,7 +152,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- connections -->
     <NaviLink v-if="CONNECTORS" :to="prefix + 'connectors'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="hub" class="mci-icon"></SvgIcon>
         </div>
@@ -169,7 +169,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- settings -->
     <NaviLink :to="prefix + 'settings'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="setting" class="mci-icon"></SvgIcon>
         </div>
@@ -186,7 +186,7 @@ const { onTapAvatar } = chooseAvatar()
 
     <!-- trash -->
     <NaviLink :to="prefix + 'trash'">
-      <div class="iu-no-user-select liu-hover mc-item">
+      <div class="iu-no-user-select thus-hover mc-item">
         <div class="mci-icon-box">
           <SvgIcon :color="iconColor" name="delete_400" class="mci-icon"></SvgIcon>
         </div>

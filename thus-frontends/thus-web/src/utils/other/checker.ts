@@ -3,7 +3,7 @@
 import cui from "~/components/custom-ui"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import type { ThreadShow } from "~/types/types-content"
-import type { LiuMyContext } from "~/types"
+import type { ThusMyContext } from "~/types"
 import localCache from "~/utils/system/local-cache"
 
 interface CheckerParam {
@@ -35,7 +35,7 @@ const getUserId = (
 // 获取我的上下文: userId / memberId / spaceId / spaceType
 const getMyContext = (
   opt: CheckerParam = {}
-): LiuMyContext | undefined => {
+): ThusMyContext | undefined => {
   opt.showTip = opt.showTip ?? true
 
   const { local_id: userId } = localCache.getPreference()

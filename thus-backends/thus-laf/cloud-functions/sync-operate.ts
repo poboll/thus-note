@@ -13,7 +13,7 @@ import {
 import * as vbot from "valibot"
 import { 
   type CryptoCipherAndIV, 
-  type LiuRqReturn, 
+  type ThusRqReturn, 
   type Table_AiChat, 
   type Table_AiRoom, 
   type Table_Content, 
@@ -44,7 +44,7 @@ export async function main(ctx: FunctionContext) {
   const user = vRes.userData
   
   // 3. decide which path to run
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   const b = body as SyncOperateAPI.Param
   if(b.operateType === "agree-aichat") {
     res = await agree_aichat(user, b.chatId)
@@ -64,7 +64,7 @@ export async function main(ctx: FunctionContext) {
 async function get_ai_detail(
   user: Table_User,
   chatId: string,
-): Promise<LiuRqReturn<SyncOperateAPI.Res_GetAiDetail>> {
+): Promise<ThusRqReturn<SyncOperateAPI.Res_GetAiDetail>> {
   // 1. get shared data
   const data1 = await getSharedData(user, chatId)
   if(!data1.pass) return data1.err
@@ -89,7 +89,7 @@ interface SharedData {
 async function get_aichat(
   user: Table_User,
   chatId: string,
-): Promise<LiuRqReturn<SyncOperateAPI.Res_GetAichat>> {
+): Promise<ThusRqReturn<SyncOperateAPI.Res_GetAichat>> {
   // 1. get shared data
   const data1 = await getSharedData(user, chatId)
   if(!data1.pass) return data1.err
@@ -129,7 +129,7 @@ async function get_aichat(
 async function agree_aichat(
   user: Table_User,
   chatId: string,
-): Promise<LiuRqReturn<SyncOperateAPI.Res_AgreeAichat>> {
+): Promise<ThusRqReturn<SyncOperateAPI.Res_AgreeAichat>> {
   // 1. get shared data
   const data1 = await getSharedData(user, chatId)
   if(!data1.pass) return data1.err
@@ -171,8 +171,8 @@ async function agree_aichat(
   const aesKey = getAESKey() ?? ""
   const enc_title = encryptDataWithAES(waitingData.title, aesKey)
   let enc_desc: CryptoCipherAndIV | undefined
-  if(waitingData.liuDesc) {
-    enc_desc = encryptDataWithAES(waitingData.liuDesc, aesKey)
+  if(waitingData.thusDesc) {
+    enc_desc = encryptDataWithAES(waitingData.thusDesc, aesKey)
   }
   // TODO: enc_search_text
 

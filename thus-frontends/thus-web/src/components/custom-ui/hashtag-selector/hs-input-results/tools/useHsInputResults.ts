@@ -15,9 +15,9 @@ import {
 } from "~/utils/system/tag-related";
 import { searchLocal } from "~/utils/system/tag-related/search";
 import type { TagShow } from "~/types/types-content";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { initRecent, getRecent, addRecent } from "./tag-recent";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import { useKeyboard } from "~/hooks/useKeyboard";
 import time from "~/utils/basic/time";
 

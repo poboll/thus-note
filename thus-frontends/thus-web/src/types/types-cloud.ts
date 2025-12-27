@@ -7,7 +7,7 @@ import type {
 } from "./types-basic"
 import type { 
   LiuContent, 
-  LiuRemindMe, 
+  ThusRemindMe, 
   LiuStateConfig, 
   TagView,
 } from "./types-atom"
@@ -65,7 +65,7 @@ export interface Cloud_ImageStore {
 /** 登录时，后端传回来的用户基础信息
  * 只有基础的，复杂的数据配置，需要另外调用
 */
-export interface LiuSpaceAndMember {
+export interface ThusSpaceAndMember {
   // 关于 member 的信息
   memberId: string
   member_name?: string
@@ -155,11 +155,11 @@ export namespace SyncOperateAPI {
 
   export interface WaitingData {
     title?: string
-    liuDesc?: LiuContent[]
+    thusDesc?: LiuContent[]
     calendarStamp?: number
     remindStamp?: number
     whenStamp?: number
-    remindMe?: LiuRemindMe
+    remindMe?: ThusRemindMe
   }
 
   export type ContentType = "note" | "todo" | "calendar"

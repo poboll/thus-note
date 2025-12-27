@@ -1,6 +1,6 @@
 import type { ThreadShow } from "~/types/types-content"
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 function saveContentToCloud(
   thread: ThreadShow,

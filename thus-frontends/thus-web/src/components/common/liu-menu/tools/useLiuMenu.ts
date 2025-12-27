@@ -1,8 +1,8 @@
 import { nextTick, useTemplateRef } from "vue"
 import { hideAllPoppers } from 'floating-vue'
-import type { LiuMenuProps } from "./types"
+import type { ThusMenuProps } from "./types"
 
-export function useLiuMenu(props: LiuMenuProps) {
+export function useThusMenu(props: ThusMenuProps) {
 
   const maskEl = useTemplateRef<HTMLElement>("maskEl")
 

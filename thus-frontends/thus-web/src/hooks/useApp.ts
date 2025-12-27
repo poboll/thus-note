@@ -1,14 +1,14 @@
 import { useGlobalLoading } from "./tools/useGlobalLoading"
 import { useGlobalEvent } from "./tools/useGlobalEvent";
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { init as initForSystem } from "~/utils/system/init"
 import { onMounted, onUnmounted, provide } from "vue";
 import { useGlobalStateStore } from "./stores/useGlobalStateStore";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import { useIdsChanged } from "./tools/useIdsChanged";
 import localCache from "~/utils/system/local-cache";
 import { deviceChaKey } from "~/utils/provide-keys";
-import type { GetChaRes } from "~/utils/liu-api/tools/types";
+import type { GetChaRes } from "~/utils/thus-api/tools/types";
 import { listenLoaded, listenWxJSBridgeReady } from "./tools/listen-loaded"
 import { initServiceWorker } from "./pwa/useServiceWorker"
 import { initListenError } from "./tools/initListenError";
@@ -99,7 +99,7 @@ function initDeviceCha(cha: GetChaRes) {
 }
 
 function printInit() {
-  const version = LIU_ENV.version
+  const version = THUS_ENV.version
   const appName = liuEnv.getEnv().APP_NAME
   console.log(`You are using ${appName} v${version}`)
   console.log(" ")

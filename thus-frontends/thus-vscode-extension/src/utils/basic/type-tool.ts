@@ -23,7 +23,7 @@ export type SimplePromise = () => Promise<void>
 
 export type ReturnPromise<R> = () => Promise<R>
 
-export type LiuTimeout = ReturnType<typeof setTimeout> | undefined
+export type ThusTimeout = ReturnType<typeof setTimeout> | undefined
 
 export type LiuInterval = ReturnType<typeof setInterval> | undefined
 

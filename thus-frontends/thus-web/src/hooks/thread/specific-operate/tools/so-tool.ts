@@ -1,6 +1,6 @@
 import type { ThreadShow } from "~/types/types-content"
 import time from "~/utils/basic/time"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 const setEdit = (
   newThread: ThreadShow

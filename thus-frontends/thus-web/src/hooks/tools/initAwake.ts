@@ -1,6 +1,6 @@
 // listen to page visible after a while
 
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import { useActiveSyncNum } from "../useCommon";
 import { watch } from "vue";
 import { useSystemStore } from "../stores/useSystemStore";

@@ -1,19 +1,19 @@
 import { defaultData, type CeData } from "./types"
 import type { ContentLocalTable } from "~/types/types-table"
-import type { LiuRemindMe } from "~/types/types-atom"
+import type { ThusRemindMe } from "~/types/types-atom"
 import time from "~/utils/basic/time"
 
 // 从 thread 中判断 "xx 之后提醒我" 这个值怎么转成确切时间点
 export function getRemindMeFromThread(
   thread: ContentLocalTable
-): LiuRemindMe | undefined {
+): ThusRemindMe | undefined {
   const oldRemindMe = thread.remindMe
   if(!oldRemindMe) return
   const oldType = oldRemindMe.type
   if(oldType === "specific_time" || oldType === "early") return oldRemindMe
   const remindStamp = thread.remindStamp
   if(!remindStamp) return
-  const newRemindMe: LiuRemindMe = {
+  const newRemindMe: ThusRemindMe = {
     type: "specific_time",
     specific_stamp: remindStamp
   }

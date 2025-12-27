@@ -1,13 +1,13 @@
 import { useWindowSize } from "~/hooks/useVueUse"
 import type { LayoutStore } from "../../useLayoutStore"
 import { storeToRefs } from "pinia"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import cfg from "~/config"
 import type { SbData } from "./types"
 import type { SimpleFunc } from "~/utils/basic/type-tool"
 import time from "~/utils/basic/time"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import liuUtil from "~/utils/liu-util"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import liuUtil from "~/utils/thus-util"
 import { useKeyboard } from "~/hooks/useKeyboard"
 
 export function useSbKeyboard(
@@ -18,7 +18,7 @@ export function useSbKeyboard(
   LISTEN_DELAY: number,        // 防抖节流的阈值毫秒数
 ) {
   
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
   const { sidebarStatus, sidebarWidth } = storeToRefs(layout)
   const { width } = useWindowSize()
 

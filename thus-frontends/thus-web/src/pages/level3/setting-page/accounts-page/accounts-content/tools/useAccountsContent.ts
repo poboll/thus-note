@@ -1,14 +1,14 @@
 import { reactive, watch } from "vue"
 import type { AcData } from "./types"
 import { pageStates } from "~/utils/atom"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import cui from "~/components/custom-ui"
 import { useAwakeNum } from "~/hooks/useCommon"
 import { CloudEventBus } from "~/utils/cloud/CloudEventBus"
 import type { MenuItem } from "~/components/common/liu-menu/tools/types"
 import { i18n } from "~/locales"
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 
 export function useAccountsContent() {
 

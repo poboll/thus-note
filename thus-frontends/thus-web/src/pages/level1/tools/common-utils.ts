@@ -1,5 +1,5 @@
-import liuUtil from "~/utils/liu-util";
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import liuUtil from "~/utils/thus-util";
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import type { Fetch_UserLoginNormal } from "./requests"
 import { useLoginStore } from "../login-page/tools/useLoginStore"
 import { showEmojiTip, showErrMsg } from "./show-msg"
@@ -35,7 +35,7 @@ export async function encryptTextWithRSA(pem: string, text: string) {
 
 // 调用登录函数之后的，统一处理函数
 export async function afterFetchingLogin(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   res: Fetch_UserLoginNormal,
 ) {
   console.log("afterFetching.........")

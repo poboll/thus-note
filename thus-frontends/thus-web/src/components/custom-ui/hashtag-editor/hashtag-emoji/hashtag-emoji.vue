@@ -53,7 +53,7 @@ const { t } = useI18n()
 
           <template v-for="(item, index) in CUSTOM_EMOJIS" :key="index">
         
-            <div class="liu-hover he-item" @click="onTapEmoji(item, hide)">
+            <div class="thus-hover he-item" @click="onTapEmoji(item, hide)">
               <span>{{ item }}</span>
             </div>
 

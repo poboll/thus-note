@@ -33,16 +33,16 @@ const onTapWhenItem = (item: MenuItem, index: number) => {
     </div>
 
     <div class="fb-desc">
-      <LiuMenu
+      <ThusMenu
         :menu="menu"
         @tapitem="onTapWhenItem"
         min-width-str="70px"
         mask-z-index="2600"
       >
-        <div class="liu-no-user-select fb-text">
+        <div class="thus-no-user-select fb-text">
           <span>{{ fileShowName }}</span>
         </div>
-      </LiuMenu>
+      </ThusMenu>
     </div>
     
   </div>

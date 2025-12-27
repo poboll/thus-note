@@ -1,11 +1,11 @@
 // Function Name: file-utils
 
 import type {
-  LiuTimeout,
+  ThusTimeout,
   DownloadFileOpt,
   DownloadFileRes,
   DownloadFileResolver,
-  LiuRqReturn,
+  ThusRqReturn,
   Cloud_ImageStore,
   Cloud_FileStore,
   LiuErrReturn,
@@ -46,7 +46,7 @@ export function downloadFile(
   url: string,
   opt?: DownloadFileOpt,
 ): Promise<DownloadFileRes> {
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
   const max_sec = opt?.max_sec ?? 30
 
   const _listen = (a: DownloadFileResolver) => {
@@ -196,7 +196,7 @@ export async function downloadAndUpload(
 
   // 2. get Uint8Array from response
   const res2 = data.res
-  let result: LiuRqReturn<DownloadUploadRes> = { 
+  let result: ThusRqReturn<DownloadUploadRes> = { 
     code: "E4000", 
     errMsg: "oss of param is not matched",
   }
@@ -221,7 +221,7 @@ export function getAcceptImgTypesString() {
 async function prepareToUploadToQiniu(
   res: Response,
   opt: DownloadUploadOpt,
-): Promise<LiuRqReturn<DownloadUploadRes>> {
+): Promise<ThusRqReturn<DownloadUploadRes>> {
   // 0. get bytes
   const fileBlob = await res.blob()
   const arrayBuffer = await fileBlob.arrayBuffer()
@@ -342,7 +342,7 @@ export async function uploadToQiniu(
   uint8arr: Uint8Array,
   key: string,
   uploadToken: string,
-): Promise<LiuRqReturn<Param_WebhookQiniu>> {
+): Promise<ThusRqReturn<Param_WebhookQiniu>> {
   const config = new qiniu.conf.Config()
   const formUploader = new qiniu.form_up.FormUploader(config)
   const putExtra = new qiniu.form_up.PutExtra()

@@ -9,17 +9,17 @@ import type {
   ThirdPartyType,
 } from "./types"
 import { searchFuncsKey } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import valTool from "~/utils/basic/val-tool";
 import time from "~/utils/basic/time";
 import searchController from "~/utils/controllers/search-controller";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { storeToRefs } from "pinia";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { useSeKeyboard } from "./useSeKeyboard";
 import sideBar from "~/views/side-bar";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import { 
   toListenKeyboard, 
   cancelListenKeyboard,
@@ -45,7 +45,7 @@ const seData = reactive<SearchEditorData>({
   innerList: [],
 })
 let _resolve: SeResolver | undefined
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 export function initSearchEditor() {
   initProvideData()
@@ -138,7 +138,7 @@ async function onTapClearItem(listType: SearchListType, atomId: string) {
 
 
 function listenRouteChange() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const { query, meta } = newV
     if(!query) return
@@ -170,7 +170,7 @@ function listenInputChange() {
   const reloadNum = toRef(seData, "reloadNum")
   const DURATION = 150
   let lastSearchStamp = 0
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
 
   const whenEmpty = async () => {
     seData.trimTxt = ""

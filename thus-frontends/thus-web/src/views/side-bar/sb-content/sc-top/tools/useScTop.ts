@@ -1,10 +1,10 @@
 import type { MenuItem } from "~/components/common/liu-menu/tools/types";
 import type { ScTopEmits } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { usePrefix, useMyProfile } from "~/hooks/useCommon";
 import cui from "~/components/custom-ui";
 import middleBridge from "~/utils/middle-bridge";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 const MORE_ITEMS: MenuItem[] = [
   {
@@ -18,7 +18,7 @@ const MORE_ITEMS: MenuItem[] = [
 ]
 
 export function useScTop(emits: ScTopEmits) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const { myProfile, isPremium } = useMyProfile()
   const { prefix } = usePrefix()
 

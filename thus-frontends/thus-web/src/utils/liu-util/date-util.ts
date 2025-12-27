@@ -1,6 +1,6 @@
 import dateTool from '~/utils/basic/date-tool'
 import { i18n } from '~/locales'
-import type { LiuRemindEarly, LiuRemindLater, LiuRemindMe } from '~/types/types-atom'
+import type { LiuRemindEarly, LiuRemindLater, ThusRemindMe } from '~/types/types-atom'
 import { REMIND_LATER, REMIND_EARLY } from "~/config/atom"
 import type { SupportedLocale } from '~/types/types-locale'
 import time from '../basic/time'
@@ -182,7 +182,7 @@ export function getEarlyStamp(
 
 export function getCalendarStamp(
   whenStamp: number | undefined,
-  remindMe: LiuRemindMe | undefined
+  remindMe: ThusRemindMe | undefined
 ) {
   if(whenStamp) return formatStamp(whenStamp)
   if(!remindMe) return
@@ -197,7 +197,7 @@ export function getCalendarStamp(
 }
 
 export function getRemindStamp(
-  remindMe: LiuRemindMe | undefined,
+  remindMe: ThusRemindMe | undefined,
   whenStamp: number | undefined,
 ) {
   if(!remindMe) return
@@ -216,7 +216,7 @@ export function getRemindStamp(
 // 用于发布前/编辑时，展示 "提醒我"
 export function getRemindMeStr(
   t: ComposerTranslation,
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
 ) {
   if(!remindMe) return ""
   const { type, early_minute, later, specific_stamp } = remindMe
@@ -238,7 +238,7 @@ export function getRemindMeStr(
 // 用于发布后，展示 "提醒我"
 export function getRemindMeStrAfterPost(
   remindStamp: number,
-  remindMe: LiuRemindMe
+  remindMe: ThusRemindMe
 ) {
   if(!remindStamp) return ""
   const { type, early_minute, later, specific_stamp } = remindMe

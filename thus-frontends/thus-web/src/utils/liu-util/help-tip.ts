@@ -1,5 +1,5 @@
 
-import liuApi from "../liu-api"
+import liuApi from "../thus-api"
 
 const MAC_MAPS = {
   "Mod_Enter": "⌘ + ↵",

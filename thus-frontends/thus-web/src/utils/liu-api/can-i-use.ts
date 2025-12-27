@@ -1,7 +1,7 @@
 import { isPrefersReducedMotion } from "./device"
 import { getCharacteristic } from "./characteristic"
 import valTool from "../basic/val-tool"
-import liuEnv from "../liu-env"
+import liuEnv from "../thus-env"
 import type { LiuYorN } from "~/types/types-basic"
 
 function isSafeBrowser() {

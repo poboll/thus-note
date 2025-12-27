@@ -1,4 +1,4 @@
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import type { CommentStorageAtom, CommentStorageType } from "./types"
 import localReq from "./req/local-req"
 

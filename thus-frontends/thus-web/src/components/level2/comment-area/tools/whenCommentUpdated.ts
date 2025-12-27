@@ -3,7 +3,7 @@ import valTool from "~/utils/basic/val-tool"
 import type { CommentAreaData } from "./types"
 import type { CommentStoreState } from "~/hooks/stores/useCommentStore"
 import commentController from "~/utils/controllers/comment-controller/comment-controller"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 /** 当 comment-area 监听到 comment-store 发生变化时
  *   相应地做一些处理，比如添加 / 编辑 / 删除 item 

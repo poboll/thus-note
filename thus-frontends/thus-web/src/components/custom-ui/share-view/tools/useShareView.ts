@@ -8,17 +8,17 @@ import type {
   ShareDataType,
   ShareViaType,
 } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
 import { handleShareView } from "./handleShareView"
-import liuUtil from "~/utils/liu-util"
-import liuEnv from "~/utils/liu-env"
+import liuUtil from "~/utils/thus-util"
+import liuEnv from "~/utils/thus-env"
 import { saveAs as fileSaverSaveAs } from "file-saver"
 import time from "~/utils/basic/time"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import { showSnackBar } from "../../snack-bar/index"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import cfg from "~/config"
 
 let _resolve: SvResolver | undefined
@@ -42,7 +42,7 @@ const svData = reactive<ShareViewData>({
   markdown: "",
 })
 const queryKey = "shareview"
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 export function initShareView() {
   listenRouteChange()
@@ -151,7 +151,7 @@ function onTapIcs(e: MouseEvent) {
 }
 
 function listenRouteChange() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const { query } = newV
     if(!query) return
@@ -186,7 +186,7 @@ function toResolve(res: ShareViewRes) {
   _resolve = undefined
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(show.value) return
   if(toggleTimeout) {

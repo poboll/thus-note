@@ -1,6 +1,6 @@
 import { reactive, watch } from "vue"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import type {
   BcParam,
   BcData,
@@ -9,15 +9,15 @@ import type {
 } from "./types"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
 import { toListenEscKeyUp, cancelListenEscKeyUp } from "../../tools/listen-keyup"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 
 let _resolve: BcResolver | undefined
 
 const TRANSITION_DURATION = 350
 const queryKey = "browsecode"
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 const bcData = reactive<BcData>({
   code: "",
@@ -37,7 +37,7 @@ export function initBrowseCode() {
 }
 
 function listenRouteChange() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const { query } = newV
     if (!query) return
@@ -86,7 +86,7 @@ export function browseCode(param: BcParam) {
   return new Promise(_wait)
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if (bcData.show) return
   if (toggleTimeout) {

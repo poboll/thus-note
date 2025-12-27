@@ -9,7 +9,7 @@ import type { TagView } from './types-atom'
 
 export type LiuTagTreeStat = HeTreeStat<TagView>
 
-export interface LiuFileStore {
+export interface ThusFileStore {
   id: string
   name: string
   lastModified: number       // 文件最后修改的时间戳，精确到 ms
@@ -44,7 +44,7 @@ export interface LiuExif {
   Model?: string            // 拍摄时的设备，即使图片经过软件再编辑，此值仍可能存在
 }
 
-export interface LiuImageStore {
+export interface ThusImageStore {
   id: string
   name: string
   lastModified: number       // 文件最后修改的时间戳，精确到 ms
@@ -77,14 +77,14 @@ export interface LiuUser {
   lastRefresh: number
 }
 
-export interface LiuMyContext {
+export interface ThusMyContext {
   userId: string
   memberId: string
   spaceId: string
   spaceType: SpaceType
 }
 
-export type LiuFileAndImage = LiuFileStore | LiuImageStore
+export type LiuFileAndImage = ThusFileStore | ThusImageStore
 
 export type RouteItem = RouteLocationResolvedGeneric | RouteLocationNormalized
 

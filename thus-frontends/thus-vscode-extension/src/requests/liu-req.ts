@@ -1,13 +1,13 @@
-import type { LiuAuthStatus, LiuRqOpt, LiuRqReturn } from "~/types";
+import type { ThusAuthStatus, ThusRqOpt, ThusRqReturn } from "~/types";
 import { handleAfterFetching, handleBeforeFetching } from "./tools/req-funcs";
 import * as vscode from "vscode"
-import liuInfo from "~/utils/liu-info";
+import liuInfo from "~/utils/thus-info";
 import time from "~/utils/basic/time";
 import valTool from "~/utils/basic/val-tool";
 import typeCheck from "~/utils/basic/type-check";
 
-let authStatus: LiuAuthStatus | undefined
-function setAuthStatus(data: LiuAuthStatus) {
+let authStatus: ThusAuthStatus | undefined
+function setAuthStatus(data: ThusAuthStatus) {
   authStatus = data
 }
 
@@ -48,7 +48,7 @@ async function request<
 >(
   url: string,
   body?: U,
-  opt?: LiuRqOpt,
+  opt?: ThusRqOpt,
 ) {
   const b = await _getBody(body)
   let init: RequestInit = {
@@ -100,7 +100,7 @@ async function request<
   }
 
   if(!res) {
-    console.warn("liu-req fail: ")
+    console.warn("thus-req fail: ")
     console.log(res)
     console.log(" ")
     return { code: "C0001" }
@@ -117,7 +117,7 @@ async function request<
     return { code: `B0001` }
   }
 
-  let res2 = await res.json() as LiuRqReturn<T>
+  let res2 = await res.json() as ThusRqReturn<T>
 
   if(res2.data && authStatus) {
     const newData = await handleAfterFetching(res2.data, authStatus.client_key)

@@ -1,7 +1,7 @@
 import { inject, onDeactivated, ref, watch } from "vue"
-import type { ImageShow, LiuFileStore, LiuImageStore } from "~/types"
+import type { ImageShow, ThusFileStore, ThusImageStore } from "~/types"
 import imgHelper from "~/utils/files/img-helper"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { mvFileKey } from "~/utils/provide-keys"
 import type { CeData } from "./types"
 import valTool from "~/utils/basic/val-tool"
@@ -76,7 +76,7 @@ function whenCoversSorted(
   ceData: CeData,
 ) {
   const oldImages = ceData.images ?? []
-  const newImages: LiuImageStore[] = []
+  const newImages: ThusImageStore[] = []
   for(let i=0; i<newCovers.length; i++) {
     const id = newCovers[i].id
     const data = oldImages.find(v => v.id === id)
@@ -147,14 +147,14 @@ async function handleOtherFiles(
   ceData: CeData,
   files: File[],
 ) {
-  const fileList: LiuFileStore[] = []
+  const fileList: ThusFileStore[] = []
   const MB = 1024 * 1024
 
   for(let i=0; i<files.length; i++) {
     const v = files[i]
     const arrayBuffer = await v.arrayBuffer()
     const suffix = valTool.getSuffix(v.name)
-    const obj: LiuFileStore = {
+    const obj: ThusFileStore = {
       id: ider.createFileId(),
       name: v.name,
       lastModified: v.lastModified,

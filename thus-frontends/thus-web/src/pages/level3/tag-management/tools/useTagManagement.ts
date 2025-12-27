@@ -1,7 +1,7 @@
 import { reactive, type Ref, watch } from "vue";
 import type { TmData } from "./types";
 import { storeToRefs } from "pinia";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
 import { getCurrentSpaceTagList, useTagsTree } from "~/utils/system/tag-related";
 import valTool from "~/utils/basic/val-tool";
@@ -23,7 +23,7 @@ export function useTagManagement() {
     tmData.toPath = newV + "tag/"
   }, { immediate: true })
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const gStore = useGlobalStateStore()
   const { tagChangedNum } = storeToRefs(gStore)
 

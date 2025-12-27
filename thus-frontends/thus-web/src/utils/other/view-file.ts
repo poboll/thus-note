@@ -1,9 +1,9 @@
 // [查看文件] 的具体操作
-import type { LiuFileStore } from "~/types"
+import type { ThusFileStore } from "~/types"
 import imgHelper from "../files/img-helper"
 import cui from "~/components/custom-ui"
 import fileHelper from "../files/file-helper"
-import liuUtil from "../liu-util"
+import liuUtil from "../thus-util"
 import { saveAs as fileSaverSaveAs } from 'file-saver';
 
 function isNormalImage(mimeType: string) {
@@ -17,7 +17,7 @@ function isNormalImage(mimeType: string) {
 //   图片: 直接用 preview-image 显示
 //   应用: 直接下载
 //   其他: 开启新的窗口显示
-export async function viewFile(store: LiuFileStore) {
+export async function viewFile(store: ThusFileStore) {
   const mimeType = store.mimeType.toLowerCase()
 
   // 图片

@@ -1,12 +1,12 @@
 import { ref } from "vue";
 import cfg from "~/config";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import valTool from "~/utils/basic/val-tool";
 
 const enable = ref(false)
 const number = ref(0)
 const transition = ref(300)   // 移动时要消耗多少毫秒数
-let timeout: LiuTimeout
+let timeout: ThusTimeout
 
 export function initGlobalLoading() {
   return {

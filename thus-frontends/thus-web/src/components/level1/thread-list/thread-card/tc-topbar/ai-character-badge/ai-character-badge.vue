@@ -26,7 +26,7 @@ const { t } = useI18n()
 
   <div class="state-badge-container">
     
-    <div class="liu-no-user-select tct-state-box" :style="{
+    <div class="thus-no-user-select tct-state-box" :style="{
       'color': mainColor,
     }">
       <!-- bg color -->

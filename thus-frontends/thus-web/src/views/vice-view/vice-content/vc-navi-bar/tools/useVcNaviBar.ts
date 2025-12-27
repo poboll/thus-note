@@ -1,6 +1,6 @@
 import { reactive, watch } from "vue"
 import type { VnbData } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import valTool from "~/utils/basic/val-tool"
 
 export function useVcNaviBar() {
@@ -9,7 +9,7 @@ export function useVcNaviBar() {
     showCloseBtn: true,  
   })
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const q = newV.query
     const { vlink, vfile } = q

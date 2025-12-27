@@ -1,16 +1,16 @@
 import type { LiuLimit } from "~/types/types-atom"
-import liuEnv from "../liu-env"
+import liuEnv from "../thus-env"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import cui from "~/components/custom-ui"
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router"
 
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 function init() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
 }
 
 function getMode() {

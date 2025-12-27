@@ -1,4 +1,4 @@
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import type { CommentDetailData } from "./types";
 import { useSyncStore, type SyncStoreItem } from "~/hooks/stores/useSyncStore";
 import { storeToRefs } from "pinia";

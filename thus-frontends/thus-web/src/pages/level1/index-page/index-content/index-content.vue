@@ -28,11 +28,11 @@ const { t } = useI18n()
 </script>
 <template>
 
-  <div class="liu-mc-container">
+  <div class="thus-mc-container">
     <div class="mc-virtual"
       :class="{ 'mc-virtual_short': !showTop }"
     ></div>
-    <div class="liu-mc-box">
+    <div class="thus-mc-box">
       
       <CustomEditor></CustomEditor>
       <div class="liu-mc-spacing"></div>
@@ -41,7 +41,7 @@ const { t } = useI18n()
 
       <!-- title: Today or Next 24 hrs -->
       <div v-if="showTitle && calendarTitleKey" 
-        class="liu-no-user-select ic-title"
+        class="thus-no-user-select ic-title"
       >
         <div class="ic-title_calendar">
           <span>{{ t(calendarTitleKey) }}</span>
@@ -65,7 +65,7 @@ const { t } = useI18n()
 
       <!-- title: Inbox -->
       <div v-if="showTitle" 
-        class="liu-no-user-select ic-title ic-title_inbox"
+        class="thus-no-user-select ic-title ic-title_inbox"
       >
         <span>{{ t('index.inbox') }}</span>
       </div>

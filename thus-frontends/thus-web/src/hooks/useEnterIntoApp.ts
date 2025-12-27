@@ -1,6 +1,6 @@
 // 当用户进入 "应用内" 时触发
 import { toRef, watch, type WatchStopHandle } from "vue"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { SimpleFunc, BoolFunc } from "~/utils/basic/type-tool"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 
@@ -26,7 +26,7 @@ export function useEnterIntoApp(
   
   const wStore = useWorkspaceStore()
   const spaceId = toRef(wStore, "spaceId")
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
 
   watchStop = watch([route, spaceId], (
     [newV1, newV2]

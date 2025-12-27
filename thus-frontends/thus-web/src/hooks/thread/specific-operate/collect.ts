@@ -1,10 +1,10 @@
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore"
 import type { ThreadShow } from "~/types/types-content"
 import time from "~/utils/basic/time"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import cui from "~/components/custom-ui"
 import dbOp from "../db-op"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 // 处理动态 "收藏" 的公共逻辑
 export const toCollect = async (

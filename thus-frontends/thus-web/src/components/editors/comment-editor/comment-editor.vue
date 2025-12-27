@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCommentEditor } from './tools/useCommentEditor';
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 import EditorCore from "../editor-core/editor-core.vue"
 import type { PropType } from 'vue';
 import EditingBubbleMenu from "../shared/editing-bubble-menu/editing-bubble-menu.vue";
@@ -75,10 +75,10 @@ const {
   <div v-if="myProfile" class="ce-container">
 
     <!-- 头像 -->
-    <LiuAvatar
+    <ThusAvatar
       :member-show="myProfile"
       class="ce-avatar"
-    ></LiuAvatar>
+    ></ThusAvatar>
 
     <!-- 编辑区域 -->
     <div class="ce-main">

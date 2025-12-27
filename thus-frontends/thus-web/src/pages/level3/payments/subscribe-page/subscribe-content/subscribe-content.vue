@@ -29,17 +29,17 @@ watch(() => scData.state, (newV) => {
     :p-state="scData.state"
   ></PlaceholderView>
 
-  <div class="liu-mc-container">
+  <div class="thus-mc-container">
     <div class="liu-tc-virtual"></div>
-    <div class="liu-mc-box sc-box" v-if="spi && scData.state < 0">
+    <div class="thus-mc-box sc-box" v-if="spi && scData.state < 0">
 
       <!-- 方案标题 -->
-      <div class="liu-no-user-select sc-title">
+      <div class="thus-no-user-select sc-title">
         <span>{{ spi.title }}</span>
       </div>
 
       <!-- price -->
-      <div class="liu-no-user-select sc-price" v-if="scData.price_1">
+      <div class="thus-no-user-select sc-price" v-if="scData.price_1">
         <span class="scp-tag">{{ spi.symbol }}</span>
 
         <!-- integral -->
@@ -73,13 +73,13 @@ watch(() => scData.state, (newV) => {
       </div>
 
       <!-- 徽章 或 终身会员 -->
-      <div class="liu-no-user-select sc-badge">
+      <div class="thus-no-user-select sc-badge">
         <span v-if="scData.isLifelong">{{ t('payment.lifetime') }}</span>
         <span v-else>{{ spi.badge }}</span>
       </div>
 
       <!-- 什么时候过期 或 什么时候续费 -->
-      <div class="liu-no-user-select scb-footer" 
+      <div class="thus-no-user-select scb-footer" 
         v-if="!scData.isLifelong && scData.expireStr"
       >
         <span v-if="scData.autoRecharge">{{ t('payment.recharge_date', { date: scData.expireStr }) }}</span>
@@ -89,7 +89,7 @@ watch(() => scData.state, (newV) => {
 
       <!-- 方案内文 -->
       <div class="sc-content">
-        <span class="liu-selection">{{ spi.desc }}</span>
+        <span class="thus-selection">{{ spi.desc }}</span>
       </div>
 
       <!-- wechat or alipay -->
@@ -105,7 +105,7 @@ watch(() => scData.state, (newV) => {
 
         <!-- Cancel subscription & Refund -->
         <div v-if="scData.showRefundBtn && scData.isPremium" 
-          class="liu-no-user-select liu-hover sc-refund"
+          class="thus-no-user-select thus-hover sc-refund"
           @click.stop="onTapRefund"
         >
           <span>{{ t('payment.cancel_refund') }}</span>
@@ -128,7 +128,7 @@ watch(() => scData.state, (newV) => {
 
         <!-- Cancel subscription & Refund -->
         <div v-if="scData.showRefundBtn" 
-          class="liu-no-user-select liu-hover sc-refund"
+          class="thus-no-user-select thus-hover sc-refund"
           @click.stop="onTapRefund"
         >
           <span>{{ t('payment.cancel_refund') }}</span>

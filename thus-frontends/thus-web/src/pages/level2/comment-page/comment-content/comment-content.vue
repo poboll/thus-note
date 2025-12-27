@@ -14,9 +14,9 @@ defineProps({
 </script>
 <template>
 
-  <div class="liu-mc-container">
+  <div class="thus-mc-container">
     <div class="liu-tc-virtual"></div>
-    <div class="liu-mc-box" v-if="commentId">
+    <div class="thus-mc-box" v-if="commentId">
       <CommentDetail 
         :target-id="commentId"
         :is-showing="isShowing"

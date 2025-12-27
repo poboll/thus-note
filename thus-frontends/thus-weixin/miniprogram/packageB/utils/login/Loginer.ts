@@ -8,7 +8,7 @@ import {
   setLoginLocally,
 } from "./tools/local-login";
 import { LiuTime } from "../LiuTime";
-import type { LiuSpaceAndMember } from "../../types/types-cloud";
+import type { ThusSpaceAndMember } from "../../types/types-cloud";
 
 export class Loginer {
 
@@ -144,7 +144,7 @@ export class Loginer {
   }
 
   private static _getMemberData(
-    spaceMemberList?: LiuSpaceAndMember[],
+    spaceMemberList?: ThusSpaceAndMember[],
   ) {
     if(!spaceMemberList) return {}
     const spaceMember = spaceMemberList[0]

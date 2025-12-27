@@ -1,10 +1,10 @@
 import { watch } from "vue"
 import type { SeKeyboardParam } from "./types"
 import { handleKeyDown } from "./handle"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import time from "~/utils/basic/time"
-import liuApi from "~/utils/liu-api"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import liuApi from "~/utils/thus-api"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import { useKeyboard } from "~/hooks/useKeyboard"
 
 export function useSeKeyboard(param: SeKeyboardParam) {
@@ -20,7 +20,7 @@ export function useSeKeyboard(param: SeKeyboardParam) {
 
   // 监听页面，查看是否处于允许搜索的页面
   let allowSearch = false
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const inApp = newV.meta.inApp
     if(inApp === false) {

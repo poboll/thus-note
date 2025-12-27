@@ -11,7 +11,7 @@ const { cbData } = useCustomButton(props)
 <template>
 
   <button 
-    class="liu-no-user-select btn-container"
+    class="thus-no-user-select btn-container"
     :class="{ 
       'btn-mini': size === 'mini',
       'btn-other': type === 'other',

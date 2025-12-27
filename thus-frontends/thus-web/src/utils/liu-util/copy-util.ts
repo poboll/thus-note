@@ -1,10 +1,10 @@
 import { getRawList } from "./vue-util"
 import valTool from "../basic/val-tool";
-import type { ImageShow, LiuFileStore, LiuImageStore } from "~/types";
+import type { ImageShow, ThusFileStore, ThusImageStore } from "~/types";
 
 interface CopyData {
-  images?: Array<LiuImageStore | ImageShow>
-  files?: LiuFileStore[]
+  images?: Array<ThusImageStore | ImageShow>
+  files?: ThusFileStore[]
   [key: string]: any
 }
 

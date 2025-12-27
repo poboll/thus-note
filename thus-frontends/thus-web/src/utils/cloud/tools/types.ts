@@ -1,6 +1,6 @@
 import type { 
-  LiuImageStore,
-  LiuFileStore,
+  ThusImageStore,
+  ThusFileStore,
 } from "~/types";
 import type { 
   LiuTable, 
@@ -12,12 +12,12 @@ import type {
 export interface ImageTransferedRes {
   useCloud: boolean       // check if using cloud image 
                           // which represents that downloading is required
-  image?: LiuImageStore
+  image?: ThusImageStore
 }
 
 export interface FileTransferedRes {
   useCloud: boolean
-  file?: LiuFileStore
+  file?: ThusFileStore
 }
 
 
@@ -73,10 +73,10 @@ export type UploadTaskLocalTable_ID = "content_id" |
 
 export interface UpdateImagesRes {
   updated: boolean
-  images?: LiuImageStore[]
+  images?: ThusImageStore[]
 }
 
 export interface UpdateFilesRes {
   updated: boolean
-  files?: LiuFileStore[]
+  files?: ThusFileStore[]
 }

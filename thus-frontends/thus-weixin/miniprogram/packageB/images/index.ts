@@ -1,4 +1,4 @@
-import { LiuUtil } from "../utils/liu-util/index";
+import { LiuUtil } from "../utils/thus-util/index";
 
 const prefix = "/packageB/images"
 

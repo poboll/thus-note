@@ -1,7 +1,7 @@
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore"
 import type { ThreadShow } from "~/types/types-content"
 import valTool from "~/utils/basic/val-tool"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import cui from "~/components/custom-ui"
 import dbOp from "../db-op"
 import soTool from "./tools/so-tool"

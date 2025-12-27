@@ -1,11 +1,11 @@
 import { onActivated, onDeactivated, ref } from "vue";
 import type { TrueOrFalse } from "~/types/types-basic";
 import type { TlHasDataOpt } from "~/components/level1/thread-list/tools/types";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { usePrefix } from "~/hooks/useCommon";
 
 export function useIndexContent() {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const showTxt = ref<TrueOrFalse>("T")
   const showTitle = ref(false)
   const calendarTitleKey = ref("")

@@ -53,9 +53,9 @@
 
 在状态栏最右侧，有一个 🔔 图标，点击后就会展开通知了，如下二图所示。
 
-![Notification](https://raw.githubusercontent.com/yenche123/thus-note/cool/assets/vsce-images/notification_1.jpeg)
+![Notification](https://raw.githubusercontent.com/yenche123/liubai/cool/assets/vsce-images/notification_1.jpeg)
 
-![Notification 2](https://raw.githubusercontent.com/yenche123/thus-note/cool/assets/vsce-images/notification_2.jpeg)
+![Notification 2](https://raw.githubusercontent.com/yenche123/liubai/cool/assets/vsce-images/notification_2.jpeg)
 
 
 

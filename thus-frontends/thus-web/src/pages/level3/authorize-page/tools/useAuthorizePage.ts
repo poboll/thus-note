@@ -1,14 +1,14 @@
 import { reactive, watch } from "vue";
 import type { ApData } from "./types";
 import { pageStates } from "~/utils/atom";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router";
 import valTool from "~/utils/basic/val-tool";
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { UserSettingsAPI } from "~/requests/req-types";
 import { showErrMsg } from "~/pages/level1/tools/show-msg";
 
@@ -21,7 +21,7 @@ export function useAuthorizePage() {
     credential: "",
   })
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   initAuthorizePage(apData, rr)
 
   const onTapAgree = () => {
@@ -37,7 +37,7 @@ export function useAuthorizePage() {
 
 function initAuthorizePage(
   apData: ApData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const hasBE = liuEnv.hasBackend()
   if(!hasBE) {

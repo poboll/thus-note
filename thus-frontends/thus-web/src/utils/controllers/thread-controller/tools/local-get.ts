@@ -4,7 +4,7 @@ import type { ContentLocalTable } from "~/types/types-table";
 import { equipThreads } from "../../equip/threads";
 import { getThreadsByCollection } from "../../collection-controller/collection-controller"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore" 
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import time from "~/utils/basic/time";
 import cfg from "~/config"
 import type { OState } from "~/types/types-basic";

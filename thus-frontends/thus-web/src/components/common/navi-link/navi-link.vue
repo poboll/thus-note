@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useNaviLink, type NaviLinkEmits } from "./tools/useNaviLink";
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 
 defineOptions({
   inheritAttrs: false,

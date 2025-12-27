@@ -1,7 +1,7 @@
 import type { TlContext } from "./types";
 import type { ThreadShow } from "~/types/types-content"
 import type { 
-  LiuDownloadParcel, 
+  ThusDownloadParcel, 
   SyncGet_ThreadList,
   SyncGet_CheckContents,
 } from "~/types/cloud/sync-get/types";
@@ -54,7 +54,7 @@ export async function handleCalendarList(
 }
 
 async function checkoutIds(
-  res: LiuDownloadParcel[],
+  res: ThusDownloadParcel[],
   results: ThreadShow[],
 ) {
   const ids = CloudMerger.getIdsForCheckingContents(

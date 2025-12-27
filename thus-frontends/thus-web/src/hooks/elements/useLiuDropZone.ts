@@ -1,6 +1,6 @@
 import { ref, type ShallowRef } from "vue"
 import { useGlobalStateStore } from "../stores/useGlobalStateStore"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { useDropZone } from "../useVueUse"
 
 export function useLiuDropZone(

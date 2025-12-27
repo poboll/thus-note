@@ -14,7 +14,7 @@ import { storeToRefs } from "pinia"
 import { watch } from "vue"
 import valTool from "~/utils/basic/val-tool";
 import commentController from "~/utils/controllers/comment-controller/comment-controller";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 export function subscribeCdUpdate(
   cdData: CommentDetailData

@@ -1,5 +1,5 @@
 import type { LpData, LoginByThirdParty } from "./types";
-import type { BoolFunc, LiuTimeout } from "~/utils/basic/type-tool";
+import type { BoolFunc, ThusTimeout } from "~/utils/basic/type-tool";
 import cui from "~/components/custom-ui";
 import { 
   fetchInitLogin, 
@@ -29,8 +29,8 @@ import {
 } from "../../tools/show-msg"
 import { useLoginStore } from "./useLoginStore";
 import { storeToRefs } from "pinia";
-import { useLiuWatch } from "~/hooks/useLiuWatch";
-import { useRouteAndLiuRouter, type RouteAndLiuRouter } from "~/routes/liu-router";
+import { useThusWatch } from "~/hooks/useThusWatch";
+import { useRouteAndThusRouter, type RouteAndThusRouter } from "~/routes/liu-router";
 import { 
   onActivated, 
   onDeactivated, 
@@ -43,12 +43,12 @@ import {
 } from "vue";
 import middleBridge from "~/utils/middle-bridge";
 import valTool from "~/utils/basic/val-tool";
-import liuApi from "~/utils/liu-api";
-import liuUtil from "~/utils/liu-util";
-import liuConsole from "~/utils/debug/liu-console";
+import liuApi from "~/utils/thus-api";
+import liuUtil from "~/utils/thus-util";
+import liuConsole from "~/utils/debug/thus-console";
 import localCache from "~/utils/system/local-cache";
 import { useThrottleFn } from "~/hooks/useVueUse"
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 // 等待向后端调用 init 的结果
 let initPromise: Promise<boolean>
@@ -61,7 +61,7 @@ const MIN_5 = 5 * time.MINUTE
 
 export function useLoginPage() {
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const { OPEN_WITH_BROWSER } = liuEnv.getEnv()
 
   const lpData = reactive<LpData>({
@@ -165,7 +165,7 @@ export function useLoginPage() {
 
 
 function initGoTo(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   onMounted(() => {
     const q = rr.route.query
@@ -183,7 +183,7 @@ function initGoTo(
 
 // check out if redirect to A2HS
 function checkIfRedirectToA2HS(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const res0 = liuEnv.hasBackend()
   if(!res0) return
@@ -219,11 +219,11 @@ async function runBackFromCode(lpData: LpData) {
 // 当监听到路由真的变化出去了（离开 login-）相关页面了
 // 就关闭 loading 弹窗，否则 3s 后自动关闭
 function listenRouteAndLastLogged(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   lpData: LpData,
 ) {
   let watchStop: WatchStopHandle | undefined
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
   const lastLogged = toRef(lpData, "lastLogged")
 
   const _close = (checkRoute = true) => {
@@ -308,7 +308,7 @@ function listenRouteAndLastLogged(
 
 
 function handleBack(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   lpData: LpData,
 ) {
   const vi = lpData.view
@@ -330,7 +330,7 @@ function handleBack(
 
 // 选定某一个用户
 async function toSelectAnAccount(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   idx: number,
   lpData: LpData,
 ) {
@@ -505,7 +505,7 @@ let isAfterFetchingLogin = false
 
 
 async function toSubmitPhoneAndCode(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   phone: string,
   code: string,
   lpData: LpData,
@@ -548,7 +548,7 @@ async function toSubmitPhoneAndCode(
 
 
 async function toSubmitEmailAndCode(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   code: string,
   lpData: LpData,
 ) {
@@ -611,11 +611,11 @@ function listenLoginStore(lpData: LpData) {
     loginStore.reset()
   }
 
-  useLiuWatch(view, whenViewChange)
+  useThusWatch(view, whenViewChange)
 }
 
 function whenTapLoginViaThirdParty(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   tp: LoginByThirdParty,
   lpData: LpData,
 ) {
@@ -638,7 +638,7 @@ function whenTapLoginViaThirdParty(
 }
 
 async function whenTapWeChat(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   lpData: LpData,
 ) {
   // 0. check out if wechat login is available
@@ -698,7 +698,7 @@ async function whenTapWeChat(
 
 
 function toGetLoginInitData(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   lpData: LpData,
 ) {
   const _request = async (a: BoolFunc) => {

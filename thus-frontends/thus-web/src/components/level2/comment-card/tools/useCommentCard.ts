@@ -1,4 +1,4 @@
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import type { 
   CommentCardProps,
   CcReactionItem,
@@ -7,10 +7,10 @@ import type {
 import { computed, reactive, ref, watch } from "vue";
 import cui from "~/components/custom-ui";
 import { useGlobalStateStore } from '~/hooks/stores/useGlobalStateStore';
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router";
 import { emojiList } from "~/config/emoji-list"
 import { useTemporaryStore } from "~/hooks/stores/useTemporaryStore";
@@ -32,7 +32,7 @@ export function useCommentCard(
   initReactions(props, ccData)
 
   const gStore = useGlobalStateStore()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const {
     allowHover,
@@ -78,7 +78,7 @@ export function useCommentCard(
 
 async function toContentPanel(
   props: CommentCardProps,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const res = await cui.showContentPanel({ comment: props.cs, onlyReaction: false })
   if(res?.toReply) {
@@ -105,7 +105,7 @@ async function toContentPanel(
 
 function toCommentDetail(
   props: CommentCardProps,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const cid2 = props.cs._id
   const opt = { rr }

@@ -2,7 +2,7 @@
 // Receive messages and events from WeCom
 import cloud from "@lafjs/cloud";
 import type { 
-  LiuRqReturn,
+  ThusRqReturn,
   Ww_Add_External_Contact,
   Ww_Msg_Event,
 } from "@/common-types";
@@ -122,7 +122,7 @@ async function getMsgObject(
   return res
 }
 
-function preCheck(): LiuRqReturn | undefined {
+function preCheck(): ThusRqReturn | undefined {
   const _env = process.env
   const token = _env.LIU_WECOM_CHAT_SYNC_TOKEN
   if(!token) {
@@ -161,7 +161,7 @@ function verifyMsgSignature(
   timestamp: string, 
   nonce: string,
   ciphertext: string,
-): LiuRqReturn | undefined {
+): ThusRqReturn | undefined {
   const _env = process.env
   const token = _env.LIU_WECOM_CHAT_SYNC_TOKEN as string
   const sig = getSignature(token, timestamp, nonce, ciphertext)

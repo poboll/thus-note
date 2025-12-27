@@ -1,10 +1,10 @@
 
 import localCache from "~/utils/system/local-cache"
-import type { LiuRqOpt, LiuRqReturn } from "./tools/types"
+import type { ThusRqOpt, ThusRqReturn } from "./tools/types"
 import valTool from "~/utils/basic/val-tool"
 import time from "~/utils/basic/time"
 import typeCheck from "~/utils/basic/type-check"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { 
   handleBeforeFetching,
   handleAfterFetching,
@@ -25,10 +25,10 @@ async function _getBody<U extends Record<string, any>>(
   const b: Record<string, any> = {
     x_liu_language: navigator.language,
     x_liu_theme: liuApi.getThemeFromSystem(),
-    x_liu_version: LIU_ENV.version,
+    x_liu_version: THUS_ENV.version,
     x_liu_stamp: time.getTime(),
     x_liu_timezone: time.getTimezone().toFixed(1),
-    x_liu_client: LIU_ENV.client,
+    x_liu_client: THUS_ENV.client,
     x_liu_device: liuApi.getDeviceString(),
     ...body,
   }
@@ -56,8 +56,8 @@ async function request<
 >(
   url: string,
   body?: U,
-  opt?: LiuRqOpt,
-): Promise<LiuRqReturn<T>> {
+  opt?: ThusRqOpt,
+): Promise<ThusRqReturn<T>> {
 
   const b = await _getBody(body)
   const init: RequestInit = {
@@ -113,7 +113,7 @@ async function request<
   }
 
   if(!res) {
-    console.warn("liu-req fail: ")
+    console.warn("thus-req fail: ")
     console.log(res)
     console.log(" ")
     return { code: "C0001" }
@@ -130,7 +130,7 @@ async function request<
     return { code: `B0001` }
   }
 
-  const res2 = await res.json() as LiuRqReturn<T>
+  const res2 = await res.json() as ThusRqReturn<T>
 
   if(res2.data) {
     const newData = await handleAfterFetching(res2.data)

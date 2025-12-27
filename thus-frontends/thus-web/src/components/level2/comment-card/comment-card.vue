@@ -2,7 +2,7 @@
 import { defineAsyncComponent, type PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { CommentShow } from '~/types/types-content';
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 import CcBox from "./cc-box/cc-box.vue"
 import type { CommentCardLocation } from "./tools/types"
 import { useCommentCard } from "./tools/useCommentCard"
@@ -67,7 +67,7 @@ const {
     @click.stop="onTapContainer"
   >
 
-    <!-- 上部留白（ + 指向上方评论） -->
+    <!-- 上部如是（ + 指向上方评论） -->
     <div class="cc-top">
 
       <!-- 当前评论有指向前面的评论时 -->
@@ -89,19 +89,19 @@ const {
 
         <!-- 头像、姓名和日期 -->
         <div class="cct-first-bar">
-          <LiuAvatar
+          <ThusAvatar
             class="cct-avatar"
             :member-show="cs.creator"
-          ></LiuAvatar>
+          ></ThusAvatar>
           <div class="cctf-info">
             <!-- 用户名 -->
-            <div class="liu-no-user-select cctf-account">
+            <div class="thus-no-user-select cctf-account">
               <span v-if="cs.creator?.name">{{ cs.creator?.name }}</span>
               <span v-else>{{ t('comment.no_idea') }}</span>
             </div>
 
             <!-- 发表或编辑时间 -->
-            <div class="liu-no-user-select cctf-time">
+            <div class="thus-no-user-select cctf-time">
               <span v-if="cs.editedStr">{{ t('thread_related.edited_at', { date: cs.editedStr }) }}</span>
               <span v-else>{{ cs.createdStr }}</span>
             </div>
@@ -138,10 +138,10 @@ const {
 
         <!-- 头像 （+指向下个评论的线条）-->
         <div class="ccc-first-column">
-          <LiuAvatar
+          <ThusAvatar
             class="ccc-avatar"
             :member-show="cs.creator"
-          ></LiuAvatar>
+          ></ThusAvatar>
           <div class="cccf-line-box">
             <div class="cccf-line" v-if="cs.nextRepliedMe || location === 'popup'"></div>
           </div>
@@ -149,7 +149,7 @@ const {
 
         <div class="ccc-main">
           <!-- 用户名 + 时间 -->
-          <div class="liu-no-user-select ccc-account-time">
+          <div class="thus-no-user-select ccc-account-time">
             <div class="ccc-account">
               <span v-if="cs.creator?.name">{{ cs.creator?.name }}</span>
               <span v-else>{{ t('comment.no_idea') }}</span>
@@ -172,7 +172,7 @@ const {
         </div>
 
         <!-- popup 遮罩，避免用户选中 -->
-        <div class="liu-no-user-select ccc-cover" v-if="location === 'popup'" @click="onTapCccCover"></div>
+        <div class="thus-no-user-select ccc-cover" v-if="location === 'popup'" @click="onTapCccCover"></div>
 
       </div>
       
@@ -180,7 +180,7 @@ const {
 
     <!-- 已删除时的部分 -->
     <div v-else class="cc-delete">
-      <div class="liu-no-user-select cc-delete-box">
+      <div class="thus-no-user-select cc-delete-box">
         <span>{{ t('comment.deleted_tip') }}</span>
       </div>
 
@@ -273,7 +273,7 @@ const {
   word-wrap: break-word;
   overflow-wrap: break-word;
   font-size: var(--mini-font);
-  color: var(--liu-quote);
+  color: var(--thus-quote);
   margin-block-start: -4px;
 }
 
@@ -345,7 +345,7 @@ const {
 
 .ccc-account {
   font-size: var(--mini-font);
-  color: var(--liu-quote);
+  color: var(--thus-quote);
   margin-inline-end: 10px;
 }
 

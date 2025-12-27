@@ -1,6 +1,6 @@
 import type { 
   LiuContent, 
-  LiuRemindMe,
+  ThusRemindMe,
   ContentInfoType,
   TagView,
   LiuUploadTask,
@@ -27,7 +27,7 @@ export interface LiuUploadBase {
   first_id?: string    // 能传就传
   spaceId?: string     // 发表时，必填，表示存到哪个工作区
 
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
   
@@ -44,7 +44,7 @@ export interface LiuUploadThread extends LiuUploadBase {
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   pinStamp?: number
 
   createdStamp?: number
@@ -92,7 +92,7 @@ export interface LiuUploadDraft extends LiuUploadBase {
   
   title?: string
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   tagIds?: string[]
   stateId?: string
   stateStamp?: number

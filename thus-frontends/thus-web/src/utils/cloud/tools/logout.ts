@@ -1,5 +1,5 @@
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import time from "~/utils/basic/time"
 import localCache from "~/utils/system/local-cache";
 
@@ -7,7 +7,7 @@ const SEC_3 = 3 * time.SECOND
 let lastLogoutStamp = 0
 
 export function logout(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
 
   // 1. 防抖节流，3s内进来过，忽略

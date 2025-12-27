@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n';
 import type { SearchEditorData } from "../tools/types";
 import SearchItem from './search-item/search-item.vue';
 import { useSearchResults } from './tools/useSearchResults';
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 
 const props = defineProps({
   seData: {
@@ -37,7 +37,7 @@ const { isMobile } = liuApi.getCharacteristic()
 
       <!-- 建议 -->
       <div class="sr-inner-box" v-if="seData.suggestList.length">
-        <div class="liu-no-user-select sri-title">
+        <div class="thus-no-user-select sri-title">
           <span>{{ t('search_related.suggest') }}</span>
         </div>
         <template v-for="(item, index) in seData.suggestList" 
@@ -54,7 +54,7 @@ const { isMobile } = liuApi.getCharacteristic()
 
       <!-- 最近 -->
       <div class="sr-inner-box" v-if="seData.recentList.length">
-        <div class="liu-no-user-select sri-title">
+        <div class="thus-no-user-select sri-title">
           <span>{{ t('search_related.recent') }}</span>
         </div>
         <template v-for="(item, index) in seData.recentList" 
@@ -76,7 +76,7 @@ const { isMobile } = liuApi.getCharacteristic()
 
       <!-- 搜索结果 -->
       <div class="sr-inner-box" v-if="seData.innerList.length">
-        <div class="liu-no-user-select sri-title">
+        <div class="thus-no-user-select sri-title">
           <span>{{ t('search_related.results') }}</span>
         </div>
         <template v-for="(item, index) in seData.innerList" 
@@ -93,7 +93,7 @@ const { isMobile } = liuApi.getCharacteristic()
 
       <!-- 第三方 -->
       <div class="sr-inner-box" v-if="seData.thirdList.length">
-        <div class="liu-no-user-select sri-title">
+        <div class="thus-no-user-select sri-title">
           <span>{{ t('search_related.third_party') }}</span>
         </div>
         <template v-for="(item, index) in seData.thirdList" 
@@ -112,7 +112,7 @@ const { isMobile } = liuApi.getCharacteristic()
       <template v-if="!seData.innerList.length && !seData.thirdList.length">
         <!-- 1. 新建动态 -->
         <div class="sr-inner-box" v-if="seData.mode === 'select_thread'">
-          <div class="liu-no-user-select sri-title">
+          <div class="thus-no-user-select sri-title">
             <span>{{ t('search_related.add_instantly') }}</span>
           </div>
           <SearchItem
@@ -124,7 +124,7 @@ const { isMobile } = liuApi.getCharacteristic()
         </div>
 
         <!-- 2. 搜索结果为空 -->
-        <div class="liu-no-user-select sr-no-data" v-else>
+        <div class="thus-no-user-select sr-no-data" v-else>
           <span>{{ t('search_related.no_data') }}</span>
         </div>
       </template>
@@ -170,7 +170,7 @@ const { isMobile } = liuApi.getCharacteristic()
 
 .sri-title {
   font-weight: 700;
-  color: var(--liu-quote);
+  color: var(--thus-quote);
   letter-spacing: 1px;
   font-size: var(--mini-font);
   margin-inline-start: 10px;

@@ -85,7 +85,7 @@ function whenThreadPost(c: ContentLocalTable) {
   const uploadThread: LiuUploadThread = {
     first_id: c.first_id,
     spaceId: c.spaceId,
-    liuDesc: c.liuDesc,
+    thusDesc: c.thusDesc,
     images: transferUtil.imagesFromStoreToCloud(c.images),
     files: transferUtil.filesFromStoreToCloud(c.files),
     editedStamp: c.editedStamp,
@@ -120,7 +120,7 @@ function whenCommentPost(c: ContentLocalTable) {
     first_id: c.first_id,
     spaceId: c.spaceId,
 
-    liuDesc: c.liuDesc,
+    thusDesc: c.thusDesc,
     images: transferUtil.imagesFromStoreToCloud(c.images),
     files: transferUtil.filesFromStoreToCloud(c.files),
 
@@ -141,7 +141,7 @@ function whenThreadEdit(c: ContentLocalTable) {
     id: c._id,
     first_id: c.first_id,
 
-    liuDesc: c.liuDesc,
+    thusDesc: c.thusDesc,
     images: transferUtil.imagesFromStoreToCloud(c.images),
     files: transferUtil.filesFromStoreToCloud(c.files),
 
@@ -166,7 +166,7 @@ function whenCommentEdit(c: ContentLocalTable) {
     id: c._id,
     first_id: c.first_id,
 
-    liuDesc: c.liuDesc,
+    thusDesc: c.thusDesc,
     images: transferUtil.imagesFromStoreToCloud(c.images),
     files: transferUtil.filesFromStoreToCloud(c.files),
 
@@ -193,7 +193,7 @@ function whenDraftSet(d: DraftLocalTable) {
     first_id: d.first_id,
     spaceId: d.spaceId,
 
-    // liuDesc is put below
+    // thusDesc is put below
 
     editedStamp: d.editedStamp,
     infoType: d.infoType,
@@ -212,8 +212,8 @@ function whenDraftSet(d: DraftLocalTable) {
     stateStamp: d.stateStamp,
     aiReadable: d.aiReadable,
   }
-  if(d.liuDesc) {
-    uploadDraft.liuDesc = transferUtil.tiptapToLiu(d.liuDesc, { trim: false })
+  if(d.thusDesc) {
+    uploadDraft.thusDesc = transferUtil.tiptapToLiu(d.thusDesc, { trim: false })
   }
   return uploadDraft
 }

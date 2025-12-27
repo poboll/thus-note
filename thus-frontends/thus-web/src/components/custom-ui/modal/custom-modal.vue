@@ -24,7 +24,7 @@ const iconUrl = computed(() => modalData.iconUrl)
 
   <div 
     v-if="modalEnable" 
-    class="liu-no-user-select cui-modal-container" 
+    class="thus-no-user-select cui-modal-container" 
     :class="{ 'cui-modal-container_show': modalShow }"
   >
     <div class="cui-modal-bg"></div>
@@ -51,11 +51,11 @@ const iconUrl = computed(() => modalData.iconUrl)
         class="cui-modal-tip"
         @click="onTapModalTip"
       >
-        <LiuCheckbox :checked="modalData.tipSelected" 
+        <ThusCheckbox :checked="modalData.tipSelected" 
           class="cui-checkbox"
           :size="20"
           :circleSize="10.6"
-        ></LiuCheckbox>
+        ></ThusCheckbox>
         <div class="cui-modal-tip-text">
           <span>{{ t(modalData.tip_key) }}</span>
         </div>

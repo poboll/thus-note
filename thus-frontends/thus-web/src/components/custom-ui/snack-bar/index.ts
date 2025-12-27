@@ -2,14 +2,14 @@
 import { reactive, ref, watch } from "vue"
 import type { SnackbarParam } from "~/types/other/types-snackbar"
 import type { SbResolver, SbData } from "./tools/types"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import { useLayoutStore } from "~/views/useLayoutStore"
 import { storeToRefs } from "pinia"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 
 
 let _resolve: SbResolver | undefined
-let autoTimeout: LiuTimeout
+let autoTimeout: ThusTimeout
 const TRANSITION_DURATION = 150
 const enable = ref(false)
 const show = ref(false)
@@ -51,7 +51,7 @@ function listenToContext() {
     bnbHeight,
   } = storeToRefs(layoutStore)
 
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
   watch([routeHasBottomNaviBar, bottomNaviBar, bnbHeight, route], (
     [newV1, newV2, newV3, newV4]
   ) => {
@@ -124,7 +124,7 @@ function onTapAction() {
   _close()
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _open() {
   if(show.value) return
   if(toggleTimeout) {

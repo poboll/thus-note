@@ -30,9 +30,9 @@ interface RouteAndRouter {
   router: VueRouter
 }
 
-export interface RouteAndLiuRouter {
+export interface RouteAndThusRouter {
   route: RouteLocationNormalizedLoaded
-  router: LiuRouter
+  router: ThusRouter
 }
 
 export type VueRoute = RouteLocationNormalizedLoaded
@@ -44,7 +44,7 @@ let routeChangeTmpData: RouteChangeState = {}
 // 仅会记录 刷新/从外部网页跳转回来/从外部网页跳转进来 之后的堆栈
 let stack: RouteItem[] = []
 
-class LiuRouter {
+class ThusRouter {
 
   private router: VueRouter
 
@@ -468,7 +468,7 @@ const _judgeBrowserJump = (
 }
 
 
-const initLiuRouter = (): RouteAndRouter => {
+const initThusRouter = (): RouteAndRouter => {
   const vueRouter = useVueRouter()
   const vueRoute = useVueRoute()
 
@@ -513,21 +513,21 @@ const initLiuRouter = (): RouteAndRouter => {
   return { route: vueRoute, router: vueRouter }
 }
 
-const useRouter = (): LiuRouter => {
-  return new LiuRouter()
+const useRouter = (): ThusRouter => {
+  return new ThusRouter()
 }
 
-const useRouteAndLiuRouter = (): RouteAndLiuRouter => {
-  const router = new LiuRouter()
+const useRouteAndThusRouter = (): RouteAndThusRouter => {
+  const router = new ThusRouter()
   const vueRoute = useVueRoute()
   return { router, route: vueRoute }
 }
 
 export {
-  LiuRouter,
-  initLiuRouter,
+  ThusRouter,
+  initThusRouter,
   useRouter,
-  useRouteAndLiuRouter,
+  useRouteAndThusRouter,
   useLink,
 
   // 下面这两个监听方法，必须在 router-view 里的组件调用

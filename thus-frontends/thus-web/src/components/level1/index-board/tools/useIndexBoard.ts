@@ -1,12 +1,12 @@
 import { reactive, watch } from "vue";
 import type { IbData, IbDataKey } from "./types";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import cui from "~/components/custom-ui";
 import localCache from "~/utils/system/local-cache";
 import time from "~/utils/basic/time";
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router";
 import cfg from "~/config";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
@@ -21,13 +21,13 @@ import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 const SEC_90 = 90 * time.SECOND
 
 interface IbCtx {
-  rr: RouteAndLiuRouter
+  rr: RouteAndThusRouter
   ibData: IbData
   hasEverTapInstall: boolean
 }
 
 export function useIndexBoard() {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const ibData = reactive<IbData>({
     a2hs: false,
     newVersion: false,

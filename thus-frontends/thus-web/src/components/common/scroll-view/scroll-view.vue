@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { SvEmits } from "./tools/types"
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import { useScrollView } from './tools/useScrollView';
 import { svProps } from "./tools/types"
 import middleBridge from "~/utils/middle-bridge";

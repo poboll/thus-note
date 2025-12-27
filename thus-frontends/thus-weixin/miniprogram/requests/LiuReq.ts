@@ -1,12 +1,12 @@
-import type { LiuReqOptions, LiuRqReturn } from "./tools/types"
+import type { LiuReqOptions, ThusRqReturn } from "./tools/types"
 import { LiuTime } from "../utils/LiuTime"
 import { LiuApi } from "../utils/LiuApi"
 import { envData } from "../config/env-data"
-import { LiuUtil } from "../utils/liu-util/index"
+import { LiuUtil } from "../utils/thus-util/index"
 import { defaultData } from "../config/default-data"
 import { getLoginLocally } from "~/utils/login/tools/local-login"
 
-export type NetworkResolver<T> = (res: LiuRqReturn<T>) => void
+export type NetworkResolver<T> = (res: ThusRqReturn<T>) => void
 
 let miniEnvType: string | undefined
 
@@ -73,7 +73,7 @@ export class LiuReq {
           // console.log(res)
           const resData = res.data as any
           if(resData && resData.code) {
-            a(resData as LiuRqReturn<T>)
+            a(resData as ThusRqReturn<T>)
             return
           }
 

@@ -37,7 +37,7 @@ const {
   <div class="cc-toolbar">
 
     <!-- 表态 -->
-    <div class="liu-hover liu-hover_first cct-item"
+    <div class="thus-hover thus-hover_first cct-item"
       :aria-label="t('common.reaction')"
       @click.stop="$emit('newoperation', 'emoji')"
     >
@@ -57,7 +57,7 @@ const {
     </div>
 
     <!-- 回复 -->
-    <div class="liu-hover cct-item"
+    <div class="thus-hover cct-item"
       :aria-label="t('common.reply')"
       @click.stop="$emit('newoperation', 'comment')"
     >
@@ -66,13 +66,13 @@ const {
           :color="default_color"
         ></svg-icon>
       </div>
-      <span class="liu-no-user-select cct-text" 
+      <span class="thus-no-user-select cct-text" 
         v-if="cs.commentNum"
       >{{ cs.commentNum }}</span>
     </div>
 
     <!-- 分享 -->
-    <div class="liu-hover cct-item"
+    <div class="thus-hover cct-item"
       :aria-label="t('common.share')"
       @click.stop="$emit('newoperation', 'share')"
     >
@@ -84,11 +84,11 @@ const {
     </div>
 
     <!-- 更多 -->
-    <div class="liu-hover cct-more"
+    <div class="thus-hover cct-more"
       :class="{ 'cct-more_show': expandMore }"
       :aria-label="t('common.more')"
     >
-      <LiuMenu
+      <ThusMenu
         :menu="footerMenu"
         min-width-str="100px"
         @menushow="onMenuShow"
@@ -100,7 +100,7 @@ const {
             :color="default_color"
           ></svg-icon>
         </div>
-      </LiuMenu>
+      </ThusMenu>
     </div>
 
   </div>

@@ -4,7 +4,7 @@ import { LiuReq } from "../requests/LiuReq"
 import { LiuTime } from "./LiuTime"
 import { LiuApi } from "./LiuApi"
 import { Loginer } from "./login/Loginer"
-import type { BoolFunc, LiuTimeout } from "./basic/type-tool"
+import type { BoolFunc, ThusTimeout } from "./basic/type-tool"
 import valTool from "./val-tool"
 import { AuthManager } from "./managers/AuthManager"
 import { defaultData } from "../config/default-data"
@@ -52,7 +52,7 @@ export class LiuApp {
     if (res2) return
 
     // 3. define network change and custom timeout
-    let _timeout: LiuTimeout
+    let _timeout: ThusTimeout
     const _whenNetworkChange = async (
       res?: WechatMiniprogram.OnNetworkStatusChangeListenerResult,
     ) => {

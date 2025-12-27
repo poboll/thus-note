@@ -2,7 +2,7 @@
 import { initSearchEditor } from "./tools/useSearchEditor"
 import SearchResults from "./search-results/search-results.vue";
 import { useI18n } from "vue-i18n";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 const {
   TRANSITION_DURATION: tranMs,
@@ -49,7 +49,7 @@ const { t } = useI18n()
 
       <SearchResults :se-data="seData"></SearchResults>
 
-      <div class="liu-no-user-select se-footer">
+      <div class="thus-no-user-select se-footer">
         <div class="sef-first">
           <span class="se-bold">Esc</span>
           <span>{{ t('tip.to_leave') }}</span>
@@ -190,7 +190,7 @@ const { t } = useI18n()
 .sef-first {
   width: 40%;
   font-size: var(--mini-font);
-  color: var(--liu-quote);
+  color: var(--thus-quote);
 }
 
 .se-bold {
@@ -205,7 +205,7 @@ const { t } = useI18n()
 
 .seff-part {
   font-size: var(--mini-font);
-  color: var(--liu-quote);
+  color: var(--thus-quote);
 }
 
 .seff-part:first-child {

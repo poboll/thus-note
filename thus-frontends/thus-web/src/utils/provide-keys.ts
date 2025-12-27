@@ -4,7 +4,7 @@ import type {
   SvProvideInject, 
   SvBottomUp,
 } from "~/types/components/types-scroll-view"
-import type { GetChaRes } from './liu-api/tools/types'
+import type { GetChaRes } from './thus-api/tools/types'
 import type { ComposingData } from '~/types/types-atom'
 
 // InjectionKey 是什么? 参考: 

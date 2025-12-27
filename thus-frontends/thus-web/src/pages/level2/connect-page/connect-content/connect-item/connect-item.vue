@@ -117,7 +117,7 @@ const { t } = useI18n()
 }
 
 
-@container liu-mc-container (max-width: 480px) {
+@container thus-mc-container (max-width: 480px) {
   .ci-box {
     padding: 24px;
   }

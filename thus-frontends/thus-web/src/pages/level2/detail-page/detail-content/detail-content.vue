@@ -17,9 +17,9 @@ const {
 </script>
 <template>
   
-  <div class="liu-mc-container">
+  <div class="thus-mc-container">
     <div class="liu-tc-virtual"></div>
-    <div class="liu-mc-box">
+    <div class="thus-mc-box">
       <ThreadDetail 
         :is-showing="isShowing"
         :thread-id="threadId"

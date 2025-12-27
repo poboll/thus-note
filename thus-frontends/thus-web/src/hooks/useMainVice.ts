@@ -1,7 +1,7 @@
 
 import { onActivated, provide, ref } from "vue"
 import time from "~/utils/basic/time"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import middleBridge from "~/utils/middle-bridge"
 import { viceViewWidthKey, tapMainViewStampKey } from "~/utils/provide-keys"
 

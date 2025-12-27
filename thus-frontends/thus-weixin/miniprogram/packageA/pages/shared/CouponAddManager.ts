@@ -5,7 +5,7 @@ import {
 import APIs from "~/requests/APIs"
 import { LiuReq } from "~/requests/LiuReq"
 import { HappySystemAPI } from "~/requests/req-types"
-import { LiuRqReturn } from "~/requests/tools/types"
+import { ThusRqReturn } from "~/requests/tools/types"
 
 
 export class CouponAddManager {
@@ -18,7 +18,7 @@ export class CouponAddManager {
   private static _copytext: string | null = null
 
   // for both
-  private static _credPromise: Promise<LiuRqReturn<HappySystemAPI.Res_CouponCheck>> | null = null
+  private static _credPromise: Promise<ThusRqReturn<HappySystemAPI.Res_CouponCheck>> | null = null
 
   static async addPoster(file: WechatMiniprogram.MediaFile) {
     this._file = file

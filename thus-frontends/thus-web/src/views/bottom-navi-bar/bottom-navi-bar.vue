@@ -17,7 +17,7 @@ const color_selected = "var(--main-normal)"
 </script>
 <template>
 
-  <div class="liu-frosted-glass bnb-container"
+  <div class="thus-frosted-glass bnb-container"
     :class="{ 
       'bnb-container_show': bnbData.show,
       'bnb-container_temp-hidden': bnbData.tempHidden,
@@ -25,7 +25,7 @@ const color_selected = "var(--main-normal)"
     ref="bottom-navi-bar"
   >
     <!-- content area -->
-    <div class="liu-no-user-select bnb-box">
+    <div class="thus-no-user-select bnb-box">
 
       <!-- search -->
       <div class="bnb-item" :class="{ 'bnb-item_active': bnbData.currentState === 'search' }"

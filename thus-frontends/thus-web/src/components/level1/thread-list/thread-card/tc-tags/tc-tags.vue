@@ -5,7 +5,7 @@ import type { TagShow } from "~/types/types-content"
 import { RouterLink } from 'vue-router'
 import { useWorkspaceStore } from '~/hooks/stores/useWorkspaceStore';
 import { storeToRefs } from 'pinia';
-import { useRouteAndLiuRouter } from '~/routes/liu-router';
+import { useRouteAndThusRouter } from '~/routes/liu-router';
 
 defineProps({
   tagShows: {
@@ -14,7 +14,7 @@ defineProps({
   },
 })
 
-const { router, route } = useRouteAndLiuRouter()
+const { router, route } = useRouteAndThusRouter()
     
 const wStore = useWorkspaceStore()
 const { spaceType } = storeToRefs(wStore)
@@ -42,7 +42,7 @@ const onTapTag = (e: MouseEvent, href: string) => {
           :href="toPath + item.tagId"
           @click.stop.prevent="onTapTag($event, toPath + item.tagId)"
         >
-          <div class="liu-no-user-select ce-tag-item">
+          <div class="thus-no-user-select ce-tag-item">
             <span v-if="item.emoji" class="ce-tag-emoji">{{ item.emoji }} </span>
             <span v-else-if="item.parentEmoji" class="ce-tag-emoji">{{ item.parentEmoji }}</span>
             <span>{{ item.text }}</span>
@@ -66,7 +66,7 @@ const onTapTag = (e: MouseEvent, href: string) => {
   .ce-tag-item {
     padding: 6px 14px 6px 14px;
     font-size: var(--mini-font);
-    color: var(--liu-quote);
+    color: var(--thus-quote);
     background: var(--tag-bg);
     border-radius: 6px;
     margin-inline-end: 10px;

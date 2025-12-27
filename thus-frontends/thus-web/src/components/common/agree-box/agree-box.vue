@@ -18,10 +18,10 @@ const { t } = useI18n()
 <template>
   <div class="agree-box" @click.stop="onTapBox" :class="{ 'agree-box_shaking': isShaking }">
     <div class="agree-checkbox">
-      <LiuCheckbox :checked="agree" :size="19"
+      <ThusCheckbox :checked="agree" :size="19"
         :circleSize="10"
         :borderSize="2.5"
-      ></LiuCheckbox>
+      ></ThusCheckbox>
     </div>
     <div class="agree-text" :class="{ 'agree-text_shaking': isShaking }">
       <span>{{ t('login.agree_1') }}</span>
@@ -82,7 +82,7 @@ const { t } = useI18n()
 }
 
 .agree-text_shaking {
-  color: var(--liu-state-3);
+  color: var(--thus-state-3);
 }
 
 .agree-box a {
@@ -90,7 +90,7 @@ const { t } = useI18n()
 }
 
 .agree-text_shaking a {
-  color: var(--liu-state-3)
+  color: var(--thus-state-3)
 }
 
 @media(hover: hover) {

@@ -2,14 +2,14 @@
 
 function getEnv() {
 
-  const extVersion = LIU_ENV.EXT_VERSION
-  const apiDomain = LIU_ENV.API_DOMAIN
-  const liuDomain = LIU_ENV.LIU_DOMAIN
-  const customerService = LIU_ENV.CUSTOMER_SERVICE
-  const developerEmail = LIU_ENV.DEVELOPER_EMAIL
-  const mode = LIU_ENV.MODE
-  const appName = LIU_ENV.APP_NAME
-  const appPrefix = LIU_ENV.APP_PREFIX
+  const extVersion = THUS_ENV.EXT_VERSION
+  const apiDomain = THUS_ENV.API_DOMAIN
+  const liuDomain = THUS_ENV.LIU_DOMAIN
+  const customerService = THUS_ENV.CUSTOMER_SERVICE
+  const developerEmail = THUS_ENV.DEVELOPER_EMAIL
+  const mode = THUS_ENV.MODE
+  const appName = THUS_ENV.APP_NAME
+  const appPrefix = THUS_ENV.APP_PREFIX
 
   return {
     extVersion,

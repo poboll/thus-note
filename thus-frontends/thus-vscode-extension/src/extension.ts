@@ -2,13 +2,13 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { AuthenticationManager } from './managers/AuthenticationManager';
-import liuInfo from './utils/liu-info';
+import liuInfo from './utils/thus-info';
 import { i18n } from './locales/i18n';
-import liuUtil from './utils/liu-util';
+import liuUtil from './utils/thus-util';
 import { Logger } from './utils/Logger';
 import { LiuRecorder } from './managers/LiuRecorder';
 import { LiuStatusBar } from './managers/LiuStatusBar';
-import liuEnv from './utils/liu-env';
+import liuEnv from './utils/thus-env';
 
 function isSafeEnvironment() {
 	const theCrypto = liuUtil.crypto.getCrypto()
@@ -64,7 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// 4. init recorder
 	LiuRecorder.initialize(context, authManager)
 
-	// 5. add Thus in Status Bar
+	// 5. add Liubai in Status Bar
 	LiuStatusBar.initialize()
 }
 

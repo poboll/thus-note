@@ -423,7 +423,7 @@ export class BackupToOthers {
 
   private _getBasicData() {
     const {
-      liuDesc,
+      thusDesc,
       title,
       images,
       files,
@@ -431,8 +431,8 @@ export class BackupToOthers {
 
     // handle desc
     let desc = ""
-    if(liuDesc) {
-      desc = RichTexter.turnDescToText(liuDesc)
+    if(thusDesc) {
+      desc = RichTexter.turnDescToText(thusDesc)
     }
     if(!desc) {
       const user = this._user
@@ -617,9 +617,9 @@ class AiCluster {
 
   private getInputMessage() {
     const title = this._decryptedData.title
-    const liuDesc = this._decryptedData.liuDesc
-    if(!liuDesc || liuDesc.length > 1) return title
-    const item1 = liuDesc[0]
+    const thusDesc = this._decryptedData.thusDesc
+    if(!thusDesc || thusDesc.length > 1) return title
+    const item1 = thusDesc[0]
     if(!item1 || item1.type !== "paragraph") return title
     const content1 = item1.content
     if(!content1 || content1.length === 0) return title
@@ -818,11 +818,11 @@ class AiCluster {
     waitingData: SyncOperateAPI.WaitingData,
     aiWorker: LiuAi.AiWorker,
   ) {
-    // 1. check out liuDesc
-    const { liuDesc } = waitingData
-    if(!liuDesc || liuDesc.length < 1) {
+    // 1. check out thusDesc
+    const { thusDesc } = waitingData
+    if(!thusDesc || thusDesc.length < 1) {
       const msg1 = valTool.objToStr(waitingData)
-      this._reporter(msg1, "liuDesc is empty in ai cluster")
+      this._reporter(msg1, "thusDesc is empty in ai cluster")
       return false
     }
 
@@ -841,7 +841,7 @@ class AiCluster {
       this._reporter("aesKey is empty in ai cluster", "aesKey is empty")
       return false
     }
-    const enc_desc = encryptDataWithAES(liuDesc, aesKey)
+    const enc_desc = encryptDataWithAES(thusDesc, aesKey)
     // TODO: enc_search_text
 
     // 4. construct new data

@@ -2,7 +2,7 @@ import { useSyncStore, type SyncStoreItem } from "~/hooks/stores/useSyncStore";
 import type { TlData } from "./types";
 import { storeToRefs } from "pinia";
 import { watch } from "vue";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 export function useIdsChanged(
   tlData: TlData,

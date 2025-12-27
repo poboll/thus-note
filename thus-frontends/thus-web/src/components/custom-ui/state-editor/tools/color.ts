@@ -1,13 +1,13 @@
 
 export const COLORS = [
-  "--liu-state-1",
-  "--liu-state-2",
-  "--liu-state-3",
-  "--liu-state-4",
-  "--liu-state-5",
-  "--liu-state-6",
-  "--liu-state-7",
-  "--liu-state-8",
-  "--liu-state-9",
-  "--liu-state-10"
+  "--thus-state-1",
+  "--thus-state-2",
+  "--thus-state-3",
+  "--thus-state-4",
+  "--thus-state-5",
+  "--thus-state-6",
+  "--thus-state-7",
+  "--thus-state-8",
+  "--thus-state-9",
+  "--thus-state-10"
 ]

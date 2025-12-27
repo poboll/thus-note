@@ -44,10 +44,10 @@ defineProps({
 
     <template #popper>
       <div class="lt-container">
-        <div class="liu-no-user-select lt-title">
+        <div class="thus-no-user-select lt-title">
           <span>{{ ariaLabel }}</span>
         </div>
-        <div class="liu-no-user-select lt-content" v-if="shortcut">
+        <div class="thus-no-user-select lt-content" v-if="shortcut">
           <span>{{ shortcut }}</span>
         </div>
       </div>

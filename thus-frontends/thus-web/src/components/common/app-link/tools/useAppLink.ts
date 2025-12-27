@@ -1,10 +1,10 @@
 import { computed } from 'vue'
 import { useLink } from 'vue-router'
-import { useRouteAndLiuRouter } from '~/routes/liu-router'
+import { useRouteAndThusRouter } from '~/routes/liu-router'
 import valTool from '~/utils/basic/val-tool'
 
 export function useAppLink(props: any) {
-  const { route: fromRoute, router } = useRouteAndLiuRouter()
+  const { route: fromRoute, router } = useRouteAndThusRouter()
   const { navigate, href, route: toRouteRef, isActive, isExactActive } = useLink(props)
 
   const isExternalLink  = computed(() => {

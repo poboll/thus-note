@@ -1,9 +1,9 @@
-import type { LiuImageStore, LiuFileStore } from "~/types";
+import type { ThusImageStore, ThusFileStore } from "~/types";
 import type { Cloud_ImageStore, Cloud_FileStore } from "~/types/types-cloud"
 
 
 export function imagesFromStoreToCloud(
-  local_list?: LiuImageStore[]
+  local_list?: ThusImageStore[]
 ) {
   if(!local_list) return
 
@@ -31,7 +31,7 @@ export function imagesFromStoreToCloud(
 }
 
 export function filesFromStoreToCloud(
-  local_list?: LiuFileStore[]
+  local_list?: ThusFileStore[]
 ) {
   if(!local_list) return
 

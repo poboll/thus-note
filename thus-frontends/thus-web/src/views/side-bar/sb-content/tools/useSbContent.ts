@@ -1,13 +1,13 @@
 import { computed } from "vue";
-import { useRouteAndLiuRouter } from '~/routes/liu-router';
+import { useRouteAndThusRouter } from '~/routes/liu-router';
 import { useI18n } from 'vue-i18n';
 import { usePrefix } from "~/hooks/useCommon"
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 export function useSbContent() {
   const { t } = useI18n()
 
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
   const state = computed(() => {
     const n = route.name
     const q = route.query

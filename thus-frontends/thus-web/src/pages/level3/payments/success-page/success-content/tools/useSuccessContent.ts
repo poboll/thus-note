@@ -7,9 +7,9 @@ import { storageMySubscription } from "../../../utils/pay-tools";
 import valTool from "~/utils/basic/val-tool";
 import { onMounted } from "vue";
 import time from "~/utils/basic/time";
-import liuEnv from "~/utils/liu-env";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
-import liuApi from "~/utils/liu-api";
+import liuEnv from "~/utils/thus-env";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
+import liuApi from "~/utils/thus-api";
 import cui from "~/components/custom-ui";
 import { useQRCode } from "~/hooks/useVueUse";
 
@@ -21,7 +21,7 @@ export function useSuccessContent() {
   const cha = liuApi.getCharacteristic()
   const qrcode = useQRCode(WECOM_GROUP_LINK ?? "")
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const onTapView = () => {
     rr.router.push({ name: "subscription" })
   }

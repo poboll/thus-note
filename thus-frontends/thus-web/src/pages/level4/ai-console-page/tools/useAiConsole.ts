@@ -3,10 +3,10 @@ import { onActivated, reactive, watch } from "vue"
 import type { AcData } from "./types"
 import { pageStates } from "~/utils/atom";
 import middleBridge from "~/utils/middle-bridge";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import { useActiveSyncNum } from "~/hooks/useCommon";
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { UserSettingsAPI } from "~/requests/req-types";
 
 export function useAiConsole() {

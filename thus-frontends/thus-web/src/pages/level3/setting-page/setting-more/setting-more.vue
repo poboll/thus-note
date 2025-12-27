@@ -18,13 +18,13 @@ const iconColor = "var(--main-normal)"
 <template>
   <PageDefault title-key="common.more">
     <!-- import & export -->
-    <div class="liu-no-user-select sc-title">
+    <div class="thus-no-user-select sc-title">
       <span>{{ t('setting.import_export') }}</span>
     </div>
     <div class="sc-box">
       <!-- 导入 -->
       <AppLink :to="prefix + 'import'">
-        <div class="liu-no-user-select liu-hover sc-bar">
+        <div class="thus-no-user-select thus-hover sc-bar">
           <div class="scb-hd">
             <span>{{ t('setting.import') }}</span>
           </div>
@@ -38,7 +38,7 @@ const iconColor = "var(--main-normal)"
 
       <!-- 导出 -->
       <AppLink :to="prefix + 'export'">
-        <div class="liu-no-user-select liu-hover sc-bar">
+        <div class="thus-no-user-select thus-hover sc-bar">
           <div class="scb-hd">
             <span>{{ t('setting.export') }}</span>
           </div>
@@ -54,12 +54,12 @@ const iconColor = "var(--main-normal)"
 
 
     <!-- rules -->
-    <div class="liu-no-user-select sc-title">
+    <div class="thus-no-user-select sc-title">
       <span>{{ t('setting.terms') }}</span>
     </div>
     <div class="sc-box">
       <!-- Service Terms -->
-      <a class="liu-no-user-select liu-hover sc-bar" target="_blank"
+      <a class="thus-no-user-select thus-hover sc-bar" target="_blank"
         :href="serviceTermsLink"
       >
         <div class="scb-hd">
@@ -73,7 +73,7 @@ const iconColor = "var(--main-normal)"
       </a>
 
       <!-- Privacy Policy -->
-      <a class="liu-no-user-select liu-hover sc-bar" target="_blank"
+      <a class="thus-no-user-select thus-hover sc-bar" target="_blank"
         :href="privacyPolicyLink"
       >
         <div class="scb-hd">

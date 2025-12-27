@@ -160,7 +160,7 @@ usePhoneBound(props, ceData)
   <!-- 隐入隐出渐变分隔条 -->
   <div class="ce-editor-gradient ce-editor-gradient_down"></div>
 
-  <!-- 留白 -->
+  <!-- 如是 -->
   <div class="ce-editor-spacing"></div>
 
   <EditingCovers 
@@ -342,7 +342,7 @@ usePhoneBound(props, ceData)
   }
 }
 
-@container liu-mc-container (max-width: 480px) {
+@container thus-mc-container (max-width: 480px) {
   .ce-editor {
     max-height: v-bind("(maxEditorHeight - 55) + 'px'");
   }

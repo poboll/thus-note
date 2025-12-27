@@ -8,21 +8,21 @@ import type {
   StatePageCtx,
 } from "./types"
 import type { KanbanColumn } from "~/types/types-content"
-import type { LiuAtomState, WhyThreadChange } from "~/types/types-atom"
+import type { ThusAtomState, WhyThreadChange } from "~/types/types-atom"
 import stateController from "~/utils/controllers/state-controller/state-controller"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import { storeToRefs } from "pinia"
-import { useLiuWatch } from "~/hooks/useLiuWatch"
+import { useThusWatch } from "~/hooks/useThusWatch"
 import { kanbanInnerChangeKey } from "~/utils/provide-keys"
 import time from "~/utils/basic/time"
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore"
 import cui from "~/components/custom-ui"
 import cfg from "~/config"
 import ider from "~/utils/basic/ider"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import localCache from "~/utils/system/local-cache"
 import type { 
-  LiuDownloadParcel, 
+  ThusDownloadParcel, 
   SyncGet_ThreadList, 
   SyncGet_CheckContents,
 } from "~/types/cloud/sync-get/types"
@@ -130,7 +130,7 @@ async function toAddState(
   const now = time.getTime()
 
   // 去创建
-  const atom: LiuAtomState = {
+  const atom: ThusAtomState = {
     id: ider.createStateId(),
     showInIndex: rData.showInIndex,
     showFireworks: rData.showFireworks,
@@ -278,7 +278,7 @@ function initKanbanColumns(
     toGetThreads(ctx)
   }
 
-  useLiuWatch(spaceIdRef, _getData)
+  useThusWatch(spaceIdRef, _getData)
 }
 
 function toGetColumns(
@@ -329,7 +329,7 @@ async function loadCloud(
   const ids: string[] = []
 
   // 2. to fetch
-  const promises: Array<Promise<LiuDownloadParcel[] | undefined>> = []
+  const promises: Array<Promise<ThusDownloadParcel[] | undefined>> = []
   for(let i=0; i<kanban.columns.length; i++) {
     const col = kanban.columns[i]
     const param: SyncGet_ThreadList = {
@@ -385,7 +385,7 @@ async function loadCloud(
 
 
 function transferStateListToColumns(
-  stateList: LiuAtomState[]
+  stateList: ThusAtomState[]
 ) {
 
   const columns = stateList.map(v => {
@@ -400,8 +400,8 @@ function transferStateListToColumns(
     // 处理颜色
     let color = v.color
     if(!color) {
-      color = "--liu-state-1"
-      if(v.id === "FINISHED") color = "--liu-state-2"
+      color = "--thus-state-1"
+      if(v.id === "FINISHED") color = "--thus-state-2"
     }
     const colorShow = liuUtil.colorToShow(color)
 

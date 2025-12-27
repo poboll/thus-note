@@ -3,10 +3,10 @@ import { ref, toRef, watch, type Ref } from "vue"
 import { useWindowSize } from "~/hooks/useVueUse"
 import localCache from "~/utils/system/local-cache"
 import time from "~/utils/basic/time"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { RouteLocationNormalizedLoaded } from "vue-router"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
-import liuUtil from "~/utils/liu-util"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
+import liuUtil from "~/utils/thus-util"
 
 interface IframeRestrictionProps {
   viceViewPx: number
@@ -33,7 +33,7 @@ export function useIframeRestriction(props: IframeRestrictionProps) {
 
   const vcStateRef = toRef(props, "vcState")
   const vvPxRef = toRef(props, "viceViewPx")
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
 
   const ctx: IrCtx = {
     vcStateRef,
@@ -70,7 +70,7 @@ export function useIframeRestriction(props: IframeRestrictionProps) {
 function listenViceViewPx(
   ctx: IrCtx,
 ) {
-  let lastTimeout: LiuTimeout
+  let lastTimeout: ThusTimeout
   const { width } = useWindowSize()
   const { vvPxRef, vcStateRef, enable } = ctx
 
@@ -119,7 +119,7 @@ function whenVcStateChange(
   if(!isOpening) open(ctx)
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 async function open(
   ctx: IrCtx,
 ) {

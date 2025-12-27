@@ -1,10 +1,10 @@
 import time from "~/utils/basic/time";
 import valTool from "~/utils/basic/val-tool";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import { onMounted } from "vue";
 import { useGlobalStateStore } from "../stores/useGlobalStateStore";
-import liuUtil from "~/utils/liu-util";
-import liuApi from "~/utils/liu-api";
+import liuUtil from "~/utils/thus-util";
+import liuApi from "~/utils/thus-api";
 
 const MAX_WAITING = 3 * time.SECOND
 
@@ -14,7 +14,7 @@ export function listenLoaded() {
 
   const gs = useGlobalStateStore()
   let hasClosed = false
-  let maxCloseTimeout: LiuTimeout
+  let maxCloseTimeout: ThusTimeout
 
   const _closeSplashScreen = async () => {
     if(hasClosed) return

@@ -3,7 +3,7 @@ import type {
   ActionSheetParam,
   AsSuccessRes,
 } from "./tools/types"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
 
 type AsResolver = (res: AsSuccessRes) => void
@@ -61,7 +61,7 @@ function onTapItem(index: number) {
   _close()
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _open() {
   if(show.value) return
   if(toggleTimeout) clearTimeout(toggleTimeout)

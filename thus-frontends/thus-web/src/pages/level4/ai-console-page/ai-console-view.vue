@@ -26,7 +26,7 @@ const onTapVoiceInfo = () => {
     <div class="ac-bar">
 
       <div class="ac-title">
-        <span class="liu-no-user-select">{{ t('ai_console.voice_preference') }}</span>
+        <span class="thus-no-user-select">{{ t('ai_console.voice_preference') }}</span>
         <div class="ac-info-box" @click.stop="onTapVoiceInfo">
           <SvgIcon name="info" class="ac-info-icon"
             color="var(--main-note)"
@@ -35,7 +35,7 @@ const onTapVoiceInfo = () => {
         
       </div>
 
-      <div class="liu-no-user-select ac-footer">
+      <div class="thus-no-user-select ac-footer">
         <select v-model="voicePreference" class="ac-select">
           <option value="male">{{ t('ai_console.male') }}</option>
           <option value="female">{{ t('ai_console.female') }}</option>
@@ -126,7 +126,7 @@ const onTapVoiceInfo = () => {
   }
 }
 
-@container liu-mc-container (max-width: 480px) {
+@container thus-mc-container (max-width: 480px) {
   .ac-box {
     padding: 24px;
   }

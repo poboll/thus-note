@@ -3,7 +3,7 @@ import type {
   CommentPopupParam,
   CommentPopupData,
 } from "./types"
-import { useRouteAndLiuRouter, type RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter, type RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
 import valTool from "~/utils/basic/val-tool"
 import { turnThreadIntoComment } from "~/utils/transfer-util/thread-comment"
@@ -14,7 +14,7 @@ import {
   cancelListenEscKeyUp,
 } from "../../tools/listen-keyup"
 import { editorCanInteractKey } from "~/utils/provide-keys"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 const queryKey = "commentpopup"
 const cpData = reactive<CommentPopupData>({
@@ -29,11 +29,11 @@ const cpData = reactive<CommentPopupData>({
   submitNum: 0,
 })
 
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 let watchStopHandle: WatchStopHandle | undefined
 
 export function initCommentPopup() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
 
   // 告知 editor 当前浏览态的卡片不可交互

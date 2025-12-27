@@ -12,7 +12,7 @@ export function listToMarkdown(
   if(opt?.title) {
     str += `# ${opt.title}\n\n`
   }
-  str += liuDescToMd(list)
+  str += thusDescToMd(list)
   return str
 }
 
@@ -25,7 +25,7 @@ interface DescToMdOpt {
 }
 
 
-function liuDescToMd(
+function thusDescToMd(
   list: LiuContent[],
   opt?: DescToMdOpt,
 ) {
@@ -65,14 +65,14 @@ function liuDescToMd(
       plainText += slice
     }
     else if(type === "paragraph") {
-      const slice = liuDescToMd(content)
+      const slice = thusDescToMd(content)
       if(opt?.inBlockquote) {
         plainText += `> `
       }
       plainText += (slice + `\n`)
     }
     else if(type === "blockquote") {
-      const slice = liuDescToMd(content, { inBlockquote: true })
+      const slice = thusDescToMd(content, { inBlockquote: true })
       plainText += slice
     }
     else if(type === "horizontalRule") {
@@ -82,12 +82,12 @@ function liuDescToMd(
       let slice = `\`\`\``
       if(attrs?.language) slice += attrs.language 
       slice += `\n`
-      slice += liuDescToMd(content)
+      slice += thusDescToMd(content)
       slice += `\n\`\`\`\n`
       plainText += slice
     }
     else if(type === "listItem") {
-      const slice = liuDescToMd(content)
+      const slice = thusDescToMd(content)
       if(opt?.orderNum) {
         plainText += `${opt.orderNum}. `
         opt.orderNum++
@@ -98,20 +98,20 @@ function liuDescToMd(
       plainText += slice
     }
     else if(type === "orderedList") {
-      const slice = liuDescToMd(content, { orderNum: attrs?.start ?? 1 })
+      const slice = thusDescToMd(content, { orderNum: attrs?.start ?? 1 })
       plainText += slice
     }
     else if(type === "bulletList") {
-      const slice = liuDescToMd(content, { inBulletList: true })
+      const slice = thusDescToMd(content, { inBulletList: true })
       plainText += slice
     }
     else if(type === "taskItem") {
       let slice = attrs?.checked ? `- [x] ` : `- [ ] `
-      slice += liuDescToMd(content)
+      slice += thusDescToMd(content)
       plainText += slice
     }
     else if(type === "taskList") {
-      const slice = liuDescToMd(content)
+      const slice = thusDescToMd(content)
       plainText += slice
     }
   }

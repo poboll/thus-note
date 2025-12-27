@@ -2,12 +2,12 @@
 // 侧边栏顶部区域
 import { useScTop } from './tools/useScTop';
 import { useSctLayout } from "./tools/useSctLayout";
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 import NaviLink from "~/components/common/navi-link/navi-link.vue";
 import { useI18n } from 'vue-i18n';
 import { useSctRoute } from './tools/useSctRoute';
 import cui from '~/components/custom-ui';
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 import type { MenuItem } from "~/components/common/liu-menu/tools/types";
 import { type ScTopEmits, scTopProps } from "./tools/types"
 import { chooseAvatar } from '~/hooks/shared/chooseAvatar';
@@ -55,14 +55,14 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
 <template>
 
   <div class="sc-avatar-name">
-    <LiuAvatar
+    <ThusAvatar
       v-if="myProfile"
       :member-show="myProfile"
       class="sc-avatar"
       @click.stop="onTapAvatar"
-    ></LiuAvatar>
+    ></ThusAvatar>
     
-    <div class="liu-no-user-select sc-title" v-if="myProfile?.name" @click.stop="onTapName">
+    <div class="thus-no-user-select sc-title" v-if="myProfile?.name" @click.stop="onTapName">
       <span>{{ myProfile.name }}</span>
     </div>
   </div>
@@ -73,7 +73,7 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
       :distance="4"
       :aria-label="t('premium.badge_tip')"
     >
-      <div class="liu-no-user-select liu-premium" @click="onTapPremium">
+      <div class="thus-no-user-select liu-premium" @click="onTapPremium">
         <span>🥂</span>
         <span class="liu-premium-text">Premium</span>
       </div>
@@ -96,7 +96,7 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
         :aria-label="t('common.search')"
         :shortcut="searchTip"
       >
-        <div class="liu-hover liu-hover_first sct-box"
+        <div class="thus-hover thus-hover_first sct-box"
           @click="onTapSearch"
         >
           <svg-icon name="search" class="sct-icon"
@@ -116,7 +116,7 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
         @aftertap="onTapItem"
         :to="prefix + 'connectors'"
       >
-        <div class="liu-hover sct-box" :aria-label="t('common.connects')"
+        <div class="thus-hover sct-box" :aria-label="t('common.connects')"
           :class="{'sc-selected': sctIndicator === 'connect'}"
         >
           <svg-icon name="hub" class="sct-icon"
@@ -136,7 +136,7 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
         @aftertap="onTapItem"
         :to="prefix + 'notification'"
       >
-      <div class="liu-hover sct-box" :aria-label="t('common.notification')"
+      <div class="thus-hover sct-box" :aria-label="t('common.notification')"
         :class="{'sc-selected': sctIndicator === 'notification'}"
       >
         <svg-icon name="notification" class="sct-icon"
@@ -152,18 +152,18 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
       @mouseenter="$emit('mouseenter', 'more')"
       @mouseleave="$emit('mouseleave')"
     >
-      <LiuMenu
+      <ThusMenu
         :menu="MORE_ITEMS"
         @tapitem="(event1: MenuItem, event2: number) => onTapMoreMenuItem(event1, event2)"
       >
-        <div class="liu-hover liu-hover_last sct-box"
+        <div class="thus-hover thus-hover_last sct-box"
           :aria-label="t('whatever.sidebar_more')"
         >
           <svg-icon name="more" class="sct-icon"
             :color="iconColor"
           ></svg-icon>
         </div>
-      </LiuMenu>
+      </ThusMenu>
     </div>
     
     <!-- 设置 -->
@@ -175,7 +175,7 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
         @aftertap="onTapItem"
         :to="prefix + 'settings'"
       >
-        <div class="liu-hover sct-box" :aria-label="t('common.setting')"
+        <div class="thus-hover sct-box" :aria-label="t('common.setting')"
           :class="{'sc-selected': sctIndicator === 'setting'}"
         >
           <svg-icon name="setting" class="sct-icon"
@@ -195,7 +195,7 @@ const searchTip = `${liuUtil.getHelpTip('Mod')} + K`
         @aftertap="onTapItem"
         :to="prefix + 'trash'"
       >
-        <div class="liu-hover liu-hover_last sct-box"
+        <div class="thus-hover thus-hover_last sct-box"
           :aria-label="t('common.trash')"
           :class="{'sc-selected': sctIndicator === 'trash'}"
         >

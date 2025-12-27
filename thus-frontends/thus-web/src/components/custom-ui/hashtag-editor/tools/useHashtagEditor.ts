@@ -8,11 +8,11 @@ import type {
 } from "~/types/other/types-hashtag"
 import { searchLocal } from "~/utils/system/tag-related/search"
 import { formatTagText, findTagId, hasStrangeChar } from "~/utils/system/tag-related"
-import liuApi from "~/utils/liu-api"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import liuApi from "~/utils/thus-api"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { initRecent, getRecent } from "./tag-recent"
 import type { SimpleFunc } from "~/utils/basic/type-tool"
 import { useKeyboard } from "~/hooks/useKeyboard"
@@ -38,7 +38,7 @@ const hteData = reactive<HteData>({
 
 const inputEl = ref<HTMLInputElement | null>(null)
 const queryKey = "hashtageditor"
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 let firstInputVal = ""
 let firstEmoji = ""
@@ -46,7 +46,7 @@ let firstEmoji = ""
 let _resolve: HteResolver | undefined
 
 export function initHashtagEditor() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
   const { isMobile } = liuApi.getCharacteristic()
 

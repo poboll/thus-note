@@ -11,9 +11,9 @@ const {
 
 </script>
 <template>
-  <div class="liu-simple-page">
+  <div class="thus-simple-page">
 
-    <div class="liu-mc-container">
+    <div class="thus-mc-container">
 
       <PlaceholderView :p-state="apData.pageState"></PlaceholderView>
       

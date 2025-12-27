@@ -1,9 +1,9 @@
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import valTool from "~/utils/basic/val-tool"
 
 let errNum = 0
 export async function handleCustomUiQueryErr(
-  rr: RouteAndLiuRouter | undefined,
+  rr: RouteAndThusRouter | undefined,
   queryKey: string,
 ) {
   if(!rr) return
@@ -14,7 +14,7 @@ export async function handleCustomUiQueryErr(
 }
 
 export function openIt(
-  rr: RouteAndLiuRouter | undefined,
+  rr: RouteAndThusRouter | undefined,
   queryKey: string,
 ) {
   if(!rr) return
@@ -25,7 +25,7 @@ export function openIt(
 }
 
 export function closeIt(
-  rr: RouteAndLiuRouter | undefined,
+  rr: RouteAndThusRouter | undefined,
   queryKey: string,
 ) {
   if(!rr) return

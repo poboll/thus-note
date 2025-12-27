@@ -100,7 +100,7 @@ const {
 
         <!--状态标题 -->
         <div class="kv-state-box">
-          <div class="liu-no-user-select kv-state"
+          <div class="thus-no-user-select kv-state"
             :style="{ 
               'color': item.colorShow,
             }"
@@ -123,23 +123,23 @@ const {
 
           <!-- 更多 -->
           <!-- :container="'#kv-column-header_' + item.id" -->
-          <LiuMenu
+          <ThusMenu
             :menu="MORE_ITEMS"
             placement="bottom-end"
             @tapitem="(event1: MenuItem, event2: number) => onTapMoreMenuItem(item.id, event1, event2)"
             @menushow="() => onMenuShow(item.id)"
             @menuhide="() => onMenuHide(item.id)"
           >
-            <div class="liu-hover kvch-btn">
+            <div class="thus-hover kvch-btn">
               <svg-icon name="more" class="kvch-svg" 
                 :color="iconColor"
               ></svg-icon>
             </div>
-          </LiuMenu>
+          </ThusMenu>
             
 
           <!-- 添加动态 -->
-          <div class="liu-hover kvch-btn"
+          <div class="thus-hover kvch-btn"
             @click="onTapAddThread(item.id)"
           >
             <svg-icon name="add" class="kvch-svg" 

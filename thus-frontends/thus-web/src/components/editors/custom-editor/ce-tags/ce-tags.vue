@@ -23,7 +23,7 @@ const onTapClear = (index: number) => {
 
     <template v-for="(item, index) in tagShows" :key="item.tagId">
 
-      <div class="liu-no-user-select ce-tag-item">
+      <div class="thus-no-user-select ce-tag-item">
         <span v-if="item.emoji" class="ce-tag-emoji">{{ item.emoji }}</span>
         <span v-else-if="item.parentEmoji" class="ce-tag-emoji">{{ item.parentEmoji }}</span>
         <span>{{ item.text }}</span>
@@ -52,7 +52,7 @@ const onTapClear = (index: number) => {
 .ce-tag-item {
   padding: 3px 2px 3px 16px;
   font-size: var(--btn-font);
-  color: var(--liu-quote);
+  color: var(--thus-quote);
   background-color: var(--tag-bg);
   border-radius: 6px;
   margin-inline-end: 10px;
@@ -94,7 +94,7 @@ const onTapClear = (index: number) => {
   }
 }
 
-@container liu-mc-container (max-width: 500px) {
+@container thus-mc-container (max-width: 500px) {
   .ce-tag-item {
     font-size: var(--mini-font);
   }

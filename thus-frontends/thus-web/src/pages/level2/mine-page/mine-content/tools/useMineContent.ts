@@ -1,5 +1,5 @@
 import { useMyProfile, usePrefix } from "~/hooks/useCommon";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 export function useMineContent() {
   const { myProfile, isPremium } = useMyProfile()

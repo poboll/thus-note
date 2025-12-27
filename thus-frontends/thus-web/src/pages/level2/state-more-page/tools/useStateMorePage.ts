@@ -1,5 +1,5 @@
 import { reactive, watch } from "vue";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { storeToRefs } from "pinia";
 import { 
@@ -9,13 +9,13 @@ import {
 import type { PageState } from "~/types/types-atom";
 import type { SmpView, SmpData, SmpCtx } from "./types";
 import typeCheck from "~/utils/basic/type-check";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import commonPack from "~/utils/controllers/tools/common-pack";
 
 export function useStateMorePage() {
 
   // 获取路由
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
 
   // 获取工作区
   const wStore = useWorkspaceStore()

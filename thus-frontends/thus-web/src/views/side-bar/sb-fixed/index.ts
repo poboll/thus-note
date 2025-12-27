@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import valTool from "~/utils/basic/val-tool";
 import type { SbfData } from "./tools/types";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import time from "~/utils/basic/time";
 import cfg from "~/config"
 
@@ -51,8 +51,8 @@ function onPopupTouchEnd() {
 }
 
 
-let openTimeout: LiuTimeout
-let closeTimeout: LiuTimeout
+let openTimeout: ThusTimeout
+let closeTimeout: ThusTimeout
 
 function toOpen() {
   const s = sbfData.state

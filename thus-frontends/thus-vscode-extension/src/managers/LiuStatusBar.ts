@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { i18n } from '~/locales/i18n';
-import liuInfo from '~/utils/liu-info';
+import liuInfo from '~/utils/thus-info';
 
 export class LiuStatusBar {
   private static _instance: LiuStatusBar

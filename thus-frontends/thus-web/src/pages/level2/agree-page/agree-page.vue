@@ -20,19 +20,19 @@ const eventKey = computed(() => {
 
 </script>
 <template>
-  <div class="liu-simple-page">
+  <div class="thus-simple-page">
 
-    <div class="liu-mc-container">
+    <div class="thus-mc-container">
 
       <PlaceholderView :p-state="apData.pageState"></PlaceholderView>
 
       <div v-show="apData.pageState < 0" 
-        class="liu-no-user-select liu-mc-box"
+        class="thus-no-user-select thus-mc-box"
       >
 
         <!-- navi bar -->
         <div class="ap-navi-bar" v-if="apData.showNaviBar">
-          <div class="liu-hover apnb-item" @click.stop="onTapHome">
+          <div class="thus-hover apnb-item" @click.stop="onTapHome">
             <svg-icon name="home"
               class="apnb-home"
             ></svg-icon>
@@ -76,7 +76,7 @@ const eventKey = computed(() => {
 </template>
 <style scoped lang="scss">
 
-.liu-mc-box {
+.thus-mc-box {
   display: flex;
   flex-direction: column;
   align-items: center;

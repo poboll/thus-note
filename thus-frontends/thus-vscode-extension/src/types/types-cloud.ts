@@ -25,7 +25,7 @@ export interface Cloud_ImageStore {
 /** 登录时，后端传回来的用户基础信息
  * 只有基础的，复杂的数据配置，需要另外调用
 */
-export interface LiuSpaceAndMember {
+export interface ThusSpaceAndMember {
   // 关于 member 的信息
   memberId: string
   member_name?: string

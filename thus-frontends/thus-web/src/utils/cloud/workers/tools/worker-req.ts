@@ -1,6 +1,6 @@
 import { handleBeforeFetching, handleAfterFetching } from "./req-funcs"
 import type { MainToChildMessage } from "../../tools/types"
-import type { LiuRqOpt, LiuRqReturn } from "~/requests/tools/types"
+import type { ThusRqOpt, ThusRqReturn } from "~/requests/tools/types"
 import time from "~/utils/basic/time"
 import valTool from "~/utils/basic/val-tool"
 import typeCheck from "~/utils/basic/type-check"
@@ -11,9 +11,9 @@ function init(msg: MainToChildMessage) {
   default_body = {
     x_liu_language: msg.system_language,
     x_liu_theme: msg.system_theme,
-    x_liu_version: LIU_ENV.version,
+    x_liu_version: THUS_ENV.version,
     x_liu_timezone: time.getTimezone().toFixed(1),
-    x_liu_client: LIU_ENV.client,
+    x_liu_client: THUS_ENV.client,
     x_liu_token: msg.token,
     x_liu_serial: msg.serial,
     x_liu_device: msg.device_string,
@@ -45,7 +45,7 @@ async function request<
 >(
   url: string,
   body?: U,
-  opt?: LiuRqOpt,
+  opt?: ThusRqOpt,
 ) {
   const b = await _getBody(body)
   const init: RequestInit = {
@@ -95,7 +95,7 @@ async function request<
     return { code: `B0001` }
   }
 
-  const res2 = await res.json() as LiuRqReturn<T>
+  const res2 = await res.json() as ThusRqReturn<T>
 
   if(res2.data && client_key) {
     const newData = await handleAfterFetching(res2.data, client_key)

@@ -17,7 +17,7 @@ export interface Cloud_ImageStore {
 }
 
 
-export interface LiuSpaceAndMember {
+export interface ThusSpaceAndMember {
   // 关于 member 的信息
   memberId: string
   member_name?: string

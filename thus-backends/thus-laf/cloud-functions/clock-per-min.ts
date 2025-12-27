@@ -465,8 +465,8 @@ function turnContentIntoAtom(
   if(res1.title) {
     title = res1.title
   }
-  else if(res1.liuDesc) {
-    title = RichTexter.getSummary(res1.liuDesc)
+  else if(res1.thusDesc) {
+    title = RichTexter.getSummary(res1.thusDesc)
   }
 
   const atom: RemindAtom = {

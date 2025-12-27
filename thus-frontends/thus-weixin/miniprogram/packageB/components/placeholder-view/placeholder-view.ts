@@ -4,7 +4,7 @@ import { i18nBehavior } from "../../behaviors/i18n-behavior"
 import { defaultData } from "../../config/default-data"
 import { LiuApi } from "~/packageB/utils/LiuApi"
 import valTool from "~/packageB/utils/val-tool"
-import { LiuUtil } from "~/packageB/utils/liu-util/index"
+import { LiuUtil } from "~/packageB/utils/thus-util/index"
 
 const TRANSITION_MS = 300
 

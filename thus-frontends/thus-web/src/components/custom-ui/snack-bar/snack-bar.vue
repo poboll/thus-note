@@ -26,13 +26,13 @@ const {
           :style="{ backgroundColor: sbData.dot_color }"
         ></div>
 
-        <div class="liu-no-user-select sb-text">
+        <div class="thus-no-user-select sb-text">
           <span v-if="sbData.text">{{ sbData.text }}</span>
           <span v-else-if="sbData.text_key">{{ t(sbData.text_key) }}</span>
         </div>
       </div>
       <div v-if="(sbData.action || sbData.action_key)" 
-        class="liu-no-user-select sb-action"
+        class="thus-no-user-select sb-action"
         :style="{ 'color': sbData.action_color ? sbData.action_color : undefined }"
         @click="onTapAction"
       >

@@ -1,8 +1,8 @@
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import localCache from "~/utils/system/local-cache";
 
 export function redirectToLoginPage(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const n = rr.route.name
   if(n === "login") return

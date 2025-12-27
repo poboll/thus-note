@@ -7,7 +7,7 @@ import localCache from "~/utils/system/local-cache";
 import type { CeData, CeEmits } from "./types"
 import time from "~/utils/basic/time";
 import transferUtil from "~/utils/transfer-util";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import localReq from "./req/local-req";
 import type { ThreadShowStore } from "~/hooks/stores/useThreadShowStore";
 import { storeToRefs } from "pinia";
@@ -17,7 +17,7 @@ import type { SpaceType } from "~/types/types-basic";
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
 import { resetBasicCeData } from "./some-funcs";
 import cui from "~/components/custom-ui";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 // 本文件处理发表的逻辑
 
@@ -196,7 +196,7 @@ function _getThreadData(
   const contentJSON = editorContent?.json
   const list = contentJSON?.type === "doc" && contentJSON.content ? contentJSON.content : []
   const liuList = list.length > 0 ? transferUtil.tiptapToLiu(list) : undefined
-  const liuDesc = liuUtil.getRawList(liuList)
+  const thusDesc = liuUtil.getRawList(liuList)
 
   const { storageState, aiReadable } = ceData
   const images = liuUtil.getRawList(ceData.images)
@@ -209,7 +209,7 @@ function _getThreadData(
   const tagSearched = getTagIdsParents(tagIds)
 
   const search_title = (ceData.title ?? "").toLowerCase()
-  const search_other = transferUtil.packSearchOther(liuDesc, files)
+  const search_other = transferUtil.packSearchOther(thusDesc, files)
 
   // console.log("看一下 search_title: ", search_title)
   // console.log("看一下 search_other: ", search_other)
@@ -221,7 +221,7 @@ function _getThreadData(
     storageState,
     aiReadable,
     title: ceData.title,
-    liuDesc,
+    thusDesc,
     images,
     files,
     calendarStamp,

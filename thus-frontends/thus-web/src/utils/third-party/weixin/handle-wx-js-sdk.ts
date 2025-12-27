@@ -1,5 +1,5 @@
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { ServicePolyAPI } from "~/types/types-cloud";
 import type { BoolFunc } from "~/utils/basic/type-tool";
 import type { LiuWx } from "./types";

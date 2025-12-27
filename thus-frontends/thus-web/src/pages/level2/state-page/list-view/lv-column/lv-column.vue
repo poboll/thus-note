@@ -62,7 +62,7 @@ const iconColor = "var(--main-note)"
     <div v-if="list.length < 1" class="lc-add-box"
       :class="{ 'lc-add-box_show': showAddBox }"
     >
-      <div class="liu-no-user-select liu-hover lc-add"
+      <div class="thus-no-user-select thus-hover lc-add"
         @click="$emit('tapadd')"
       >
         <svg-icon name="add" class="lc-add-svg"
@@ -80,7 +80,7 @@ const iconColor = "var(--main-note)"
     >
       <div class="lci-inner" @click="$emit('tapitem', thread._id)">
 
-        <div class="liu-no-user-select lci-text">
+        <div class="thus-no-user-select lci-text">
           <span v-if="thread.title" class="lci-title">{{ thread.title }}</span>
           <span v-if="thread.summary">{{ thread.summary }}</span>
           <span v-else>{{ t('thread_related.img_file') }}</span>
@@ -101,7 +101,7 @@ const iconColor = "var(--main-note)"
       <AppLink 
         :to="prefix + 'state-more/' + stateId"
       >
-        <div class="liu-no-user-select liu-hover lc-more">
+        <div class="thus-no-user-select thus-hover lc-more">
           <span class="lcm-text">{{ t('common.checkMore') }}</span>
           <div class="lcm-icon-box">
             <svg-icon name="arrow-right2"

@@ -1,6 +1,6 @@
 import Compressor from 'compressorjs';
-import type { LiuExif, ImageShow, LiuImageStore } from "~/types"
-import liuUtil from '../liu-util';
+import type { LiuExif, ImageShow, ThusImageStore } from "~/types"
+import liuUtil from '../thus-util';
 import ider from '../basic/ider';
 import { encode as blurhashEncode } from "blurhash";
 import { getImgLayout } from "./tools/img-layout"
@@ -180,7 +180,7 @@ async function getMetaDataFromFiles(
   files: File[],
   exifs?: LiuExif[],
 ) {
-  const list: LiuImageStore[] = []
+  const list: ThusImageStore[] = []
 
   const _get = (file: File) => {
 
@@ -284,7 +284,7 @@ async function getMetaDataFromFiles(
       return null
     }
 
-    const obj: LiuImageStore = {
+    const obj: ThusImageStore = {
       id: ider.createImgId(),
       name: data.file.name,
       lastModified: data.file.lastModified,
@@ -317,7 +317,7 @@ function _resizeDimensions(img: HTMLImageElement) {
   return liuUtil.constraintWidthHeight(width, height, maxWidth, maxHeight)
 }
 
-function imageStoreToShow(val: LiuImageStore): ImageShow {
+function imageStoreToShow(val: ThusImageStore): ImageShow {
   const [src] = liuUtil.createURLsFromStore([val])
   const obj: ImageShow = {
     src,
@@ -333,7 +333,7 @@ function imageStoreToShow(val: LiuImageStore): ImageShow {
 // 当逻辑层的 images 变化时，响应到 coversRef 视图层上
 function whenImagesChanged(
   coversRef: Ref<ImageShow[]>,
-  newImages?: LiuImageStore[],
+  newImages?: ThusImageStore[],
 ) {
   const newLength = newImages?.length ?? 0
   if(newLength < 1) {
@@ -341,7 +341,7 @@ function whenImagesChanged(
     return
   }
 
-  (newImages as LiuImageStore[]).forEach((v, i) => {
+  (newImages as ThusImageStore[]).forEach((v, i) => {
     const v2 = coversRef.value[i]
     if(!v2) {
       coversRef.value.push(imageStoreToShow(v))

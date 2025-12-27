@@ -44,7 +44,7 @@ const enableBottom = computed(() => {
       <!-- the bar of date for TODAY_FUTURE -->
       <template v-if="viewType === 'TODAY_FUTURE' && item.dateText">
         <div v-if="index === 0 || tlData.list[index - 1].dateText !== item.dateText" 
-          class="liu-no-user-select thread-list-bar"
+          class="thus-no-user-select thread-list-bar"
         >
           <span>{{ item.dateText }}</span>
         </div>

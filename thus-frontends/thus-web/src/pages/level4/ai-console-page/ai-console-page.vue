@@ -7,13 +7,13 @@ const { acData } = useAiConsole()
 </script>
 <template>
 
-  <div class="liu-simple-page">
+  <div class="thus-simple-page">
 
-    <div class="liu-mc-container">
+    <div class="thus-mc-container">
 
       <PlaceholderView :p-state="acData.pageState"></PlaceholderView>
 
-      <div v-if="acData.pageState < 0" class="liu-mc-box">
+      <div v-if="acData.pageState < 0" class="thus-mc-box">
         <AiConsoleView 
           v-model:voice-preference="acData.voicePreference"
         ></AiConsoleView>

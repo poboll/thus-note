@@ -101,7 +101,7 @@ pnpm i
 pnpm watch
 
 # Backend
-cd thus-backends/thus-laf
+cd liubai-backends/thus-laf
 pnpm i
 # Deploy to Laf
 ```

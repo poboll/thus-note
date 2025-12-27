@@ -1,6 +1,6 @@
 import type { CryptoCipherAndIV, LiuPlainText } from "~/types"
 import ider from "~/utils/ider"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import valTool from "~/utils/basic/val-tool"
 
 export async function handleBeforeFetching(

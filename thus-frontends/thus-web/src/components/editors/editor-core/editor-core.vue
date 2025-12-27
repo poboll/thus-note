@@ -249,7 +249,7 @@ defineExpose({ editor })
       margin-inline-end: 0;
       margin-block-start: 10px;
       margin-block-end: 10px;
-      color: var(--liu-quote);
+      color: var(--thus-quote);
     }
 
     hr {

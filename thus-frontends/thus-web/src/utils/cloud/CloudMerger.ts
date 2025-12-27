@@ -2,17 +2,17 @@
 // 处理从云端加载动态、评论（含点赞和表态）至本地
 // 再融合进本地的 db 中
 import type { CmResolver, CmTask, CmOpt } from "./cm-tools/types"
-import type { LiuTimeout } from "../basic/type-tool";
+import type { ThusTimeout } from "../basic/type-tool";
 import ider from "../basic/ider";
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { 
   Res_SyncGet_Client, 
   SyncGetAtom,
   CloudMergerOpt,
-  LiuDownloadParcel,
+  ThusDownloadParcel,
 } from "~/types/cloud/sync-get/types";
-import { handleLiuDownloadParcels } from "./cm-tools/handleParcels";
+import { handleThusDownloadParcels } from "./cm-tools/handleParcels";
 import someFuncs from "./cm-tools/some-funcs"
 import type { CommentShow, ThreadShow } from "~/types/types-content";
 import type { ThreadListViewType } from "~/types/types-view";
@@ -20,7 +20,7 @@ import { useNetworkStore } from "~/hooks/stores/useNetworkStore";
 
 class CloudMerger {
 
-  private static triggerTimeout: LiuTimeout
+  private static triggerTimeout: ThusTimeout
   private static tasks: CmTask[] = []
 
   static request(
@@ -128,7 +128,7 @@ class CloudMerger {
         continue
       }
 
-      await handleLiuDownloadParcels(list2)
+      await handleThusDownloadParcels(list2)
       task.resolver(list2)
     }
     
@@ -142,7 +142,7 @@ class CloudMerger {
   }
 
   static getIdsForCheckingContents(
-    res1: LiuDownloadParcel[],
+    res1: ThusDownloadParcel[],
     showList: CommentShow[] | ThreadShow[],
     viewType?: ThreadListViewType,
   ) {

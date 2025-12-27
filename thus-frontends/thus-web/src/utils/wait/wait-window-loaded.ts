@@ -1,7 +1,7 @@
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
 import { storeToRefs } from "pinia";
 import { watch } from "vue";
-import type { BoolFunc, LiuTimeout } from "~/utils/basic/type-tool";
+import type { BoolFunc, ThusTimeout } from "~/utils/basic/type-tool";
 
 let waitPromise: Promise<boolean> | undefined
 export function waitWindowLoaded() {
@@ -35,7 +35,7 @@ export function waitWxJSBridge(
       return
     }
 
-    let timeout: LiuTimeout
+    let timeout: ThusTimeout
     
     const { wxJSBridgeReady } = storeToRefs(gStore)
     const _stop = watch(wxJSBridgeReady, (newV) => {

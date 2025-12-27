@@ -29,14 +29,14 @@ const icon_color = "var(--main-normal)"
   <!-- 第一排工具栏 -->
   <div class="ce-toolbar">
     <!-- 图片 -->
-    <div class="liu-hover liu-hover_first cet-item" :aria-label="t('editor.image')"
+    <div class="thus-hover thus-hover_first cet-item" :aria-label="t('editor.image')"
       @click.stop="onTapChooseImage"
     >
       <svg-icon name="editor-image" class="ceti-icon" :color="icon_color" />
     </div>
 
     <!-- 标签 -->
-    <div class="liu-hover cet-item"
+    <div class="thus-hover cet-item"
       @click="onTapTag"
       :aria-label="t('editor.tag')"
     >
@@ -44,7 +44,7 @@ const icon_color = "var(--main-normal)"
     </div>
 
     <!-- 开启/关闭全屏 -->
-    <div class="liu-hover cet-item"
+    <div class="thus-hover cet-item"
       @click="onTapExpand"
       :aria-label="expanded ? t('editor.restore') : t('editor.expand')"
     >
@@ -53,7 +53,7 @@ const icon_color = "var(--main-normal)"
     </div>
 
     <!-- 更多 -->
-    <div class="liu-hover cet-item"
+    <div class="thus-hover cet-item"
       :class="{ 'cet-item_selected': more }"
       @click="onTapMore"
       :aria-label="t('common.more')"
@@ -65,7 +65,7 @@ const icon_color = "var(--main-normal)"
     </div>
 
     <!-- 清除样式 -->
-    <div class="liu-hover cet-item cet-format-clear"
+    <div class="thus-hover cet-item cet-format-clear"
       :class="{ 'cet-format-clear_show': showFormatClear }"
       @click="onTapClearFormat"
       :aria-label="t('editor.format_clear')"

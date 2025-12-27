@@ -2,8 +2,8 @@ import type { Ref } from "vue";
 import { ref, toRef, watch } from 'vue';
 import valTool from '~/utils/basic/val-tool';
 import type { AgreeBoxProps } from "./types";
-import liuApi from "~/utils/liu-api";
-import liuEnv from "~/utils/liu-env";
+import liuApi from "~/utils/thus-api";
+import liuEnv from "~/utils/thus-env";
 
 export function useAgreeBox(
   agree: Ref<boolean>,

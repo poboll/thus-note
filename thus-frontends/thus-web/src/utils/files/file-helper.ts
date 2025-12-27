@@ -1,9 +1,9 @@
 import type { 
-  LiuFileStore, 
-  LiuImageStore,
+  ThusFileStore, 
+  ThusImageStore,
 } from "~/types"
 
-function storeToFile(store: LiuFileStore | LiuImageStore) {
+function storeToFile(store: ThusFileStore | ThusImageStore) {
   const { arrayBuffer, name, mimeType, lastModified } = store
   if(!arrayBuffer) {
     console.warn("没有 arrayBuffer.........")

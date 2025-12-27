@@ -3,7 +3,7 @@
 
 import { useI18n } from 'vue-i18n';
 import { useSbOpen } from './tools/useSbOpen';
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 
 defineEmits<{
   (event: "tapopen"): void
@@ -26,7 +26,7 @@ const shortcut = `${liuUtil.getHelpTip('Mod')} + \\`
       :aria-label="t('dnd.sidebar')"
       :shortcut="shortcut"
     >
-      <div class="liu-hover sb-open"
+      <div class="thus-hover sb-open"
         @click="$emit('tapopen')"
       >
         <svg-icon
@@ -74,7 +74,7 @@ const shortcut = `${liuUtil.getHelpTip('Mod')} + \\`
   }
 }
 
-.liu-hover::before {
+.thus-hover::before {
   border-radius: 0;
 }
 
@@ -84,18 +84,18 @@ const shortcut = `${liuUtil.getHelpTip('Mod')} + \\`
     transform: scale(1.25);
   }
 
-  .liu-hover:hover::before {
+  .thus-hover:hover::before {
     opacity: 0;
   }
 
-  .liu-hover[aria-label]::after {
+  .thus-hover[aria-label]::after {
     top: 0;
     right: 0;
     transform: translateX(100%) scale(0.8);
   }
 }
 
-.liu-hover:active::before {
+.thus-hover:active::before {
   opacity: 0;
 }
 

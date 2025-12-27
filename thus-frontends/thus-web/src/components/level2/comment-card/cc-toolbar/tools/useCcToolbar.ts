@@ -1,8 +1,8 @@
 
 import { computed, ref, watch } from 'vue';
 import type { CcToolbarProps, CcToolbarMenuItem, CcToolbarEmits } from "./types"
-import liuApi from '~/utils/liu-api';
-import type { LiuTimeout } from '~/utils/basic/type-tool';
+import liuApi from '~/utils/thus-api';
+import type { ThusTimeout } from '~/utils/basic/type-tool';
 
 
 // 编辑、删除
@@ -41,7 +41,7 @@ export function useCcToolbar(
   const expandMore = ref(isMobile)
 
 
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
   const setExpandMore = (newV: boolean, delay = 60) => {
     if(timeout) clearTimeout(timeout)
     timeout = setTimeout(() => {

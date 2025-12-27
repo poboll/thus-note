@@ -4,7 +4,7 @@ import { themeBehavior } from "~/behaviors/theme-behavior"
 import { sharedBehavior } from "~/behaviors/shared-behavior"
 import { LiuApi } from "~/utils/LiuApi"
 import valTool from "~/utils/val-tool"
-import { LiuUtil } from "~/utils/liu-util/index"
+import { LiuUtil } from "~/utils/thus-util/index"
 
 Component({
 

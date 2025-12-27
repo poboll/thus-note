@@ -45,7 +45,7 @@ const hasAvatar = computed(() => {
 </script>
 <template>
 
-  <div class="liu-no-user-select la-container">
+  <div class="thus-no-user-select la-container">
 
     <div class="la-bg" v-if="!hasAvatar"></div>
 

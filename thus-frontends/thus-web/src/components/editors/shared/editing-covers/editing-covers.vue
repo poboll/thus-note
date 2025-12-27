@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ImageShow } from '~/types';
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { useEditingCovers } from "./tools/useEditingCovers"
 import { SlickList, SlickItem, HandleDirective } from 'vue-slicksort'
 import { ceCoversProps } from "./tools/types"
@@ -43,7 +43,7 @@ const vHandle = HandleDirective
     @sort-end="onDragEnd"
     @sort-cancel="onDragEnd"
     @update:list="onListUpdate"
-    class="liu-no-user-select cc-container"
+    class="thus-no-user-select cc-container"
     helper-class="cec-item_helper"
     :hideSortableGhost="true"
   >

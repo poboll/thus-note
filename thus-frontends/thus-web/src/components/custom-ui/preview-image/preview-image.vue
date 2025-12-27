@@ -15,7 +15,7 @@ const {
 <template>
 
   <div v-if="enable" 
-    class="liu-no-user-select pi-container"
+    class="thus-no-user-select pi-container"
     :class="{ 'pi-container_show': show }"
   >
     <PiContent 

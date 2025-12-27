@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { useI18n } from "vue-i18n";
 
 const enable = ref(false)

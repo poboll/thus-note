@@ -15,7 +15,7 @@ const { t } = useI18n()
     <div class="lpn-box">
 
       <!-- 返回按钮 -->
-      <div class="liu-no-user-select liu-hover lpn-back" @click.stop="onTapBack">
+      <div class="thus-no-user-select thus-hover lpn-back" @click.stop="onTapBack">
         <div class="lpn-back-icon">
           <svg-icon name="arrow-back700" class="lpn-back-svg" color="var(--main-normal)"></svg-icon>
         </div>
@@ -35,7 +35,7 @@ const { t } = useI18n()
     <div v-if="opData.showLoading" class="lp-container">
 
       <div class="lpc-title">
-        <span class="liu-selection">{{ t('login.logging') }}</span>
+        <span class="thus-selection">{{ t('login.logging') }}</span>
       </div>
       <PulsarLoader color="var(--main-normal)"></PulsarLoader>
 

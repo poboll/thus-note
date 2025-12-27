@@ -16,12 +16,12 @@ const {
 
   <div class="cc-box">
     <svg-icon 
-      class="liu-no-user-select cc-img"
+      class="thus-no-user-select cc-img"
       :cover-fill-stroke="false"
       name="emojis-smiling_face_with_heart-eyes_color"
     ></svg-icon>
     <div class="cc-text">
-      <span class="liu-selection">{{ t('payment.success_title') }}</span>
+      <span class="thus-selection">{{ t('payment.success_title') }}</span>
     </div>
     <div class="cc-btn-box" v-if="wStore.userId">
 

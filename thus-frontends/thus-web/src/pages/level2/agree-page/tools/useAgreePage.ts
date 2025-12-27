@@ -2,18 +2,18 @@ import { reactive, watch } from "vue"
 import type { ApData } from "./types"
 import { pageStates } from "~/utils/atom"
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router"
 import valTool from "~/utils/basic/val-tool"
 import type { SyncOperateAPI } from "~/types/types-cloud"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import APIs from "~/requests/APIs"
 import { 
   getGlobalWx,
   invokeWxJsSdk,
 } from "~/utils/third-party/weixin/handle-wx-js-sdk"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import cui from "~/components/custom-ui"
 
 export function useAgreePage() {
@@ -24,7 +24,7 @@ export function useAgreePage() {
     showNaviBar: cha.isWeChat,
   })
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const { name, query } = newV
     if(name !== "agree") return
@@ -93,7 +93,7 @@ async function toGetData(
 
 async function toTapOK(
   apData: ApData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const cha = liuApi.getCharacteristic()
   if(!cha.isWeChat) {
@@ -115,7 +115,7 @@ async function toTapOK(
 
 function toTapCheckItOut(
   apData: ApData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const { contentId } = apData
   if(!contentId) {

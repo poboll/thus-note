@@ -1,8 +1,8 @@
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import type { ScData } from "./types"
 import { reactive, watch } from "vue"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import time from "~/utils/basic/time"
 import type {
   Res_SubPlan_Info,
@@ -10,17 +10,17 @@ import type {
   Param_PaymentOrder_A,
   Res_PO_CreateOrder,
 } from "~/requests/req-types"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import type { UserSubscription } from "~/types/types-cloud"
 import type { PageState } from "~/types/types-atom"
 import { pageStates } from "~/utils/atom"
 import { useThrottleFn } from "~/hooks/useVueUse"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import cui from "~/components/custom-ui"
 import { useAwakeNum } from "~/hooks/useCommon"
-import { type RouteAndLiuRouter, useRouteAndLiuRouter } from "~/routes/liu-router"
+import { type RouteAndThusRouter, useRouteAndThusRouter } from "~/routes/liu-router"
 import { showEmojiTip, showErrMsg } from "~/pages/level1/tools/show-msg"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { 
   buyViaAlipayWap, 
   storageMySubscription, 
@@ -31,11 +31,11 @@ import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import { storeToRefs } from "pinia"
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore"
 
-let timeout1: LiuTimeout  // in order to avoid the view from always loading
-let timeout2: LiuTimeout  // for setDataState
+let timeout1: ThusTimeout  // in order to avoid the view from always loading
+let timeout2: ThusTimeout  // for setDataState
 
 export function useSubscribeContent() {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const hasBackend = liuEnv.hasBackend()
   const now = time.getTime()
   const { PAYMENT_PRIORITY } = liuEnv.getEnv()
@@ -97,7 +97,7 @@ function _showUnableToPay() {
 
 async function toBuyViaOneOff(
   scData: ScData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. get params
   const { subPlanInfo } = scData

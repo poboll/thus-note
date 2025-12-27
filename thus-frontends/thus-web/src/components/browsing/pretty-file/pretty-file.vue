@@ -26,11 +26,11 @@ const {
     <!-- 文件信息 -->
     <div class="pf-info" @click.stop="onTapFile">
       <!-- 文件标题 -->
-      <div class="liu-no-user-select pf-title">
+      <div class="thus-no-user-select pf-title">
         <span>{{ file.name }}</span>
       </div>
       <!-- 文件大小 -->
-      <div v-if="sizeStr" class="liu-no-user-select pf-bd">
+      <div v-if="sizeStr" class="thus-no-user-select pf-bd">
         <span>{{ sizeStr }}</span>
       </div>
     </div>

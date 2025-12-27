@@ -5,13 +5,13 @@ import type {
   StateEditorRes,
 } from "./tools/types"
 import { ref, reactive, watch, toRef } from "vue"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../tools/useCuiTool"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import time from "~/utils/basic/time"
 import cfg from "~/config"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 
 let _resolve: SeResolver | undefined
 
@@ -19,7 +19,7 @@ const TRANSITION_DURATION = 200
 const enable = ref(false)
 const show = ref(false)
 const queryKey = "stateeditor"
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 let lastShowEditorStamp = 0
 
@@ -33,7 +33,7 @@ const reData = reactive<StateEditorData>({
 })
 
 export function initStateEditor() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
   listenText()
   return {
@@ -141,7 +141,7 @@ function listenRouteChange() {
   })
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(show.value) return
   if(toggleTimeout) {

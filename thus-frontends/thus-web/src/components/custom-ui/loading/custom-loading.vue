@@ -19,10 +19,10 @@ const {
     <div class="cui-loading-box">
       <div class="cui-loading-pulsar"></div>
       <span v-if="loData.title" 
-        class="liu-no-user-select cui-loading-title"
+        class="thus-no-user-select cui-loading-title"
       >{{ loData.title }}</span>
       <span v-else-if="loData.title_key" 
-        class="liu-no-user-select cui-loading-title"
+        class="thus-no-user-select cui-loading-title"
       >{{ t(loData.title_key) }}</span>
     </div>
   </div>

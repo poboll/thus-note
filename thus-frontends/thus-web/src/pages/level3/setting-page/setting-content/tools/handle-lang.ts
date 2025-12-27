@@ -2,7 +2,7 @@ import type { SettingContentData } from "./types"
 import { getLanguageList } from "./get-list"
 import cui from "~/components/custom-ui"
 import { useSystemStore } from "~/hooks/stores/useSystemStore"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import { fetchUserSet } from "./requests"
 
 export async function whenTapLanguage(

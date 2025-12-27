@@ -1,6 +1,6 @@
 import { computed } from "vue"
 import type { PrettyFileProps, PrettyFileIcon, PrettyFileEmit } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import { checkFile } from "~/utils/files/checkFile"
 
 export function usePrettyFile(
@@ -8,7 +8,7 @@ export function usePrettyFile(
   emit: PrettyFileEmit,
 ) {
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const {
     iconType,

@@ -21,7 +21,7 @@ const {
 
   <div 
     v-if="teEnable" 
-    class="liu-no-user-select cui-modal-container" 
+    class="thus-no-user-select cui-modal-container" 
     :class="{ 'cui-modal-container_show': teShow }"
   >
     <div class="cui-modal-bg"></div>

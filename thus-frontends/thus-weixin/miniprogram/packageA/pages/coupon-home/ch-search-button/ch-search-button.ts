@@ -1,4 +1,4 @@
-import { LiuUtil } from "~/utils/liu-util/index"
+import { LiuUtil } from "~/utils/thus-util/index"
 import { LiuApi } from "~/utils/LiuApi"
 import { i18nBehavior } from "~/packageA/behaviors/i18n-behavior"
 import { themeBehavior } from "~/packageA/behaviors/theme-behavior"

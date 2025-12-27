@@ -7,8 +7,8 @@ import type {
   SpaceType,
   BaseIsOn,
 } from "./types-basic"
-import type { AiCharacter, LiuIDEType, LiuRemindMe } from "./types-atom"
-import type { ImageShow, LiuFileStore } from "./index"
+import type { AiCharacter, LiuIDEType, ThusRemindMe } from "./types-atom"
+import type { ImageShow, ThusFileStore } from "./index"
 import type { TipTapJSONContent } from "./types-editor"
 import type { ContentConfig, ImgLayout } from "./other/types-custom"
 import type { LiuAi } from "./types-ai"
@@ -62,17 +62,17 @@ export interface ThreadShow {
   title?: string
   content?: TipTapJSONContent
   briefing?: TipTapJSONContent   // 文本很多时的摘要
-  summary?: string               // liuDesc 转为单行的纯文本，并且限制字数在 140 字内;
-                                 // 如果 liuDesc 不存在，看文件是否存在，若有打印文件名
-  desc?: string                  // liuDesc 的纯文本
+  summary?: string               // thusDesc 转为单行的纯文本，并且限制字数在 140 字内;
+                                 // 如果 thusDesc 不存在，看文件是否存在，若有打印文件名
+  desc?: string                  // thusDesc 的纯文本
   images?: ImageShow[]
-  files?: LiuFileStore[]
+  files?: ThusFileStore[]
   imgLayout?: ImgLayout
 
   calendarStamp?: number
   whenStamp?: number
   remindStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   creator?: MemberShow         // 发表者本人的 memberShow
   isMine: boolean             // 是否为我所发表的
   myFavorite: boolean         // 是否已收藏
@@ -117,11 +117,11 @@ export interface CommentShow {
   visScope: VisScope
   storageState: StorageState
   content?: TipTapJSONContent
-  summary?: string               // liuDesc 转为单行的纯文本，并且限制字数在 140 字内;
-                                 // 如果 liuDesc 不存在，看文件是否存在，若有，打印文件名
-  desc?: string                  // liuDesc 的纯文本
+  summary?: string               // thusDesc 转为单行的纯文本，并且限制字数在 140 字内;
+                                 // 如果 thusDesc 不存在，看文件是否存在，若有，打印文件名
+  desc?: string                  // thusDesc 的纯文本
   images?: ImageShow[]
-  files?: LiuFileStore[]
+  files?: ThusFileStore[]
   creator?: MemberShow         // 发表者本人的 memberShow
   isMine: boolean             // 是否为我所发表的
   myEmoji: string             // 是否点过表态，若点过则为 emoji 的 encodeURIComponent，若没有点过则为空字符串

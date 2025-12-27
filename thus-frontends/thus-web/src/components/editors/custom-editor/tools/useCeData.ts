@@ -7,7 +7,7 @@ import type {
   TipTapJSONContent,
 } from "~/types/types-editor";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
-import type { LiuRemindMe } from "~/types/types-atom";
+import type { ThusRemindMe } from "~/types/types-atom";
 import type { CeData, CeProps, CeEmits } from "./types";
 import ider from "~/utils/basic/ider";
 import type { DraftLocalTable } from "~/types/types-table";
@@ -15,13 +15,13 @@ import localCache from "~/utils/system/local-cache";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import time from "~/utils/basic/time";
 import localReq from "./req/local-req";
-import type { LiuFileStore, LiuImageStore } from "~/types";
+import type { ThusFileStore, ThusImageStore } from "~/types";
 import type { CepToPost } from "./useCeFinish"
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { storeToRefs } from "pinia";
 import type { OState_Draft, SpaceType } from "~/types/types-basic"
-import type { LiuTimeout } from "~/utils/basic/type-tool";
-import liuApi from "~/utils/liu-api";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
+import liuApi from "~/utils/thus-api";
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
 import type { EcSelectionChangeData } from "../../editor-core/tools/types";
 import { useDebounceFn } from "~/hooks/useVueUse";
@@ -29,7 +29,7 @@ import { deviceChaKey } from '~/utils/provide-keys';
 import { checkCanSubmit } from "./some-funcs";
 import { checkIfReminderEnabled } from "./reminder-tip";
 
-let collectTimeout: LiuTimeout
+let collectTimeout: ThusTimeout
 let spaceIdRef: Ref<string>
 let spaceTypeRef: Ref<SpaceType>
 let memberIdRef: Ref<string>
@@ -77,7 +77,7 @@ export function useCeData(
   const titleFocused = ref(false)
   const descFocused = ref(false)
   const gs = useGlobalStateStore()
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
 
   const anyFocused = computed(() => {
     const val = titleFocused.value || descFocused.value
@@ -126,7 +126,7 @@ export function useCeData(
     toWhenChange(date, ctx)
   }
 
-  const onRemindMeChange = (val: LiuRemindMe | null) => {
+  const onRemindMeChange = (val: ThusRemindMe | null) => {
     toRemindMeChange(val, ctx)
   }
 
@@ -328,7 +328,7 @@ function toStateChange(
 }
 
 function toRemindMeChange(
-  val: LiuRemindMe | null,
+  val: ThusRemindMe | null,
   ctx: CesCtx,
 ) {
   ctx.ceData.remindMe = val ?? undefined
@@ -416,16 +416,16 @@ async function toSave(ctx: CesCtx) {
   }
 
   const { local_id: userId } = localCache.getPreference()
-  let liuDesc: TipTapJSONContent[] | undefined = undefined
+  let thusDesc: TipTapJSONContent[] | undefined = undefined
   if(ceData.editorContent?.json) {
     const { type, content } = ceData.editorContent.json
-    if(type === "doc" && content) liuDesc = content
+    if(type === "doc" && content) thusDesc = content
   }
 
   // 响应式对象 转为普通对象
-  liuDesc = liuUtil.toRawData(liuDesc)
+  thusDesc = liuUtil.toRawData(thusDesc)
   const images = _getStoragedFiles(ceData)
-  const files = _getStoragedFiles<LiuFileStore>(ceData, "files")
+  const files = _getStoragedFiles<ThusFileStore>(ceData, "files")
   const remindMe = liuUtil.toRawData(ceData.remindMe)
   const tagIds = liuUtil.toRawData(ceData.tagIds)
 
@@ -453,7 +453,7 @@ async function toSave(ctx: CesCtx) {
     storageState: ss,
     aiReadable,
     title: ceData.title,
-    liuDesc,
+    thusDesc,
     images,
     files,
     whenStamp: ceData.whenStamp,
@@ -508,7 +508,7 @@ function saveDraftToCloud(
 
 
 
-function _getStoragedFiles<T = LiuImageStore>(
+function _getStoragedFiles<T = ThusImageStore>(
   ceData: CeData, 
   key: keyof CeData = "images"
 ): T[] | undefined {

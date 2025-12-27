@@ -1,10 +1,10 @@
 import { watch, ref, provide } from "vue";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { showA2hsFaqKey } from "~/utils/provide-keys";
 
 
 export function useA2hsPage() {
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
   const showA2hsFAQ = ref(true)
 
   provide(showA2hsFaqKey, showA2hsFAQ)

@@ -58,7 +58,7 @@
 
 没有更多了。
 
-以上我向你所描述的，你都可以在 [ai-system-two.ts](https://github.com/yenche123/thus-note/blob/cool/thus-backends/thus-laf/cloud-functions/ai-system-two.ts) 文件中找到，这份文件就是系统二的所有组成。
+以上我向你所描述的，你都可以在 [ai-system-two.ts](https://github.com/yenche123/liubai/blob/cool/liubai-backends/thus-laf/cloud-functions/ai-system-two.ts) 文件中找到，这份文件就是系统二的所有组成。
 
 
 ## 与系统二对话

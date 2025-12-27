@@ -2,7 +2,7 @@ import time from "~/utils/basic/time";
 import { db } from "~/utils/db";
 import localCache from "~/utils/system/local-cache";
 import type { MainToChildMessage } from "./types";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 
 /** put some useful funcs here to let CloudEventBus invoke */
 

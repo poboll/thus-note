@@ -7,7 +7,7 @@ import type { TipTapEditor } from "~/types/types-editor"
 import localCache from "~/utils/system/local-cache";
 import time from "~/utils/basic/time";
 import transferUtil from "~/utils/transfer-util";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import type { ContentLocalTable } from "~/types/types-table";
 import ider from "~/utils/basic/ider";
 import localReq from "./req/local-req";
@@ -20,7 +20,7 @@ import { getStorageAtom } from "./useCommentEditor"
 import { equipComments } from "~/utils/controllers/equip/comments"
 import commentController from "~/utils/controllers/comment-controller/comment-controller";
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 
 export async function finishComment(
   props: CeProps,
@@ -259,7 +259,7 @@ async function _getCommentData(
   const contentJSON = editorContent?.json
   const list = contentJSON?.type === "doc" && contentJSON.content ? contentJSON.content : []
   const liuList = list.length > 0 ? transferUtil.tiptapToLiu(list) : undefined
-  const liuDesc = liuUtil.getRawList(liuList)
+  const thusDesc = liuUtil.getRawList(liuList)
 
   // 2. 处理 storageState
   const superior = await _getSuperior(props)
@@ -277,7 +277,7 @@ async function _getCommentData(
     oState: "OK",
     visScope: "DEFAULT",
     storageState,
-    liuDesc,
+    thusDesc,
     images,
     files,
     updatedStamp: now,

@@ -2,7 +2,7 @@
 // vice-content 里，负责显示拖动文件时的指示
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref } from "vue";
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 
 defineProps({
   showDropZone: {
@@ -33,7 +33,7 @@ onMounted(async () => {
       <svg-icon name="add" class="cdz-add-icon" :color="color"></svg-icon>
     </div>
 
-    <div class="liu-no-user-select cdz-title">
+    <div class="thus-no-user-select cdz-title">
       <span>{{ t('dnd.add_tip') }}</span>
     </div>
     

@@ -1,7 +1,7 @@
 import { computed, ref } from "vue"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import valTool from "~/utils/basic/val-tool"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 interface DatePickerParam {
   date?: Date
@@ -79,7 +79,7 @@ function onTapCancel() {
   _close()
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _open() {
   if(show.value) return
   if(toggleTimeout) {

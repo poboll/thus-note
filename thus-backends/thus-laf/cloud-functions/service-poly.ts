@@ -1,7 +1,7 @@
 // Function Name: service-poly
 
 import cloud from '@lafjs/cloud'
-import { LiuRqReturn, ServicePolyAPI, Table_Config } from './common-types'
+import { ThusRqReturn, ServicePolyAPI, Table_Config } from './common-types'
 import { createCommonNonce } from '@/common-ids'
 import { getNowStamp } from '@/common-time'
 import * as crypto from "crypto";
@@ -14,7 +14,7 @@ export async function main(ctx: FunctionContext) {
   const body = ctx.request?.body ?? {}
   const oT = body.operateType
 
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(oT === "get-wxjssdk-config") {
     res = await get_wxjssdk_config(body)
   }
@@ -24,7 +24,7 @@ export async function main(ctx: FunctionContext) {
 
 async function get_wxjssdk_config(
   body: Record<string, any>,
-): Promise<LiuRqReturn<ServicePolyAPI.Res_GetWxjssdkConfig>> {
+): Promise<ThusRqReturn<ServicePolyAPI.Res_GetWxjssdkConfig>> {
   // 0. check out body
   const url = body.url
   if(!url || typeof url !== "string") {

@@ -4,7 +4,7 @@ import type { LiuContent, LiuMarkAtom } from "~/types/types-atom"
 import valTool from "../basic/val-tool"
 import { ALLOW_DEEP_TYPES } from "~/config/atom"
 import reg_exp from "~/config/regular-expressions"
-import liuUtil from "../liu-util"
+import liuUtil from "../thus-util"
 import usefulTool from "../basic/useful-tool"
 import { commonFileSuffix } from "~/config/file-suffix"
 

@@ -8,7 +8,7 @@ import type {
   ContentInfoType,
   LiuContent,
   LiuIDEType,
-  LiuRemindMe,
+  ThusRemindMe,
 } from "../../types-atom"
 import type { ThreadListViewType } from "~/types/types-view"
 import type { 
@@ -180,14 +180,14 @@ export interface LiuDownloadContent {
   storageState: StorageState
 
   title?: string
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
 
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   emojiData: EmojiData
   parentThread?: string
   parentComment?: string
@@ -235,12 +235,12 @@ export interface LiuDownloadDraft {
   visScope?: VisScope
 
   title?: string
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
 
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   tagIds?: string[]
   stateId?: string
   stateStamp?: number
@@ -253,23 +253,23 @@ interface LDP_Base {
   status: LiuDownloadStatus
 }
 
-export interface LiuDownloadParcel_A extends LDP_Base {
+export interface ThusDownloadParcel_A extends LDP_Base {
   parcelType: "content"
   content?: LiuDownloadContent
 }
 
-export interface LiuDownloadParcel_B extends LDP_Base {
+export interface ThusDownloadParcel_B extends LDP_Base {
   parcelType: "draft"
   draft?: LiuDownloadDraft
 }
 
-export type LiuDownloadParcel = LiuDownloadParcel_A | LiuDownloadParcel_B
+export type ThusDownloadParcel = ThusDownloadParcel_A | ThusDownloadParcel_B
 
 export interface SyncGetAtomRes {
   code: string
   taskId: string
   errMsg?: string
-  list?: LiuDownloadParcel[]
+  list?: ThusDownloadParcel[]
 }
 
 export interface Res_SyncGet_Client {

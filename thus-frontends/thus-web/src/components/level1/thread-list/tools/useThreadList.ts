@@ -17,7 +17,7 @@ import typeCheck from "~/utils/basic/type-check"
 import stateController from "~/utils/controllers/state-controller/state-controller"
 import type { ThreadShow } from "~/types/types-content"
 import valTool from "~/utils/basic/val-tool"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { CloudMerger } from "~/utils/cloud/CloudMerger"
 import type {
   SyncGet_ThreadList,

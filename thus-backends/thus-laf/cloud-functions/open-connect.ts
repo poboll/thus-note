@@ -6,7 +6,7 @@ import {
 import cloud from "@lafjs/cloud"
 import { 
   type OpenConnectOperate,
-  type LiuRqReturn,
+  type ThusRqReturn,
   type LiuErrReturn,
   type VerifyTokenRes_B,
   type Table_Member,
@@ -58,7 +58,7 @@ export async function main(ctx: FunctionContext) {
   const vRes = await verifyToken(ctx, body)
   if(!vRes.pass) return vRes.rqReturn
 
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(oT === "bind-wecom") {
     res = await handle_bind_wecom(vRes, body)
   }
@@ -542,7 +542,7 @@ async function handle_check_wechat(
   if(!credential || typeof credential !== "string") {
     return { code: "E4000", errMsg: "credential is required" }
   }
-  const res: LiuRqReturn<Res_OC_CheckWeChat> = {
+  const res: ThusRqReturn<Res_OC_CheckWeChat> = {
     code: "0000",
   }
 
@@ -596,7 +596,7 @@ async function handle_check_wechat(
 async function handle_bind_wechat(
   vRes: VerifyTokenRes_B,
   body: Record<string, any>,
-): Promise<LiuRqReturn<Res_OC_BindWeChat>> {
+): Promise<ThusRqReturn<Res_OC_BindWeChat>> {
   // 0. get params
   const userId = vRes.userData._id
 
@@ -698,7 +698,7 @@ async function handle_bind_wechat(
 async function handle_set_wechat(
   vRes: VerifyTokenRes_B,
   body: Param_OC_SetWechat,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
 
   // 0. check params
   const res0 = vbot.safeParse(Sch_Param_OC_SetWechat, body)
@@ -765,7 +765,7 @@ async function handle_get_wechat(
   if(!memberId || typeof memberId !== "string") {
     return { code: "E4000", errMsg: "memberId is required" }
   }
-  const res: LiuRqReturn<Res_OC_GetWeChat> = {
+  const res: ThusRqReturn<Res_OC_GetWeChat> = {
     code: "0000",
   }
 
@@ -815,7 +815,7 @@ async function handle_get_wechat(
 async function handle_bind_wecom(
   vRes: VerifyTokenRes_B,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_OC_BindWeCom>> {
+): Promise<ThusRqReturn<Res_OC_BindWeCom>> {
   // 0. get params
   const userId = vRes.userData._id
 
@@ -925,7 +925,7 @@ async function handle_bind_wecom(
   }
 }
 
-function getWeComBotId(): LiuRqReturn {
+function getWeComBotId(): ThusRqReturn {
   const bot_ids = process.env.LIU_WECOM_QYNB_BOT_IDS
   if(!bot_ids) {
     return { code: "E5001", errMsg: "wecom bot_ids not found" }
@@ -956,7 +956,7 @@ async function handle_check_wecom(
   if(!credential || typeof credential !== "string") {
     return { code: "E4000", errMsg: "credential is required" }
   }
-  const res: LiuRqReturn<Res_OC_CheckWeCom> = {
+  const res: ThusRqReturn<Res_OC_CheckWeCom> = {
     code: "0000",
   }
 

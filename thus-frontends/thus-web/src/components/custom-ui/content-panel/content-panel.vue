@@ -26,7 +26,7 @@ const iconColor = `var(--other-btn-text)`
 <template>
 
   <!-- 以移动端先进行布局，最后再适配非移动端的模式 -->
-  <div class="liu-no-user-select cp-container" v-if="cpData.enable">
+  <div class="thus-no-user-select cp-container" v-if="cpData.enable">
 
     <div class="cp-bg" 
       :class="{ 'cp-bg_show': cpData.show }"
@@ -38,7 +38,7 @@ const iconColor = `var(--other-btn-text)`
       @mouseleave="onMouseLeaveBox"
     >
 
-      <div class="liu-no-user-select cp-big-title" v-if="cpData.onlyReaction">
+      <div class="thus-no-user-select cp-big-title" v-if="cpData.onlyReaction">
         <span>{{ cpData.title }}</span>
       </div>
 
@@ -105,7 +105,7 @@ const iconColor = `var(--other-btn-text)`
           </div>
 
           <!-- 举报按钮 -->
-          <div class="liu-hover cpf-last" v-if="!cpData.isMine"
+          <div class="thus-hover cpf-last" v-if="!cpData.isMine"
             :aria-label="t('common.report')"
           >
             <svg-icon name="report_600"
@@ -115,7 +115,7 @@ const iconColor = `var(--other-btn-text)`
           </div>
 
           <!-- 删除按钮 -->
-          <div class="liu-hover cpf-last" v-else
+          <div class="thus-hover cpf-last" v-else
             :aria-label="t('common.delete')"
             @click.stop="onTapDelete"
           >

@@ -3,13 +3,13 @@ import MainView from "~/views/main-view/main-view.vue";
 import ScrollView from "~/components/common/scroll-view/scroll-view.vue";
 import ComposeContent from "./compose-content/compose-content.vue";
 import { useI18n } from "vue-i18n";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { onActivated } from "vue";
 import middleBridge from "~/utils/middle-bridge";
 
 const { t } = useI18n()
 
-const rr = useRouteAndLiuRouter()
+const rr = useRouteAndThusRouter()
 const onTapHome = () => {
   rr.router.goHome()
 }
@@ -24,15 +24,15 @@ onActivated(() => {
   <MainView enable-drop-files disable-panels>
     <scroll-view>
 
-      <div class="liu-mc-container compose-page">
+      <div class="thus-mc-container compose-page">
         <div class="liu-tc-virtual"></div>
-        <div class="liu-mc-box">
+        <div class="thus-mc-box">
           <ComposeContent></ComposeContent>
         </div>
       </div>
 
       <div class="cp-bottom-box">
-        <div class="liu-no-user-select liu-hover cp-back-home"
+        <div class="thus-no-user-select thus-hover cp-back-home"
           @click.stop="onTapHome"
         >
           <span>{{ t('common.back_home') }}</span>

@@ -1,11 +1,11 @@
 
 import type { TipTapEditor } from '~/types/types-editor';
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { inject, ref, watch } from 'vue';
 import valTool from '~/utils/basic/val-tool';
 import cui from '~/components/custom-ui';
-import { useRouteAndLiuRouter } from '~/routes/liu-router';
-import liuUtil from '~/utils/liu-util';
+import { useRouteAndThusRouter } from '~/routes/liu-router';
+import liuUtil from '~/utils/thus-util';
 import { deviceChaKey } from '~/utils/provide-keys';
 import { useDebounceFn } from "~/hooks/useVueUse"
 import { useGlobalStateStore } from '~/hooks/stores/useGlobalStateStore';
@@ -73,7 +73,7 @@ export function useBwBubbleMenu(
     }
   } as FloatingUiOpt
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const _toPickOneTool = async (idx: number, instantly = false) => {
     selectedIndex.value = idx

@@ -1,6 +1,6 @@
-# 在 Devbox 上部署语音转文字服务
+# 如何使用 devbox 实现微信语音输入
 
-## 前言
+## 背景
 
 在[如是](../2024/how-to-use-multi-ai-on-wechat)上，很多人们会想直接使用微信的语音输入，说的总比打字快。
 
@@ -20,7 +20,7 @@
 
 这个方案的前提是，服务器上已经事先安装了 `FFmpeg`，否则 `fluent-ffmpeg` 将无法使用。
 
-“这可不是一个简单的函数即服务”当时心想。我自己是一个后端和运维小白，以前都是 Serverless 一把梭，专注于前端跟用户的交互。现在这可有点难到我了。
+“这可不是一个简单的函数即服务”我当时心想。我自己是一个后端和运维小白，以前都是 Serverless 一把梭，专注于前端跟用户的交互。现在这可有点难到我了。
 
 不过，我想起了 Sealos 前阵子上线的 `devbox`，宣传里似乎就是要弥补 `Laf` 这样函数即服务的不足。
 
@@ -75,7 +75,7 @@ devbox 让你免去 `记录服务器 IP 或域名` / `输入 SSH 端口号` / `�
 现在我们打开 Terminal 终端，用 `git` 下载代码:
 
 ```shell
-git clone https://github.com/yenche123/thus-note.git
+git clone https://github.com/yenche123/liubai.git
 ```
 
 这里分享一个心得，你在 SSH Host 的 IDE 上输入命令，感觉会有那么一点卡卡的 delay 感，那是因为你真的在操作远程服务器上的终端，你们之间当然会有一个延时了。
@@ -100,13 +100,15 @@ ffmpeg -version                        # verify if installed successfully
 
 ![entrypoint](./assets0108/07.png)
 
-我们在根目录上，也就是跟 `thus-note/` 同级的位置（如上图所示），创建一个 `entrypoint.sh` 文件，内容如下:
+我们在根目录上，也就是跟 `liubai/` 同级的位置（如上图所示），创建一个 `entrypoint.sh` 文件，内容如下:
 
-```bash
+```shell
 #!/bin/bash
-cd /home/devbox/project/thus-note/thus-backends/thus-ffmpeg
+cd /home/devbox/project/liubai/liubai-backends/thus-ffmpeg
 pnpm dev
 ```
+
+这个文件是告知生产环境的服务器，机器启动之后，如何启动我们渴望的服务。
 
 我们这里就是告知机器，先定位到目标文件夹 `thus-ffmpeg` 然后再运行 `pnpm dev` 命令，去启动 `express` 服务。
 
@@ -122,8 +124,8 @@ chmod +x entrypoint.sh
 
 我们打开 `thus-ffmpeg` 目录，来安装所需依赖：
 
-```bash
-cd /home/devbox/project/thus-note/thus-backends/thus-ffmpeg
+```shell
+cd /home/devbox/project/liubai/liubai-backends/thus-ffmpeg
 pnpm i
 ```
 
@@ -184,7 +186,7 @@ bash entrypoint.sh
 
 ## 立即体验
 
-上面提到的服务已经部署在"如是"上了，现在关注"如是"微信公众号，发送语音给它，就会调用上方提到的 `amr` 转 `mp3` 服务。
+上面提到的服务已经部署在“如是”上了，现在关注“如是”微信公众号，发送语音给它，就会调用上方提到的 `amr` 转 `mp3` 服务。
 
 目前大模型厂商 7 小虎中，MiniMax 是允许开发者在 `messages` 中直接传入 `mp3` 格式的 `base64`。看到这里，你还不快去试试，原生地在微信中使用多模态！
 
@@ -198,9 +200,9 @@ bash entrypoint.sh
 
 借由 `devbox` 对底层容器的优化，它让我们拥有**开发即部署**的能力，开发完直接在开发服务器上验证结果；同时 `devbox` 能对整个虚拟器进行快照，解决了 `开发环境` 和 `生产环境` 的一致性难题，让我们在生产环境上无需重走一遍安装依赖以及底层软件的流程，达到生产环境开箱即用的效果。
 
-对于本文有任何疑问，欢迎在评论区留言，或者在 thus-note 上[提交 issue](https://github.com/yenche123/thus-note/issues) 与
+对于本文有任何疑问，欢迎在评论区留言，或者在 liubai 上[提交 issue](https://github.com/yenche123/liubai/issues) 与我交流！
 
-## 作者
+## 本文作者
 
 - [Yanzhe](https://github.com/yenche123)，如是开发者。如是是一款集合多个 AI 的生产力工具，让你在微信上即可管理你的笔记、日程、任务和待办清单！
 

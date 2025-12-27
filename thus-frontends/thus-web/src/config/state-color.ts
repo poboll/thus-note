@@ -1,35 +1,35 @@
 import { useSystemStore } from "~/hooks/stores/useSystemStore"
 
 const LIGHT_MAP: Record<string, string> = {
-  "--liu-state-1": "#BAAEA2",
-  "--liu-state-2": "#909871",
-  "--liu-state-3": "#BC7F79",
-  "--liu-state-4": "#9786B1",
-  "--liu-state-5": "#9D7867",
-  "--liu-state-6": "#5E7B87",
-  "--liu-state-7": "#51816B",
-  "--liu-state-8": "#8F5B77",
-  "--liu-state-9": "#5976BA",
-  "--liu-state-10": "#ECB165",
+  "--thus-state-1": "#BAAEA2",
+  "--thus-state-2": "#909871",
+  "--thus-state-3": "#BC7F79",
+  "--thus-state-4": "#9786B1",
+  "--thus-state-5": "#9D7867",
+  "--thus-state-6": "#5E7B87",
+  "--thus-state-7": "#51816B",
+  "--thus-state-8": "#8F5B77",
+  "--thus-state-9": "#5976BA",
+  "--thus-state-10": "#ECB165",
 }
 
 const DARK_MAP: Record<string, string> = {
-  "--liu-state-1": "#C3BBB3",
-  "--liu-state-2": "#C4C8A2",
-  "--liu-state-3": "#D4B4AF",
-  "--liu-state-4": "#AA87B0",
-  "--liu-state-5": "#DCBB9F",
-  "--liu-state-6": "#8DB1BF",
-  "--liu-state-7": "#88927C",
-  "--liu-state-8": "#DF9AB7",
-  "--liu-state-9": "#88ABDA",
-  "--liu-state-10": "#FFD194",
+  "--thus-state-1": "#C3BBB3",
+  "--thus-state-2": "#C4C8A2",
+  "--thus-state-3": "#D4B4AF",
+  "--thus-state-4": "#AA87B0",
+  "--thus-state-5": "#DCBB9F",
+  "--thus-state-6": "#8DB1BF",
+  "--thus-state-7": "#88927C",
+  "--thus-state-8": "#DF9AB7",
+  "--thus-state-9": "#88ABDA",
+  "--thus-state-10": "#FFD194",
 }
 
 /**
  * 映射颜色
  * @param useTo 
- * @param colorKey 可以是: #xxxxxx / var(--liu-state...) / --liu-statexxxx
+ * @param colorKey 可以是: #xxxxxx / var(--thus-state...) / --thus-statexxxx
  * @return 返回 #xxxxxx
  */
 export function mapStateColor(
