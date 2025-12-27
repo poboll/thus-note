@@ -24,11 +24,11 @@ const {
     <div class="cw-container" v-if="cwData.pageState < 0">
 
       <div class="cw-bar">
-        <div class="liu-no-user-select cwb-title">
+        <div class="thus-no-user-select cwb-title">
           <span>{{ t('connect.dingtalk_backup') }}</span>
         </div>
 
-        <div class="liu-no-user-select cwb-footer">
+        <div class="thus-no-user-select cwb-footer">
           <liu-switch 
             :checked="cwData.webhook_toggle"
             @change="onWebhookChanged($event.checked)"
@@ -38,14 +38,14 @@ const {
       </div>
 
       <div class="cw-desc">
-        <span class="liu-selection">{{ t('connect.dingtalk_backup_desc') }}</span>
+        <span class="thus-selection">{{ t('connect.dingtalk_backup_desc') }}</span>
       </div>
 
       <!-- show if toggle is true -->
       <div class="cw-panel" v-if="cwData.webhook_toggle">
 
         <!-- webhook url -->
-        <div class="liu-no-user-select cw-question">
+        <div class="thus-no-user-select cw-question">
           <span>{{ t('connect.dingtalk_webhook_url') }}</span>
         </div>
         <input type="text" 

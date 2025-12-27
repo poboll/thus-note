@@ -17,7 +17,7 @@ const { t } = useI18n()
 
 </script>
 <template>
-  <div class="liu-no-user-select sms-button" 
+  <div class="thus-no-user-select sms-button" 
     :class="{ 
       'sms-button_disabled': status !== 'can_tap',
       'sms-button_loading': status === 'loading',

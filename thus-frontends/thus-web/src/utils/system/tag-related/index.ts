@@ -2,7 +2,7 @@ import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
 import type { TagView } from "~/types/types-atom";
 import type { TagShow } from "~/types/types-content";
-import liuUtil from "../../liu-util";
+import liuUtil from "../../thus-util";
 import { 
   findIndexInThisTagList,
   findTagShowById,

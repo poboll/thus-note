@@ -32,7 +32,7 @@ const icon_color = `var(--main-normal)`
     <div class="hsir-results" v-show="hsirData.list.length">
       <template v-for="(item, index) in hsirData.list" :key="item.tagId">
 
-        <div class="liu-no-user-select hsirr-item" :class="{ 'hsirr-item_selected': hsirData.selectedIndex === index }"
+        <div class="thus-no-user-select hsirr-item" :class="{ 'hsirr-item_selected': hsirData.selectedIndex === index }"
           @mouseenter="() => onMouseEnter(index)"
           @click.stop="() => onTapItem(item)"
         >

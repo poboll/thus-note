@@ -20,13 +20,13 @@ import {
   checkCanSubmit,
   resetBasicCeData,
 } from "./some-funcs"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import type { 
   LiuDownloadDraft, 
   SyncGet_Draft, 
   SyncGet_ThreadData,
 } from "~/types/cloud/sync-get/types"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { CloudMerger } from "~/utils/cloud/CloudMerger"
 import ider from "~/utils/basic/ider"
 import { useThrottleFn } from "~/hooks/useVueUse"
@@ -164,7 +164,7 @@ function whenComposingDataChanged(
   ceData.showTitleBar = Boolean(title)
   ceData.whenStamp = composingData.whenStamp
   ceData.remindMe = composingData.remindMe
-  let descList: TipTapJSONContent[] | undefined = composingData.liuDesc
+  let descList: TipTapJSONContent[] | undefined = composingData.thusDesc
   if(descList) {
     descList = transferUtil.liuToTiptap(descList)
   }
@@ -279,7 +279,7 @@ async function setDataFromDraft(
   ceData.tagIds = draft.tagIds ?? []
   ceData.stateId = draft.stateId
 
-  let descList = draft.liuDesc
+  let descList = draft.thusDesc
   if(descList) {
     descList = transferUtil.liuToTiptap(descList)
   }
@@ -516,8 +516,8 @@ async function toMergeDraft(
   ceData.aiReadable = cloud_draft.aiReadable
 
   let descJSON: TipTapJSONContent[] | undefined
-  if(cloud_draft.liuDesc) {
-    descJSON = transferUtil.liuToTiptap(cloud_draft.liuDesc)
+  if(cloud_draft.thusDesc) {
+    descJSON = transferUtil.liuToTiptap(cloud_draft.thusDesc)
   }
   setEditorContent(ctx, descJSON)
   checkToggleOfMore(ceData)
@@ -644,8 +644,8 @@ async function setDataFromThread(
   ceData.stateId = thread.stateId
 
   let descJSON: TipTapJSONContent[] | undefined
-  if(thread.liuDesc) {
-    descJSON = transferUtil.liuToTiptap(thread.liuDesc)
+  if(thread.thusDesc) {
+    descJSON = transferUtil.liuToTiptap(thread.thusDesc)
   }
   setEditorContent(ctx, descJSON)
   checkToggleOfMore(ceData)

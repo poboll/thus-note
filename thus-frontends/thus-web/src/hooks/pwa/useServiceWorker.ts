@@ -1,6 +1,6 @@
 import { useRegisterSW } from 'virtual:pwa-register/vue';
 import { watch } from 'vue';
-import liuConsole from "~/utils/debug/liu-console";
+import liuConsole from "~/utils/debug/thus-console";
 import localCache from "~/utils/system/local-cache";
 import time from "~/utils/basic/time";
 import type { SimplePromise } from '~/utils/basic/type-tool';

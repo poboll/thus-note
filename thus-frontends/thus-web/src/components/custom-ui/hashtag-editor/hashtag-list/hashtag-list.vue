@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import type { TagItem } from "../tools/types"
 import { useHashtagList } from "./tools/useHashtagList"
 import middleBridge from '~/utils/middle-bridge';
@@ -42,7 +42,7 @@ const showScrollbarProperty = middleBridge.canShowScrollbarProperty()
   <div class="ht-list" ref="htListEl" :class="{ 'ht-list-scrollbar': showScrollbarProperty }">
 
     <template v-for="(item, index) in list" :key="item.tagId">
-      <div class="liu-no-user-select ht-item" :class="{ 'ht-item_selected': index === selectedIndex }"
+      <div class="thus-no-user-select ht-item" :class="{ 'ht-item_selected': index === selectedIndex }"
         @mouseenter="() => onMouseEnter(index)" @click="() => onTapItem(index)">
 
         <div class="hti-icon">

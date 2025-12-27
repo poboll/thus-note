@@ -1,4 +1,4 @@
-import { LiuUtil, type CustomModalOpt } from "../liu-util/index";
+import { LiuUtil, type CustomModalOpt } from "../thus-util/index";
 
 export class ShowTip {
 

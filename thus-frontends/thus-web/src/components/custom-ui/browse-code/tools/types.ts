@@ -1,4 +1,4 @@
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 
 export interface BcParam {
   code: string
@@ -10,7 +10,7 @@ export interface BcData {
   language?: string | null
   show: boolean
   enable: boolean
-  copiedTimeout?: LiuTimeout
+  copiedTimeout?: ThusTimeout
 }
 
 export interface BcResult {

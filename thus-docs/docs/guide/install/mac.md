@@ -20,7 +20,7 @@
 
 <img src="./assets-mac/2.png" width="450" />
 
-- 如果没有，点击窗口右上角的"..."更多按钮，选择 `投放、保存和分享`，点击 `安装"Thus"...`
+- 如果没有，点击窗口右上角的“...”更多按钮，选择 `投放、保存和分享`，点击 `安装“Liubai”...`
 
 <img src="./assets-mac/3.png" width="400" style="margin-block-end: 8px;" />
 

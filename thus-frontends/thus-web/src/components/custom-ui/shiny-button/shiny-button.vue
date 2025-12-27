@@ -7,7 +7,7 @@ defineEmits(["click"])
 <template>
 
   <div class="shiny-container">
-    <button class="liu-no-user-select shiny-cta" @click="$emit('click', $event)">
+    <button class="thus-no-user-select shiny-cta" @click="$emit('click', $event)">
       <slot />
     </button>
   </div>

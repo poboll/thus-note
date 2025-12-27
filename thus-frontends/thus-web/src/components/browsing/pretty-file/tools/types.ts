@@ -1,16 +1,16 @@
-import type { LiuFileStore } from "~/types";
+import type { ThusFileStore } from "~/types";
 import type { PropType } from 'vue';
 
 export type PrettyFileIcon = "word" | "excel" | "ppt" | "pdf" 
   | "text" | "photo" | "video" | "psd" | "attachment" | ""
 
 export interface PrettyFileProps {
-  file?: LiuFileStore
+  file?: ThusFileStore
 }
 
 export const prettyFileProps = {
   file: {
-    type: Object as PropType<LiuFileStore>
+    type: Object as PropType<ThusFileStore>
   }
 }
 

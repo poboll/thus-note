@@ -4,8 +4,8 @@ import {
   readonly,
 } from "vue"
 import { 
-  useRouteAndLiuRouter,
-  type RouteAndLiuRouter
+  useRouteAndThusRouter,
+  type RouteAndThusRouter
 } from "~/routes/liu-router"
 import {
   useDocumentVisibility, 
@@ -21,15 +21,15 @@ import {
 } from "./tools/requests";
 import time from "../basic/time";
 import localCache from "../system/local-cache";
-import liuEnv from "../liu-env";
+import liuEnv from "../thus-env";
 import { logout } from "./tools/logout";
 import { afterGettingUserData } from "./tools/after-getting-user-data";
-import type { BoolFunc, LiuTimeout } from "~/utils/basic/type-tool"
+import type { BoolFunc, ThusTimeout } from "~/utils/basic/type-tool"
 import valTool from "../basic/val-tool";
 import { waitEnterIntoApp } from "~/hooks/useEnterIntoApp";
 import { getUser } from "./tools/some-funcs";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
-import liuConsole from "../debug/liu-console";
+import liuConsole from "../debug/thus-console";
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore";
 import { storeToRefs } from "pinia";
 
@@ -40,7 +40,7 @@ const MIN_25 = 25 * time.MINUTE
 // 事件总线，对云同步任务进行调度
 class CloudEventBus {
 
-  private static rr: RouteAndLiuRouter
+  private static rr: RouteAndThusRouter
 
   // 时间是否已校准
   private static isTimeCalibrated = false
@@ -62,7 +62,7 @@ class CloudEventBus {
     if(!backend) return
 
     const _this = this
-    this.rr = useRouteAndLiuRouter()
+    this.rr = useRouteAndThusRouter()
 
     const preMain = useThrottleFn(() => {
       _this.main()
@@ -245,7 +245,7 @@ class CloudEventBus {
       _resolve = a
     }
 
-    let timeout: LiuTimeout
+    let timeout: ThusTimeout
     const stop = watch(syncNum, (newV) => {
       if(timeout) clearTimeout(timeout)
       stop()

@@ -35,7 +35,7 @@ const { t } = useI18n()
     <div class="ir-box">
 
       <!-- 来一个哭脸 -->
-      <div class="liu-no-user-select ir-emoji-box">
+      <div class="thus-no-user-select ir-emoji-box">
         <svg-icon 
           class="ir-emoji"
           :cover-fill-stroke="false"
@@ -44,7 +44,7 @@ const { t } = useI18n()
       </div>
 
       <!-- title -->
-      <div class="liu-no-user-select ir-title">
+      <div class="thus-no-user-select ir-title">
         <span>{{ t('tip.ir_title') }}</span>
       </div>
 
@@ -56,7 +56,7 @@ const { t } = useI18n()
       </div>
 
       <!-- 我知道了 -->
-      <div class="liu-no-user-select ir-got-it" @click="onTapConfirm">
+      <div class="thus-no-user-select ir-got-it" @click="onTapConfirm">
         <span>{{ t('tip.got_it') }}</span>
       </div>
 

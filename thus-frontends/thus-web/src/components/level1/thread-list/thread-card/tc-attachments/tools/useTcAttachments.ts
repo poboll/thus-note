@@ -1,10 +1,10 @@
-import { useRouteAndLiuRouter } from '~/routes/liu-router';
+import { useRouteAndThusRouter } from '~/routes/liu-router';
 import type { TcaProps } from './types';
 import { checkFile } from '~/utils/files/checkFile';
 import { CloudFiler } from '~/utils/cloud/CloudFiler';
 
 export function useTcAttachments(props: TcaProps) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const onTapFile = (e: MouseEvent, index: number) => {
     const { thread } = props

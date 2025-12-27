@@ -5,7 +5,7 @@ import {
   checker, getDocAddId, valTool, verifyToken, WxMiniHandler,
 } from "@/common-util"
 import { 
-  type LiuRqReturn, 
+  type ThusRqReturn, 
   type VerifyTokenRes_B,
   PeopleTasksAPI,
   WxMiniAPI,
@@ -30,7 +30,7 @@ export async function main(ctx: FunctionContext) {
   if(!vRes.pass) return vRes.rqReturn
 
   // 2. decide which path to go
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   const oT = body["operateType"] as PeopleTasksAPI.OperateType
   if(oT === "enter-wx-chat-tool") {
     res = await enter_wx_chat_tool(body, vRes)
@@ -103,7 +103,7 @@ async function update_task_title(
 async function list_wx_tasks(
   body: Record<string, any>,
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<PeopleTasksAPI.Res_ListWxTasks>> {
+): Promise<ThusRqReturn<PeopleTasksAPI.Res_ListWxTasks>> {
   // 1. check out params
   const res1 = vbot.safeParse(PeopleTasksAPI.Sch_Param_ListWxTasks, body)
   if(!res1.success) {

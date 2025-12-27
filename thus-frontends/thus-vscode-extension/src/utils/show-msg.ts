@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import time from "./basic/time";
 import valTool from "./basic/val-tool";
 import type { ReturnPromise, SimpleFunc } from "./basic/type-tool";
-import liuEnv from "./liu-env";
+import liuEnv from "./thus-env";
 
 
 function _getCustomerServiceLink() {

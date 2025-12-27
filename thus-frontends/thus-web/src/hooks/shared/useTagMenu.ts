@@ -2,7 +2,7 @@ import type { MenuItem } from "~/components/common/liu-menu/tools/types"
 import cui from "~/components/custom-ui"
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore"
 import type { TagView } from "~/types/types-atom"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { 
   addATag, 
   tagIdsToShows, 

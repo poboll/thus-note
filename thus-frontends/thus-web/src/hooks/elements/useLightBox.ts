@@ -1,5 +1,5 @@
 import { type Ref, shallowRef, watch, onBeforeUnmount } from 'vue';
-import type { LiuTimeout } from '~/utils/basic/type-tool';
+import type { ThusTimeout } from '~/utils/basic/type-tool';
 
 interface IOptions {
   light?: {
@@ -62,7 +62,7 @@ export const useLightBox = (
     }
   }
 
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
   
   // 监听卡片的鼠标移动
   const onMouseMove = (e: MouseEvent) => {

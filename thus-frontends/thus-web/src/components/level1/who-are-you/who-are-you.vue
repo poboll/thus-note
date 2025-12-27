@@ -4,7 +4,7 @@
 import { nextTick, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useWhoAreYou } from './tools/useWhoAreYou';
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 
 const inputEl = ref<HTMLInputElement | null>(null) 
 

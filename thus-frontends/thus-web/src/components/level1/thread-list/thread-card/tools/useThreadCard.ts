@@ -2,20 +2,20 @@ import { computed, onMounted, provide, ref, shallowRef, watch } from 'vue';
 import type EditorCore from "~/components/editors/editor-core/editor-core.vue"
 import type { TipTapEditor } from "~/types/types-editor"
 import type { TcEmits, TcProps } from "./types"
-import liuApi from '~/utils/liu-api';
-import { useRouteAndLiuRouter } from '~/routes/liu-router';
-import type { RouteAndLiuRouter } from '~/routes/liu-router';
+import liuApi from '~/utils/thus-api';
+import { useRouteAndThusRouter } from '~/routes/liu-router';
+import type { RouteAndThusRouter } from '~/routes/liu-router';
 import { useGlobalStateStore } from '~/hooks/stores/useGlobalStateStore';
 import type {
   GlobalStateStore
 } from "~/hooks/stores/useGlobalStateStore"
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 import cui from '~/components/custom-ui';
 import { editorBriefingKey } from '~/utils/provide-keys';
 
 interface TcCtx {
   props: TcProps
-  rr: RouteAndLiuRouter
+  rr: RouteAndThusRouter
   gStore: GlobalStateStore
 }
 
@@ -26,7 +26,7 @@ export function useThreadCard(
   const showMore = ref(false)
   const editorCoreRef = ref<typeof EditorCore | null>(null)
   const editor = shallowRef<TipTapEditor>()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const gStore = useGlobalStateStore()
 
   const ctx: TcCtx = {

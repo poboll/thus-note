@@ -5,7 +5,7 @@ import limit from "~/utils/limit"
 import cui from "~/components/custom-ui"
 import dbOp from "../db-op"
 import type { ThreadChangedOpt } from "~/types/types-atom"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 //【重要】
 // 应该先 “修改 db”，再去 “通知全局”

@@ -88,9 +88,9 @@ DeepSeek 因其官方资源紧张 + 开源的原因，我们使用到了来自�
 
 ## 置顶 {#pin}
 
-许多朋友询问如何快速找到留白，这里教大家一个实用的小技巧：置顶留白。
+许多朋友询问如何快速找到如是，这里教大家一个实用的小技巧：置顶如是。
 
-<img src="./assets-three-assistants/pin-thus.png" width="400">
+<img src="./assets-three-assistants/pin-liubai.png" width="400">
 
 如上图所示，在关注如是的页面，点击右上角 `...` 按钮，再点击 `置顶服务号` 即可在微信消息列表里找到如是。
 
@@ -118,7 +118,7 @@ DeepSeek 因其官方资源紧张 + 开源的原因，我们使用到了来自�
 
 <img src="./assets-three-assistants/bug-2.png" width="500" style="margin-block-end: 20px">
 
-系微信的问题，与留白无关。
+系微信的问题，与如是无关。
 
 我们也因此推荐大家在手机微信上使用“三个助手”，让它成为你的智能口袋；毕竟在电脑 PC 上，你其实有更多选择。
 

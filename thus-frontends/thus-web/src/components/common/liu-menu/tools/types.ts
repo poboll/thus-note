@@ -16,7 +16,7 @@ type MenuTrigger = "click" | "hover" | "focus" | "touch"
 type MenuPlacement = "bottom" | "bottom-start" | "bottom-end" 
 | "auto" | "top" | "top-start" | "top-end"
 
-export interface LiuMenuProps {
+export interface ThusMenuProps {
   menu: MenuItem[]
   container: string
   minWidthStr?: string

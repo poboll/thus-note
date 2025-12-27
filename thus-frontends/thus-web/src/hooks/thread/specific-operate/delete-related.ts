@@ -4,7 +4,7 @@ import cui from "~/components/custom-ui"
 import dbOp from "../db-op"
 import time from "~/utils/basic/time"
 import stateController from "~/utils/controllers/state-controller/state-controller"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 export async function deleteThread(
   oldThread: ThreadShow,

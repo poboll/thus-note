@@ -3,7 +3,7 @@ import type {
   GetDataOpt,
 } from "./types"
 import type {
-  LiuExportContentJSON, LiuFileExport, LiuImageExport
+  ThusExportContentJSON, LiuFileExport, LiuImageExport
 } from "~/types/other/types-export"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import cfg from "~/config";
@@ -11,12 +11,12 @@ import { getData } from "./get-data"
 import type { ContentLocalTable } from "~/types/types-table";
 import type JSZip from "jszip";
 import cui from "~/components/custom-ui";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import time from "~/utils/basic/time";
 import { membersToShows } from "~/utils/other/member-related";
 import { saveAs as fileSaverSaveAs } from 'file-saver';
 import transferUtil from "~/utils/transfer-util";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import valTool from "~/utils/basic/val-tool";
 import { getJSZip } from "../../../tools/get-jszip";
 
@@ -56,8 +56,8 @@ export async function handleExport(
   const appName = liuEnv.getEnv().APP_NAME ?? ""
   const metadata = {
     appName,
-    version: LIU_ENV.version,
-    client: LIU_ENV.client,
+    version: THUS_ENV.version,
+    client: THUS_ENV.client,
     export_num: list.length,
     export_stamp: time.getTime(),
     operator: m.name ?? "",
@@ -107,7 +107,7 @@ async function insertMarkdownContent(
   const { theFolder, images, files } = preInsert(contents, d)
   if(!theFolder) return
 
-  let md = transferUtil.tiptapToMarkdown(d.liuDesc ?? [], { title: d.title })
+  let md = transferUtil.tiptapToMarkdown(d.thusDesc ?? [], { title: d.title })
 
   // 添加图片
   if(images.length) {
@@ -182,7 +182,7 @@ function insertJsonContent(
   const { theFolder, files, images } = preInsert(contents, d)
   if(!theFolder) return
 
-  const jsonData: LiuExportContentJSON = {
+  const jsonData: ThusExportContentJSON = {
     _id: d._id,
     first_id: d.first_id,
     insertedStamp: d.insertedStamp,
@@ -195,7 +195,7 @@ function insertJsonContent(
     visScope: d.visScope,
     storageState: d.storageState,
     title: d.title,
-    liuDesc: d.liuDesc,
+    thusDesc: d.thusDesc,
     files,
     images,
     calendarStamp: d.calendarStamp,

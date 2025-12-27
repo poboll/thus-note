@@ -14,7 +14,7 @@
 
 ![Marketplace](./assets-github-dev/1.png)
 
-将选项卡切换至 `扩展: 商店`，搜索 `Thus`，并点击 `安装`。
+将选项卡切换至 `扩展: 商店`，搜索 `Liubai`，并点击 `安装`。
 
 ### 2. 信任
 
@@ -23,7 +23,7 @@
 点击 `信任发布者和安装`
 
 ::: tip
-如是是完全开源的，本插件的源代码位于 [thus-vscode-extension](https://github.com/yenche123/thus-note/tree/cool/thus-frontends/thus-vscode-extension) 目录下，欢迎你审计。
+如是是完全开源的，本插件的源代码位于 [thus-vscode-extension](https://github.com/yenche123/liubai/tree/cool/thus-frontends/thus-vscode-extension) 目录下，欢迎你审计。
 :::
 
 ## 登录 {#login}
@@ -32,9 +32,9 @@
 
 ![登录](./assets-github-dev/3.png)
 
-安装完毕，插件会弹通知请求你登录；若没有出现通知，点击窗口左下角的 `留白` 按钮，也可以登录。如上图所示。
+安装完毕，插件会弹通知请求你登录；若没有出现通知，点击窗口左下角的 `如是` 按钮，也可以登录。如上图所示。
 
-### 2. 跳转到留白
+### 2. 跳转到如是
 
 ![打开](./assets-github-dev/4.png)
 

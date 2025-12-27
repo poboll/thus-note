@@ -3,7 +3,7 @@
 // 用户登录、注册、进入
 import cloud from '@lafjs/cloud'
 import type {
-  LiuRqReturn, 
+  ThusRqReturn, 
   SupportedTheme,
   Shared_LoginState, 
   Table_User, 
@@ -15,7 +15,7 @@ import type {
   Table_Credential,
   Res_ULN_User,
   Res_UserLoginNormal,
-  LiuSpaceAndMember,
+  ThusSpaceAndMember,
   SupportedClient,
   LiuResendEmailsParam,
   UserLoginOperate,
@@ -140,7 +140,7 @@ export async function main(ctx: FunctionContext) {
   const body = ctx.request?.body ?? {}
   const oT = body.operateType as UserLoginOperate
 
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(oT === "init") {
     res = handle_init()
   }
@@ -267,7 +267,7 @@ async function handle_phone(
 async function handle_phone_code(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   // 1. get params
   const enc_phone = body.enc_phone
   if(!enc_phone) {
@@ -476,7 +476,7 @@ async function handle_scan_login(
 async function handle_scan_check(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_UL_ScanCheck>> {
+): Promise<ThusRqReturn<Res_UL_ScanCheck>> {
   const cred = body.credential
   if(!cred || typeof cred !== "string") {
     return { code: "E4000", errMsg: "no credential" }
@@ -543,7 +543,7 @@ async function handle_scan_check(
 async function handle_wx_gzh_scan(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_UL_WxGzhScan>> {
+): Promise<ThusRqReturn<Res_UL_WxGzhScan>> {
   // 1. to check state
   const state = body.state
   const res1 = await LoginStater.check(state)
@@ -692,7 +692,7 @@ async function handle_auth_submit(
 async function handle_auth_request(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<UserLoginAPI.Res_AuthRequest>> {
+): Promise<ThusRqReturn<UserLoginAPI.Res_AuthRequest>> {
   // 0. check out env
   const _env = process.env
   const baseUrl = _env.LIU_DOMAIN
@@ -747,7 +747,7 @@ async function handle_auth_request(
 async function handle_users_select(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
 
   // 1. getting some params
   const userId = body.userId
@@ -1144,7 +1144,7 @@ async function handle_email(
   // 8. choose send channel
   const _env = process.env
   const sendChannel = _env.LIU_EMAIL_SEND_CHANNEL
-  let res8: LiuRqReturn | undefined
+  let res8: ThusRqReturn | undefined
   if(sendChannel === "tencent-ses") {
     res8 = await _sendByTencentSES()
   }
@@ -1166,7 +1166,7 @@ async function handle_email(
 function handleEmailSent(
   cId: string,
   send_channel: LiuSESChannel,
-  res: LiuRqReturn<Record<string, any>>,
+  res: ThusRqReturn<Record<string, any>>,
 ) {
   const u: Partial<Table_Credential> = {}
   const { code, data } = res
@@ -1278,7 +1278,7 @@ async function handle_google_oauth(
 async function handle_wx_mini_session(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<UserLoginAPI.Res_WxMiniSession>> {
+): Promise<ThusRqReturn<UserLoginAPI.Res_WxMiniSession>> {
   // 1. check out params
   const js_code = body.js_code
   if(!valTool.isStringWithVal(js_code)) {
@@ -1405,7 +1405,7 @@ async function prepareWxGzhOAuth(
 async function handle_wx_gzh_for_mini(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<UserLoginAPI.Res_WxGzhForMini>> {
+): Promise<ThusRqReturn<UserLoginAPI.Res_WxGzhForMini>> {
   // 1. prepare
   const res1 = await prepareWxGzhOAuth(body)
   if(res1.pass === false) return res1.err
@@ -1441,7 +1441,7 @@ async function handle_wx_gzh_for_mini(
 async function handle_wx_gzh_base(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_UL_WxGzhBase>> {
+): Promise<ThusRqReturn<Res_UL_WxGzhBase>> {
   const res = await prepareWxGzhOAuth(body)
   if(res.pass === false) return res.err
   const openid = res.data.openid
@@ -1457,7 +1457,7 @@ async function handle_wx_gzh_base(
 async function handle_wx_gzh_oauth(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   // 1. check out params
   const res1 = await checkOAuthParams(body)
   const { code: code1, data: data1 } = res1
@@ -1565,7 +1565,7 @@ async function handle_wx_gzh_oauth(
 async function handle_github_oauth(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   // 1. check out parameters
   const res1 = await checkOAuthParams(body)
   const { code: code1, data: data1 } = res1
@@ -1694,7 +1694,7 @@ async function signInUpViaPhone(
   body: Record<string, string>,
   phone: string,
   client_key?: string,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   const res1 = await findUserByPhone(phone)
   // error
   if(res1.type === 1) {
@@ -1729,7 +1729,7 @@ async function sign_in(
   body: Record<string, string>,
   userInfos: LiuUserInfo[],
   opt: SignInOpt,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
 
   // 1. 判断是否为多个 userInfo
   const uLength = userInfos.length
@@ -1887,7 +1887,7 @@ async function tryToSignInWithUserId(
   body: Record<string, string>,
   userId: string,
   opt: SignInOpt,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   const res1 = await findUserById(userId)
   const rType = res1.type
   if(rType === 1) {
@@ -1913,7 +1913,7 @@ async function tryToSignInWithWxGzh(
   body: Record<string, string>,
   wx_gzh_openid: string,
   opt: SignInOpt,
-): Promise<LiuRqReturn<Res_UserLoginNormal> | undefined> {
+): Promise<ThusRqReturn<Res_UserLoginNormal> | undefined> {
 
   // 1. find user by wx_gzh_openid
   const res1 = await findUserByWxGzhOpenId(wx_gzh_openid)
@@ -2086,7 +2086,7 @@ async function handleMember1(
 
 /** 查找没有昵称的 member，看能不能用第三方数据赋值 */
 async function handleMember2(
-  spaceMemberList: LiuSpaceAndMember[],
+  spaceMemberList: ThusSpaceAndMember[],
   opt: SignInOpt,
 ) {
   // 1. return if member name has existed
@@ -2117,7 +2117,7 @@ async function sign_multi_in(
   body: Record<string, string>,
   userInfos: LiuUserInfo[],
   thirdData?: UserThirdData,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   if(userInfos.length < 2) {
     return { 
       code: "E5001", 
@@ -2205,7 +2205,7 @@ async function sign_up(
   param2: SignUpParam2,
   client_key?: string,
   thirdData?: UserThirdData,
-): Promise<LiuRqReturn<Res_UserLoginNormal>> {
+): Promise<ThusRqReturn<Res_UserLoginNormal>> {
   // 1. init user
   const res1 = await init_user(body, param2, thirdData)
   const { code, data: userInfos } = res1
@@ -2330,7 +2330,7 @@ export async function init_user(
   body: Record<string, string | undefined>,
   param2: SignUpParam2,
   thirdData?: UserThirdData,
-): Promise<LiuRqReturn<LiuUserInfo[]>> {
+): Promise<ThusRqReturn<LiuUserInfo[]>> {
   const { 
     email, 
     phone, 
@@ -2419,8 +2419,8 @@ export async function init_user(
     return { code: "E5001", errMsg: "fail to add an member" }
   }
 
-  // 5. construct LiuSpaceAndMember
-  const liuSpaceAndMember: LiuSpaceAndMember = {
+  // 5. construct ThusSpaceAndMember
+  const liuSpaceAndMember: ThusSpaceAndMember = {
     memberId,
     member_name: name,
     member_avatar: avatar,
@@ -2887,7 +2887,7 @@ interface CheckOAuthParams {
 // check out params for OAuth
 async function checkOAuthParams(
   body: Record<string, string>,
-): Promise<LiuRqReturn<CheckOAuthParams>> {
+): Promise<ThusRqReturn<CheckOAuthParams>> {
 
   // 检查 oauth_code
   const oauth_code = body.oauth_code

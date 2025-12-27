@@ -2,7 +2,7 @@ import { onMounted, ref, shallowRef, type Ref } from "vue"
 import type EditorCore from "../../editor-core/editor-core.vue"
 import type { TipTapEditor } from "~/types/types-editor"
 import time from "~/utils/basic/time"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 
 export function useCustomEditor() {
   const editorCoreRef = ref<typeof EditorCore | null>(null)
@@ -25,7 +25,7 @@ export function useCustomEditor() {
 }
 
 let lastScoll = 0
-let hideMaskTimeout: LiuTimeout
+let hideMaskTimeout: ThusTimeout
 function handleEditorScrolling(
   showMask: Ref<boolean>,
 ) {

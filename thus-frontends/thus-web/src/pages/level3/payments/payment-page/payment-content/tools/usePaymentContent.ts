@@ -1,11 +1,11 @@
 import { inject, reactive, watch } from "vue";
-import { type RouteAndLiuRouter, useRouteAndLiuRouter } from "~/routes/liu-router";
-import liuEnv from "~/utils/liu-env";
+import { type RouteAndThusRouter, useRouteAndThusRouter } from "~/routes/liu-router";
+import liuEnv from "~/utils/thus-env";
 import type { PcData } from "./types";
 import { pageStates } from "~/utils/atom";
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore";
 import type { Res_OrderData } from "~/requests/req-types";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import localCache from "~/utils/system/local-cache";
 import { deviceChaKey } from "~/utils/provide-keys";
 import valTool from "~/utils/basic/val-tool";
@@ -21,7 +21,7 @@ import {
 import { fetchOrder } from "~/requests/shared";
 
 export function usePaymentContent() {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const hasBackend = liuEnv.hasBackend()
   const pcData = reactive<PcData>({
     state: hasBackend ? pageStates.LOADING : pageStates.NEED_BACKEND,
@@ -65,7 +65,7 @@ export function usePaymentContent() {
 
 function whenTapAlipay(
   pcData: PcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. check if we can pay
   const od = pcData.od
@@ -82,7 +82,7 @@ function whenTapAlipay(
 
 async function whenTapWxpayH5(
   pcData: PcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. check if we can pay
   const od = pcData.od
@@ -107,7 +107,7 @@ async function whenTapWxpayH5(
 
 async function whenTapWxpayJSAPI(
   pcData: PcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. check if we can pay
   const od = pcData.od
@@ -144,7 +144,7 @@ function showCannotPayTip() {
 
 function initPaymentContent(
   pcData: PcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   if(pcData.state === pageStates.NEED_BACKEND) return
   watch(rr.route, (newV) => {
@@ -195,7 +195,7 @@ function initPaymentContent(
 
 async function loginWithWxGzhOAuthCode(
   pcData: PcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
 
   // 1. get query
@@ -244,7 +244,7 @@ interface FetchOrderDataOpt {
 
 async function fetchOrderData(
   pcData: PcData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   opt?: FetchOrderDataOpt,
 ) {
   // 1. get params

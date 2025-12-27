@@ -1,6 +1,6 @@
 
 import { Plugin } from "@tiptap/pm/state"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 export const linkToTextPlugin = new Plugin({
   props: {

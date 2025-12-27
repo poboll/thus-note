@@ -1,5 +1,5 @@
 import type { FileShow } from "~/types"
-import type { LiuRemindMe } from "~/types/types-atom"
+import type { ThusRemindMe } from "~/types/types-atom"
 import type { CeData } from "../../tools/types"
 import type { PropType } from "vue"
 import type { TipTapEditor } from "~/types/types-editor"
@@ -32,7 +32,7 @@ export interface MaData {
 
 export interface MoreAreaEmits {
   (event: "whenchange", val: Date | null): void
-  (event: "remindmechange", val: LiuRemindMe | null): void
+  (event: "remindmechange", val: ThusRemindMe | null): void
   (event: "titlechange", val: string): void
   (event: "synccloudchange", val: boolean): void
   (event: "aireadablechange", val: boolean): void
@@ -63,7 +63,7 @@ export const cmaProps = {
 
 export const cmaEmits = {
   whenchange: (val: Date | null) => true,
-  remindmechange: (val: LiuRemindMe | null) => true,
+  remindmechange: (val: ThusRemindMe | null) => true,
   titlechange: (val: string) => true,
   synccloudchange: (val: boolean) => true,
   aireadablechange: (val: boolean) => true,

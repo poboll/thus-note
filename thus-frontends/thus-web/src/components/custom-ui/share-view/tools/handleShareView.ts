@@ -2,10 +2,10 @@ import type { ThreadShow } from "~/types/types-content";
 import type { ShareViewData, ExportData } from "./types"
 import thirdLink from "~/config/third-link"
 import dateTool from "~/utils/basic/date-tool";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import type { EventAttributes, Alarm } from "ics";
 import { i18n } from "~/locales";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import { db } from "~/utils/db";
 import transferUtil from "~/utils/transfer-util";
 
@@ -46,7 +46,7 @@ async function handleTextAndMd(
   const _id = thread._id
   const d = await db.contents.get(_id)
   if(!d) return
-  const md = transferUtil.tiptapToMarkdown(d.liuDesc ?? [], { title: d.title })
+  const md = transferUtil.tiptapToMarkdown(d.thusDesc ?? [], { title: d.title })
   svData.markdown = md
 }
 

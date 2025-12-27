@@ -1,6 +1,6 @@
 # 连接到钉钉上
 
-我们提供保姆级（小白也能用！）的简易配置方法，让你轻松把留白上的记事备份到钉钉上。
+我们提供保姆级（小白也能用！）的简易配置方法，让你轻松把如是上的记事备份到钉钉上。
 
 配置只要 5 分钟!! 超过 5 分钟者，请直接[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)，我们在线为你服务。
 
@@ -54,13 +54,13 @@
 
 <img src="./assets-dingtalk/dingtalk-7.png" width="550" alt="从空白新建" />
 
-左上角 ↖️ 可以重命名流程，建议命名为 `从留白备份到钉钉`；接着，在右下角 ↘️ 找到 Webhook `接收到数据时`，点击它。
+左上角 ↖️ 可以重命名流程，建议命名为 `从如是备份到钉钉`；接着，在右下角 ↘️ 找到 Webhook `接收到数据时`，点击它。
 
 <img src="./assets-dingtalk/dingtalk-8.png" width="650" alt="接收到数据时" />
 
 ### 4. Webhook
 
-在 **关键词1** 处，填入 `thus`
+在 **关键词1** 处，填入 `liubai`
 
 在 **参数格式** 处，选择 `JSON`
 
@@ -68,8 +68,8 @@
 
 ```json
 {
-  "id": "你的卡片 id，会由留白自动生成",
-  "desc": "你在留白的输入会被放进这里",
+  "id": "你的卡片 id，会由如是自动生成",
+  "desc": "你在如是的输入会被放进这里",
   "title": "这是可选的标题",
   "source": "可能的来源"
 }
@@ -79,7 +79,7 @@
 
 接下来，按上图所示，我们点击 `复制`，把 Webhook 地址复制到剪贴板里。
 
-紧接着，将它粘贴到[如是](https://my.thus-note.com/connect/dingtalk)上，点击`保存`，如下图所示。
+紧接着，将它粘贴到[如是](https://my.liubai.cc/connect/dingtalk)上，点击`保存`，如下图所示。
 
 <img src="./assets-dingtalk/dingtalk-10.png" width="450" alt="粘贴 Webhook" />
 
@@ -89,7 +89,7 @@
 
 <img src="./assets-dingtalk/dingtalk-11.png" width="650" alt="新增记录" />
 
-我们开始连连看，把留白的进来的数据连接到多维表格的各个字段上。
+我们开始连连看，把如是的进来的数据连接到多维表格的各个字段上。
 
 以 `卡片唯一值` 为例，我们点击 `+设置字段值`，然后点击 `卡片唯一值`：
 
@@ -126,27 +126,27 @@
 
 ## 进阶
 
-钉钉的多维表格似乎支持 DeepSeek R1 回复（分析）你表格的数据，有玩出花样的朋友，欢迎[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)或[邮件](mailto:hi@thus-note.com)告诉我们，我再把它整理到文档上来。
+钉钉的多维表格似乎支持 DeepSeek R1 回复（分析）你表格的数据，有玩出花样的朋友，欢迎[联系客服](https://work.weixin.qq.com/kfid/kfcfb6f3959d36f6a0f)或[邮件](mailto:hi@liubai.cc)告诉我们，我再把它整理到文档上来。
 
-当然，你也可以直接在 [GitHub](https://github.com/yenche123/thus-note/blob/cool/thus-docs/docs/guide/connect/dingtalk.md) 上编辑本页面，提交 PR 🙌
+当然，你也可以直接在 [GitHub](https://github.com/yenche123/liubai/blob/cool/thus-docs/docs/guide/connect/dingtalk.md) 上编辑本页面，提交 PR 🙌
 
 ## 常见问题
 
 ### 1. 只能备份吗？可不可以双向同步？
 
-“在第三方云文档上的编辑，需要同步到留白”
+“在第三方云文档上的编辑，需要同步到如是”
 
-“在留白上更新某个字段又要同步过去”...... 
+“在如是上更新某个字段又要同步过去”...... 
 
 这将引发一系列需求，没完没了，同时可能存在安全隐患（比如循环触发），故“同步”功能目前没有计划。
 
-“备份”很简单，这很留白。
+“备份”很简单，这很如是。
 
 ### 2. 编辑后，不会同步到钉钉上？
 
 同问题一，同步会引发**数据一致性**的问题，故不支持。
 
-目前，你能在留白上看到最新数据，在钉钉上保留你的初始记录。
+目前，你能在如是上看到最新数据，在钉钉上保留你的初始记录。
 
 一切有迹可循，这很优雅！
 

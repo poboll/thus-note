@@ -1,10 +1,10 @@
 import { reactive, watch } from "vue"
 import type { CwData } from "./types"
 import { WebhookHandler } from "../../shared/webhook-handler"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router"
 import type { 
   Res_OC_GetWps, 
@@ -14,18 +14,18 @@ import { pageStates } from "~/utils/atom"
 import { useAwakeNum } from "~/hooks/useCommon"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import { useThrottleFn } from "~/hooks/useVueUse"
 import { showErrMsg } from "~/pages/level1/tools/show-msg"
 import cui from "~/components/custom-ui"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import time from "~/utils/basic/time"
 
 let lastSetStamp = 0
 
 export function useConnectWps() {
   const hasBE = liuEnv.hasBackend()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const cwData = reactive<CwData>({
     pageState: hasBE ? pageStates.LOADING : pageStates.NEED_BACKEND,
@@ -180,7 +180,7 @@ async function toChangeWebhook(
 
 async function checkoutData(
   cwData: CwData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
 
   // 1. get member id

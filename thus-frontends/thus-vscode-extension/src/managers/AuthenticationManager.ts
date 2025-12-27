@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import valTool from '../utils/basic/val-tool';
-import type { LiuAuthStatus } from '../types';
-import liuInfo from '~/utils/liu-info';
-import liuReq from '~/requests/liu-req';
+import type { ThusAuthStatus } from '../types';
+import liuInfo from '~/utils/thus-info';
+import liuReq from '~/requests/thus-req';
 import APIs from '~/requests/APIs';
 import time from '~/utils/basic/time';
 import { 
@@ -20,10 +20,10 @@ import {
   createClientKey, 
   getMyDataFromSpaceMemberList,
 } from "./tools/common-tools"
-import type { LiuTimeout, SimpleFunc } from '~/utils/basic/type-tool';
+import type { ThusTimeout, SimpleFunc } from '~/utils/basic/type-tool';
 import { Logger } from '~/utils/Logger';
 import { SimpleEventBus } from '~/utils/event-bus/simple-event-bus';
-import liuEnv from '~/utils/liu-env';
+import liuEnv from '~/utils/thus-env';
 import { RefreshAuth } from './tools/refresh-auth';
 import type { RefreshDuration } from '~/types/types-atom';
 
@@ -48,7 +48,7 @@ export class AuthenticationManager {
 
   // some data
   private _stopProgressForOpeningBrowser: SimpleFunc | undefined
-  private _timeoutForOpeningBrowser: LiuTimeout
+  private _timeoutForOpeningBrowser: ThusTimeout
 
   // `private` is in order to avoid new AuthenticationManager() 
   // from being called by outside
@@ -78,7 +78,7 @@ export class AuthenticationManager {
   }
 
   public async tryToRefreshAuth(
-    oldAuthStatus: LiuAuthStatus,
+    oldAuthStatus: ThusAuthStatus,
     duration: RefreshDuration = "WEEK",
   ) {
     // 0. check out api_domain
@@ -280,7 +280,7 @@ export class AuthenticationManager {
     this._stopProgressForOpeningBrowser = undefined
   }
 
-  private showLoggedIn(authStatus: LiuAuthStatus) {
+  private showLoggedIn(authStatus: ThusAuthStatus) {
     const title_1 = i18n.t("login.has_signed_in")
     vscode.window.showInformationMessage(title_1)
   }
@@ -379,7 +379,7 @@ export class AuthenticationManager {
     }
   }
 
-  private async showLogout(authStatus: LiuAuthStatus) {
+  private async showLogout(authStatus: ThusAuthStatus) {
     const title = i18n.t("logout.title")
     let desc = i18n.t("logout.desc_2")
     const name = authStatus.nickname
@@ -494,7 +494,7 @@ export class AuthenticationManager {
       Logger.warn("there is no personal space id")
       return
     }
-    const data6: LiuAuthStatus = {
+    const data6: ThusAuthStatus = {
       token,
       serial: serial_id,
       client_key,
@@ -537,7 +537,7 @@ export class AuthenticationManager {
   public async getAuthStatus() {
     const res = await this._context.secrets.get(LOGIN_DATA_KEY)
     if(!res) return
-    const data = valTool.strToObj<LiuAuthStatus>(res)
+    const data = valTool.strToObj<ThusAuthStatus>(res)
     if(!data || !data.serial || !data.token) return
     liuReq.setAuthStatus(data)
     return data

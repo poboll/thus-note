@@ -2,12 +2,12 @@ import type { SettingContentData } from "./types"
 import type { SupportedTheme } from "~/types/types-atom"
 import { getThemeList } from "./get-list"
 import cui from "~/components/custom-ui"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { useWindowSize } from "~/hooks/useVueUse"
 import valTool from "~/utils/basic/val-tool"
 import { transitionHelper } from "~/utils/other/transition-related"
 import { useSystemStore, type UseSystemType } from "~/hooks/stores/useSystemStore"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import { fetchUserSet } from "./requests"
 
 export async function whenTapTheme(
@@ -80,7 +80,7 @@ async function toSetTheme(
     console.log("updateDOM........")
     systemStore.setTheme(theme)
   }
-  const transition = transitionHelper({ updateDOM, classNames: "liu-switching-theme" })
+  const transition = transitionHelper({ updateDOM, classNames: "thus-switching-theme" })
 
   // III.
   const whenTransitionReady = () => {

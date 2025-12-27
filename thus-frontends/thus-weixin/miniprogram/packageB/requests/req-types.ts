@@ -1,7 +1,7 @@
 import type { LocalTheme } from "../types/types-atom"
 import type { 
   CloudStorageService, 
-  LiuSpaceAndMember, 
+  ThusSpaceAndMember, 
   UserSubscription,
 } from "../types/types-cloud"
 import type { LocalLocale } from "../types/types-locale"
@@ -20,7 +20,7 @@ export namespace UserLoginAPI {
     github_id?: number
     theme?: LocalTheme
     language?: LocalLocale
-    spaceMemberList?: LiuSpaceAndMember[]
+    spaceMemberList?: ThusSpaceAndMember[]
     subscription?: UserSubscription
     serial_id?: string
     token?: string
@@ -46,7 +46,7 @@ export namespace UserSettingsAPI {
     open_id?: string
     theme: LocalTheme
     language: LocalLocale
-    spaceMemberList: LiuSpaceAndMember[]
+    spaceMemberList: ThusSpaceAndMember[]
     subscription?: UserSubscription
     phone_pixelated?: string
     

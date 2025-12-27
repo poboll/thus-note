@@ -1,6 +1,6 @@
 // 中间桥，供业务层调用，该组件再向更底层的函数
-// 比如 liu-util / liu-api，获取或调用资源
-import liuApi from "../liu-api"
+// 比如 thus-util / thus-api，获取或调用资源
+import liuApi from "../thus-api"
 import { i18n } from "~/locales"
 import type { SetAppTitleOpt } from "./tools/types"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"

@@ -9,7 +9,7 @@ import type { SnackbarRes, SnackbarParam } from "~/types/other/types-snackbar"
 import { i18n } from "~/locales"
 import { mapStateColor } from "~/config/state-color"
 import cloudOp from "../cloud-op"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 interface SelectStateRes {
   tipPromise?: Promise<SnackbarRes>

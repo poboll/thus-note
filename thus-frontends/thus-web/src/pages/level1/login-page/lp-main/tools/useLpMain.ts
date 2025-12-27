@@ -1,11 +1,11 @@
 import { nextTick, onMounted, reactive, ref, toRef, watch } from "vue";
 import type { LpmProps, LpmData, LpmEmit } from "./types"
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 import { useDebounceFn, useWindowSize } from "~/hooks/useVueUse";
 import valTool from "~/utils/basic/val-tool";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
 import { storeToRefs } from "pinia";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import cui from "~/components/custom-ui"
 import type { LoginByThirdParty } from "../../tools/types";
 

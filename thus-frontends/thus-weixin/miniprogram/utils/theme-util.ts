@@ -1,5 +1,5 @@
 import type { GetImagePath } from "~/types/index";
-import { LiuUtil } from "~/utils/liu-util/index";
+import { LiuUtil } from "~/utils/thus-util/index";
 import { colorData } from "~/config/default-data";
 import type { SupportedTheme } from "~/types/types-atom";
 import { LiuApi } from "./LiuApi";

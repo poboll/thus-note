@@ -76,7 +76,7 @@ async function handleRemovedContents() {
     v.oState = "DELETED"
     v.updatedStamp = now + i
     v.title = ""
-    v.liuDesc = []
+    v.thusDesc = []
     v.images = []
     v.files = []
     v.tagIds = []

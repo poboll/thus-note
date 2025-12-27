@@ -1,5 +1,5 @@
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import type { 
   UserSettingsAPI,
   Res_HelloWorld,

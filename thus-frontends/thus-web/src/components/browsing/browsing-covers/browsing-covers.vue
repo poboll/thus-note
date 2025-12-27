@@ -13,7 +13,7 @@ const {
 </script>
 <template>
 
-  <div class="liu-no-user-select bc-container"
+  <div class="thus-no-user-select bc-container"
     v-if="covers?.length"
   >
 

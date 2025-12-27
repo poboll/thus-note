@@ -1,6 +1,6 @@
 import { computed, onMounted, onUnmounted, useTemplateRef } from "vue"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import liuApi from "~/utils/liu-api"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import liuApi from "~/utils/thus-api"
 import localCache from "~/utils/system/local-cache"
 import type { VciProps } from "./types"
 import thirdLink from "~/config/third-link"
@@ -9,7 +9,7 @@ import { add_white_bg } from "~/config/add-white-bgs"
 import cfg from "~/config"
 
 export function useVcIframe(props: VciProps) {
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
   const iframeEl = useTemplateRef<HTMLIFrameElement>("iframeEl")
   const { bgColor, isCard, styles } = getStyles(props)
 

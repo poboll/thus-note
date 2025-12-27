@@ -1,8 +1,8 @@
 import { ref, watch, type Ref } from "vue";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import type { SimpleFunc } from "~/utils/basic/type-tool";
 import valTool from "~/utils/basic/val-tool";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 interface OpenCloseData {
   enable: boolean
@@ -69,7 +69,7 @@ async function _close(
 */
 export function usePageEnabled(pageName: string) {
   const pageEnabled = ref(true)
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   watch(rr.route, (newV) => {
     if(!newV) return

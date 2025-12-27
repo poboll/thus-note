@@ -1,7 +1,7 @@
 
 import { reactive } from "vue";
 import cfg from "~/config";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 
 interface LoadingParam {
   title?: string
@@ -30,8 +30,8 @@ const initLoading = () => {
   return { TRANSITION_DURATION, loData }
 }
 
-let showTimeout: LiuTimeout
-let closeTimeout: LiuTimeout
+let showTimeout: ThusTimeout
+let closeTimeout: ThusTimeout
 
 const showLoading = (opt?: LoadingParam) => {
   loData.title = opt?.title ?? ""

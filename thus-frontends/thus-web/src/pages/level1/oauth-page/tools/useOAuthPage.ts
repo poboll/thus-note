@@ -1,6 +1,6 @@
 import { reactive, watch } from "vue"
 import type { OpData } from "./types"
-import { useRouteAndLiuRouter, type RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter, type RouteAndThusRouter } from "~/routes/liu-router"
 import localCache from "~/utils/system/local-cache"
 import { getClientKey } from "../../tools/common-tools"
 import { fetchOAuth } from "../../tools/requests"
@@ -9,7 +9,7 @@ import valTool from "~/utils/basic/val-tool"
 
 export function useOAuthPage() {
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const opData = reactive<OpData>({
     via: "",
     code: "",
@@ -31,7 +31,7 @@ export function useOAuthPage() {
 
 function listenRouteChange(
   opData: OpData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   watch(rr.route, (newV) => {
     if(!newV) return
@@ -55,7 +55,7 @@ function listenRouteChange(
 
 async function enterFromGitHub(
   opData: OpData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const { 
     code, 
@@ -103,7 +103,7 @@ async function enterFromGitHub(
 
 async function enterFromGoogle(
   opData: OpData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
 
   const { 
@@ -154,7 +154,7 @@ async function enterFromGoogle(
 
 async function enterFromWeChat(
   opData: OpData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const qry = rr.route.query
   console.log("enterFromWeChat: ")

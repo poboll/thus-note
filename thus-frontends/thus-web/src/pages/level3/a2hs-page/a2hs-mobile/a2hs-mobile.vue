@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import A2hsFaq from "../a2hs-faq/a2hs-faq.vue";
 
 const { t } = useI18n()
@@ -11,8 +11,8 @@ const cha = liuApi.getCharacteristic()
 <template>
 
   <div class="a2hs-title">
-    <span v-if="cha.isIPadOS" class="liu-selection">{{ t('a2hs.ipad_safari_1') }}</span>
-    <span v-else class="liu-selection">{{ t('a2hs.mobile_safari_1') }}</span>
+    <span v-if="cha.isIPadOS" class="thus-selection">{{ t('a2hs.ipad_safari_1') }}</span>
+    <span v-else class="thus-selection">{{ t('a2hs.mobile_safari_1') }}</span>
   </div>
 
   <div v-if="cha.isIPadOS" class="a2hs-img-1_ipad"></div>
@@ -20,7 +20,7 @@ const cha = liuApi.getCharacteristic()
 
 
   <div class="a2hs-title">
-    <span class="liu-selection">{{ t('a2hs.mobile_safari_2') }}</span>
+    <span class="thus-selection">{{ t('a2hs.mobile_safari_2') }}</span>
   </div>
   <div class="a2hs-img-2"></div>
 

@@ -1,5 +1,5 @@
 import type { Res_UserLoginNormal } from "~/requests/req-types";
-import type { RouteAndLiuRouter } from "~/routes/liu-router";
+import type { RouteAndThusRouter } from "~/routes/liu-router";
 import { useLoginStore } from "../login-page/tools/useLoginStore";
 import localCache from "~/utils/system/local-cache";
 import { redirectToLoginPage } from "./common-tools";
@@ -7,7 +7,7 @@ import { handleUser, handleSpaceAndMembers } from "./cloud-into-db";
 import type { LocalPreference } from "~/utils/system/tools/types";
 import { CloudEventBus } from "~/utils/cloud/CloudEventBus";
 import { useSystemStore } from "~/hooks/stores/useSystemStore";
-import liuConsole from "~/utils/debug/liu-console";
+import liuConsole from "~/utils/debug/thus-console";
 import time from "~/utils/basic/time";
 import { compareSpaceAndMember } from "~/utils/cloud/tools/after-getting-user-data";
 
@@ -18,7 +18,7 @@ interface ToLoginOpt {
 
 // 开始去初始化本地数据
 async function toLogin(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   d: Res_UserLoginNormal,
   opt?: ToLoginOpt,
 ) {
@@ -118,7 +118,7 @@ async function toLogin(
 
 /** 跳转到去选择用户 */
 function checkIfChooseAccounts(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   d: Res_UserLoginNormal,
 ) {
   const {

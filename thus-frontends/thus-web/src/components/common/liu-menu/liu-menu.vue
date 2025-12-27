@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { MenuItem } from "./tools/types"
-import { useLiuMenu } from './tools/useLiuMenu'
+import { useThusMenu } from './tools/useThusMenu'
 import { liumenu_props } from "./tools/types"
 import type { SimpleFunc } from "~/utils/basic/type-tool"
 // 【待完善项】因为是 Menu 选单，应该可以用 Keyboard 的上下键来选择
@@ -23,7 +23,7 @@ const {
   connectMaskEl,
   disconnectMaskEl,
   onTouchEndMask,
-} = useLiuMenu(props)
+} = useThusMenu(props)
 
 const onTapItem = (item: MenuItem, index: number, hide: SimpleFunc) => {
   if(props.hasCheckbox && item.disabled) {
@@ -102,14 +102,14 @@ const onMenuHide = () => {
               <span>{{ t(item.text_key) }}</span>
             </div>
 
-            <LiuCheckbox
+            <ThusCheckbox
               v-if="hasCheckbox"
               :checked="item.checked"
               :disabled="item.disabled"
               :size="20"
               :circleSize="10.6"
               checked-color="var(--cool-bg)"
-            ></LiuCheckbox>
+            ></ThusCheckbox>
 
           </div>
         

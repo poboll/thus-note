@@ -6,7 +6,7 @@ import * as crypto from "crypto";
 import type { 
   LiuAi,
   LiuErrReturn, 
-  LiuRqReturn,
+  ThusRqReturn,
   Ns_FFmpeg,
   Table_Credential,
   Table_Member,
@@ -310,9 +310,9 @@ async function handle_voice(
   sP5.set("url", amrUrl)
   const link5 = url5.toString()
 
-  let data5: LiuRqReturn<Ns_FFmpeg.Res_ArmToMp3> | undefined
+  let data5: ThusRqReturn<Ns_FFmpeg.Res_ArmToMp3> | undefined
   try {
-    const res5 = await liuReq<LiuRqReturn<Ns_FFmpeg.Res_ArmToMp3>>(
+    const res5 = await liuReq<ThusRqReturn<Ns_FFmpeg.Res_ArmToMp3>>(
       link5, 
       undefined, 
       { method: "GET" },
@@ -1078,7 +1078,7 @@ async function checkAccessToken() {
 
 async function turnInputIntoMsgObj(
   ctx: FunctionContext,
-): Promise<LiuRqReturn<Wx_Gzh_Msg_Event> | string> {
+): Promise<ThusRqReturn<Wx_Gzh_Msg_Event> | string> {
   const b = ctx.body
   const q = ctx.query
   

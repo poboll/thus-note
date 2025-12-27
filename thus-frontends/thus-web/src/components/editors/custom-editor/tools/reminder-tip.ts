@@ -1,12 +1,12 @@
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
-import liuEnv from "~/utils/liu-env"
+import liuReq from "~/requests/thus-req"
+import liuEnv from "~/utils/thus-env"
 import type { Res_OC_GetWeChat } from "~/requests/req-types";
 import type { CeData } from "./types";
 import cui from "~/components/custom-ui";
 import localCache from "~/utils/system/local-cache";
 import time from "~/utils/basic/time";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 export function checkIfReminderEnabled(
   memberId: string,

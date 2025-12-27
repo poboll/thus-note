@@ -13,14 +13,14 @@ const { t } = useI18n()
 
 </script>
 <template>
-  <div class="liu-simple-page">
+  <div class="thus-simple-page">
 
-    <div class="liu-mc-container">
+    <div class="thus-mc-container">
 
       <PlaceholderView :p-state="wbData.pageState"></PlaceholderView>
 
       <div v-show="wbData.pageState < 0" 
-        class="liu-no-user-select liu-mc-box"
+        class="thus-no-user-select thus-mc-box"
       >
 
         <div class="ap-icon-box">
@@ -82,7 +82,7 @@ const { t } = useI18n()
 </template>
 <style scoped lang="scss">
 
-.liu-mc-box {
+.thus-mc-box {
   display: flex;
   flex-direction: column;
   align-items: center;

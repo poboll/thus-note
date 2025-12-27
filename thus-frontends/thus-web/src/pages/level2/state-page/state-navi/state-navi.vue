@@ -54,21 +54,21 @@ const iconColor = "var(--main-normal)"
 <template>
 
   <!--直接使用 sticky 布局-->
-  <div class="liu-frosted-glass sn-container">
+  <div class="thus-frosted-glass sn-container">
 
     <div class="sn-box"
       :class="{ 'sn-box_constraint': innerCurrent === 1 }"
     >
 
       <!-- 返回按钮 -->
-      <div class="liu-hover sn-back-box" @click="onTapBack">
+      <div class="thus-hover sn-back-box" @click="onTapBack">
         <SvgIcon class="nb-back-icon" name="arrow-back700"
           :color="iconColor"
         ></SvgIcon>
       </div>
 
       <!-- 列表 / 看板 -->
-      <div class="liu-no-user-select sn-toggle"
+      <div class="thus-no-user-select sn-toggle"
         ref="indicatorParentEl"
       >
 
@@ -102,7 +102,7 @@ const iconColor = "var(--main-normal)"
       <div class="sn-footer">
 
         <!-- 刷新 -->
-        <div class="liu-hover snf-box"
+        <div class="thus-hover snf-box"
           :aria-label="t('common.refresh')"
           v-if="stateProvideData?.showReload.value"
           @click="onTapReload"
@@ -113,7 +113,7 @@ const iconColor = "var(--main-normal)"
         </div>
 
         <!-- 添加 -->
-        <div class="liu-hover liu-hover_last snf-box"
+        <div class="thus-hover thus-hover_last snf-box"
           :aria-label="t('state_related.add_state')"
           @click="onTapAddState"
         >

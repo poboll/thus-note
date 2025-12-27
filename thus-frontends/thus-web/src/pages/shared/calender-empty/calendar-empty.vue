@@ -18,7 +18,7 @@ defineProps({
 <template>
 
   <div class="ce-shell">
-    <div class="liu-no-user-select ce-container">
+    <div class="thus-no-user-select ce-container">
 
       <div class="ce-emoji-box">
         <svg-icon name="emojis-bottle_with_popping_cork_color"

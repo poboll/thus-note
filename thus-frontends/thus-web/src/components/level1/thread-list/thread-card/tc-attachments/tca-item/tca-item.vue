@@ -14,11 +14,11 @@ const { t } = useI18n()
 </script>
 <template>
 
-  <div class="tca-item" :class="{ 'liu-hover': canHover }">
+  <div class="tca-item" :class="{ 'thus-hover': canHover }">
     <div class="tca-icon">
       <svg-icon :name="iconName" class="tca-svgicon" :color="color"></svg-icon>
     </div>
-    <div class="liu-no-user-select tca-title" 
+    <div class="thus-no-user-select tca-title" 
       :aria-label="labelKey ? t(labelKey) : ''"
     >
       <span>{{ title }}</span>

@@ -2,17 +2,17 @@ import { LiuApi } from "~/packageB/utils/LiuApi"
 import { TaskManager } from "./TaskManager"
 import APIs from "~/packageB/requests/APIs"
 import { LiuReq } from "~/packageB/requests/LiuReq"
-import { LiuUtil } from "~/packageB/utils/liu-util/index"
+import { LiuUtil } from "~/packageB/utils/thus-util/index"
 import { ShowTip } from "~/packageB/utils/managers/ShowTip"
 import { LiuTunnel } from "~/packageB/utils/LiuTunnel"
 import type { JustCreateTask, PleaseCreateTask } from "~/packageB/types/types-tunnel"
 import { LiuTime } from "~/packageB/utils/LiuTime"
-import { LiuRqReturn } from "~/packageB/requests/tools/types"
+import { ThusRqReturn } from "~/packageB/requests/tools/types"
 
-type CreateTaskResolver = (res: LiuRqReturn<any> | null) => void
+type CreateTaskResolver = (res: ThusRqReturn<any> | null) => void
 
 let hasCreatedTask = false
-let createTaskPromise: Promise<LiuRqReturn<any> | null> | undefined
+let createTaskPromise: Promise<ThusRqReturn<any> | null> | undefined
 
 function toCreateTask(
   desc: string,

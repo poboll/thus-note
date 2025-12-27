@@ -6,16 +6,16 @@ const { cpData } = useCotPage()
 </script>
 <template>
 
-  <div class="liu-simple-page">
+  <div class="thus-simple-page">
 
-    <div class="liu-mc-container">
+    <div class="thus-mc-container">
 
       <PlaceholderView :p-state="cpData.pageState"></PlaceholderView>
 
-      <div v-if="cpData.pageState < 0" class="liu-mc-box">
+      <div v-if="cpData.pageState < 0" class="thus-mc-box">
 
         <div class="cp-reasoning-box">
-          <span class="liu-selection">{{ cpData.reasoningContent }}</span>
+          <span class="thus-selection">{{ cpData.reasoningContent }}</span>
         </div>
         
       </div>

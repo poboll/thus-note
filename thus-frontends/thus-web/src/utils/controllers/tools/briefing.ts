@@ -33,15 +33,15 @@ function getMagicNum(opt: PackThreadOpt) {
 
 /**
  * 当字数大于 MAGICNUM 或行数大于 3 时，显示摘要
- * @param liuDesc 用户填写的完整内容
+ * @param thusDesc 用户填写的完整内容
  * @returns 摘要
  */
 export function getBriefing(
-  liuDesc: LiuContent[] | undefined,
+  thusDesc: LiuContent[] | undefined,
   opt: PackThreadOpt,
 ): TipTapJSONContent | undefined {
-  if(!liuDesc || liuDesc.length < 1) return
-  const newLiuDesc = valTool.copyObject(liuDesc)
+  if(!thusDesc || thusDesc.length < 1) return
+  const newLiuDesc = valTool.copyObject(thusDesc)
   const magicNum = getMagicNum(opt)
   _magicNum = magicNum
 

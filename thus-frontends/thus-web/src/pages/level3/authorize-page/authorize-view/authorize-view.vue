@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LiuAppType } from '~/types/types-atom';
+import type { ThusAppType } from '~/types/types-atom';
 import type { PropType } from 'vue';
 import { appMap } from '../tools/app-map';
 import { useI18n } from 'vue-i18n';
@@ -11,7 +11,7 @@ import AvatarName from "./avatar-name/avatar-name.vue"
 
 const props = defineProps({
   appType: {
-    type: String as PropType<LiuAppType>,
+    type: String as PropType<ThusAppType>,
     required: true,
   },
   code: {
@@ -35,7 +35,7 @@ const {
 </script>
 <template>
 
-  <div class="liu-mc-box">
+  <div class="thus-mc-box">
 
     <!-- logos and check (or arrow) -->
     <div class="av-logos">
@@ -116,20 +116,20 @@ const {
     </div>
 
     <!-- title -->
-    <div v-if="code" class="liu-no-user-select av-title">
+    <div v-if="code" class="thus-no-user-select av-title">
       <span>{{ t('authorize.opening_title', { app: appMap[appType] }) }}</span>
     </div>
-    <div v-else class="liu-no-user-select av-title">
+    <div v-else class="thus-no-user-select av-title">
       <span>{{ t('authorize.title_1', { app: appMap[appType] }) }}</span>
     </div>
 
     <!-- description -->
     <div v-if="code" class="av-desc">
-      <span v-if="avData.showCode" class="liu-selection">{{ t('authorize.opening_tip_2', { app: appMap[appType], code }) }}</span>
-      <span v-else class="liu-selection">{{ t('authorize.opening_tip_1', { app: appMap[appType] }) }}</span>
+      <span v-if="avData.showCode" class="thus-selection">{{ t('authorize.opening_tip_2', { app: appMap[appType], code }) }}</span>
+      <span v-else class="thus-selection">{{ t('authorize.opening_tip_1', { app: appMap[appType] }) }}</span>
     </div>
     <div v-else class="av-desc">
-      <span class="liu-selection">{{ t('authorize.desc_1', { app: appMap[appType] }) }}</span>
+      <span class="thus-selection">{{ t('authorize.desc_1', { app: appMap[appType] }) }}</span>
     </div>
 
     <!-- buttons -->
@@ -167,7 +167,7 @@ const {
 </template>
 <style scoped lang="scss">
 
-.liu-mc-box {
+.thus-mc-box {
   display: flex;
   flex-direction: column;
   align-items: center;

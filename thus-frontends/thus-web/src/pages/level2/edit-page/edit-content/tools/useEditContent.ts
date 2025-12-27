@@ -1,5 +1,5 @@
 import { 
-  useRouteAndLiuRouter, 
+  useRouteAndThusRouter, 
   onBeforeRouteLeave,
 } from "~/routes/liu-router";
 import { onActivated, ref, watch, type Ref } from "vue"
@@ -9,7 +9,7 @@ import { pageStates } from "~/utils/atom";
 import cui from "~/components/custom-ui";
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore";
 import valTool from "~/utils/basic/val-tool";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 export function useEditContent() {
   const threadId = ref("")
@@ -23,7 +23,7 @@ export function useEditContent() {
     alwaysAllowBack.value = false
   })
 
-  const { route, router } = useRouteAndLiuRouter()
+  const { route, router } = useRouteAndThusRouter()
   watch(route, (newV) => {
     whenRouteChange(threadId, state, newV)
   }, { immediate: true })

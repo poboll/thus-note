@@ -3,7 +3,7 @@
 
 import cloud from "@lafjs/cloud";
 import type { 
-  LiuRqReturn,
+  ThusRqReturn,
   LiuErrReturn,
   Table_Credential,
   Table_User,
@@ -76,7 +76,7 @@ export async function main(ctx: FunctionContext) {
 
 async function turnInputIntoMsgObj(
   ctx: FunctionContext,
-): Promise<LiuRqReturn<Ww_Msg_Event> | string> {
+): Promise<ThusRqReturn<Ww_Msg_Event> | string> {
 
   const b = ctx.body
   const q = ctx.query
@@ -435,7 +435,7 @@ async function handle_add_external_contact(
 
 async function getExternalContactOfWecom(
   external_userid: string,
-): Promise<LiuRqReturn<Ww_Res_User_Info>> {
+): Promise<ThusRqReturn<Ww_Res_User_Info>> {
   // 1. get access_token
   const res1 = await checkWecomAccessToken()
   if(!res1.pass) return res1.err
@@ -460,7 +460,7 @@ async function getExternalContactOfWecom(
 
 async function sendWelcomeMessage(
   data: Ww_Welcome_Body,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   // 1. check access_token
   const res1 = await checkWecomAccessToken()
   if(!res1.pass) return res1.err

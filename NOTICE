@@ -2,12 +2,12 @@
 
 ## 项目归属声明
 
-本项目 "如是 (Thus-Note)" 基于开源项目 [Thus](https://github.com/yenche123/thus-note) 进行二次开发。
+本项目 "如是 (Thus-Note)" 基于开源项目 [Liubai](https://github.com/yenche123/liubai) 进行二次开发。
 
 ### 原项目信息
-- **项目名称**: Thus (如是)
+- **项目名称**: Liubai (留白记事)
 - **原作者**: [@yenche123](https://github.com/yenche123)
-- **原项目地址**: https://github.com/yenche123/thus-note
+- **原项目地址**: https://github.com/yenche123/liubai
 - **开源协议**: AGPL-3.0-or-later
 
 ### 致谢
@@ -26,8 +26,8 @@
 
 ### 联系方式
 如有任何问题或建议，请通过以下方式联系：
-- GitHub Issues: https://github.com/your-username/thus-note/issues
-- GitHub Discussions: https://github.com/your-username/thus-note/discussions
+- GitHub Issues: https://github.com/poboll/thus-note/issues
+- GitHub Discussions: https://github.com/poboll/thus-note/discussions
 
 ---
 

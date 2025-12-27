@@ -1,5 +1,5 @@
 import { onMounted, reactive, ref } from "vue"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import type { OwbData } from "./types"
 import { useOpenClose } from "~/hooks/useOpenClose"
 import { waitWindowLoaded } from "~/utils/wait/wait-window-loaded"

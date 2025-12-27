@@ -5,11 +5,11 @@ import type {
   QpResolver,
   QpResult,
 } from "./types"
-import type { LiuTimeout, SimpleFunc } from "~/utils/basic/type-tool";
+import type { ThusTimeout, SimpleFunc } from "~/utils/basic/type-tool";
 import cfg from "~/config";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { 
   Res_OC_BindWeChat,
   Res_OC_BindWeCom,
@@ -21,7 +21,7 @@ import {
   fetchScanCheck, 
   fetchWxGzhScan,
 } from "~/pages/level1/tools/requests";
-import { useRouteAndLiuRouter, type RouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter, type RouteAndThusRouter } from "~/routes/liu-router";
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
 import { fetchOrder } from "~/requests/shared";
 import { 
@@ -50,10 +50,10 @@ const qpData = reactive<QpData>({
   reloadRotateDeg: 0,
 })
 
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 export function initQRCodePopup() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
 
   return {
@@ -143,7 +143,7 @@ function onImgLoaded() {
   qpData.loading = false
 }
 
-let pollTimeout: LiuTimeout
+let pollTimeout: ThusTimeout
 async function fetchData() {
 
   // 1. clear pollTimeout
@@ -418,7 +418,7 @@ function _over(
   endToListenToViewport()
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(qpData.show) return
   if(toggleTimeout) {

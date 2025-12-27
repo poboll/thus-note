@@ -1,11 +1,11 @@
 import { reactive, watch } from "vue";
 import type { HsData, HsParam, HsRes, HtsResolver } from "./types"
-import { useRouteAndLiuRouter, type RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter, type RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../../tools/useCuiTool"
 import valTool from "~/utils/basic/val-tool";
 import time from "~/utils/basic/time";
 import type { TagShow } from "~/types/types-content"
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import cfg from "~/config"
 
 /**
@@ -26,11 +26,11 @@ const hsData = reactive<HsData>({
   lastFocusOrBlurStamp: 0,
   inputTxt: "",
 })
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 let _resolve: HtsResolver | undefined
 
 export function initHashtagSelector() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
   
   return {
@@ -164,7 +164,7 @@ function toResolve(res: HsRes) {
   _resolve = undefined
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(hsData.show) return
   if(toggleTimeout) {

@@ -3,7 +3,7 @@
 Build! Anyway
 
 > [!NOTE]
-> 下面是我开发留白前端时的一些笔记，可能你也会遇到，所以公开在这里。
+> 下面是我开发如是前端时的一些笔记，可能你也会遇到，所以公开在这里。
 
 #buildinpublic
 
@@ -17,7 +17,7 @@ Build! Anyway
 
 4. 网站性能测试: https://www.webpagetest.org/
 
-5. Safari “加入 Dock 中”，会优先使用 `manifest` 定义的 512x512 并且 purpose 为 `maskable` 的图标，但这个图标由于最小安全区域的缘故，图标是大量留白的，这时添加到 Dock 中其图标会变得很小，所以干脆不存放 512 这个尺寸的 maskable 图标至 manifest 中，而是在这个尺寸时，统一使用背景透明的 any 图标，但是 purpose 中也填上 `maskable`，即
+5. Safari “加入 Dock 中”，会优先使用 `manifest` 定义的 512x512 并且 purpose 为 `maskable` 的图标，但这个图标由于最小安全区域的缘故，图标是大量如是的，这时添加到 Dock 中其图标会变得很小，所以干脆不存放 512 这个尺寸的 maskable 图标至 manifest 中，而是在这个尺寸时，统一使用背景透明的 any 图标，但是 purpose 中也填上 `maskable`，即
 ```json
 {
   "src": "logos/logo_512x512_v2.png",

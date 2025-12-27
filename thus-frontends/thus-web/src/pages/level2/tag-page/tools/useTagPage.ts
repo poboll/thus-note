@@ -1,5 +1,5 @@
 import { reactive, watch } from "vue";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { tagIdsToShows } from "~/utils/system/tag-related";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { storeToRefs } from "pinia";
@@ -7,13 +7,13 @@ import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
 import type { PageState } from "~/types/types-atom";
 import type { TpView, TpData, TpCtx } from "./types"
 import typeCheck from "~/utils/basic/type-check";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 
 export function useTagPage() {
 
   // 获取路由
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
 
   // 获取工作区
   const wStore = useWorkspaceStore()

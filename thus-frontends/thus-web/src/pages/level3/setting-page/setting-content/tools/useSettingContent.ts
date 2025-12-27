@@ -7,12 +7,12 @@ import { deleteLocalData } from "./handle-logout"
 import { whenTapTheme } from "./handle-theme"
 import { whenTapLanguage } from "./handle-lang"
 import { whenTapFontSize } from "./handle-font-size"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import { useSystemStore } from "~/hooks/stores/useSystemStore"
 import { storeToRefs } from "pinia"
 import { useMyProfile, usePrefix } from "~/hooks/useCommon"
 import localCache from "~/utils/system/local-cache"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import { CloudEventBus } from "~/utils/cloud/CloudEventBus"
 import middleBridge from "~/utils/middle-bridge"
 import type { MemberShow } from "~/types/types-content"
@@ -24,9 +24,9 @@ import {
 } from "~/hooks/pwa/useServiceWorker"
 import valTool from "~/utils/basic/val-tool"
 import { useShowAddToHomeScreen } from "~/hooks/pwa/useA2HS"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import APIs from "~/requests/APIs"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore"
 import thirdLink from "~/config/third-link"
 import time from "~/utils/basic/time"
@@ -39,7 +39,7 @@ export function useSettingContent() {
   const _env = liuEnv.getEnv()
   const onceData = localCache.getOnceData()
   const contactLink = _env.CUSTOMER_SERVICE
-  const emailLink = LIU_ENV.author?.email
+  const emailLink = THUS_ENV.author?.email
 
   const data = reactive<SettingContentData>({
     language: "system",
@@ -71,7 +71,7 @@ export function useSettingContent() {
     liuApi.route.reload()
   }
 
-  const version = LIU_ENV.version
+  const version = THUS_ENV.version
   let appName = _env.APP_NAME ?? ""
   if(appName && appName[0]) {
     appName = appName[0].toUpperCase() + appName.substring(1)

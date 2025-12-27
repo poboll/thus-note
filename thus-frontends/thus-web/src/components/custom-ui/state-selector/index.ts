@@ -6,11 +6,11 @@ import type {
 import { ref, watch } from "vue"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import valTool from "~/utils/basic/val-tool"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import { openIt, closeIt, handleCustomUiQueryErr } from "../tools/useCuiTool"
-import liuUtil from "~/utils/liu-util"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import liuUtil from "~/utils/thus-util"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
 
 let _resolve: SsResolver | undefined
@@ -20,14 +20,14 @@ const show = ref(false)
 const hasRemoveBtn = ref(false)
 const TRANSITION_DURATION = 250
 const queryKey = "stateselector"
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 
 /**
  * 本组件只涉及 ui，负责给用户 "选择"
  * 至于具体的逻辑处理和存储，都不在本组件内完成
  */
 export function initStateSelector() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   listenRouteChange()
   return {
     list,
@@ -147,8 +147,8 @@ function getList() {
     // 处理颜色
     let color = v.color
     if(!color) {
-      color = "--liu-state-1"
-      if(v.id === "FINISHED") color = "--liu-state-2"
+      color = "--thus-state-1"
+      if(v.id === "FINISHED") color = "--thus-state-2"
     }
     const colorShow = liuUtil.colorToShow(color)
 
@@ -168,20 +168,20 @@ function getDefaultList() {
     {
       id: "TODO",
       text_key: "thread_related.todo",
-      colorShow: "var(--liu-state-1)",
+      colorShow: "var(--thus-state-1)",
       selected: false,
     },
     {
       id: "FINISHED",
       text_key: "thread_related.finished",
-      colorShow: "var(--liu-state-2)",
+      colorShow: "var(--thus-state-2)",
       selected: false,
     }
   ]
   return tmpList
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(show.value) return
   if(toggleTimeout) {

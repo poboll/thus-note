@@ -1,6 +1,6 @@
 import type { ThreadOutterOperation } from "~/types/types-atom"
 import { handleCollect } from "./handleCollect"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { PreCtx } from "../../utils/tools/types"
 import {
   handleDelete,
@@ -14,7 +14,7 @@ import { handleSelectState } from "./handleState"
 import type { ThreadShow } from "~/types/types-content"
 
 export function useThreadOperateInDetail() {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const receiveOperation = (
     operation: ThreadOutterOperation,

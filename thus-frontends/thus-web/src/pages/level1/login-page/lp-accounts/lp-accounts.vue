@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
 import type { LpaEmit, LpaProps } from "./tools/types"
-import LiuAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
+import ThusAvatar from '~/components/common/liu-avatar/liu-avatar.vue';
 import { useLpAccounts } from "./tools/useLpAccounts"
 
 const props = defineProps<LpaProps>()
@@ -28,20 +28,20 @@ const {
 
       <template v-for="(item, index) in accounts" :key="item._id">
         <div class="lpa-item" @click.stop="onTapItem(index)">
-          <LiuAvatar
+          <ThusAvatar
             :member-show="item"
             class="lpa-avatar"
-          ></LiuAvatar>
-          <div class="liu-no-user-select lpa-name">
+          ></ThusAvatar>
+          <div class="thus-no-user-select lpa-name">
             <span v-if="item.name">{{ item.name }}</span>
             <span v-else>{{ t('common.unknown') }}</span>
           </div>
           <div class="lpa-footer">
-            <LiuCheckbox 
+            <ThusCheckbox 
               :checked="index === lpaData.selectedIndex" 
               :size="20"
               :circleSize="10.6"
-            ></LiuCheckbox>
+            ></ThusCheckbox>
           </div>
         </div>
       </template>

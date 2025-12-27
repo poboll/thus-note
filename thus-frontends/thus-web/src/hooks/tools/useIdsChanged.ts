@@ -1,6 +1,6 @@
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import { useSyncStore, type SyncStoreItem } from "../stores/useSyncStore";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import type { 
   LocationQuery, 
   RouteLocationResolvedGeneric, 
@@ -16,7 +16,7 @@ export function useIdsChanged() {
   const all_threads: SyncStoreItem[] = []
   const all_comments: SyncStoreItem[] = []
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   // pass `to` route representing the current route or the route to be navigated to
   // and then check if the new route is going to be generated

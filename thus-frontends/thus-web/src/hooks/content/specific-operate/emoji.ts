@@ -8,7 +8,7 @@ import type {
   CollectionLocalTable,
   ContentLocalTable,
 } from "~/types/types-table";
-import type { LiuMyContext } from "~/types";
+import type { ThusMyContext } from "~/types";
 import time from "~/utils/basic/time";
 import ider from "~/utils/basic/ider";
 import type { CommentShow, ThreadShow, EmojiData } from "~/types/types-content";
@@ -19,8 +19,8 @@ import {
  } from "~/hooks/stores/useCommentStore";
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore";
 import type { OState_2 } from "~/types/types-basic"
-import liuApi from "~/utils/liu-api"
-import liuUtil from "~/utils/liu-util";
+import liuApi from "~/utils/thus-api"
+import liuUtil from "~/utils/thus-util";
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
 
 
@@ -235,7 +235,7 @@ async function addCollection(
   content: ContentLocalTable,
   forType: ContentInfoType,
   encodeStr: string,
-  authData: LiuMyContext,
+  authData: ThusMyContext,
   stamp: number,
 ) {
   const content_id = content._id

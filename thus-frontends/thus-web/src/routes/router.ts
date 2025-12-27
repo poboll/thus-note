@@ -4,7 +4,7 @@ import {
   type RouteLocationNormalizedGeneric,
 } from "vue-router"
 import { routes } from "./init-routes"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import localCache from "~/utils/system/local-cache"
 import valTool from "~/utils/basic/val-tool"
 

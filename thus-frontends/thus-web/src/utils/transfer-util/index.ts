@@ -7,7 +7,7 @@ import { listToText } from "./text"
 import { listToMarkdown } from "./markdown"
 import { imagesFromStoreToCloud, filesFromStoreToCloud } from "./file"
 import type { ListToMdOpt } from "./markdown"
-import type { LiuFileStore } from "~/types"
+import type { ThusFileStore } from "~/types"
 
 
 interface TiptapToLiuOpt {
@@ -57,7 +57,7 @@ function tiptapToMarkdown(
 // 组装 Content 里的 search_other 字段
 function packSearchOther(
   list: TipTapJSONContent[] | undefined,
-  files: LiuFileStore[] | undefined,
+  files: ThusFileStore[] | undefined,
 ) {
   let res = ""
 

@@ -20,7 +20,7 @@ import { LiuApi } from "~/packageB/utils/LiuApi";
 import { pageStates } from "~/packageB/utils/atom-util";
 import type { WxMiniAPI } from "~/packageB/types/types-wx";
 import type { TaskDetail } from "./tools/types";
-import { LiuUtil } from "~/packageB/utils/liu-util/index";
+import { LiuUtil } from "~/packageB/utils/thus-util/index";
 import valTool from "~/packageB/utils/val-tool";
 import { useI18n } from "~/packageB/locales/index";
 import { DateUtil } from "~/packageB/utils/date-util";

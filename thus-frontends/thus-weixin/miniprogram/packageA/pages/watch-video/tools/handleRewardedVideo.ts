@@ -1,7 +1,7 @@
 import { LiuApi } from "~/utils/LiuApi"
 import type { MiniProgramContext } from "~/types/index"
 import type { WatchVideoData } from "./types"
-import { LiuUtil } from "~/utils/liu-util/index"
+import { LiuUtil } from "~/utils/thus-util/index"
 import { fetchPost } from "./useWatchVideo"
 
 let rewardedVideoAd: WechatMiniprogram.RewardedVideoAd | undefined

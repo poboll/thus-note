@@ -32,13 +32,13 @@ function handleEnv() {
 	// merge environment variables
 	const mergedEnvConfig = { ...cfg1, ...cfg2, ...cfg3, ...cfg4 }
 
-	// handle LIU_ENV
+	// handle THUS_ENV
 	const _liuEnv = {
-		"LIU_ENV.EXT_VERSION": JSON.stringify(version),
-		"LIU_ENV.MODE": JSON.stringify(proOrDev),
+		"THUS_ENV.EXT_VERSION": JSON.stringify(version),
+		"THUS_ENV.MODE": JSON.stringify(proOrDev),
 	}
 	for(const key in mergedEnvConfig) {
-		_liuEnv[`LIU_ENV.${key}`] = JSON.stringify(mergedEnvConfig[key])
+		_liuEnv[`THUS_ENV.${key}`] = JSON.stringify(mergedEnvConfig[key])
 	}
 	return _liuEnv
 }

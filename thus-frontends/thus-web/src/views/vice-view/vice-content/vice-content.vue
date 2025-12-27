@@ -65,7 +65,7 @@ const {
 
     <template v-for="(item, index) in vcData.list" :key="item.id">
 
-      <div class="liu-view" v-show="item.show">
+      <div class="thus-view" v-show="item.show">
         <!-- iframe with src -->
         <VcIframe
           v-if="item.state === 'iframe'"

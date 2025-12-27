@@ -13,11 +13,11 @@ import type {
 import localCache from "~/utils/system/local-cache";
 import { db } from "~/utils/db";
 import time from "~/utils/basic/time";
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import cui from "~/components/custom-ui";
-import type { LiuSpaceAndMember } from "~/types/types-cloud";
+import type { ThusSpaceAndMember } from "~/types/types-cloud";
 import { CloudFiler } from "../CloudFiler";
-import liuConsole from "~/utils/debug/liu-console";
+import liuConsole from "~/utils/debug/thus-console";
 import usefulTool from "~/utils/basic/useful-tool";
 import type { SimpleObject } from "~/utils/basic/type-tool";
 
@@ -27,7 +27,7 @@ interface AgudOpt {
 
 export async function afterGettingUserData(
   d: UserSettingsAPI.Res_Enter | UserSettingsAPI.Res_Latest,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   opt?: AgudOpt,
 ) {
 
@@ -94,8 +94,8 @@ async function handleUser(
 
 
 export async function compareSpaceAndMember(
-  spaceMemberList: LiuSpaceAndMember[],
-  rr: RouteAndLiuRouter,
+  spaceMemberList: ThusSpaceAndMember[],
+  rr: RouteAndThusRouter,
 ) {
   const gStore = useGlobalStateStore()
   const wStore = useWorkspaceStore()

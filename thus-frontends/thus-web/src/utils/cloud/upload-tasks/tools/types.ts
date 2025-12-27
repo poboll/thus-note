@@ -1,10 +1,10 @@
-import type { LiuRqReturn } from "~/requests/tools/types"
+import type { ThusRqReturn } from "~/requests/tools/types"
 import type { LiuFileAndImage } from "~/types"
 import type { Res_WebhookQiniu } from "~/requests/req-types"
 import type { DexieBulkUpdateAtom } from "~/types/other/types-dexie";
 import type { UploadTaskLocalTable } from "~/types/types-table";
 
-export type FileReqReturn = LiuRqReturn<Res_WebhookQiniu>
+export type FileReqReturn = ThusRqReturn<Res_WebhookQiniu>
 
 export type UploadResolver = (res: FileReqReturn | null) => void
 

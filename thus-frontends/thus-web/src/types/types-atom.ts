@@ -11,7 +11,7 @@ export type LiuRemindLater = "30min" | "1hr" | "2hr" | "3hr" | "tomorrow_this_mo
 export type LiuRemindEarly = number
 
 // "提醒我" 的结构
-export interface LiuRemindMe {
+export interface ThusRemindMe {
   type: "early" | "later" | "specific_time"
 
   // 提前多少分钟，若提前一天则为 1440
@@ -96,10 +96,10 @@ export interface LiuContent {
   text?: string
 }
 
-export interface LiuAtomState {
+export interface ThusAtomState {
   id: string
   text?: string
-  color?: string              // 存储 # 开头的 hex，或者 --liu-state- 开头的系统颜色
+  color?: string              // 存储 # 开头的 hex，或者 --thus-state- 开头的系统颜色
   showInIndex: boolean
   showFireworks?: boolean     // 是否开启撒花
   updatedStamp: number
@@ -107,7 +107,7 @@ export interface LiuAtomState {
 }
 
 export interface LiuStateConfig {
-  stateList: LiuAtomState[]
+  stateList: ThusAtomState[]
   updatedStamp: number 
 }
 
@@ -252,11 +252,11 @@ export type AiCharacter = "baixiaoying" | "deepseek" | "hailuo" | "hunyuan" | "k
 export interface ComposingData {
   aiChatId?: string
   title?: string
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
 }
 
 export const liuIDETypes = [
@@ -277,7 +277,7 @@ export const liuIDETypes = [
 export type LiuIDEType = typeof liuIDETypes[number]
 
 export const liuAppTypes = [...liuIDETypes] as const
-export type LiuAppType = typeof liuAppTypes[number]
+export type ThusAppType = typeof liuAppTypes[number]
 
 export const genderTypes = ["male", "female"] as const
 export type GenderType = typeof genderTypes[number]

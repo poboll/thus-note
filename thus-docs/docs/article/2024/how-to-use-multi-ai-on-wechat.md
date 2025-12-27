@@ -28,7 +28,7 @@
 
 只要 3 步：
 
-### 1. 关注"如是"
+### 1. 关注“如是”
 
 <img src="./assets1222/5.png" alt="subscribe" width="380" style="margin-block-end: 10px;" >
 
@@ -37,7 +37,7 @@
 
 扫码关注👆
 
-### 2. 点击"发消息"
+### 2. 点击“发消息”
 
 <img src="./assets1222/6.png" alt="message" width="380" >
 
@@ -81,7 +81,7 @@
 
 本项目完全开源，非常需要你的 star! 对我们会是莫大的帮助。
 
-[https://github.com/yenche123/thus-note](https://github.com/yenche123/thus-note)
+[https://github.com/yenche123/liubai](https://github.com/yenche123/liubai)
 
 祝你和你的助手们，愉悦的交流、完美的协作！
 

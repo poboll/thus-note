@@ -1,6 +1,6 @@
 import thirdLink from "~/config/third-link";
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { 
   UserLoginAPI,
   Res_UL_WxGzhBase,
@@ -17,14 +17,14 @@ import localCache from "~/utils/system/local-cache";
 import { waitWxJSBridge } from "~/utils/wait/wait-window-loaded";
 import cui from "~/components/custom-ui";
 import { showErrMsg } from "~/pages/level1/tools/show-msg";
-import type { LiuRqReturn } from "~/requests/tools/types";
-import liuUtil from "~/utils/liu-util";
+import type { ThusRqReturn } from "~/requests/tools/types";
+import liuUtil from "~/utils/thus-util";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import usefulTool from "~/utils/basic/useful-tool";
 import type { UserLocalTable } from "~/types/types-table";
 import { db } from "~/utils/db";
-import liuApi from "~/utils/liu-api";
-import type { RouteAndLiuRouter } from "~/routes/liu-router";
+import liuApi from "~/utils/thus-api";
+import type { RouteAndThusRouter } from "~/routes/liu-router";
 
 let initData: UserLoginAPI.Res_Init | undefined
 
@@ -180,7 +180,7 @@ const vawData: VawData = {}
 // pay by alipay.trade.wap.pay
 export async function buyViaAlipayWap(
   order_id: string,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   currentPage: "payment" | "subscription",
 ) {
   // 1. check out vawData
@@ -218,7 +218,7 @@ export async function buyViaAlipayWap(
 }
 
 function jumpToAlipayWap(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   currentPage: "payment" | "subscription",
 ) {
   const url = vawData.wap_url
@@ -270,7 +270,7 @@ export async function preloadAlipayWap(
 }
 
 function _handlePayResult(
-  res: LiuRqReturn<any>,
+  res: ThusRqReturn<any>,
 ) {
   const code4 = res.code
   const data4 = res.data

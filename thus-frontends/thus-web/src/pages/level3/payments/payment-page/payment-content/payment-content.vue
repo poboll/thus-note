@@ -70,7 +70,7 @@ const arrowColor = "var(--main-normal)"
 
   <!-- 3. wxpay -->
   <div v-else-if="cha?.isWeChat && cha?.isMobile && pcData.od && pcData.order_amount_txt"
-    class="liu-no-user-select pc-container"
+    class="thus-no-user-select pc-container"
   >
     <!-- title (like: 年度会员) -->
     <div class="pc-pay-title">
@@ -111,7 +111,7 @@ const arrowColor = "var(--main-normal)"
 
   <!-- 4. alipay -->
   <div v-else-if="cha?.isAlipay && cha?.isMobile && pcData.od && pcData.order_amount_txt"
-    class="liu-no-user-select pc-container"
+    class="thus-no-user-select pc-container"
   >
     <!-- title (like: 年度会员) -->
     <div class="pc-pay-title">
@@ -150,7 +150,7 @@ const arrowColor = "var(--main-normal)"
 
   <!-- 5. mobile web -->
   <div v-else-if="cha?.isMobile && pcData.od && pcData.order_amount_txt"
-    class="liu-no-user-select pc-container"
+    class="thus-no-user-select pc-container"
   >
 
     <!-- title (like: Payment Method) -->
@@ -199,7 +199,7 @@ const arrowColor = "var(--main-normal)"
   </div>
 
   <!-- 6. qr code -->
-  <div v-else-if="pcData.od?.order_id && qrcode" class="liu-no-user-select pc-container">
+  <div v-else-if="pcData.od?.order_id && qrcode" class="thus-no-user-select pc-container">
     <div class="pc-square">
 
       <div class="pc-qrcode">

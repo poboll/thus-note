@@ -1,5 +1,5 @@
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import type { 
   Res_UL_WxGzhScan, 
   Res_UL_ScanCheck,
@@ -8,7 +8,7 @@ import type {
 } from "~/requests/req-types"
 import localCache from "~/utils/system/local-cache";
 import { createClientKey } from "./common-utils"
-import type { LiuRqReturn } from "~/requests/tools/types";
+import type { ThusRqReturn } from "~/requests/tools/types";
 
 function _getDefaultOpt() {
   const { theme, language } = localCache.getPreference()
@@ -217,4 +217,4 @@ export async function fetchScanLogin(
 }
 
 
-export type Fetch_UserLoginNormal = LiuRqReturn<Res_UserLoginNormal>
+export type Fetch_UserLoginNormal = ThusRqReturn<Res_UserLoginNormal>

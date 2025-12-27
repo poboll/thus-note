@@ -17,7 +17,7 @@ export type Prettify<T> = {
 
 export type SimplePromise = () => Promise<void>
 
-export type LiuTimeout = ReturnType<typeof setTimeout> | undefined
+export type ThusTimeout = ReturnType<typeof setTimeout> | undefined
 
 export type LiuInterval = ReturnType<typeof setInterval> | undefined
 

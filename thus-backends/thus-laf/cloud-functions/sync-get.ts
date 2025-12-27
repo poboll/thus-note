@@ -30,13 +30,13 @@ import type {
   LiuDownloadCollection,
   LiuDownloadContent,
   CollectionInfoType,
-  LiuDownloadParcel_A,
+  ThusDownloadParcel_A,
   Res_SyncGet_Cloud,
   SyncGet_CheckContents,
   SyncGet_ThreadData,
   SyncGet_Draft,
   Table_Draft,
-  LiuDownloadParcel_B,
+  ThusDownloadParcel_B,
   LiuDownloadDraft,
   SyncGet_CommentList,
   SyncGet_CommentList_A,
@@ -775,7 +775,7 @@ type GetShareDataRes_1 = Gsdr_A | Gsdr_1_B
 
 // package draft
 function getSharedData_6(
-  parcel: LiuDownloadParcel_B,
+  parcel: ThusDownloadParcel_B,
   d: Table_Draft,
   opt: OperationOpt,
 ): SyncGetAtomRes {
@@ -803,7 +803,7 @@ function getSharedData_6(
     visScope: d.visScope,
 
     title: res6.title,
-    liuDesc: res6.liuDesc,
+    thusDesc: res6.thusDesc,
     images: res6.images,
     files: res6.files,
 
@@ -841,7 +841,7 @@ async function getSharedData_5(
   }
 
   // 3. construct parcel and get shared data
-  const parcel: LiuDownloadParcel_B = {
+  const parcel: ThusDownloadParcel_B = {
     id: d._id,
     status: "has_data",
     parcelType: "draft",
@@ -860,7 +860,7 @@ async function getSharedData_4(
 ): Promise<SyncGetAtomRes> {
   const { taskId } = opt
   // 1. construct parcel
-  const parcel: LiuDownloadParcel_B = {
+  const parcel: ThusDownloadParcel_B = {
     id: draft_id,
     status: "not_found",
     parcelType: "draft"
@@ -930,7 +930,7 @@ async function getSharedData_2(
   // 3. construct list
   let list = ids.map(v => {
     const d3 = contents.find(v2 => v2._id === v)
-    const obj3: LiuDownloadParcel_A = {
+    const obj3: ThusDownloadParcel_A = {
       id: v,
       status: d3 ? "has_data" : "not_found",
       parcelType: "content",
@@ -999,7 +999,7 @@ function turnDownloadContentsIntoParcels(
   list: LiuDownloadContent[],
 ) {
   const results = list.map(v => {
-    const obj: LiuDownloadParcel_A = {
+    const obj: ThusDownloadParcel_A = {
       id: v._id,
       status: "has_data",
       parcelType: "content",
@@ -1029,13 +1029,13 @@ function packContents(
     const myFavorite = findCollection(v, myCollections, "FAVORITE")
     const myEmoji = findCollection(v, myCollections, "EXPRESS")
 
-    // decrypt title, liuDesc, images, files
+    // decrypt title, thusDesc, images, files
     const res = decryptEncData(v)
     if(!res.pass) return res
     const {
       title,
       images,
-      liuDesc,
+      thusDesc,
       files,
     } = res
     
@@ -1054,7 +1054,7 @@ function packContents(
       storageState: v.storageState,
 
       title,
-      liuDesc,
+      thusDesc,
       images,
       files,
 

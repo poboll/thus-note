@@ -41,9 +41,9 @@ defineEmits<{
       :consider-bottom-navi-bar="considerBottomNaviBar"
     >
       <navi-virtual v-if="hasTopNavi"></navi-virtual>
-      <div class="liu-mc-container">
+      <div class="thus-mc-container">
         <div class="liu-tc-virtual" v-if="topVirtual"></div>
-        <div class="liu-mc-box">
+        <div class="thus-mc-box">
           <slot></slot>
         </div>
       </div>

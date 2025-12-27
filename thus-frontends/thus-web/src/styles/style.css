@@ -150,22 +150,22 @@ input {
 /**************** 一些常用的 css **************/
 
 /** xxx-content 的 layout */
-.liu-mc-container {
+.thus-mc-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   container-type: inline-size;
-  container-name: liu-mc-container;
+  container-name: thus-mc-container;
 }
 
-.liu-mc-container > .liu-tc-virtual {
+.thus-mc-container > .liu-tc-virtual {
   width: 100%;
   height: 10px;
 }
 
-.liu-mc-container > .liu-mc-box {
+.thus-mc-container > .thus-mc-box {
   width: var(--card-percent);
   max-width: var(--card-max);
   min-width: var(--card-min);
@@ -173,8 +173,8 @@ input {
   transition: .3s;
 }
 
-@container liu-mc-container (min-width: 460px) {
-  .liu-mc-container > .liu-mc-box {
+@container thus-mc-container (min-width: 460px) {
+  .thus-mc-container > .thus-mc-box {
     width: 90%;
   }
 }
@@ -186,8 +186,8 @@ input {
 }
 
 
-@container liu-mc-container (min-width: 500px) {
-  .liu-mc-container > .liu-mc-box {
+@container thus-mc-container (min-width: 500px) {
+  .thus-mc-container > .thus-mc-box {
     width: 88%;
   }
 }
@@ -198,8 +198,8 @@ input {
   }
 }
 
-@container liu-mc-container (min-width: 560px) {
-  .liu-mc-container > .liu-mc-box {
+@container thus-mc-container (min-width: 560px) {
+  .thus-mc-container > .thus-mc-box {
     width: 85%;
   }
 }
@@ -211,8 +211,8 @@ input {
 }
 
 
-@container liu-mc-container (min-width: 610px) {
-  .liu-mc-container > .liu-mc-box {
+@container thus-mc-container (min-width: 610px) {
+  .thus-mc-container > .thus-mc-box {
     width: 80%;
   }
 }
@@ -224,14 +224,14 @@ input {
 }
 
 
-.liu-mc-box > .liu-mc-spacing {
+.thus-mc-box > .liu-mc-spacing {
   width: 100%;
   height: 10px;
 }
 
 
 /** 一些页面顶部，会出现的置顶提示 highlight 框 */
-.liu-highlight-box {
+.thus-highlight-box {
   width: 100%;
   position: relative;
   padding: 30px;
@@ -244,7 +244,7 @@ input {
   background-color: var(--card-bg);
 }
 
-.liu-highlight-box::before {
+.thus-highlight-box::before {
   position: absolute;
   content: "";
   top: 0;
@@ -258,7 +258,7 @@ input {
 
 
 /** 页面内的自定义 view 盒子 */
-.liu-view {
+.thus-view {
   width: 100%;
   height: 100%;
   position: relative;

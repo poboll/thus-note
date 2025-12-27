@@ -1,8 +1,8 @@
 import { computed, inject } from "vue";
 import type { SiProps } from "./types";
 import { searchFuncsKey } from "../../../tools/types";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
-import liuApi from "~/utils/liu-api";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
+import liuApi from "~/utils/thus-api";
 
 export function useSearchItem(props: SiProps) {
 
@@ -17,7 +17,7 @@ export function useSearchItem(props: SiProps) {
   const injectData = inject(searchFuncsKey)
   const { isIOS } = liuApi.getCharacteristic()
 
-  let timeoutForIOS: LiuTimeout
+  let timeoutForIOS: ThusTimeout
   const onMouseEnter = () => {
     if (!injectData) return
     // console.log("onMouseEnter: ", props.atomId)

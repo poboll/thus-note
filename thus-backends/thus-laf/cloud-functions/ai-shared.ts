@@ -37,7 +37,7 @@ import {
   type OaiStreamCompletion,
   type OaiStreamChoiceDelta,
   type OaiChatCompletionChunk,
-  type LiuRqReturn,
+  type ThusRqReturn,
   type Table_AiRoom,
   Ns_MapTool,
   type Ns_MiniMax,
@@ -1563,7 +1563,7 @@ class GeoLocation {
     }
   }
 
-  postCheck(res: LiuRqReturn) {
+  postCheck(res: ThusRqReturn) {
     if(res.code !== "0000" || !res.data) {
       const err = checker.getErrResult(
         res.errMsg ?? "network error",
@@ -1574,7 +1574,7 @@ class GeoLocation {
   }
 
   private async _handleReqError(
-    result: LiuRqReturn,
+    result: ThusRqReturn,
     reqLink: string,
   ) {
     const errCode = result.code
@@ -1586,7 +1586,7 @@ class GeoLocation {
   }
 
   private async _afterFetchMaps(
-    result: LiuRqReturn,
+    result: ThusRqReturn,
     reqLink: string,
   ): Promise<DataPass<LiuAi.MapResult>> {
     // 1. check if error
@@ -3253,7 +3253,7 @@ export class TransformContent {
   static getCardData(v: Table_Content) {
     const data = decryptEncData(v)
     if(!data.pass) return
-    const summary = RichTexter.getSummary(data.liuDesc)
+    const summary = RichTexter.getSummary(data.thusDesc)
     const obj: LiuAi.CardData = {
       title: data.title ?? "",
       summary,

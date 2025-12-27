@@ -1,7 +1,7 @@
 import type { CommentShow } from "~/types/types-content";
 import { CloudMerger } from "~/utils/cloud/CloudMerger";
-import liuEnv from "~/utils/liu-env";
-import liuUtil from "~/utils/liu-util";
+import liuEnv from "~/utils/thus-env";
+import liuUtil from "~/utils/thus-util";
 import { type ValueComment, getValuedComments } from "~/utils/other/comment-related";
 import type { SyncGet_CommentList_D } from "~/types/cloud/sync-get/types"
 import type { 

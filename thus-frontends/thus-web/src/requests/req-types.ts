@@ -1,5 +1,5 @@
 // 存放所有接口返回的 data 类型
-import type { GenderType, LiuAppType, LocalTheme } from "~/types/types-atom"
+import type { GenderType, ThusAppType, LocalTheme } from "~/types/types-atom"
 import type { LocalLocale } from "~/types/types-locale"
 import type { 
   OState_Order,
@@ -7,7 +7,7 @@ import type {
   PayChannel,
   OrderType,
   UserSubscription, 
-  LiuSpaceAndMember, 
+  ThusSpaceAndMember, 
   SubscriptionStripe,
   SubscriptionPaymentCircle,
   CloudStorageService,
@@ -27,7 +27,7 @@ export interface Res_HelloWorld {
 
 /************************ 登录相关 ********************/
 
-export interface Res_ULN_User extends LiuSpaceAndMember {
+export interface Res_ULN_User extends ThusSpaceAndMember {
   userId: string
   createdStamp: number
 }
@@ -60,7 +60,7 @@ export interface Res_UserLoginNormal {
   theme?: LocalTheme
   language?: LocalLocale
   // 返回的 space 和 member 信息都是当前用户有加入的，已退出的不会返回
-  spaceMemberList?: LiuSpaceAndMember[]
+  spaceMemberList?: ThusSpaceAndMember[]
   subscription?: UserSubscription
   serial_id?: string
   token?: string
@@ -101,7 +101,7 @@ export namespace UserSettingsAPI {
     open_id?: string
     theme: LocalTheme
     language: LocalLocale
-    spaceMemberList: LiuSpaceAndMember[]
+    spaceMemberList: ThusSpaceAndMember[]
     subscription?: UserSubscription
     phone_pixelated?: string     // like 187******56
     
@@ -124,7 +124,7 @@ export namespace UserSettingsAPI {
 
   export interface Res_AuthGetInfo {
     operateType: "auth-get-info"
-    appType: LiuAppType
+    appType: ThusAppType
     serial: string
   }
 

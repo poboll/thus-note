@@ -3,19 +3,19 @@
 /** 对于按钮的特效 */
 
 /** reject user-select */
-.liu-no-user-select {
+.thus-no-user-select {
   user-select: none;
   -webkit-user-select: none;
   cursor: default;
 }
 
-.liu-hover {
+.thus-hover {
   position: relative;
   cursor: pointer;
   outline: 0;
 }
 
-.liu-hover::before {
+.thus-hover::before {
   top: 0;
   left: 0;
   border-radius: 8px;
@@ -30,11 +30,11 @@
 }
 
 /** 对于毛玻璃的效果 */
-.liu-frosted-glass {
+.thus-frosted-glass {
   position: relative;
 }
 
-.liu-frosted-glass::before {
+.thus-frosted-glass::before {
   content: "";
   position: absolute;
   top: 0;
@@ -47,7 +47,7 @@
   overflow: hidden;
 }
 
-.liu-simple-page {
+.thus-simple-page {
   width: 100%;
   height: 100vh;
   height: 100dvh;
@@ -95,15 +95,15 @@
 /********* 仅在有鼠标的设备上生效 *********/
 @media(hover: hover) {
 
-  .liu-hover:focus-visible {
+  .thus-hover:focus-visible {
     outline: 2px solid var(--main-normal);
   }
 
-  .liu-hover:hover::before {
+  .thus-hover:hover::before {
     opacity: .06;
   }
 
-  .liu-hover[aria-label]::after {
+  .thus-hover[aria-label]::after {
     content: attr(aria-label);
     position: absolute;
     top: 100%;
@@ -129,28 +129,28 @@
     transition-delay: 250ms;
   }
 
-  .liu-hover[aria-label]:hover::after {
+  .thus-hover[aria-label]:hover::after {
     visibility: visible;
     opacity: 1;
   }
 
-  .liu-hover_first[aria-label]::after {
+  .thus-hover_first[aria-label]::after {
     right: 100%;
     transform: translateX(100%);
   }
 
-  .liu-hover_last[aria-label]::after {
+  .thus-hover_last[aria-label]::after {
     right: 0;
     transform: translateX(0);
   }
 }
 
-.liu-hover:active::before {
+.thus-hover:active::before {
   opacity: .1;
 }
 
 /** 必须设置在 <span> 或 <a> 标签上，用于实现反白高亮 */
-.liu-selection::selection {
+.thus-selection::selection {
   color: var(--on-primary);
   background-color: var(--primary-active);
 }

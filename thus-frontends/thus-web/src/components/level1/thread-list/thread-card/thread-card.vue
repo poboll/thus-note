@@ -105,7 +105,7 @@ const hoverRadius = props.displayType === "list" ? "24px" : "8px"
 
       <!-- 摘要 (不支持 css text overflow 检测的时候) -->
       <div v-if="!cssDetectOverflow && threadData.briefing" v-show="isBriefing" 
-        class="liu-no-user-select tc-briefing"
+        class="thus-no-user-select tc-briefing"
         @click.stop="onTapBriefing"
       >
         <EditorCore

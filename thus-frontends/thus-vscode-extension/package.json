@@ -41,22 +41,22 @@
     "commands": [
       {
         "command": "ptsd.thus-vscode-extension.record",
-        "title": "%thus.record.title%",
+        "title": "%liubai.record.title%",
         "category": "Thus"
       },
       {
         "command": "ptsd.thus-vscode-extension.record_with_code",
-        "title": "%thus.record_with_code.title%",
+        "title": "%liubai.record_with_code.title%",
         "category": "Thus"
       },
       {
         "command": "ptsd.thus-vscode-extension.record_with_code2",
-        "title": "%thus.record_with_code2.title%",
+        "title": "%liubai.record_with_code2.title%",
         "category": "Thus"
       },
       {
         "command": "ptsd.thus-vscode-extension.login_or_logout",
-        "title": "%thus.login_or_logout.title%",
+        "title": "%liubai.login_or_logout.title%",
         "category": "Thus"
       }
     ],

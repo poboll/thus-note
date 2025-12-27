@@ -26,11 +26,11 @@
 
 ## 完全开源 {#open-source}
 
-另外，如是是完全开源的，你可以在我们的 [GitHub 仓库](https://github.com/yenche123/thus-note) 上随意审计源代码。
+另外，如是是完全开源的，你可以在我们的 [GitHub 仓库](https://github.com/yenche123/liubai) 上随意审计源代码。
 
 看不懂的地方就问 AI，**代码去黑盒化**已不是口号。
 
 > [!TIP]
-> Devin 团队提供了 [DeepWiki](https://deepwiki.com/yenche123/thus-note)，协助你理解项目源码。亲测可用中文直接提问。
+> Devin 团队提供了 [DeepWiki](https://deepwiki.com/yenche123/liubai)，协助你理解项目源码。亲测可用中文直接提问。
 >
 > ![Explanation from DeepWiki](./assets-privacy/02.png)

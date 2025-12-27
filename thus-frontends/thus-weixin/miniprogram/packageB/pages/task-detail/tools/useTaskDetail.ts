@@ -11,7 +11,7 @@ import valTool from "~/packageB/utils/val-tool";
 import { LiuApi } from "~/packageB/utils/LiuApi";
 import { useI18n } from "~/packageB/locales/index";
 import { LiuRewardedVideo } from "./liu-rewarded-video";
-import { LiuUtil } from "~/packageB/utils/liu-util/index";
+import { LiuUtil } from "~/packageB/utils/thus-util/index";
 import { defaultData } from "~/packageB/config/default-data";
 
 export async function fetchTaskDetail(

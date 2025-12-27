@@ -9,7 +9,7 @@ import {
   mainViewWidthKey, 
   outterWidthKey,
 } from "~/utils/provide-keys"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import type { MainViewProps } from "./types"
 
 export const useMainView = (

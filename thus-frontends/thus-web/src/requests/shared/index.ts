@@ -1,6 +1,6 @@
 // some requests shared by different pages or components
 import APIs from "../APIs"
-import liuReq from "../liu-req"
+import liuReq from "../thus-req"
 import type { 
   Res_PO_GetOrder,
 } from "../req-types"

@@ -17,12 +17,12 @@ const { t } = useI18n()
   >
     <div class="owb-triangle" :class="{ 'owb-triangle_pc': cha.isPC }"></div>
     <div class="owb-box">
-      <div class="liu-hover owb-close-btn" @click.stop="onTapClose">
+      <div class="thus-hover owb-close-btn" @click.stop="onTapClose">
         <svg-icon name="close" class="owb-close-svg" 
           color="var(--main-note)"
         ></svg-icon>
       </div>
-      <div class="liu-no-user-select owb-main">
+      <div class="thus-no-user-select owb-main">
         <div class="owb-bar">
 
           <!-- text: Open with browser -->
@@ -131,7 +131,7 @@ const { t } = useI18n()
   background-size: contain;
 }
 
-.liu-hover::before {
+.thus-hover::before {
   background-color: var(--on-primary);
 }
 

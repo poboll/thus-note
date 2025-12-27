@@ -1,7 +1,7 @@
 import { reactive } from "vue"
 import type { TlHasDataOpt } from "~/components/level1/thread-list/tools/types"
 import time from "~/utils/basic/time"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import type { ScData } from "./types"
 
 

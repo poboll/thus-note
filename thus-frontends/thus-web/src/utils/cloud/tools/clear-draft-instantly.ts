@@ -2,7 +2,7 @@ import type { Res_SyncSet_Client, SyncSetAtom } from "~/types/cloud/sync-set/typ
 import { whenDraftClear } from "./add-upload-task"
 import ider from "~/utils/basic/ider"
 import time from "~/utils/basic/time"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import APIs from "~/requests/APIs"
 import usefulTool from "~/utils/basic/useful-tool"
 

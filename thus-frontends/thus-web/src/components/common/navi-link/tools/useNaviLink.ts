@@ -1,5 +1,5 @@
 import { useLink } from 'vue-router'
-import { useRouteAndLiuRouter } from '~/routes/liu-router'
+import { useRouteAndThusRouter } from '~/routes/liu-router'
 import type { ToRoute } from "~/types"
 
 export interface NaviLinkEmits {
@@ -7,7 +7,7 @@ export interface NaviLinkEmits {
 }
 
 export function useNaviLink(props: any, emit: NaviLinkEmits) {
-  const { route: fromRoute, router } = useRouteAndLiuRouter()
+  const { route: fromRoute, router } = useRouteAndThusRouter()
   const { href, route: toRouteRef } = useLink(props)
 
   const onTapLink = (e: MouseEvent) => {

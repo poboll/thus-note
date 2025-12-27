@@ -11,7 +11,7 @@ import type {
   ModalData,
   ModalResolver,
 } from "./types"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
 
 let _success: ModalResolver | undefined
@@ -35,7 +35,7 @@ const modalData = reactive<ModalData>({
 })
 
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _open() {
   if(show.value) return
   if(toggleTimeout) {

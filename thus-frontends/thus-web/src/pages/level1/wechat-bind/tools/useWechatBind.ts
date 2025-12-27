@@ -1,18 +1,18 @@
 import { reactive, watch } from "vue";
 import { pageStates } from "~/utils/atom";
-import liuApi from "~/utils/liu-api";
-import liuEnv from "~/utils/liu-env";
+import liuApi from "~/utils/thus-api";
+import liuEnv from "~/utils/thus-env";
 import localCache from "~/utils/system/local-cache";
 import type { WbData } from "./types";
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router";
 import valTool from "~/utils/basic/val-tool";
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { storeToRefs } from "pinia";
 import APIs from "~/requests/APIs";
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import type { 
   Res_OC_GetWeChat, 
   Res_UserLoginNormal, 
@@ -29,7 +29,7 @@ import thirdLink from "~/config/third-link";
 import { waitWxJSBridge } from "~/utils/wait/wait-window-loaded";
 
 export function useWechatBind() {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const { wbData } = initData()
 
   listenContext(wbData, rr)
@@ -102,7 +102,7 @@ async function redirectToWeChatOAuth(
 
 
 async function goBack(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   if(isInWxMiniProgram()) {
     const wx0 = getGlobalWx()
@@ -149,7 +149,7 @@ function initData() {
 
 function listenContext(
   wbData: WbData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const pState = wbData.pageState
   if(pState >= 50) return
@@ -183,7 +183,7 @@ function listenContext(
 function handleOAuthCode(
   wbData: WbData,
   oAuthState: string,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
 
   // 1. check out state
@@ -217,7 +217,7 @@ function handleOAuthCode(
 async function toLoginForWxMini(
   wbData: WbData,
   oAuthState: string,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const { oAuthCode } = wbData
   if(!oAuthCode) return
@@ -252,7 +252,7 @@ async function toLoginForWxMini(
 
 async function toBindWeChat(
   wbData: WbData,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const { oAuthCode } = wbData
   if(!oAuthCode) return
@@ -289,7 +289,7 @@ async function toBindWeChat(
 async function loginWithWeChat(
   wbData: WbData,
   oAuthState: string,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. get params
   const { enc_client_key } = getClientKey()

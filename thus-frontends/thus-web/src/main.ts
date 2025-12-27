@@ -17,9 +17,9 @@ import { createPinia } from 'pinia'
 import { router } from './routes/router'
 import SvgIcon from "./assets/svg-icon.vue"
 import CustomBtn from "./components/custom-ui/custom-button/custom-button.vue"
-import LiuSwitch from "./components/common/liu-switch/liu-switch.vue"
+import ThusSwitch from "./components/common/liu-switch/liu-switch.vue"
 import LiuImg from "./components/common/liu-img/liu-img.vue"
-import LiuCheckbox from "./components/common/liu-checkbox/liu-checkbox.vue"
+import ThusCheckbox from "./components/common/liu-checkbox/liu-checkbox.vue"
 import PlaceholderView from "./views/common/placeholder-view/placeholder-view.vue";
 import NaviBar from "~/components/common/navi-bar/navi-bar.vue";
 import NaviVirtual from '~/components/common/navi-virtual/navi-virtual.vue';
@@ -34,13 +34,13 @@ const app = createApp(App)
 
 app.component("SvgIcon", SvgIcon)
 app.component("CustomBtn", CustomBtn)
-app.component("LiuSwitch", LiuSwitch)
+app.component("ThusSwitch", ThusSwitch)
 app.component("LiuImg", LiuImg)
-app.component("LiuCheckbox", LiuCheckbox)
+app.component("ThusCheckbox", ThusCheckbox)
 app.component("PlaceholderView", PlaceholderView)
 app.component("NaviBar", NaviBar)
 app.component("NaviVirtual", NaviVirtual)
-app.component("LiuMenu", defineAsyncComponent(() => 
+app.component("ThusMenu", defineAsyncComponent(() => 
   import("./components/common/liu-menu/liu-menu.vue")
 ))
 app.component("FloatingActionButton", defineAsyncComponent(() =>

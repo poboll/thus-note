@@ -1,21 +1,21 @@
 import type { ThreadOutterOperation } from "~/types/types-atom"
 import type { ThreadShow } from '~/types/types-content'
-import type { LiuRouter } from "~/routes/liu-router"
+import type { ThusRouter } from "~/routes/liu-router"
 import type { RouteLocationNormalizedLoaded } from "vue-router"
 import type { ThreadShowStore } from "~/hooks/stores/useThreadShowStore"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore"
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore"
 import localCache from "~/utils/system/local-cache"
 import type { TlData, TlEmits, TlProps } from "./types"
 import valTool from "~/utils/basic/val-tool"
 import threadOperate from "~/hooks/thread/thread-operate"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import tlUtil from "./tl-util"
 import { filterForCalendar } from "./handle-calendar"
 
 interface ToCtx {
-  router: LiuRouter
+  router: ThusRouter
   route: RouteLocationNormalizedLoaded
   tsStore: ThreadShowStore
   position: number
@@ -33,7 +33,7 @@ export function useThreadOperateInList(
   tlData: TlData,
 ) {
   const wStore = useWorkspaceStore()
-  const { route, router } = useRouteAndLiuRouter()
+  const { route, router } = useRouteAndThusRouter()
   const tsStore = useThreadShowStore()
 
 

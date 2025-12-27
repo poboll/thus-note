@@ -6,15 +6,15 @@ const { t } = useI18n()
 
   <div class="cc-box">
     <svg-icon 
-      class="liu-no-user-select cc-img"
+      class="thus-no-user-select cc-img"
       :cover-fill-stroke="false"
       name="emojis-face_with_peeking_eye_color"
     ></svg-icon>
-    <div class="liu-no-user-select cc-title">
+    <div class="thus-no-user-select cc-title">
       <span>{{ t('tip.coming_soon') }}</span>
     </div>
     <div class="cc-text">
-      <span class="liu-selection">{{ t('tip.stay_tuned') }}</span>
+      <span class="thus-selection">{{ t('tip.stay_tuned') }}</span>
     </div>
   </div>
 

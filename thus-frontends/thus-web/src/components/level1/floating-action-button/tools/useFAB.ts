@@ -1,6 +1,6 @@
 import { ref, toRef, watch } from "vue"
 import type { FabCtx, FabProps } from "./types"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import { useLayoutStore } from "~/views/useLayoutStore"
 
 export function useFAB(props: FabProps) {
@@ -70,7 +70,7 @@ function listenToContext(
   })
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 async function toOpen(ctx: FabCtx) {
   const { show, enable } = ctx
   if(show.value) return

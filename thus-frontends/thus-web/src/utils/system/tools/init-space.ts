@@ -1,5 +1,5 @@
 import { watch } from "vue"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { RouteLocationNormalizedLoaded } from "vue-router"
 import { db } from "../../db"
 import localCache from "../local-cache"
@@ -9,7 +9,7 @@ import type {
 } from "~/hooks/stores/useWorkspaceStore"
 import typeCheck from "~/utils/basic/type-check"
 import time from "~/utils/basic/time"
-import liuConsole from "~/utils/debug/liu-console"
+import liuConsole from "~/utils/debug/thus-console"
 
 let routeChangeNum = 0
 let lastRouteChange = 0
@@ -19,7 +19,7 @@ export function initSpace(
   store: WorkspaceStore
 ) {
   // 在 <App /> 的 setup 周期内 route.name 为 undefined
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
 
   watch(route, (newV) => {
     routeChangeNum++

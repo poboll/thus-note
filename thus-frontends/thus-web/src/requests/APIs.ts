@@ -1,4 +1,4 @@
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 
 const env = liuEnv.getEnv()
 const d = env.API_DOMAIN ?? ""

@@ -1,7 +1,7 @@
 import cui from "~/components/custom-ui";
 import valTool from "~/utils/basic/val-tool";
-import liuUtil from "~/utils/liu-util";
-import type { LiuRemindMe } from "~/types/types-atom";
+import liuUtil from "~/utils/thus-util";
+import type { ThusRemindMe } from "~/types/types-atom";
 import { db } from "~/utils/db";
 import { equipThreads } from "~/utils/controllers/equip/threads";
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore";
@@ -45,7 +45,7 @@ async function toAddNewAgenda(
 
   // 2. add specific info
   whenStamp = liuUtil.formatStamp(whenStamp)
-  const remindMe: LiuRemindMe = {
+  const remindMe: ThusRemindMe = {
     type: "early",
     early_minute: 0,
   }

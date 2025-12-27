@@ -6,16 +6,16 @@
   "author": {
     "name": "Thus-Note Team",
     "email": "contact@thus-note.com",
-    "url": "https://github.com/your-username/thus-note"
+    "url": "https://github.com/poboll/thus-note"
   },
   "license": "AGPL-3.0-or-later",
-  "homepage": "https://github.com/your-username/thus-note",
+  "homepage": "https://github.com/poboll/thus-note",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/thus-note.git"
+    "url": "https://github.com/poboll/thus-note.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/thus-note/issues"
+    "url": "https://github.com/poboll/thus-note/issues"
   },
   "keywords": [
     "note-taking",

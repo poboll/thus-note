@@ -16,14 +16,14 @@ const { max_export_num } = cfg
 </script>
 <template>
 
-  <div class="liu-highlight-box">
-    <span class="liu-selection">{{ t('export.highlight_tip', { max: max_export_num }) }}</span>
+  <div class="thus-highlight-box">
+    <span class="thus-selection">{{ t('export.highlight_tip', { max: max_export_num }) }}</span>
   </div>
 
   <div class="sc-box">
 
     <!-- 导出成 .md 文件 -->
-    <div class="liu-no-user-select liu-hover sc-bar" @click.stop="onTapMarkdown">
+    <div class="thus-no-user-select thus-hover sc-bar" @click.stop="onTapMarkdown">
       <div class="scb-hd">
         <span>{{ t('export.markdown') }}</span>
       </div>
@@ -35,7 +35,7 @@ const { max_export_num } = cfg
     </div>
 
     <!-- 导出成 .json 文件 -->
-    <div class="liu-no-user-select liu-hover sc-bar" @click.stop="onTapJSON">
+    <div class="thus-no-user-select thus-hover sc-bar" @click.stop="onTapJSON">
       <div class="scb-main">
         <div class="scb-hd scbm-hd">
           <span>{{ t('export.json') }}</span>

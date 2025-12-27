@@ -5,15 +5,15 @@ import type { Ref, ShallowRef } from "vue"
 import type { TipTapEditor, EditorCoreContent } from "~/types/types-editor"
 import type { CeCtx, CeProps, CeEmit, CommentStorageAtom } from "./types";
 import { useWindowSize } from "~/hooks/useVueUse";
-import { useLiuWatch } from "~/hooks/useLiuWatch";
+import { useThusWatch } from "~/hooks/useThusWatch";
 import valTool from "~/utils/basic/val-tool";
 import commentCache from "./comment-cache";
 import time from "~/utils/basic/time";
-import type { LiuFileStore, LiuImageStore } from "~/types";
-import liuUtil from "~/utils/liu-util";
+import type { ThusFileStore, ThusImageStore } from "~/types";
+import liuUtil from "~/utils/thus-util";
 import { finishComment } from "./finish-comment"
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import localReq from "./req/local-req";
 import transferUtil from "~/utils/transfer-util";
 import usefulTool from "~/utils/basic/useful-tool";
@@ -108,7 +108,7 @@ export function useCommentEditor(
   const gs = useGlobalStateStore()
 
   /** 一些事件 */
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
 
   // 必须做防抖节流，因为黏贴事件会触发 onEditorBlur 之后又马上聚焦，触发了 onEditorFocus
   // 所以做一层防抖节流能让 “黏贴事件” 知道理想上当前应该是何种聚焦状态
@@ -164,7 +164,7 @@ export function useCommentEditor(
 
 function handleFileName(
   ctx: CeCtx,
-  files: LiuFileStore[]
+  files: ThusFileStore[]
 ) {
   const firFile = files[0]
   if(!firFile) {
@@ -178,8 +178,8 @@ function handleFileName(
 export function getStorageAtom(
   props: CeProps,
   editorContent?: EditorCoreContent,
-  files?: LiuFileStore[],
-  images?: LiuImageStore[],
+  files?: ThusFileStore[],
+  images?: ThusImageStore[],
 ) {
   const atom: CommentStorageAtom = {
     parentThread: props.parentThread,
@@ -274,8 +274,8 @@ async function initEditorContentFromDB(
   ctx.canSubmit = false
   ctx.releasedData = {}
 
-  if(res.liuDesc?.length) {
-    const content = transferUtil.liuToTiptap(res.liuDesc)
+  if(res.thusDesc?.length) {
+    const content = transferUtil.liuToTiptap(res.thusDesc)
     const text = transferUtil.tiptapToText(content)
     const json = { type: "doc", content }
 
@@ -375,5 +375,5 @@ function listenWindowChange(
     minEditorHeight.value = min
   }
 
-  useLiuWatch(height, whenWindowHeightChange)
+  useThusWatch(height, whenWindowHeightChange)
 }

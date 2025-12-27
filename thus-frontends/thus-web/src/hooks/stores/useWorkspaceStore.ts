@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import valTool from "~/utils/basic/val-tool";
-import type { TagView, LiuStateConfig, LiuAtomState } from "~/types/types-atom";
+import type { TagView, LiuStateConfig, ThusAtomState } from "~/types/types-atom";
 import type { MemberLocalTable, WorkspaceLocalTable } from "~/types/types-table";
 import { db } from "~/utils/db";
 import type { SpaceType } from "~/types/types-basic";
 import type { MemberConfig } from "~/types/other/types-custom";
 import type { UserSubscription } from "~/types/types-cloud";
 import time from "~/utils/basic/time";
-import type { LiuImageStore } from "~/types";
+import type { ThusImageStore } from "~/types";
 
 export interface AboutMeOpt {
 
@@ -50,7 +50,7 @@ export const useWorkspaceStore = defineStore("workspace", () => {
     const spaceVal = currentSpace.value
     if(!spaceVal) return []
     const { stateConfig } = spaceVal
-    let tmpList: LiuAtomState[] = []
+    let tmpList: ThusAtomState[] = []
     if(!stateConfig) {
       tmpList = getDefaultStates()
     }
@@ -107,7 +107,7 @@ export const useWorkspaceStore = defineStore("workspace", () => {
     return true
   }
 
-  const setAvatar = async (avatar: LiuImageStore) => {
+  const setAvatar = async (avatar: ThusImageStore) => {
     if(!myMember.value) return false
     const _id = myMember.value._id
     const res = await db.members.update(_id, { avatar })
@@ -218,7 +218,7 @@ export type WorkspaceStore = ReturnType<typeof useWorkspaceStore>
 
 function getDefaultStates() {
   const now = time.getTime()
-  const defaultStates: LiuAtomState[] = [
+  const defaultStates: ThusAtomState[] = [
     {
       id: "TODO",
       showInIndex: true,

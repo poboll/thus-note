@@ -25,11 +25,11 @@ const {
   <div v-if="icData.enable" class="a2hs-container"
     :class="{ 'a2hs-container_show': icData.show }"
   >
-    <div class="liu-highlight-box a2hs-box"
+    <div class="thus-highlight-box a2hs-box"
       ref="cardRef"
       :class="{ 'a2hs-box_show': icData.show }"
     >
-      <div class="liu-no-user-select a2hs-first-bar">
+      <div class="thus-no-user-select a2hs-first-bar">
         <span>{{ t('payment.subscription_prompt_1') }}</span>
         <div class="a2hsf-footer">
           <div class="a2hs-close-box" @click.stop="$emit('cancel')">
@@ -39,7 +39,7 @@ const {
           </div>
         </div>
       </div>
-      <div class="liu-no-user-select a2hs-desc">
+      <div class="thus-no-user-select a2hs-desc">
         <span>{{ t('payment.subscription_prompt_2') }}</span>
       </div>
       <div class="a2hs-btn-bar">

@@ -1,5 +1,5 @@
 import { nextTick, toRef, watch, useTemplateRef } from "vue";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import type { SearchEditorData } from "../../tools/types";
 import time from "~/utils/basic/time"
 

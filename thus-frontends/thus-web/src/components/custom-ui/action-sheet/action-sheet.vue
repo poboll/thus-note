@@ -31,15 +31,15 @@ const iconColor = "var(--main-normal)"
     >
 
       <div class="as-main-box">
-        <div v-if="asData.title" class="liu-no-user-select as-title">
+        <div v-if="asData.title" class="thus-no-user-select as-title">
           <span>{{ asData.title }}</span>
         </div>
-        <div v-else-if="asData.title_key" class="liu-no-user-select as-title">
+        <div v-else-if="asData.title_key" class="thus-no-user-select as-title">
           <span>{{ t(asData.title_key) }}</span>
         </div>
 
         <template v-for="(item, index) in asData.itemList" :key="item.text_key">
-          <div class="liu-no-user-select as-item" @click="onTapItem(index)">
+          <div class="thus-no-user-select as-item" @click="onTapItem(index)">
 
             <div class="as-item-box">
 
@@ -64,7 +64,7 @@ const iconColor = "var(--main-normal)"
       </div>
 
 
-      <div class="liu-no-user-select as-cancel-box" @click="onTapCancel">
+      <div class="thus-no-user-select as-cancel-box" @click="onTapCancel">
         <span>{{ t('common.cancel') }}</span>
       </div>
 
@@ -131,7 +131,7 @@ const iconColor = "var(--main-normal)"
       justify-content: center;
       text-align: center;
       font-size: var(--mini-font);
-      color: var(--liu-quote);
+      color: var(--thus-quote);
       border-bottom: 0.5px solid var(--line-default);
       background-color: var(--cui-actionsheet-bg);
       font-weight: 700;

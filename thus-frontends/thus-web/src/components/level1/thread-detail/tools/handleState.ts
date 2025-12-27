@@ -2,7 +2,7 @@ import type { PreCtx } from "../../utils/tools/types"
 import { preHandle } from "../../utils/preHandle"
 import valTool from "~/utils/basic/val-tool"
 import threadOperate from "~/hooks/thread/thread-operate";
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 export async function handleSelectState(
   ctx: PreCtx

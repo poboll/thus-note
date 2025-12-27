@@ -1,11 +1,11 @@
 import { toRef, watchEffect } from "vue";
 import type { CmaProps, MaData } from "./types-cma";
 import type { CeData } from "../../tools/types";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { useI18n } from "vue-i18n"
 import type { ComposerTranslation } from "vue-i18n"
-import type { FileShow, LiuFileStore } from "~/types";
-import liuEnv from "~/utils/liu-env";
+import type { FileShow, ThusFileStore } from "~/types";
+import liuEnv from "~/utils/thus-env";
 
 export function receiveCmaProps(props: CmaProps, data: MaData) {
   const { t, locale } = useI18n()
@@ -94,7 +94,7 @@ function stateChanged(
 
 function checkAttachment(
   data: MaData,
-  newFiles?: LiuFileStore[],
+  newFiles?: ThusFileStore[],
 ) {
   const firstFile = newFiles?.[0]
   if(!firstFile) {

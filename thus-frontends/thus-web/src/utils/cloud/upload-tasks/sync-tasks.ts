@@ -14,7 +14,7 @@ import type {
   Res_SyncSet_Client, 
   SyncSetAtomRes,
 } from "~/types/cloud/sync-set/types"
-import liuReq from "~/requests/liu-req";
+import liuReq from "~/requests/thus-req";
 import { useSyncStore, type SyncStoreAtom } from "~/hooks/stores/useSyncStore"
 import newIds from "./tools/handle-new-ids"
 import usefulTool from "~/utils/basic/useful-tool";

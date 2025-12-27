@@ -1,4 +1,4 @@
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import type { App } from "vue"
 
 async function getSentryInitConfig() {
@@ -23,7 +23,7 @@ async function getSentryInitConfig() {
   }
 
   // 3. setup release
-  const release = LIU_ENV.version
+  const release = THUS_ENV.version
 
   const Sentry = await import("@sentry/vue")
 

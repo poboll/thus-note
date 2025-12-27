@@ -1,4 +1,4 @@
-import type { ImageShow, LiuImageStore } from "~/types"
+import type { ImageShow, ThusImageStore } from "~/types"
 import type { 
   ImgLayout,
   ImgOneLayout,

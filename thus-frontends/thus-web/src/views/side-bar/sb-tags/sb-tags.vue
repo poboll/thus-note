@@ -6,7 +6,7 @@ import { useSbTags } from "./tools/useSbTags";
 import { RouterLink } from 'vue-router'
 import SbtItem from './sbt-item/sbt-item.vue';
 import { useTagMenu } from '~/hooks/shared/useTagMenu';
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 
 defineProps({
   show: {
@@ -51,15 +51,15 @@ const {
 
   <div class="st-virtual"></div>
 
-  <div class="liu-no-user-select liu-frosted-glass st-navibar">
-    <button class="liu-hover st-navi-back" @click.stop="onNaviBack" :tabindex="show ? 0 : -1">
+  <div class="thus-no-user-select thus-frosted-glass st-navibar">
+    <button class="thus-hover st-navi-back" @click.stop="onNaviBack" :tabindex="show ? 0 : -1">
       <SvgIcon class="st-navi-back-icon" name="arrow-back700"></SvgIcon>
     </button>
     <div class="st-navi-title">
       <span>{{ t("common.tags") }}</span>
     </div>
     <div class="st-navi-footer">
-      <button class="liu-hover st-navi-back st-add" @click.stop="onTapAdd" :tabindex="show ? 0 : -1">
+      <button class="thus-hover st-navi-back st-add" @click.stop="onTapAdd" :tabindex="show ? 0 : -1">
         <SvgIcon class="st-navi-back-icon" name="add"></SvgIcon>
       </button>
     </div>
@@ -67,7 +67,7 @@ const {
 
   <div class="st-virtual-two"></div>
 
-  <div v-if="tagNodes.length < 1" class="liu-no-user-select st-no-tags">
+  <div v-if="tagNodes.length < 1" class="thus-no-user-select st-no-tags">
     <span>{{ t('placeholder.no_tag_yet') }}</span>
   </div>
 
@@ -126,7 +126,7 @@ const {
 
 </template>
 <style scoped lang="scss">
-.liu-frosted-glass::before {
+.thus-frosted-glass::before {
   background: none;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
@@ -258,7 +258,7 @@ const {
   }
 
   .drag-overing {
-    .liu-hover::before {
+    .thus-hover::before {
       background-color: transparent;
     }
   }

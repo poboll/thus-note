@@ -10,7 +10,7 @@ import {
   cancelListenKeyboard, 
   toFocusInput
 } from "../../tools/listen-keyboard"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
 
 let _success: TextEditorResolver | undefined
@@ -54,7 +54,7 @@ function whenKeyUp(e: KeyboardEvent) {
   }
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 const _open = () => {
   if(show.value) return
   if(toggleTimeout) {

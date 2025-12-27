@@ -3,7 +3,7 @@ import { initQRCodePopup } from "./tools/useQRCodePopup";
 import { useQRCode } from "~/hooks/useVueUse"
 import RingLoader from "~/components/loaders/ring-loader/ring-loader.vue";
 import { useI18n } from "vue-i18n";
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 
 const {
   TRANSITION_DURATION,
@@ -55,7 +55,7 @@ const cha = liuApi.getCharacteristic()
           :class="{ 'ba-logo-box_shown': !qpData.loading }"
         >
           <img src="/logos/logo_32x32_v2.png" 
-            class="liu-no-user-select ba-logo-img"
+            class="thus-no-user-select ba-logo-img"
           />
         </div>
 
@@ -64,7 +64,7 @@ const cha = liuApi.getCharacteristic()
       <div class="ba-virtual"></div>
 
       <!-- info box -->
-      <div class="liu-no-user-select ba-info"
+      <div class="thus-no-user-select ba-info"
         :class="{ 'ba-info_align_start': qpData.bindType === 'one_off_pay' }"
       >
 
@@ -104,7 +104,7 @@ const cha = liuApi.getCharacteristic()
         </div>
 
         <!-- button -->
-        <button v-if="qpData.bindType === 'one_off_pay'" class="liu-no-user-select ba-info-btn"
+        <button v-if="qpData.bindType === 'one_off_pay'" class="thus-no-user-select ba-info-btn"
           @click.stop="onTapRefresh"
         >
           <div class="bib-icon-box">

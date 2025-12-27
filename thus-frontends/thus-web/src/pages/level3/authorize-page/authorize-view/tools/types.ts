@@ -1,8 +1,8 @@
-import type { LiuAppType } from "~/types/types-atom";
+import type { ThusAppType } from "~/types/types-atom";
 
 
 export interface AuthorizeViewProps {
-  appType: LiuAppType
+  appType: ThusAppType
   code?: string
 }
 

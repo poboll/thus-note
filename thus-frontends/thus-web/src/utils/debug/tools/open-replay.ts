@@ -1,5 +1,5 @@
 import type { LocalPreference } from "~/utils/system/tools/types";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import type OpenReplayTracker from "@openreplay/tracker";
 import type { SomeProperties } from "./types";
 

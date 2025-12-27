@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import liuUtil from "~/utils/liu-util"
-import liuApi from "~/utils/liu-api";
+import liuUtil from "~/utils/thus-util"
+import liuApi from "~/utils/thus-api";
 
 defineProps({
   canSubmit: {
@@ -26,7 +26,7 @@ const cha = liuApi.getCharacteristic()
     <div class="cefa-virtual"></div>
 
     <div class="cefa-box">
-      <span class="liu-no-user-select cefa-tip"
+      <span class="thus-no-user-select cefa-tip"
         :class="{ 'cefa-tip_hidden': !focused || inCodeBlock || cha.isMobile }"
       >{{ liuUtil.getHelpTip('Mod_Enter') }}</span>
       <custom-btn 

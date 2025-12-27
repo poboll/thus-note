@@ -1,10 +1,10 @@
 import { onActivated, reactive, watch } from "vue";
 import type { CotPageData } from "./types";
 import { pageStates } from "~/utils/atom";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import valTool from "~/utils/basic/val-tool";
-import liuEnv from "~/utils/liu-env";
-import liuReq from "~/requests/liu-req";
+import liuEnv from "~/utils/thus-env";
+import liuReq from "~/requests/thus-req";
 import APIs from "~/requests/APIs";
 import type { SyncOperateAPI } from "~/types/types-cloud";
 import middleBridge from "~/utils/middle-bridge";
@@ -33,7 +33,7 @@ function initCotPage(
     return
   }
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   watch(() => rr.route, (newV) => {
     const chatId = newV.query.chatId
     const isChatIdValid = valTool.isStringWithVal(chatId)

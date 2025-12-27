@@ -1,7 +1,7 @@
 // do not import too many files in this file as possible
 // just because error occurring probably is just from those files
 // which are inported
-import liuConsole from "~/utils/debug/liu-console"
+import liuConsole from "~/utils/debug/thus-console"
 import { toUpdateSW } from "../pwa/useServiceWorker"
 import { canReload, toReload, type ErrType } from "./handle-err"
 

@@ -1,7 +1,7 @@
 // Function Name: webhook-qiniu
 
 import type { 
-  LiuRqReturn,
+  ThusRqReturn,
   Param_WebhookQiniu, 
   Res_WebhookQiniu, 
   Table_User, 
@@ -93,7 +93,7 @@ function checkBody(
 
 function getReturnData(
   body: Param_WebhookQiniu,
-): LiuRqReturn<Res_WebhookQiniu> {
+): ThusRqReturn<Res_WebhookQiniu> {
 
   const _env = process.env
   const cdn_domain = _env.LIU_QINIU_CDN_DOMAIN

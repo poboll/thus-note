@@ -25,12 +25,12 @@ const {
     <div class="cw-container" v-if="cwcData.pageState < 0">
 
       <div class="cw-bar">
-        <div class="liu-no-user-select cwb-title">
+        <div class="thus-no-user-select cwb-title">
           <span>{{ t('connect.wechat_remind') }}</span>
         </div>
 
 
-        <div class="liu-no-user-select cwb-footer" 
+        <div class="thus-no-user-select cwb-footer" 
           v-if="cwcData.wx_gzh_openid && cwcData.wx_gzh_subscribed"
         >
           <liu-switch 
@@ -39,7 +39,7 @@ const {
           ></liu-switch>
         </div>
 
-        <div class="liu-no-user-select cwb-footer" v-else>
+        <div class="thus-no-user-select cwb-footer" v-else>
 
           <custom-btn size="mini" @click="onTapFollowOnWeChat">
 
@@ -59,7 +59,7 @@ const {
       </div>
 
       <div class="cw-desc">
-        <span class="liu-selection">{{ t('connect.wechat_remind_desc') }}</span>
+        <span class="thus-selection">{{ t('connect.wechat_remind_desc') }}</span>
       </div>
 
     </div>

@@ -77,7 +77,7 @@ const {
   </div>
 
   <!-- 用于显示拖动时覆盖在 iframe 上的透明度白屏 -->
-  <div class="liu-no-user-select vcliu-cover" 
+  <div class="thus-no-user-select vcliu-cover" 
     :class="{ 'vcliu-cover_show': isOutterDraging }"
   ></div>
 

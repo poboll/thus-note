@@ -1,5 +1,5 @@
-import liuApi from "~/utils/liu-api"
-import liuUtil from "~/utils/liu-util"
+import liuApi from "~/utils/thus-api"
+import liuUtil from "~/utils/thus-util"
 import { useThrottleFn } from "../useVueUse"
 
 type ChooseFileResolver = (res: File[]) => void

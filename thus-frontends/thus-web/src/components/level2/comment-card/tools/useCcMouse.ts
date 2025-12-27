@@ -1,5 +1,5 @@
 
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import type { CommentCardProps } from "./types";
 import { ref } from "vue"
 

@@ -1,6 +1,6 @@
 import { computed, ref, watch } from "vue";
 import type { KbListEmits, KbListProps } from "./types";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 
 export function useKanbanThreads(
   props: KbListProps,
@@ -18,7 +18,7 @@ export function useKanbanThreads(
 
   // 是否显示 "+新增"
   const showAddBox = ref(false)
-  let timeout: LiuTimeout
+  let timeout: ThusTimeout
   const _handleShowAddBox = async () => {
     const len = list.value.length
     const oldV = showAddBox.value

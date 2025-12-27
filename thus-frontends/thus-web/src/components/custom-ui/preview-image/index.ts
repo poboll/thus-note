@@ -1,6 +1,6 @@
 import { nextTick, reactive, ref, watch } from "vue"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import type {
   PiParam,
   PiData,
@@ -13,7 +13,7 @@ import { toListenEscKeyUp, cancelListenEscKeyUp } from "../tools/listen-keyup"
 import { transitionHelper } from "~/utils/other/transition-related"
 import { getSpecificCSSRule } from "~/utils/other/css-related"
 import type { Swiper } from "swiper"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import cfg from "~/config"
 
 let _resolve: PiResolver | undefined
@@ -23,7 +23,7 @@ const TRANSITION_DURATION = 120
 const enable = ref(false)
 const show = ref(false)
 const queryKey = "previewimage"
-let rr: RouteAndLiuRouter | undefined
+let rr: RouteAndThusRouter | undefined
 let mSwiper: Swiper | undefined
 
 const data = reactive<PiData>({
@@ -44,7 +44,7 @@ export function initPreviewImage() {
 }
 
 function listenRouteChange() {
-  rr = useRouteAndLiuRouter()
+  rr = useRouteAndThusRouter()
   watch(rr.route, (newV) => {
     const { query } = newV
     if(!query) return
@@ -108,7 +108,7 @@ async function onPiSwiper(swiper: Swiper) {
 }
 
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(show.value) return
 

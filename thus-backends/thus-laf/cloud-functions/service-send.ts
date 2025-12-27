@@ -4,7 +4,7 @@
 import cloud from '@lafjs/cloud'
 import { Resend } from 'resend'
 import type {
-  LiuRqReturn,
+  ThusRqReturn,
   LiuSendEmailsBase,
   LiuResendEmailsParam,
   LiuTencentSESParam,
@@ -74,7 +74,7 @@ export class LiuTencentSES {
 
   static async sendEmails(
     param: LiuTencentSESParam,
-  ): Promise<LiuRqReturn> {
+  ): Promise<ThusRqReturn> {
     // 0. get subject
     const subject = param.subject
 
@@ -128,7 +128,7 @@ export class LiuTencentSES {
 
   static async retrieveEmail(
     MessageId: string,
-  ): Promise<LiuRqReturn> {
+  ): Promise<ThusRqReturn> {
     const client = this._getInstance()
     if(!client) {
       return { code: "E5001", errMsg: "no tencent ses client in retrieveEmail" } 
@@ -273,7 +273,7 @@ export class LiuTencentSMS {
 
 export interface ResultOfSMS {
   send_channel: "tencent-sms" | "qiniu-sms"
-  result: LiuRqReturn
+  result: ThusRqReturn
 }
 
 export class SmsController {
@@ -284,7 +284,7 @@ export class SmsController {
     smsCode: string,
   ): Promise<ResultOfSMS> {
     // 1. prepare
-    let res: LiuRqReturn
+    let res: ThusRqReturn
 
     // 2. check out params for tencent sms
     const _env = process.env
@@ -334,7 +334,7 @@ export class LiuResend {
   /** 去发送邮件 */
   static async sendEmails(
     param: LiuResendEmailsParam,
-  ): Promise<LiuRqReturn> {
+  ): Promise<ThusRqReturn> {
     let { subject, tags, text, html } = param
     const err1 = checkEmailParam(param)
     if(err1) return err1
@@ -398,7 +398,7 @@ export class LiuResend {
 
   static async retrieveEmail(
     email_id: string,
-  ): Promise<LiuRqReturn> {
+  ): Promise<ThusRqReturn> {
     const resend = this._getResendInstance()
     if(!resend) {
       return { code: "E5001", errMsg: "no resendApiKey in retrieveEmail" } 
@@ -455,7 +455,7 @@ export async function checkIfSmsSentTooMuch(
 /** 检查是否发送过于频繁 */
 export async function checkIfEmailSentTooMuch(
   email: string,
-): Promise<LiuRqReturn | undefined> {
+): Promise<ThusRqReturn | undefined> {
 
   // 1. get credential
   const now1 = getNowStamp()
@@ -517,7 +517,7 @@ export async function checkIfEmailSentTooMuch(
 }
 
 /** 获取有效的 email code */
-export async function getActiveEmailCode(): Promise<LiuRqReturn> {
+export async function getActiveEmailCode(): Promise<ThusRqReturn> {
   let times = 0
   while(true) {
     times++

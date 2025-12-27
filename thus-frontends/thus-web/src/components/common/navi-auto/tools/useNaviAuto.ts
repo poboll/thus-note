@@ -6,8 +6,8 @@ import { storeToRefs } from "pinia";
 import { useWindowSize } from "~/hooks/useVueUse";
 import cfg from "~/config";
 import type { NaviAutoEmits, NaviAutoData, NaviAutoProps } from "./types"
-import liuUtil from "~/utils/liu-util";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import liuUtil from "~/utils/thus-util";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import time from "~/utils/basic/time";
 import { deviceChaKey } from "~/utils/provide-keys";
 import { onLiuActivated, onLiuDeactivated } from "~/hooks/useCommon";
@@ -209,7 +209,7 @@ function listenWindowChange(
   })
 }
 
-let toggleTimeout1: LiuTimeout
+let toggleTimeout1: ThusTimeout
 function _reset(ctx: NaviAutoCtx) {
   if(toggleTimeout1) {
     clearTimeout(toggleTimeout1)
@@ -258,7 +258,7 @@ async function _close(
 }
 
 
-let toggleTimeout2: LiuTimeout
+let toggleTimeout2: ThusTimeout
 function _changeTempHidden(
   ctx: NaviAutoCtx,
   newTempHidden: boolean,

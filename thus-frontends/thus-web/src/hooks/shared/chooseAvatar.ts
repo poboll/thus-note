@@ -1,14 +1,14 @@
 import imgHelper from "~/utils/files/img-helper";
 import { useInputElement } from "../elements/useInputElement";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { useTemporaryStore } from "../stores/useTemporaryStore";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import cui from "~/components/custom-ui";
 
 export function chooseAvatar() {
   const tempStore = useTemporaryStore()
   const { chooseFile } = useInputElement()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const onTapAvatar = async () => {
     const filePickerAcceptType: FilePickerAcceptType = {

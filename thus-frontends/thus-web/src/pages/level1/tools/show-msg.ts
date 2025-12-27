@@ -1,7 +1,7 @@
 import cui from "~/components/custom-ui";
 import type { LiuErrReturn } from "~/requests/tools/types";
-import liuApi from "~/utils/liu-api";
-import liuEnv from "~/utils/liu-env";
+import liuApi from "~/utils/thus-api";
+import liuEnv from "~/utils/thus-env";
 
 export function isEverythingOkay(
   initCode?: string
@@ -71,7 +71,7 @@ export async function showContactDev(
   let contactWay = ""
   const _env = liuEnv.getEnv()
   const contactWecom = _env.CUSTOMER_SERVICE
-  const devEmail = LIU_ENV.author?.email
+  const devEmail = THUS_ENV.author?.email
   if(contactWecom) {
     contactWay = "wecom"
   }

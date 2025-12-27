@@ -14,7 +14,7 @@ import {
 } from "vue"
 import { useWorkspaceStore } from "./stores/useWorkspaceStore"
 import type { MemberShow } from "~/types/types-content";
-import { useLiuWatch } from "./useLiuWatch";
+import { useThusWatch } from "./useThusWatch";
 import localCache from "~/utils/system/local-cache";
 import { db } from "~/utils/db";
 import { usersToMemberShows } from "~/utils/other/member-related";
@@ -70,7 +70,7 @@ export function useMyProfile() {
     const [tmp2] = membersToShows([m])
     myProfile.value = tmp2
   }
-  useLiuWatch(myMember, whenMemberChange, true)
+  useThusWatch(myMember, whenMemberChange, true)
 
   return { myProfile, isPremium }
 }

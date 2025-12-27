@@ -1,6 +1,6 @@
 import { type Ref, toRef, ref, watch } from "vue"
 import type { BrowsingCoversProps } from "./types"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 import cui from "~/components/custom-ui"
 import { getViewTranNames } from "~/utils/other/transition-related"
 import { useDebounceFn, useWindowSize } from "~/hooks/useVueUse"

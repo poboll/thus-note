@@ -17,7 +17,7 @@ import {
   type Res_OrderData,
   type Table_Order,
   type Table_User,
-  type LiuRqReturn,
+  type ThusRqReturn,
   type Res_PO_CreateOrder,
   type Partial_Id,
   type Table_Subscription,
@@ -65,7 +65,7 @@ export async function main(ctx: FunctionContext) {
   // 2. go to specific operation
   const oT = body.operateType as string
 
-  let res2: LiuRqReturn = { code: "E4000", errMsg: "operateType not found" }
+  let res2: ThusRqReturn = { code: "E4000", errMsg: "operateType not found" }
   if(oT === "create_order") {
     // check out token
     const vRes = await verifyToken(ctx, body)
@@ -90,7 +90,7 @@ export async function main(ctx: FunctionContext) {
 // @see https://www.npmjs.com/package/alipay-sdk
 async function handle_alipay_wap(
   body: Record<string, any>,
-): Promise<LiuRqReturn<Res_PO_AlipayWap>> {
+): Promise<ThusRqReturn<Res_PO_AlipayWap>> {
   const order_id = body.order_id as string
   const userTimezone = body.x_liu_timezone
 
@@ -189,7 +189,7 @@ async function handle_alipay_wap(
 
 async function handle_wxpay_jsapi(
   body: Record<string, any>,
-): Promise<LiuRqReturn<Res_PO_WxpayJsapi>> {
+): Promise<ThusRqReturn<Res_PO_WxpayJsapi>> {
   const order_id = body.order_id as string
   const wx_gzh_openid = body.wx_gzh_openid as string
   const userTimezone = body.x_liu_timezone
@@ -280,7 +280,7 @@ async function handle_wxpay_jsapi(
 
 async function handle_get_order(
   body: Record<string, any>,
-): Promise<LiuRqReturn<Res_PO_GetOrder>> {
+): Promise<ThusRqReturn<Res_PO_GetOrder>> {
   // 1. get the order
   const order_id = body.order_id as string
   const oCol = db.collection("Order")
@@ -307,7 +307,7 @@ async function handle_get_order(
 async function handle_create_sp_order(
   body: Record<string, any>,
   user: Table_User,
-): Promise<LiuRqReturn<Res_PO_CreateOrder>> {
+): Promise<ThusRqReturn<Res_PO_CreateOrder>> {
   // 1. get param
   const user_id = user._id
   const subscription_id = body.subscription_id as string

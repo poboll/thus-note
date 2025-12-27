@@ -53,7 +53,7 @@
   --kanban-header-shadow: 0 12px 6px -6px rgba(0, 0, 0, .1);
   --liu-hr: #eee;   /** 卡片里的分割线 bar */
   --liu-hr2: #d3d3d3;  /** 卡片里的分割线 for bg-color，blockquote 的左侧 bar */
-  --liu-quote: #868686;  /** 引用里的文字色 */
+  --thus-quote: #868686;  /** 引用里的文字色 */
   --liu-image: #f7f7f7;
 
   /** 一些组合，在深色模式和浅色模式下，值为一样的东西
@@ -166,7 +166,7 @@
   --liu-ide-bg: linear-gradient(-30deg, #E9E9E9, #FEFEFE);
   --liu-cnb-cool-font: #FF7C5D;
   --liu-cursor-font: #696969;
-  --liu-github-font: #696969;
+  --thus-github-font: #696969;
   --liu-gitpod-font: #FF8F15;
   --liu-project-idx-font: #8963E8;
   --liu-stackblitz-font: #1389FD;
@@ -178,16 +178,16 @@
   --liu-windsurf-font: #4F4F4F;
   
   /** 状态色 */
-  --liu-state-1: #7f766f;
-  --liu-state-2: #7a8d2b;
-  --liu-state-3: #b93d32;
-  --liu-state-4: #6f5892;
-  --liu-state-5: #825e4d;
-  --liu-state-6: #5E7B87;
-  --liu-state-7: #51816B;
-  --liu-state-8: #804c68;
-  --liu-state-9: #5976BA;
-  --liu-state-10: #c18e19;
+  --thus-state-1: #7f766f;
+  --thus-state-2: #7a8d2b;
+  --thus-state-3: #b93d32;
+  --thus-state-4: #6f5892;
+  --thus-state-5: #825e4d;
+  --thus-state-6: #5E7B87;
+  --thus-state-7: #51816B;
+  --thus-state-8: #804c68;
+  --thus-state-9: #5976BA;
+  --thus-state-10: #c18e19;
 
   /** 再最后给 body 添加背景色 */
   background-color: var(--bg-color);

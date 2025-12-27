@@ -132,7 +132,7 @@ export default defineConfig(({ command, mode }) => {
     },
     
     define: {
-      "LIU_ENV": {
+      "THUS_ENV": {
         version,
         author,
         "client": "web",

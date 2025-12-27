@@ -1,12 +1,12 @@
 import { toRef, watch, ref, computed, type Ref } from 'vue';
 import { useDebounceFn, useWindowSize } from '~/hooks/useVueUse';
 import type { ImageShow } from '~/types';
-import type { LiuTimeout } from '~/utils/basic/type-tool';
+import type { ThusTimeout } from '~/utils/basic/type-tool';
 import type { PicProps, PicCover, PicEmits, PicCtx, PicSwiperParams } from './types';
 import type { ZoomEvents } from "swiper/types"
 import { Zoom, Mousewheel, Keyboard } from "swiper/modules"
 import time from '~/utils/basic/time';
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import type { LiuImgData } from '~/types/types-view';
 
 export function usePiContent(
@@ -107,7 +107,7 @@ function initSwiperParams() {
 }
 
 
-let waitingToCancel: LiuTimeout
+let waitingToCancel: ThusTimeout
 let lastTapBox = 0
 let lastPointerDown = 0
 let lastClientX = 0

@@ -14,9 +14,9 @@ import cfg from "~/config";
 import valTool from "~/utils/basic/val-tool";
 import time from "~/utils/basic/time";
 import { storeToRefs } from "pinia";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import { sidebarWidthKey } from "~/utils/provide-keys"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 import { useSbKeyboard } from "./useSbKeyboard"
 import type { SbData } from "./types";
 import { useImages } from "~/hooks/useImages"
@@ -134,7 +134,7 @@ function toClose(
 
 
 function initMouse() {
-  let lastLeave: LiuTimeout
+  let lastLeave: ThusTimeout
   const onSbMouseEnter = () => {
     if(lastLeave) clearTimeout(lastLeave)
     sbData.showHandle = true
@@ -220,7 +220,7 @@ function listenWindowChange(
   layoutStore: LayoutStore,
 ) {
   const { width } = useWindowSize()
-  let lastWindowTimeout: LiuTimeout
+  let lastWindowTimeout: ThusTimeout
 
   const whenWindowChange = () => {
     if(lastWindowTimeout) clearTimeout(lastWindowTimeout)

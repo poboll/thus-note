@@ -2,7 +2,7 @@
 
 import Stripe from "stripe"
 import type { 
-  LiuRqReturn,
+  ThusRqReturn,
   Table_Credential,
   MongoFilter,
   Table_User,
@@ -59,7 +59,7 @@ export async function main(ctx: FunctionContext) {
 /** 预检查参数 */
 function preCheck(
   ctx: FunctionContext
-): LiuRqReturn<undefined> | undefined {
+): ThusRqReturn<undefined> | undefined {
   const _env = process.env
   const sk = _env.LIU_STRIPE_API_KEY
   if(!sk) {
@@ -98,7 +98,7 @@ function preCheck(
 }
 
 interface RetrieveEventRes {
-  rqReturn?: LiuRqReturn<undefined>
+  rqReturn?: ThusRqReturn<undefined>
   event?: Stripe.Event
 }
 
@@ -126,11 +126,11 @@ async function retrieveEvent(
 /** 处理 stripe event */
 async function handleStripeEvent(
   evt: Stripe.Event,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   const tp = evt.type
   console.log(`当前 event type: ${tp}`)
 
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(evt.type === "checkout.session.completed") {
     const obj = evt.data.object
     res = await handle_session_completed(obj)
@@ -308,7 +308,7 @@ async function handle_charge_refund_updated(
 // 收到退款信息时，去修改订单信息
 async function handle_charge_refunded(
   obj: Stripe.Charge,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   console.warn("似乎 有收款 被退款（即使是部分退款，也会触发）")
   console.log(obj)
 
@@ -498,7 +498,7 @@ async function handle_subscription_updated(
 */
 async function handle_session_completed(
   obj: Stripe.Checkout.Session
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   console.warn("似乎 session 被完成了!")
   console.log(obj)
   const session_id = obj.id

@@ -1,9 +1,9 @@
 import { onMounted, onBeforeUnmount, ref, type Ref } from "vue";
 import cui from "~/components/custom-ui";
 import cfg from "~/config";
-import { type RouteAndLiuRouter, useRouteAndLiuRouter } from "~/routes/liu-router";
+import { type RouteAndThusRouter, useRouteAndThusRouter } from "~/routes/liu-router";
 import time from "~/utils/basic/time";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import localCache from "~/utils/system/local-cache";
 
 export function useShowAddToHomeScreen() {
@@ -24,7 +24,7 @@ export function useShowAddToHomeScreen() {
   }
 
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const _beforeInstallPrompt = (e: Event) => {
     e.preventDefault()
@@ -75,7 +75,7 @@ export function useShowAddToHomeScreen() {
 async function whenA2HS(
   showButtonForA2HS: Ref<boolean>,
   deferredPrompt: Event | null,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
 
   if(liuApi.canIUse.isArcBrowser()) {

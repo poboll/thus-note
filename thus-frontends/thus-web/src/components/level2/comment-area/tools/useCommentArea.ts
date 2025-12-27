@@ -13,7 +13,7 @@ import { scrollViewKey, svPullRefreshKey } from "~/utils/provide-keys"
 import type { SvProvideInject } from "~/types/components/types-scroll-view"
 import type { CommentShow } from "~/types/types-content"
 import type { ValueComment } from "~/utils/other/comment-related"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import type { 
   SyncGet_CheckContents, 
   SyncGet_CommentList_A,
@@ -21,7 +21,7 @@ import type {
 import { CloudMerger } from "~/utils/cloud/CloudMerger"
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore"
 import { storeToRefs } from "pinia"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { 
   addChildrenIntoValueComments, 
   fetchChildrenComments,

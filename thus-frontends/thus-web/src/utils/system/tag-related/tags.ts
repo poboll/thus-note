@@ -4,7 +4,7 @@ import {
   findWhichTagChange,
   findTagShowById,
 } from "./tools/tag-util";
-import liuUtil from "../../liu-util";
+import liuUtil from "../../thus-util";
 import cui from "../../../components/custom-ui";
 import { i18n } from "../../../locales"
 import { updateContentForTagAcross } from "./tools/content-util";

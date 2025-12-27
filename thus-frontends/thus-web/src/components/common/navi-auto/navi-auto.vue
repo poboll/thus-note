@@ -21,7 +21,7 @@ const default_color = "var(--navi-normal)"
 <template>
 
   <div v-if="naData.enable"
-    class="liu-frosted-glass na-container"
+    class="thus-frosted-glass na-container"
     :class="{ 
       'na-container_show': naData.show && !naData.tempHidden, 
       'na-container_shadow': naData.shadow,
@@ -32,7 +32,7 @@ const default_color = "var(--navi-normal)"
 
 
       <div class="na-title" @click.stop="$emit('taptitle')">
-        <div class="liu-no-user-select na-title-inner">
+        <div class="thus-no-user-select na-title-inner">
           <span>{{ t('hello.appName') }}</span>
         </div>
       </div>

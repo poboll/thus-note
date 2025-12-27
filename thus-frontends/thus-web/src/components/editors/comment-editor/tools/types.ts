@@ -1,7 +1,7 @@
 import type { LocatedA } from "~/types/other/types-custom"
 import type { 
-  LiuFileStore,
-  LiuImageStore,
+  ThusFileStore,
+  ThusImageStore,
 } from "~/types";
 import type { EditorCoreContent } from "~/types/types-editor";
 import type { WorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
@@ -9,8 +9,8 @@ import type { TipTapEditor } from "~/types/types-editor"
 
 export interface CeReleasedData {
   text?: string
-  images?: LiuImageStore[]
-  files?: LiuFileStore[]
+  images?: ThusImageStore[]
+  files?: ThusFileStore[]
 }
 
 export interface CeProps {
@@ -36,8 +36,8 @@ export interface CeEmit {
 
 export interface CeCtx {
   focused: boolean
-  files: LiuFileStore[]
-  images: LiuImageStore[]
+  files: ThusFileStore[]
+  images: ThusImageStore[]
   isToolbarTranslateY: boolean
   lastInitStamp: number
   lastFinishStamp: number
@@ -54,8 +54,8 @@ export interface CommentStorageAtom {
   parentComment?: string
   replyToComment?: string
   editorContent?: EditorCoreContent
-  files?: LiuFileStore[]
-  images?: LiuImageStore[]
+  files?: ThusFileStore[]
+  images?: ThusImageStore[]
 }
 
 export type CommentStorageType = "content" | "image" | "file"

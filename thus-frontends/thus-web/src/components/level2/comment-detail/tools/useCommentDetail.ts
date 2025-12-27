@@ -20,7 +20,7 @@ import type { SvProvideInject } from "~/types/components/types-scroll-view";
 import type { CommentShow, ThreadShow } from "~/types/types-content";
 import type { ValueComment } from "~/utils/other/comment-related"
 import { useTemporaryStore } from "~/hooks/stores/useTemporaryStore";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 import type {
   SyncGet_CheckContents,
   SyncGet_CommentList_B,
@@ -30,7 +30,7 @@ import { CloudMerger } from "~/utils/cloud/CloudMerger";
 import time from "~/utils/basic/time";
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore";
 import { storeToRefs } from "pinia";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { 
   addChildrenIntoValueComments, 
   fetchChildrenComments,

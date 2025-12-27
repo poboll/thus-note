@@ -22,7 +22,7 @@ import {
 import { 
   type MongoFilter,
   type Table_User, 
-  type LiuRqReturn,
+  type ThusRqReturn,
   type VerifyTokenRes_B,
   type Table_Token,
   Sch_LocalTheme,
@@ -34,7 +34,7 @@ import {
   type DataPass,
   type Table_Credential,
   type Partial_Id,
-  type LiuAppType,
+  type ThusAppType,
   type Table_BlockList,
   type Table_AiRoom,
   type GenderType,
@@ -60,7 +60,7 @@ export async function main(ctx: FunctionContext) {
   const body = ctx.request?.body ?? {}
   const oT = body.operateType
 
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
 
   // 0. if it is logout, bypass the verification
   if(oT === "logout") {
@@ -246,7 +246,7 @@ async function ai_console_set(
 
 async function ai_console_get(
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<UserSettingsAPI.Res_AiConsoleGet>> {
+): Promise<ThusRqReturn<UserSettingsAPI.Res_AiConsoleGet>> {
   const userId = vRes.userData._id
   const rCol = db.collection("AiRoom")
   const res1 = await rCol.where({ owner: userId }).getOne<Table_AiRoom>()
@@ -294,7 +294,7 @@ async function auth_agree(
 async function auth_get_info(
   vRes: VerifyTokenRes_B,
   body: Record<string, any>,
-): Promise<LiuRqReturn<UserSettingsAPI.Res_AuthGetInfo>> {
+): Promise<ThusRqReturn<UserSettingsAPI.Res_AuthGetInfo>> {
   // 1. get credential data
   const res1 = await getSharedDataForAuth(body)
   if(!res1.pass) return res1.err
@@ -303,7 +303,7 @@ async function auth_get_info(
   // 2. construct response
   const data6: UserSettingsAPI.Res_AuthGetInfo = {
     operateType: "auth-get-info",
-    appType: data1.app_type as LiuAppType,
+    appType: data1.app_type as ThusAppType,
     serial: data1._id,
   }
   return { code: "0000", data: data6 }
@@ -739,7 +739,7 @@ async function handle_wechat_bind(
 async function handle_logout(
   ctx: FunctionContext,
   body: Record<string, string>,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   const token = body["x_liu_token"]
   const serial_id = body["x_liu_serial"]
 
@@ -777,7 +777,7 @@ async function handle_logout(
 async function handle_set(
   vRes: VerifyTokenRes_B,
   body: Record<string, any>,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
 
   // 1. check inputs
   const Sch_Set = vbot.object({
@@ -845,7 +845,7 @@ async function handle_set(
 */
 async function handle_membership(
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<UserSettingsAPI.Res_Membership>> {
+): Promise<ThusRqReturn<UserSettingsAPI.Res_Membership>> {
   // 1. get latest user data
   const res1 = await getLatestUser(vRes)
   if(!res1.pass) return res1.err
@@ -925,7 +925,7 @@ async function getStripeCustomerPortal(
 async function handle_enter(
   ctx: FunctionContext,
   vRes: VerifyTokenRes_B,
-): Promise<LiuRqReturn<UserSettingsAPI.Res_Enter>> {
+): Promise<ThusRqReturn<UserSettingsAPI.Res_Enter>> {
   // 0. get some params
   const user = vRes.userData
   const userAgent = ctx.headers?.['user-agent']
@@ -975,10 +975,10 @@ async function handle_latest(
   const res1 = await getUserSettings(user)
   const data = res1.data
   if(res1.code !== "0000" || !data) {
-    return res1 as LiuRqReturn<UserSettingsAPI.Res_Latest>
+    return res1 as ThusRqReturn<UserSettingsAPI.Res_Latest>
   }
   const newData: UserSettingsAPI.Res_Latest = { ...data }
-  const newRes: LiuRqReturn<UserSettingsAPI.Res_Latest> = {
+  const newRes: ThusRqReturn<UserSettingsAPI.Res_Latest> = {
     code: "0000",
     data: newData
   }
@@ -1081,7 +1081,7 @@ async function afterHandleWechatBind(
  */
 async function getUserSettings(
   user: Table_User,
-): Promise<LiuRqReturn<UserSettingsAPI.Res_Enter>> {
+): Promise<ThusRqReturn<UserSettingsAPI.Res_Enter>> {
   const [ui] = await getUserInfos([user])
   if(!ui) {
     return { code: "E4004", errMsg: "it cannot find an userinfo" }

@@ -1,15 +1,15 @@
 import { onActivated, onDeactivated, ref, toRef, watch } from "vue";
 import { useTemporaryStore } from "~/hooks/stores/useTemporaryStore";
-import { type RouteAndLiuRouter, useRouteAndLiuRouter } from "~/routes/liu-router";
+import { type RouteAndThusRouter, useRouteAndThusRouter } from "~/routes/liu-router";
 import type { ComponentPublicInstance } from "vue"
 import type { CcProps } from "./types";
 import type { CropperResult } from "vue-advanced-cropper"
 import cui from "~/components/custom-ui";
 import imgHelper from "~/utils/files/img-helper";
 import type { FileSetAPI, UserSettingsAPI } from "~/requests/req-types"
-import type { LiuImageStore } from "~/types"
+import type { ThusImageStore } from "~/types"
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 import { uploadViaQiniu } from "~/utils/cloud/upload-tasks/tools/upload-via-qiniu"
 import ider from "~/utils/basic/ider";
 import transferUtil from "~/utils/transfer-util";
@@ -20,7 +20,7 @@ let isLoading = false
 export function useCropperContent(
   props: CcProps,
 ) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const tempStore = useTemporaryStore()
 
   onActivated(() => {
@@ -80,7 +80,7 @@ function hideCropperLoading() {
 
 async function compressFile(
   blob: Blob,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const blobs = await imgHelper.compress([blob], { 
     maxWidth: 256, 
@@ -94,7 +94,7 @@ async function compressFile(
 
 async function uploadFile(
   blob: Blob,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   // 1. get token
   const url = APIs.UPLOAD_FILE
@@ -113,7 +113,7 @@ async function uploadFile(
   // 2. create file with id
   const file = new File([blob], "avatar.jpg", { type: "image/jpeg" })
   const arrBuf = await file.arrayBuffer()
-  const imgStore: LiuImageStore = {
+  const imgStore: ThusImageStore = {
     id: ider.createImgId(),
     name: file.name,
     lastModified: file.lastModified,
@@ -143,9 +143,9 @@ async function uploadFile(
 }
 
 async function uploadAvatar(
-  imgStore: LiuImageStore,
+  imgStore: ThusImageStore,
   cloud_url: string,
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   imgStore.cloud_url = cloud_url
 

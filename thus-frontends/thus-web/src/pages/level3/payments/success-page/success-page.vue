@@ -5,7 +5,7 @@ import SuccessContent from "./success-content/success-content.vue";
 </script>
 <template>
 
-  <div class="liu-simple-page">
+  <div class="thus-simple-page">
     <scroll-view>
       <navi-virtual></navi-virtual>
       <SuccessContent></SuccessContent>

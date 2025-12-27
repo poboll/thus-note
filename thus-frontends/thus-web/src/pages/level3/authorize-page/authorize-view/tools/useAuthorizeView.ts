@@ -4,16 +4,16 @@ import type {
   AuthorizeViewEmit, 
   AuthorizeViewData,
 } from "./types";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
 import { useMyProfile } from "~/hooks/useCommon";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 
 
 export function useAuthorizeView(
   props: AuthorizeViewProps,
   emit: AuthorizeViewEmit,
 ) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const { myProfile } = useMyProfile()
   const avData = reactive<AuthorizeViewData>({
     showCode: false,
@@ -21,7 +21,7 @@ export function useAuthorizeView(
   })
 
   const code = toRef(props, "code")
-  let timeout1: LiuTimeout
+  let timeout1: ThusTimeout
 
   const _stopCountdown = () => {
     if(timeout1) {

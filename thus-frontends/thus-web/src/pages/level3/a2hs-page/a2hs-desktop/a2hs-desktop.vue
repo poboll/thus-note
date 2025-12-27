@@ -8,13 +8,13 @@ const { t } = useI18n()
 <template>
 
   <div class="a2hs-title">
-    <span class="liu-selection">{{ t('a2hs.desktop_safari_1') }}</span>
+    <span class="thus-selection">{{ t('a2hs.desktop_safari_1') }}</span>
   </div>
   <div class="a2hs-img-1"></div>
 
 
   <div class="a2hs-title">
-    <span class="liu-selection">{{ t('a2hs.desktop_safari_2') }}</span>
+    <span class="thus-selection">{{ t('a2hs.desktop_safari_2') }}</span>
   </div>
   <div class="a2hs-img-2"></div>
 

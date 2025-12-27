@@ -2,7 +2,7 @@
 
 ## 1. 复制链接
 
-`https://my.thus-note.com`
+`https://my.liubai.cc`
 
 <CopyButton />
 
@@ -24,6 +24,6 @@
 
 ## 4. 完成
 
-稍等片刻后，回到桌面上，留白应该已经在那里了。
+稍等片刻后，回到桌面上，如是应该已经在那里了。
 
 <img src="./assets-xiaomi/4.jpg" width="220" />

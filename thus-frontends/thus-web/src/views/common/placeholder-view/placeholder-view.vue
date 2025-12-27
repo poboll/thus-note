@@ -24,7 +24,7 @@ const { pvData } = usePlaceholderView(props)
     </div>
 
     <div v-else-if="pState >= 50" class="pv-err-box">
-      <div class="liu-no-user-select pv-emoji-box">
+      <div class="thus-no-user-select pv-emoji-box">
         <svg-icon 
           v-if="pState === pageStates.NETWORK_ERR"
           name="emojis-crying_face_color" 
@@ -49,7 +49,7 @@ const { pvData } = usePlaceholderView(props)
           :cover-fill-stroke="false"
         ></svg-icon>
       </div>
-      <div class="liu-no-user-select pv-err-title">
+      <div class="thus-no-user-select pv-err-title">
         <span v-if="errTitle">{{ errTitle }}</span>
         <span v-else-if="pState === pageStates.NO_AUTH">{{ t('err.no_auth') }}</span>
         <span v-else-if="pState === pageStates.NETWORK_ERR">{{ t('err.network') }}</span>

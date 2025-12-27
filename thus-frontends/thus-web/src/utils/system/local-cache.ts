@@ -5,8 +5,8 @@ import type {
   KeyOfLocalOnceData,
   KeyOfLocalKeepData,
 } from "./tools/types";
-import liuApi from "../liu-api";
-import liuEnv from "../liu-env";
+import liuApi from "../thus-api";
+import liuEnv from "../thus-env";
 
 function _getPreKey() {
   const hasBackend = liuEnv.hasBackend()

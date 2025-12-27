@@ -1,11 +1,11 @@
 import { watch } from "vue";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { useLayoutStore } from "~/views/useLayoutStore";
 
 
 export function initLayout() {
   const layoutStore = useLayoutStore()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   watch(rr.route, (newV) => {
     if(!newV) return

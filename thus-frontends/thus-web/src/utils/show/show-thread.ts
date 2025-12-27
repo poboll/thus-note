@@ -9,7 +9,7 @@ import imgHelper from "../files/img-helper";
 import transferUtil from "../transfer-util";
 import commonPack from "../controllers/tools/common-pack";
 import { tagIdsToShows } from "../system/tag-related";
-import liuUtil from "../liu-util";
+import liuUtil from "../thus-util";
 import type { PackThreadOpt } from "./tools/types";
 
 // 封装 thread 成 ThreadShow
@@ -25,7 +25,7 @@ function packThread(
     member, 
     _id, 
     user, 
-    liuDesc, 
+    thusDesc, 
     spaceId, 
     title,
   } = v
@@ -53,8 +53,8 @@ function packThread(
     return imgHelper.imageStoreToShow(v2)
   })
 
-  const desc = transferUtil.tiptapToText(liuDesc ?? [])
-  const newDesc = commonPack.packLiuDesc(liuDesc, title)
+  const desc = transferUtil.tiptapToText(thusDesc ?? [])
+  const newDesc = commonPack.packLiuDesc(thusDesc, title)
   const tiptapContent: TipTapJSONContent | undefined = 
     newDesc?.length ? { type: "doc", content: newDesc } : undefined
 
@@ -90,7 +90,7 @@ function packThread(
     title,
     content: tiptapContent,
     briefing: commonPack.getBriefing(newDesc, opt),
-    summary: commonPack.getSummary(liuDesc, v.files),
+    summary: commonPack.getSummary(thusDesc, v.files),
     desc,
     images,
     imgLayout: imgHelper.getImgLayout(images),

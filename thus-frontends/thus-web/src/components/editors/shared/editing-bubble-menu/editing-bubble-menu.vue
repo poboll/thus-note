@@ -32,7 +32,7 @@ const { cha } = useEditingBubbleMenu()
     <!-- 编辑时: 粗体、斜体、删除线 -->
     <div class="ec-bubble-menu">
       <!-- 粗体 -->
-      <div class="liu-no-user-select ec-bubble-box"
+      <div class="thus-no-user-select ec-bubble-box"
         :class="{ 'ec-bubble-box_selected': editor?.isActive('bold') }"
         @click="editor?.chain().focus().toggleBold().run()"
       >
@@ -41,7 +41,7 @@ const { cha } = useEditingBubbleMenu()
       </div>
 
       <!-- 斜体 -->
-      <div class="liu-no-user-select ec-bubble-box"
+      <div class="thus-no-user-select ec-bubble-box"
         :class="{ 'ec-bubble-box_selected': editor?.isActive('italic') }"
         @click="editor?.chain().focus().toggleItalic().run()"
       >
@@ -50,7 +50,7 @@ const { cha } = useEditingBubbleMenu()
       </div>
 
       <!-- 删除线 -->
-      <div class="liu-no-user-select ec-bubble-box"
+      <div class="thus-no-user-select ec-bubble-box"
         :class="{ 'ec-bubble-box_selected': editor?.isActive('strike') }"
         @click="editor?.chain().focus().toggleStrike().run()"
       >

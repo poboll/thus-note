@@ -20,7 +20,7 @@ const { tpData, onTapFab, onScroll } = useTagPage()
   <!-- 主视图 -->
   <main-view>
     <template v-for="(item, index) in tpData.list" :key="item.id">
-      <div class="liu-view" v-show="item.show">
+      <div class="thus-view" v-show="item.show">
         <scroll-view 
           :hidden-scroll-bar="item.show && hiddenScrollBar" 
           :show-txt="(String(item.show) as TrueOrFalse)"

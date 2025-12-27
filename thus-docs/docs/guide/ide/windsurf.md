@@ -38,7 +38,7 @@
 
 ![Trust](./assets-ide/shared-5.jpeg)
 
-配置时回车 `Trust https://my.thus-note.com` 即可，如上图所示。
+配置时回车 `Trust https://my.liubai.cc` 即可，如上图所示。
 
 ### 3. 授权
 
@@ -52,7 +52,7 @@
 
 授权完毕后，点击 `打开Windsurf` 以返回。
 
-### 5. 允许 Thus 插件接收登录信息
+### 5. 允许 Liubai 插件接收登录信息
 
 ![Allow](./assets-ide/shared-8.jpeg)
 

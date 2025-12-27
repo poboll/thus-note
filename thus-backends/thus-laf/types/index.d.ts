@@ -3,7 +3,7 @@ import {
 } from "@lafjs/cloud"
 import { ObjectId as _ObjectId } from "mongodb"
 
-type LiuSwitch = "01" | "02" | undefined
+type ThusSwitch = "01" | "02" | undefined
 
 declare global {
   type FunctionContext = _FunctionContext
@@ -20,14 +20,14 @@ declare global {
       LIU_APP_NAME: string
 
       /** 总服务状态，默认开启，仅当值为 `02` 时关闭 */
-      LIU_CLOUD_ON: LiuSwitch
+      LIU_CLOUD_ON: ThusSwitch
 
       /** 是否开放登录，默认开启，仅当值为 `02` 时关闭，`03` 时表示仅开放 
        *  登录，不开放注册
       */
-      LIU_CLOUD_LOGIN: LiuSwitch | "03"
+      LIU_CLOUD_LOGIN: ThusSwitch | "03"
 
-      LIU_ENV_STATE?: "prod" | "dev" 
+      THUS_ENV_STATE?: "prod" | "dev" 
 
       /** 当前应用的域名 
        *  其结尾请不要添加路径的开头 `/`

@@ -45,7 +45,7 @@ const {
 
     <!-- 什么时候 -->
     <div class="tcwr-item-box" v-if="whenStr">
-      <LiuMenu 
+      <ThusMenu 
         :menu="menu"
         min-width-str="100px"
         @tapitem="onTapWhenItem"
@@ -58,7 +58,7 @@ const {
           :color="default_color"
           label-key="editor.when"
         ></TcaItem>
-      </LiuMenu>
+      </ThusMenu>
       <TcaItem
         v-else
         :title="whenStr"
@@ -78,7 +78,7 @@ const {
     
     <!-- 提醒我 -->
     <div class="tcwr-item-box" v-if="remindStr">
-      <LiuMenu 
+      <ThusMenu 
         :menu="menu"
         min-width-str="100px"
         @tapitem="onTapRemindItem"
@@ -91,7 +91,7 @@ const {
           :color="default_color"
           label-key="editor.remind"
         ></TcaItem>
-      </LiuMenu>
+      </ThusMenu>
       <TcaItem
         v-else
         :title="remindStr"
@@ -116,7 +116,7 @@ const {
 
       <div class="tca-list">
         <template v-for="(item, index) in thread.files" :key="item.id">
-          <div class="liu-no-user-select tcal-item" 
+          <div class="thus-no-user-select tcal-item" 
             @click.stop="onTapFile($event, index)"
           >
             <span>{{ item.name }}</span>

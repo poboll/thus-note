@@ -11,8 +11,8 @@ import { kanbanInnerChangeKey } from "~/utils/provide-keys"
 import time from "~/utils/basic/time";
 import type { MenuItem } from "~/components/common/liu-menu/tools/types";
 import kanbanOperate from "./kanban-operate";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
-import liuUtil from "~/utils/liu-util";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
+import liuUtil from "~/utils/thus-util";
 import { usePrefix } from "~/hooks/useCommon";
 
 const MORE_ITEMS: MenuItem[] = [
@@ -31,7 +31,7 @@ export function useKanbanColumns(
   emits: KanbanEmits
 ) {
   const { prefix } = usePrefix()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const lastInnerStampRef = inject(kanbanInnerChangeKey)
 
   const columns = computed({

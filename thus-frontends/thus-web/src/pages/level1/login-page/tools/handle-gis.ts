@@ -3,10 +3,10 @@ import thirdLink from "~/config/third-link"
 import cui from "~/components/custom-ui";
 import { fetchGoogleCredential } from "../../tools/requests";
 import { afterFetchingLogin } from "../../tools/common-utils";
-import type { RouteAndLiuRouter } from "~/routes/liu-router";
+import type { RouteAndThusRouter } from "~/routes/liu-router";
 import { getClientKey } from "../../tools/common-tools";
 import time from "~/utils/basic/time";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import localCache from "~/utils/system/local-cache";
 
 // 本文件负责 Google One-Tap 登录流程
@@ -15,7 +15,7 @@ type GIS_CredentialResponse = google.accounts.id.CredentialResponse
 
 /** 加载 Google Identity Service 脚本 */
 export async function loadGoogleIdentityService(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   lpData: LpData,
 ) {
 
@@ -69,7 +69,7 @@ export async function loadGoogleIdentityService(
 }
 
 async function handleCredentialResponse(
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
   lpData: LpData,
   res: GIS_CredentialResponse,
 ) {

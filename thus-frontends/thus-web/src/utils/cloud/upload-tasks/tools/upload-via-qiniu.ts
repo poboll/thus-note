@@ -16,7 +16,7 @@ import type {
   WhenAFileCompleted,
   UploadFileRes,
 } from "./types"
-import liuConsole from "~/utils/debug/liu-console"
+import liuConsole from "~/utils/debug/thus-console"
 
 
 async function _getQiniu() {

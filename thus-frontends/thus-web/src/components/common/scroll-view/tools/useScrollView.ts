@@ -26,7 +26,7 @@ import {
 import { useDebounceFn, useResizeObserver } from "~/hooks/useVueUse"
 import time from "~/utils/basic/time";
 import valTool from "~/utils/basic/val-tool";
-import liuApi from "~/utils/liu-api";
+import liuApi from "~/utils/thus-api";
 import { useLayoutStore } from "~/views/useLayoutStore";
 import { storeToRefs } from "pinia";
 

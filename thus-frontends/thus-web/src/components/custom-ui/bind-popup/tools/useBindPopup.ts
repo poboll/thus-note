@@ -5,14 +5,14 @@ import type {
   BpResolver,
 } from "./types"
 import type { 
-  LiuTimeout,
+  ThusTimeout,
 } from "~/utils/basic/type-tool"
 import cfg from "~/config"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { useThrottleFn } from "~/hooks/useVueUse"
 import { i18n } from "~/locales"
 import APIs from "~/requests/APIs"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 
 
 const TRANSITION_DURATION = 350
@@ -290,7 +290,7 @@ function onTapClose() {
   _toClose()
 }
 
-let toggleTimeout: LiuTimeout
+let toggleTimeout: ThusTimeout
 function _toOpen() {
   if(bpData.show) return
   if(toggleTimeout) {

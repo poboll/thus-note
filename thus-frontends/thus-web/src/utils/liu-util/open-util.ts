@@ -1,5 +1,5 @@
 
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import type { WhatDetail } from "~/types/other/types-custom"
 import { useWindowSize } from "~/hooks/useVueUse"
 import cfg from "~/config"
@@ -8,7 +8,7 @@ import { useLayoutStore } from "~/views/useLayoutStore"
 import { useVvLinkStore } from "~/hooks/stores/useVvLinkStore"
 
 interface RrOpt {
-  rr: RouteAndLiuRouter
+  rr: RouteAndThusRouter
   replace?: boolean
   [otherKey: string]: any
 }

@@ -1,14 +1,14 @@
-import type { RouteAndLiuRouter } from "~/routes/liu-router";
-import type { LiuFileStore } from '~/types';
-import liuUtil from "../liu-util";
+import type { RouteAndThusRouter } from "~/routes/liu-router";
+import type { ThusFileStore } from '~/types';
+import liuUtil from "../thus-util";
 import cfg from "~/config";
 import { useWindowSize } from "~/hooks/useVueUse";
 import { useVvFileStore } from "~/hooks/stores/useVvFileStore";
 
 // 查看（或下载）文件
 export function checkFile(
-  f: LiuFileStore,
-  rr: RouteAndLiuRouter,
+  f: ThusFileStore,
+  rr: RouteAndThusRouter,
 ) {
   const _suffix = f.suffix.toLowerCase()
   const { width } = useWindowSize()
@@ -30,8 +30,8 @@ export function checkFile(
 
 
 function _openByIframe(
-  f: LiuFileStore,
-  rr: RouteAndLiuRouter,
+  f: ThusFileStore,
+  rr: RouteAndThusRouter,
 ) {
   const [url] = liuUtil.createURLsFromStore([f])
   if(!url) return
@@ -43,7 +43,7 @@ function _openByIframe(
 
 
 /** 使用 a 标签来下载 */
-function _downloadByA(f: LiuFileStore) {
+function _downloadByA(f: ThusFileStore) {
   const [url] = liuUtil.createURLsFromStore([f])
   if(!url) return
 
@@ -60,7 +60,7 @@ function _downloadByA(f: LiuFileStore) {
  *   开启新分页下载文件时，请不要使用 revokeObjURLs 回收文件
  *   因为这样用户在新的分页时，会无法另存成新的文件
  */
-function _downloadByWindow(f: LiuFileStore) {
+function _downloadByWindow(f: ThusFileStore) {
   const [url] = liuUtil.createURLsFromStore([f])
   if(!url) return
   window.open(url, f.name)

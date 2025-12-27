@@ -21,7 +21,7 @@
 
 ### 3. 注意地址栏
 
-打开留白登录页面后
+打开如是登录页面后
 
 - 如果地址栏上有 `安装` 按钮，点击它即安装，如下二图所示。
 
@@ -29,7 +29,7 @@
 
 <img src="./assets-windows/2_2.png" width="350" />
 
-- 如果没有，点击窗口右上角的 `...` 更多按钮，选择 `投放、保存和分享`，点击 `安装"Thus"...`
+- 如果没有，点击窗口右上角的 `...` 更多按钮，选择 `投放、保存和分享`，点击 `安装“Liubai”...`
 
 <img src="./assets-windows/3.png" width="350" style="margin-block-end: 8px;" />
 
@@ -43,13 +43,13 @@
 
 ### 5. 固定到任务栏
 
-安装完成后，Windows 可能会弹窗提示 `是否将Thus固定到任务栏？`，点击 `是`。
+安装完成后，Windows 可能会弹窗提示 `是否将Liubai固定到任务栏？`，点击 `是`。
 
 <img src="./assets-windows/6.png" width="350" />
 
 ### 6. 完成
 
-现在，你可以在桌面上使用留白了。
+现在，你可以在桌面上使用如是了。
 
 <img src="./assets-windows/7.png" width="600" />
 
@@ -59,7 +59,7 @@
 
 ### 1. 复制链接
 
-`https://my.thus-note.com`
+`https://my.liubai.cc`
 
 <CopyButton />
 
@@ -71,7 +71,7 @@
 
 ### 3. 注意地址栏
 
-打开留白登录页面后
+打开如是登录页面后
 
 - 如果地址栏上有 `安装` 按钮，点击它即安装，如下二图所示。
 
@@ -79,7 +79,7 @@
 
 <img src="./assets-windows/2_edge_2.png" width="350" />
 
-- 如果没有，点击窗口右上角的"..."更多按钮，选择 `应用`，点击 `安装 Thus`
+- 如果没有，点击窗口右上角的“...”更多按钮，选择 `应用`，点击 `安装 Liubai`
 
 <img src="./assets-windows/3_edge.png" width="450" style="margin-block-end: 8px;" />
 
@@ -105,13 +105,13 @@
 
 <img src="./assets-windows/5_edge_2.png" width="350" style="margin-bottom: 16px;" />
 
-紧接着，Windows 可能会弹窗提示 `是否将Thus固定到任务栏？`，点击 `是`。
+紧接着，Windows 可能会弹窗提示 `是否将Liubai固定到任务栏？`，点击 `是`。
 
 <img src="./assets-windows/6.png" width="350" />
 
 ### 6. 完成
 
-现在，你可以在桌面上使用留白了。
+现在，你可以在桌面上使用如是了。
 
 <img src="./assets-windows/7_edge.png" width="600" />
 

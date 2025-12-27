@@ -9,7 +9,7 @@ Users struggle with fragmented information management across different tools and
 - Manual effort in organizing and retrieving information
 
 ## Solution
-Thus-Note provides a unified, AI-enhanced personal information management system that:
+Liubai provides a unified, AI-enhanced personal information management system that:
 1. Consolidates all personal information in one place
 2. Works seamlessly across devices and platforms
 3. Uses AI to help organize and surface relevant information

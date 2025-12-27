@@ -6,31 +6,31 @@ import type {
   ImportedStatus,
 } from "./types";
 import type {
-  LiuFileStore,
-  LiuImageStore,
-  LiuMyContext,
+  ThusFileStore,
+  ThusImageStore,
+  ThusMyContext,
 } from "~/types";
 import valTool from "~/utils/basic/val-tool";
-import type { LiuExportContentJSON } from "~/types/other/types-export"
+import type { ThusExportContentJSON } from "~/types/other/types-export"
 import type { JSZipObject } from "jszip"
 import { db } from "~/utils/db";
 import type { ContentLocalTable } from "~/types/types-table";
 import { equipThreads } from "~/utils/controllers/equip/threads";
 import type { CommentShow, ThreadShow } from "~/types/types-content";
 import { equipComments } from "~/utils/controllers/equip/comments";
-import liuEnv from "~/utils/liu-env";
+import liuEnv from "~/utils/thus-env";
 
 // key: 会把导入的动态，全部转进当前用户所在的工作区！！
 
 export async function parseOurJson(
   atom: ImportedAtom,
-  myCtx: LiuMyContext,
+  myCtx: ThusMyContext,
 ) {
   const { cardJSON, dateStr, assets } = atom
   if(!cardJSON || !dateStr) return
 
   const jsonStr = await cardJSON.async("text")
-  const d = valTool.strToObj<LiuExportContentJSON>(jsonStr)
+  const d = valTool.strToObj<ThusExportContentJSON>(jsonStr)
   if(!d._id || !d.spaceId || !d.spaceType || !d.infoType) return
 
 
@@ -79,11 +79,11 @@ async function parseAssets(
 
 // 把 liuAssets 分别转为 images / files
 function getImagesAndFiles(
-  d: LiuExportContentJSON,
+  d: ThusExportContentJSON,
   liuAssets: ImportedAsset[],
 ): ImgsFiles {
-  const images: LiuImageStore[] = []
-  const files: LiuFileStore[] = []
+  const images: ThusImageStore[] = []
+  const files: ThusFileStore[] = []
   
   if(d.images?.length) {
     for(let i=0; i<d.images.length; i++) {
@@ -96,7 +96,7 @@ function getImagesAndFiles(
         return false
       })
       if(!v2) continue
-      const img: LiuImageStore = {
+      const img: ThusImageStore = {
         ...v1,
         arrayBuffer: v2.arrayBuffer,
       }
@@ -116,7 +116,7 @@ function getImagesAndFiles(
         return false
       })
       if(!v2) continue
-      const f: LiuFileStore = {
+      const f: ThusFileStore = {
         ...v1,
         arrayBuffer: v2.arrayBuffer,
       }
@@ -131,9 +131,9 @@ function getImagesAndFiles(
 
 // 开始生成 ImportedAtom2
 async function getImportedAtom2(
-  d: LiuExportContentJSON,
+  d: ThusExportContentJSON,
   imgsFiles: ImgsFiles,
-  myCtx: LiuMyContext,
+  myCtx: ThusMyContext,
 ) {
   if(!d.first_id) {
     d.first_id = d._id

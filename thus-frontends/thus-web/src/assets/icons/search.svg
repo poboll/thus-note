@@ -1,18 +1,18 @@
 <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-		.liu-search-one {
+		.thus-search-one {
       stroke-width: 10;
       stroke: inherit;
     }
 	</style>
   <path 
     d="M72 43C72 59.0163 59.0163 72 43 72C26.9837 72 14 59.0163 14 43C14 26.9837 26.9837 14 43 14C59.0163 14 72 26.9837 72 43Z" 
-    class="liu-search-one"
+    class="thus-search-one"
   />
   <line 
     x1="63.0711" y1="64" x2="83" y2="83.9289" 
     stroke-linecap="round"
-    class="liu-search-one"
+    class="thus-search-one"
   />
 
 </svg>

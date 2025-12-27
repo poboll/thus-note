@@ -36,15 +36,15 @@ export default defineComponent({
 
     <div class="ma-grid">
       <!-- 什么时候 -->
-      <div class="liu-hover ma-item" @click="onTapWhen">
+      <div class="thus-hover ma-item" @click="onTapWhen">
         <div class="mai-icon">
           <svg-icon name="when" class="mai-svgicon" :color="default_color"></svg-icon>
         </div>
-        <div class="liu-no-user-select mai-title">
+        <div class="thus-no-user-select mai-title">
           <span v-if="data.whenStr">{{ data.whenStr }}</span>
           <span v-else>{{ t("editor.when") }}</span>
         </div>
-        <div v-if="data.whenStr" class="liu-hover mai-footer" @click.stop="onTapClearWhen">
+        <div v-if="data.whenStr" class="thus-hover mai-footer" @click.stop="onTapClearWhen">
           <svg-icon name="close" class="maif-clear" :color="default_color"></svg-icon>
         </div>
         <div v-else class="mai-footer">
@@ -53,17 +53,17 @@ export default defineComponent({
       </div>
 
       <!-- 提醒我 -->
-      <LiuMenu :menu="remindMenu" @tapitem="onTapRemindItem" min-width-str="120px">
+      <ThusMenu :menu="remindMenu" @tapitem="onTapRemindItem" min-width-str="120px">
 
-        <div class="liu-hover ma-item">
+        <div class="thus-hover ma-item">
           <div class="mai-icon">
             <svg-icon name="notification" class="mai-svgicon" :color="default_color"></svg-icon>
           </div>
-          <div class="liu-no-user-select mai-title">
+          <div class="thus-no-user-select mai-title">
             <span v-if="data.remindMeStr">{{ data.remindMeStr }}</span>
             <span v-else>{{ t("editor.remind") }}</span>
           </div>
-          <div v-if="data.remindMeStr" class="liu-hover mai-footer" @click.stop="onTapClearRemind">
+          <div v-if="data.remindMeStr" class="thus-hover mai-footer" @click.stop="onTapClearRemind">
             <svg-icon name="close" class="maif-clear" :color="default_color"></svg-icon>
           </div>
           <div v-else class="mai-footer">
@@ -71,18 +71,18 @@ export default defineComponent({
           </div>
         </div>
 
-      </LiuMenu>
+      </ThusMenu>
 
       <!-- 加标题 -->
-      <div class="liu-hover ma-item" @click="onTapAddTitle">
+      <div class="thus-hover ma-item" @click="onTapAddTitle">
         <div class="mai-icon">
           <svg-icon name="title" class="mai-svgicon" :color="default_color"></svg-icon>
         </div>
-        <div class="liu-no-user-select mai-title">
+        <div class="thus-no-user-select mai-title">
           <span v-if="data.title">{{ data.title }}</span>
           <span v-else>{{ t("editor.add_title") }}</span>
         </div>
-        <div v-if="data.title" class="liu-hover mai-footer" @click.stop="onTapClearTitle">
+        <div v-if="data.title" class="thus-hover mai-footer" @click.stop="onTapClearTitle">
           <svg-icon name="close" class="maif-clear" :color="default_color"></svg-icon>
         </div>
         <div v-else class="mai-footer">
@@ -91,11 +91,11 @@ export default defineComponent({
       </div>
 
       <!-- 加位置 -->
-      <!-- <div class="liu-hover ma-item" @click.stop="onTapAddSite">
+      <!-- <div class="thus-hover ma-item" @click.stop="onTapAddSite">
         <div class="mai-icon">
           <svg-icon name="location" class="mai-svgicon" :color="default_color"></svg-icon>
         </div>
-        <div class="liu-no-user-select mai-title">
+        <div class="thus-no-user-select mai-title">
           <span>{{ t("editor.add_site") }}</span>
         </div>
         <div class="mai-footer">
@@ -104,21 +104,21 @@ export default defineComponent({
       </div> -->
 
       <!-- state -->
-      <div class="liu-hover ma-item" @click.stop="onTapAddState">
+      <div class="thus-hover ma-item" @click.stop="onTapAddState">
         <div class="mai-icon">
           <svg-icon name="priority_400" class="mai-svgicon" :color="default_color"></svg-icon>
         </div>
 
-        <div class="liu-no-user-select mai-title" v-if="data.stateShow">
+        <div class="thus-no-user-select mai-title" v-if="data.stateShow">
           <StateBadge :state-show="data.stateShow"
             @tapstate="onTapAddState"
           ></StateBadge>
         </div>
-        <div class="liu-no-user-select mai-title" v-else>
+        <div class="thus-no-user-select mai-title" v-else>
           <span>{{ t("editor.add_state") }}</span>
         </div>
 
-        <div v-if="data.stateShow" class="liu-hover mai-footer" @click.stop="onTapClearState">
+        <div v-if="data.stateShow" class="thus-hover mai-footer" @click.stop="onTapClearState">
           <svg-icon name="close" class="maif-clear" :color="default_color"></svg-icon>
         </div>
         <div v-else class="mai-footer">
@@ -127,16 +127,16 @@ export default defineComponent({
       </div>
 
       <!-- 加附件 -->
-      <div class="liu-hover ma-item" @click.stop="onTapAddAttachment">
+      <div class="thus-hover ma-item" @click.stop="onTapAddAttachment">
 
         <div class="mai-icon">
           <svg-icon name="attachment" class="mai-svgicon" :color="default_color"></svg-icon>
         </div>
-        <div class="liu-no-user-select mai-title">
+        <div class="thus-no-user-select mai-title">
           <span v-if="data.fileShow?.name">{{ data.fileShow.name }}</span>
           <span v-else>{{ t("editor.add_file") }}</span>
         </div>
-        <div v-if="data.fileShow?.name" class="liu-hover mai-footer" @click.stop="onTapClearAttachment">
+        <div v-if="data.fileShow?.name" class="thus-hover mai-footer" @click.stop="onTapClearAttachment">
           <svg-icon name="close" class="maif-clear" :color="default_color"></svg-icon>
         </div>
         <div v-else class="mai-footer">
@@ -146,18 +146,18 @@ export default defineComponent({
       </div>
 
       <!-- privacy -->
-      <LiuMenu :menu="privacyMenu" min-width-str="120px"
+      <ThusMenu :menu="privacyMenu" min-width-str="120px"
         :hasCheckbox="true"
         @tapitem="onTapPrivacyItem"
         placement="top"
         :more-link="data.privacyLink"
       >
 
-        <div class="liu-hover ma-item">
+        <div class="thus-hover ma-item">
           <div class="mai-icon">
             <svg-icon name="lock" class="mai-svgicon" :color="default_color"></svg-icon>
           </div>
-          <div class="liu-no-user-select mai-title"
+          <div class="thus-no-user-select mai-title"
             :class="{ 
               'mai-title_with_footer_text': !data.syncCloud || data.aiReadable === 'N',
             }"
@@ -177,7 +177,7 @@ export default defineComponent({
 
         </div>
 
-      </LiuMenu>
+      </ThusMenu>
 
 
     </div>
@@ -315,7 +315,7 @@ export default defineComponent({
   }
 }
 
-@container liu-mc-container (max-width: 590px) {
+@container thus-mc-container (max-width: 590px) {
   .ma-container_expand {
     max-height: 380px;
   }

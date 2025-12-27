@@ -1,5 +1,5 @@
-import type { LiuSpaceAndMember } from "~/types/types-cloud"
-import liuUtil from "~/utils/liu-util"
+import type { ThusSpaceAndMember } from "~/types/types-cloud"
+import liuUtil from "~/utils/thus-util"
 
 
 /** 拿到 RSA Public Key 之后，去生成的 AES key，并对其加密 */
@@ -23,7 +23,7 @@ export async function createClientKey(
 }
 
 export function getMyDataFromSpaceMemberList(
-  spaceMemberList: LiuSpaceAndMember[],
+  spaceMemberList: ThusSpaceAndMember[],
 ) {
   const personalMember = spaceMemberList.find(v => v.spaceType === "ME")
   if(!personalMember) return {}

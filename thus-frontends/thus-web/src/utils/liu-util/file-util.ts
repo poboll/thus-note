@@ -1,6 +1,6 @@
-import type { LiuFileStore, LiuImageStore } from "~/types"
+import type { ThusFileStore, ThusImageStore } from "~/types"
 import time from "../basic/time"
-import { getCharacteristic } from "../liu-api/characteristic"
+import { getCharacteristic } from "../thus-api/characteristic"
 import valTool from "../basic/val-tool"
 
 const MIN_3 = 3 * time.MINUTE
@@ -47,7 +47,7 @@ interface UrlMapVal {
 const fileMap = new Map<UrlMapKey, UrlMapVal>()
 
 export function createURLsFromStore(
-  files: Array<LiuImageStore | LiuFileStore>,
+  files: Array<ThusImageStore | ThusFileStore>,
 ) {
   const list: string[] = []
   for(let i=0; i<files.length; i++) {

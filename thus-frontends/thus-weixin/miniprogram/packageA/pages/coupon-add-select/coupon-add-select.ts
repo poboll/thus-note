@@ -6,7 +6,7 @@ import { ShowTip } from "~/utils/managers/ShowTip"
 import { ImageHelper } from "~/packageA/utils/ImageHelper"
 import { CouponAddManager } from "../shared/CouponAddManager"
 import { CouponManager } from "../shared/CouponManager"
-import { LiuUtil } from "~/utils/liu-util/index"
+import { LiuUtil } from "~/utils/thus-util/index"
 import { LiuTime } from "~/utils/LiuTime"
 import { pageBehavior } from "~/behaviors/page-behavior"
 

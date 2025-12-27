@@ -1,5 +1,5 @@
 import valTool from "~/utils/basic/val-tool"
-import liuEnv from "~/utils/liu-env"
+import liuEnv from "~/utils/thus-env"
 import { waitWindowLoaded } from "~/utils/wait/wait-window-loaded"
 
 export async function initAnalytics() {
@@ -99,7 +99,7 @@ async function initBugFender(
 ) {
   const { Bugfender } = await import("@bugfender/sdk")
 
-  const version = LIU_ENV.version
+  const version = THUS_ENV.version
   Bugfender.init({
     appKey,
     apiURL, 

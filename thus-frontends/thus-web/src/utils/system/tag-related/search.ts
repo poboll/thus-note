@@ -1,7 +1,7 @@
 import type { TagShow } from "~/types/types-content"
 import type { TagView } from "~/types/types-atom"
 import { getCurrentSpaceTagList } from "~/utils/system/tag-related"
-import liuApi from "~/utils/liu-api"
+import liuApi from "~/utils/thus-api"
 
 /**
  * 从 useWorkspaceStore 里取数据，开始查找，返回 TagShow[]

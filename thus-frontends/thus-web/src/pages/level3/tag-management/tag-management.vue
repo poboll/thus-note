@@ -100,7 +100,7 @@ const {
   }
 
   .drag-overing {
-    .liu-hover::before {
+    .thus-hover::before {
       background-color: transparent;
     }
   }

@@ -3,7 +3,7 @@ import cloud from '@lafjs/cloud'
 import type { 
   BaseIsOn,
   Shared_AccessControl,
-  LiuRqReturn,
+  ThusRqReturn,
 } from "@/common-types"
 import { Sch_X_Liu, Sch_IP } from "@/common-types"
 import { getNowStamp, SECOND, MINUTE } from "@/common-time"
@@ -109,7 +109,7 @@ async function toNext(
   ctx: FunctionContext,
   next: any,
 ) {
-  let nextRes: LiuRqReturn<any> | null = null
+  let nextRes: ThusRqReturn<any> | null = null
   try {
     nextRes = await next(ctx)
   }

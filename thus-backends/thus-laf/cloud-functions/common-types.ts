@@ -39,12 +39,12 @@ export type MongoFilter<T> = Partial<Omit<T, "_id">>
 /** 在 mongodb 中，定义一个 _id 为可选属性的 Table (Collection) */
 export type Partial_Id<T extends BaseTable> = PartialSth<T, "_id">
 
-export type LiuTimeout = ReturnType<typeof setTimeout> | undefined
+export type ThusTimeout = ReturnType<typeof setTimeout> | undefined
 
 export type T_I18N = (key: string, opt2?: Record<string, string | number>) => string
 
 /*********************** 回调类型 **********************/
-export interface LiuRqReturn<T = Record<string, any>> {
+export interface ThusRqReturn<T = Record<string, any>> {
   code: string
   errMsg?: string
   showMsg?: string
@@ -99,7 +99,7 @@ export const sch_opt_num = (
 
 
 /******************** 一些 Node.js 函数的封装类型 *******************/
-export interface LiuRqOpt {
+export interface ThusRqOpt {
   method?: "POST" | "GET"
   headers?: HeadersInit
   timeout?: number           // 超时的毫秒数，默认为 10000; 当 signal 属性存在时，此值无意义
@@ -256,8 +256,8 @@ export type LiuIDEType = typeof liuIDETypes[number]
 export const Sch_LiuIDEType = vbot.picklist(liuIDETypes)
 
 export const liuAppTypes = [...liuIDETypes] as const
-export type LiuAppType = typeof liuAppTypes[number]
-export const Sch_LiuAppType = vbot.picklist(liuAppTypes)
+export type ThusAppType = typeof liuAppTypes[number]
+export const Sch_ThusAppType = vbot.picklist(liuAppTypes)
 
 export const supportedLocales = [
   "en",
@@ -293,10 +293,10 @@ interface BaseTable {
 }
 
 /** 表示 “状态” 的原子结构 */
-export interface LiuAtomState {
+export interface ThusAtomState {
   id: string
   text?: string
-  color?: string     // 存储 # 开头的 hex，或者 --liu-state- 开头的系统颜色
+  color?: string     // 存储 # 开头的 hex，或者 --thus-state- 开头的系统颜色
   showInIndex: boolean
   contentIds?: string[]
   showFireworks?: boolean
@@ -304,7 +304,7 @@ export interface LiuAtomState {
   insertedStamp: number
 }
 
-const Sch_LiuAtomState: BaseSchema<LiuAtomState> = vbot.object({
+const Sch_ThusAtomState: BaseSchema<ThusAtomState> = vbot.object({
   id: Sch_String_WithLength,
   text: Sch_Opt_Str,
   color: Sch_Opt_Str,
@@ -317,12 +317,12 @@ const Sch_LiuAtomState: BaseSchema<LiuAtomState> = vbot.object({
 
 /** 表示数据表里，存储 “状态” 的结构  */
 export interface LiuStateConfig {
-  stateList: LiuAtomState[]
+  stateList: ThusAtomState[]
   updatedStamp: number
 }
 
 export const Sch_LiuStateConfig: BaseSchema<LiuStateConfig> = vbot.object({
-  stateList: vbot.array(Sch_LiuAtomState),
+  stateList: vbot.array(Sch_ThusAtomState),
   updatedStamp: vbot.number(),
 })
 
@@ -468,7 +468,7 @@ export type LiuRemindLater = typeof liuRemindLaters[number]
 export const Sch_LiuRemindLater = vbot.picklist(liuRemindLaters)
 
 // "提醒我" 的结构
-export interface LiuRemindMe {
+export interface ThusRemindMe {
   type: "early" | "later" | "specific_time"
 
   // 提前多少分钟，若提前一天则为 1440
@@ -481,7 +481,7 @@ export interface LiuRemindMe {
   specific_stamp?: number
 }
 
-export const Sch_LiuRemindMe = vbot.object(
+export const Sch_ThusRemindMe = vbot.object(
   {
     type: vbot.picklist(["early", "later", "specific_time"]),
     early_minute: Sch_Opt_Num,
@@ -975,7 +975,7 @@ export interface UserQuota {
   videoWatchedTimes?: number        // 共观看了多少次视频激励广告
 }
 
-export interface LiuSpaceAndMember {
+export interface ThusSpaceAndMember {
   // 关于 member 的信息
   memberId: string
   member_name?: string
@@ -1165,7 +1165,7 @@ export interface LiuUploadBase {
   first_id?: string    // 在删除、恢复、彻底删除动态时，此值为 undefined
   spaceId?: string     // 发表时，必填，表示存到哪个工作区
 
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
   
@@ -1182,7 +1182,7 @@ export interface LiuUploadThread extends LiuUploadBase {
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   pinStamp?: number
 
   createdStamp?: number
@@ -1230,7 +1230,7 @@ export interface LiuUploadDraft extends LiuUploadBase {
   
   title?: string
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   tagIds?: string[]
   stateId?: string
   stateStamp?: number
@@ -1501,7 +1501,7 @@ export interface Table_Content extends BaseTable {
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   emojiData: EmojiData
   parentThread?: string
   parentComment?: string
@@ -1547,7 +1547,7 @@ export interface Table_Draft extends BaseTable {
   enc_files?: CryptoCipherAndIV
 
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   tagIds?: string[]
   stateId?: string
   stateStamp?: number
@@ -1655,7 +1655,7 @@ export interface Table_Credential extends BaseTable {
 
   sms_sent_result?: Record<string, any>
   redirect_uri?: string        // required when infoType is "auth-code"
-  app_type?: LiuAppType        // required when infoType is "auth-code"
+  app_type?: ThusAppType        // required when infoType is "auth-code"
   wx_gzh_openid?: string
 }
 
@@ -1945,7 +1945,7 @@ export interface Table_WxTask extends BaseTable {
 
 export interface LiuUserInfo {
   user: Table_User
-  spaceMemberList: LiuSpaceAndMember[]
+  spaceMemberList: ThusSpaceAndMember[]
 }
 
 
@@ -2072,7 +2072,7 @@ export interface Res_PO_AlipayWap {
 
 /********* 用户登录相关 ********/
 
-export interface Res_ULN_User extends LiuSpaceAndMember {
+export interface Res_ULN_User extends ThusSpaceAndMember {
   userId: string
   createdStamp: number
 }
@@ -2122,7 +2122,7 @@ export interface Res_UserLoginNormal {
   theme?: LocalTheme
   language?: LocalLocale
   // 返回的 space 和 member 信息都是当前用户有加入的，已退出的不会返回
-  spaceMemberList?: LiuSpaceAndMember[]
+  spaceMemberList?: ThusSpaceAndMember[]
   subscription?: UserSubscription
   serial_id?: string
   token?: string
@@ -2143,7 +2143,7 @@ export namespace UserSettingsAPI {
     github_id?: number
     theme: LocalTheme
     language: LocalLocale
-    spaceMemberList: LiuSpaceAndMember[]
+    spaceMemberList: ThusSpaceAndMember[]
     subscription?: UserSubscription
     phone_pixelated?: string     // like 187******56
     
@@ -2166,7 +2166,7 @@ export namespace UserSettingsAPI {
 
   export interface Res_AuthGetInfo {
     operateType: "auth-get-info"
-    appType: LiuAppType
+    appType: ThusAppType
     serial: string
   }
 
@@ -2487,14 +2487,14 @@ export interface LiuDownloadContent {
   storageState: Cloud_StorageState
 
   title?: string
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
 
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   emojiData: EmojiData
   parentThread?: string
   parentComment?: string
@@ -2542,12 +2542,12 @@ export interface LiuDownloadDraft {
   visScope?: VisScope
 
   title?: string
-  liuDesc?: LiuContent[]
+  thusDesc?: LiuContent[]
   images?: Cloud_ImageStore[]
   files?: Cloud_FileStore[]
 
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   tagIds?: string[]
   stateId?: string
   stateStamp?: number
@@ -2560,23 +2560,23 @@ interface LDP_Base {
   status: LiuDownloadStatus
 }
 
-export interface LiuDownloadParcel_A extends LDP_Base {
+export interface ThusDownloadParcel_A extends LDP_Base {
   parcelType: "content"
   content?: LiuDownloadContent
 }
 
-export interface LiuDownloadParcel_B extends LDP_Base {
+export interface ThusDownloadParcel_B extends LDP_Base {
   parcelType: "draft"
   draft?: LiuDownloadDraft
 }
 
-export type LiuDownloadParcel = LiuDownloadParcel_A | LiuDownloadParcel_B
+export type ThusDownloadParcel = ThusDownloadParcel_A | ThusDownloadParcel_B
 
 export interface SyncGetAtomRes {
   code: string
   taskId: string
   errMsg?: string
-  list?: LiuDownloadParcel[]
+  list?: ThusDownloadParcel[]
 }
 
 export interface Res_SyncGet_Cloud {
@@ -2728,11 +2728,11 @@ export namespace SyncOperateAPI {
 
   export interface WaitingData {
     title?: string
-    liuDesc?: LiuContent[]
+    thusDesc?: LiuContent[]
     calendarStamp?: number
     remindStamp?: number
     whenStamp?: number
-    remindMe?: LiuRemindMe
+    remindMe?: ThusRemindMe
   }
 
   export type ContentType = "note" | "todo" | "calendar"

@@ -1,6 +1,6 @@
-import type { LiuRemindMe, ContentInfoType } from "~/types/types-atom";
+import type { ThusRemindMe, ContentInfoType } from "~/types/types-atom";
 import type { BaseIsOn, StorageState, VisScope } from "~/types/types-basic";
-import type { LiuFileStore, LiuImageStore } from "~/types"
+import type { ThusFileStore, ThusImageStore } from "~/types"
 import type { EditorCoreContent } from "~/types/types-editor";
 
 export interface CeData {
@@ -12,9 +12,9 @@ export interface CeData {
   aiReadable?: BaseIsOn
   title?: string
   whenStamp?: number
-  remindMe?: LiuRemindMe
-  images?: LiuImageStore[]
-  files?: LiuFileStore[]
+  remindMe?: ThusRemindMe
+  images?: ThusImageStore[]
+  files?: ThusFileStore[]
   tagIds: string[]
   stateId?: string
   editorContent?: EditorCoreContent

@@ -5,7 +5,7 @@ import type {
   SyncResState, 
   SyncResult,
 } from "../tools/types"
-import type { LiuFileStore, LiuImageStore } from "~/types"
+import type { ThusFileStore, ThusImageStore } from "~/types"
 import type { 
   DownloadTaskLocalTable, 
   MemberLocalTable,
@@ -28,7 +28,7 @@ interface HanFilesRes {
   hasEverSuccess?: boolean
   hasEverKnownErr?: boolean
   results: SyncResState[]
-  files: LiuFileStore[]
+  files: ThusFileStore[]
 }
 
 interface HanImgsRes {
@@ -37,7 +37,7 @@ interface HanImgsRes {
   hasEverSuccess?: boolean
   hasEverKnownErr?: boolean
   results: SyncResState[]
-  imgs: LiuImageStore[]
+  imgs: ThusImageStore[]
 }
 
 interface HanWhateverRes {
@@ -159,7 +159,7 @@ const add_fail_time = async (task: DownloadTaskLocalTable) => {
 }
 
 const handle_images = async (
-  imgs: LiuImageStore[]
+  imgs: ThusImageStore[]
 ): Promise<HanImgsRes> => {
   const imgs2 = imgs.filter(v => {
     if(v.cloud_url && !v.arrayBuffer) {
@@ -210,7 +210,7 @@ const handle_images = async (
 }
 
 const handle_file = async (
-  files: LiuFileStore[],
+  files: ThusFileStore[],
   file_id: string,
 ): Promise<HanFilesRes> => {
 

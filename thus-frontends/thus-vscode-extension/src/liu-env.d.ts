@@ -10,4 +10,4 @@ interface LiuEnv {
   APP_PREFIX: string
 }
 
-declare const LIU_ENV: LiuEnv
+declare const THUS_ENV: LiuEnv

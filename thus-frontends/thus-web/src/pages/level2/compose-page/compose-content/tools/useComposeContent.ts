@@ -3,19 +3,19 @@ import type { ComposingData } from "~/types/types-atom"
 import type { LocationQuery } from "vue-router"
 import { provide, reactive, shallowRef, watch } from "vue"
 import { pageStates } from "~/utils/atom"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import valTool from "~/utils/basic/val-tool"
 import { composingDataKey } from "~/utils/provide-keys"
 import APIs from "~/requests/APIs"
 import type { SyncOperateAPI } from "~/types/types-cloud"
-import liuReq from "~/requests/liu-req"
+import liuReq from "~/requests/thus-req"
 
 export function useComposeContent() {
   // 1. init data
   const ccData = reactive<CcData>({
     pageState: pageStates.LOADING,
   })
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const composingDataRef = shallowRef<ComposingData>()
   provide(composingDataKey, composingDataRef)
   const ctx: CcContext = {

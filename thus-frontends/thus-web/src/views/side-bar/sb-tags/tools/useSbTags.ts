@@ -6,10 +6,10 @@ import { getCurrentSpaceTagList, useTagsTree } from "~/utils/system/tag-related"
 import { filterTag, tagMovedInTree } from "~/utils/system/tag-related/tags";
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore";
 import time from "~/utils/basic/time";
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import valTool from "~/utils/basic/val-tool";
 import type { SbTagsData, SbtEmits } from "./types";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import { usePrefix } from "~/hooks/useCommon";
 
 
@@ -27,7 +27,7 @@ export function useSbTags(emits: SbtEmits) {
     sbtData.toPath = newV + "tag/"
   }, { immediate: true })
 
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const treeEl = ref<typeof Draggable | null>(null)
   const tagNodes = ref<TagView[]>([])

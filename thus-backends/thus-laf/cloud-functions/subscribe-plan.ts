@@ -18,7 +18,7 @@ import type {
   Table_User,
   Res_SubPlan_Info,
   Res_SubPlan_StripeCheckout,
-  LiuRqReturn,
+  ThusRqReturn,
   Table_Credential,
   Table_Order,
   Wxpay_Refund_Custom_Param,
@@ -53,7 +53,7 @@ export async function main(ctx: FunctionContext) {
   const user = vRes.userData
 
   const oT = body.operateType
-  let res: LiuRqReturn = { code: "E4000" }
+  let res: ThusRqReturn = { code: "E4000" }
   if(oT === "info") {
     res = await handle_info(ctx)
   }
@@ -75,7 +75,7 @@ export async function main(ctx: FunctionContext) {
 async function handle_cancel_and_refund(
   body: Record<string, string>,
   user: Table_User, 
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
 
   // 1. check user's subscription
   const hasSubscribed = checkIfUserSubscribed(user)
@@ -105,7 +105,7 @@ async function handle_cancel_and_refund(
 async function toRefundAndCancel(
   body: Record<string, string>,
   user: Table_User,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   // 1. get order
   const w: Partial<Table_Order> = {
     user_id: user._id,
@@ -127,7 +127,7 @@ async function toRefundAndCancel(
   const { payChannel } = theOrder
 
   // 4. decide which channel to refund and cancel
-  let res4: LiuRqReturn = { 
+  let res4: ThusRqReturn = { 
     code: "E5001", errMsg: "no channel to refund and cancel"
   }
   if(payChannel === "stripe" && sub_id) {
@@ -146,7 +146,7 @@ async function toRefundAndCancel(
 async function toRefundAndCancelThroughAlipay(
   user: Table_User,
   order: Table_Order,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   // 1. get arguments
   const stamp1 = getNowStamp()
   const alipayData = order.alipay_other_data ?? {}
@@ -227,7 +227,7 @@ async function toRefundAndCancelThroughAlipay(
 async function toRefundAndCancelThroughWxpay(
   user: Table_User,
   order: Table_Order,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   const time1 = getNowStamp()
 
   // 1. get arguments
@@ -315,7 +315,7 @@ async function terminateUserSubscription(
 async function toRefundAndCancelThroughStripe(
   user: Table_User,
   order: Table_Order,
-): Promise<LiuRqReturn> {
+): Promise<ThusRqReturn> {
   const stripe = LiuStripe.getStripeInstance()
   if(!stripe) {
     return { 
@@ -495,7 +495,7 @@ function checkIfUserCanBindStripe(
 async function handle_create_stripe(
   body: Record<string, string>,
   user: Table_User,
-): Promise<LiuRqReturn<Res_SubPlan_StripeCheckout>> {
+): Promise<ThusRqReturn<Res_SubPlan_StripeCheckout>> {
 
   // 1. 参数是否齐全
   const userTimezone = body.x_liu_timezone

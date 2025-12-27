@@ -3,7 +3,7 @@ import cui from "~/components/custom-ui"
 import type { ImportedAtom2 } from "./types"
 import type { ContentLocalTable } from "~/types/types-table"
 import { db } from "~/utils/db"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import transferUtil from "~/utils/transfer-util"
 import time from "~/utils/basic/time"
 
@@ -88,7 +88,7 @@ async function putToDB(
   // 组装 search_title / search_other
   list = list.map(v => {
     const search_title = (v.title ?? "").toLocaleLowerCase()
-    const search_other = transferUtil.packSearchOther(v.liuDesc ?? [], v.files ?? [])
+    const search_other = transferUtil.packSearchOther(v.thusDesc ?? [], v.files ?? [])
     v.search_title = search_title
     v.search_other = search_other
     return v

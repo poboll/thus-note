@@ -11,7 +11,7 @@ import {
   valTool,
 } from "@/common-util"
 import type { 
-  LiuRqReturn,
+  ThusRqReturn,
   SyncSetAtom,
   Table_User,
   Table_Content,
@@ -47,7 +47,7 @@ import {
   Sch_Cloud_ImageStore,
   Sch_Cloud_FileStore,
   Sch_ContentConfig,
-  Sch_LiuRemindMe,
+  Sch_ThusRemindMe,
   Sch_OState_2,
   Sch_ContentInfoType,
   Sch_LiuStateConfig,
@@ -178,7 +178,7 @@ function preCheck() {
 
 function checkBody(
   body: Record<string, any>,
-): LiuRqReturn | null {
+): ThusRqReturn | null {
 
   const { operateType: oT, atoms } = body
   if(oT !== "general_sync" && oT !== "single_sync") {
@@ -535,7 +535,7 @@ async function toPostThread(
     first_id: vbot.string([vbot.minLength(20)]),
     spaceId: vbot.string(),
 
-    liuDesc: sch_opt_arr(vbot.any()),
+    thusDesc: sch_opt_arr(vbot.any()),
     images: sch_opt_arr(Sch_Cloud_ImageStore),
     files: sch_opt_arr(Sch_Cloud_FileStore),
 
@@ -546,7 +546,7 @@ async function toPostThread(
     calendarStamp: Sch_Opt_Num,
     remindStamp: Sch_Opt_Num,
     whenStamp: Sch_Opt_Num,
-    remindMe: vbot.optional(Sch_LiuRemindMe),
+    remindMe: vbot.optional(Sch_ThusRemindMe),
     pinStamp: Sch_Opt_Num,
 
     createdStamp: vbot.number(),
@@ -580,7 +580,7 @@ async function toPostThread(
     enc_files,
   } = sharedData
 
-  // 3. inspect liuDesc and encrypt
+  // 3. inspect thusDesc and encrypt
   const aesKey = getAESKey() ?? ""
 
   // 4. get the workspace
@@ -678,7 +678,7 @@ async function toPostComment(
     first_id: vbot.string([vbot.minLength(20)]),
     spaceId: vbot.string(),
 
-    liuDesc: sch_opt_arr(vbot.any()),
+    thusDesc: sch_opt_arr(vbot.any()),
     images: sch_opt_arr(Sch_Cloud_ImageStore),
     files: sch_opt_arr(Sch_Cloud_FileStore),
     
@@ -833,7 +833,7 @@ async function toThreadEdit(
     id: Sch_Id,
     first_id: Sch_Opt_Str,
 
-    liuDesc: sch_opt_arr(vbot.any()),
+    thusDesc: sch_opt_arr(vbot.any()),
     images: sch_opt_arr(Sch_Cloud_ImageStore),
     files: sch_opt_arr(Sch_Cloud_FileStore),
 
@@ -842,7 +842,7 @@ async function toThreadEdit(
     calendarStamp: Sch_Opt_Num,
     remindStamp: Sch_Opt_Num,
     whenStamp: Sch_Opt_Num,
-    remindMe: vbot.optional(Sch_LiuRemindMe),
+    remindMe: vbot.optional(Sch_ThusRemindMe),
     stateId: Sch_Opt_Str,
     stateStamp: Sch_Opt_Num,
 
@@ -974,7 +974,7 @@ async function toThreadWhenRemind(
     calendarStamp: Sch_Opt_Num,
     whenStamp: Sch_Opt_Num,
     remindStamp: Sch_Opt_Num,
-    remindMe: vbot.optional(Sch_LiuRemindMe),
+    remindMe: vbot.optional(Sch_ThusRemindMe),
   }, vbot.never())
   const res1 = checkoutInput(Sch_Hourglass, thread, taskId)
   if(res1) return res1
@@ -1426,7 +1426,7 @@ async function toCommentEdit(
     id: Sch_Id,
     first_id: Sch_Opt_Str,
 
-    liuDesc: sch_opt_arr(vbot.any()),
+    thusDesc: sch_opt_arr(vbot.any()),
     images: sch_opt_arr(Sch_Cloud_ImageStore),
     files: sch_opt_arr(Sch_Cloud_FileStore),
     
@@ -1613,7 +1613,7 @@ async function toDraftSet(
     first_id: Sch_Opt_Id,
     spaceId: Sch_Opt_Id,
 
-    liuDesc: sch_opt_arr(vbot.any()),
+    thusDesc: sch_opt_arr(vbot.any()),
     images: sch_opt_arr(Sch_Cloud_ImageStore),
     files: sch_opt_arr(Sch_Cloud_FileStore),
 
@@ -1628,7 +1628,7 @@ async function toDraftSet(
 
     title: Sch_Opt_Str,
     whenStamp: Sch_Opt_Num,
-    remindMe: vbot.optional(Sch_LiuRemindMe),
+    remindMe: vbot.optional(Sch_ThusRemindMe),
     tagIds: sch_opt_arr(Sch_Id),
     stateId: Sch_Opt_Str,
     stateStamp: Sch_Opt_Num,
@@ -1999,23 +1999,23 @@ async function getSharedData_9(
   opt: OperationOpt,
 ): Promise<GetShareDataRes_9> {
   const { taskId } = opt
-  const { title, liuDesc, images, files } = draft
+  const { title, thusDesc, images, files } = draft
   
   const aesKey = getAESKey() ?? ""
 
   // 1. handle desc
   let enc_desc: CryptoCipherAndIV | undefined
-  if(liuDesc) {
-    const res3 = checker.isLiuContentArr(liuDesc)
+  if(thusDesc) {
+    const res3 = checker.isLiuContentArr(thusDesc)
     if(!res3) {
       return {
         pass: false,
         result: {
-          code: "E4000", taskId, errMsg: "liuDesc is illegal"
+          code: "E4000", taskId, errMsg: "thusDesc is illegal"
         }
       }
     }
-    enc_desc = encryptDataWithAES(liuDesc, aesKey)
+    enc_desc = encryptDataWithAES(thusDesc, aesKey)
   }
 
   const enc_title = encryptDataWithAES(title, aesKey)
@@ -2279,21 +2279,21 @@ async function getSharedData_2(
   content: LiuUploadThread | LiuUploadComment,
 ): Promise<GetShareDataRes_2> {
 
-  // 1. inspect liuDesc and encrypt
-  const { liuDesc } = content
+  // 1. inspect thusDesc and encrypt
+  const { thusDesc } = content
   const aesKey = getAESKey() ?? ""
   let enc_desc: CryptoCipherAndIV | undefined
-  if(liuDesc) {
-    const res3 = checker.isLiuContentArr(liuDesc)
+  if(thusDesc) {
+    const res3 = checker.isLiuContentArr(thusDesc)
     if(!res3) {
       return {
         pass: false,
         result: {
-          code: "E4000", taskId, errMsg: "liuDesc is illegal"
+          code: "E4000", taskId, errMsg: "thusDesc is illegal"
         }
       }
     }
-    enc_desc = encryptDataWithAES(liuDesc, aesKey)
+    enc_desc = encryptDataWithAES(thusDesc, aesKey)
   }
 
   // 2. get oldContent & content_id
@@ -2361,21 +2361,21 @@ async function getSharedData_1(
     }
   }
 
-  // 3. inspect liuDesc and encrypt
-  const { liuDesc } = content
+  // 3. inspect thusDesc and encrypt
+  const { thusDesc } = content
   const aesKey = getAESKey() ?? ""
   let enc_desc: CryptoCipherAndIV | undefined
-  if(liuDesc) {
-    const res3 = checker.isLiuContentArr(liuDesc)
+  if(thusDesc) {
+    const res3 = checker.isLiuContentArr(thusDesc)
     if(!res3) {
       return {
         pass: false,
         result: {
-          code: "E4000", taskId, errMsg: "liuDesc is illegal"
+          code: "E4000", taskId, errMsg: "thusDesc is illegal"
         }
       }
     }
-    enc_desc = encryptDataWithAES(liuDesc, aesKey)
+    enc_desc = encryptDataWithAES(thusDesc, aesKey)
   }
 
   // 4. get memberId

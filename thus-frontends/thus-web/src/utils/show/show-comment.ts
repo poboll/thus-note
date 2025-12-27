@@ -7,7 +7,7 @@ import type { TipTapJSONContent } from "~/types/types-editor";
 import imgHelper from "../files/img-helper";
 import transferUtil from "../transfer-util";
 import commonPack from "../controllers/tools/common-pack";
-import liuUtil from "../liu-util";
+import liuUtil from "../thus-util";
 
 // 封装 content 成 CommentShow
 function packComment(
@@ -18,7 +18,7 @@ function packComment(
 ) {
 
   const v = content
-  const { member, _id, user, liuDesc, spaceId } = v
+  const { member, _id, user, thusDesc, spaceId } = v
 
   let myEmoji = ""
   let myEmojiStamp: number | undefined
@@ -37,8 +37,8 @@ function packComment(
     return imgHelper.imageStoreToShow(v2)
   })
 
-  const desc = transferUtil.tiptapToText(liuDesc ?? [])
-  const newDesc = commonPack.packLiuDesc(liuDesc)
+  const desc = transferUtil.tiptapToText(thusDesc ?? [])
+  const newDesc = commonPack.packLiuDesc(thusDesc)
   const tiptapContent: TipTapJSONContent | undefined = 
     newDesc?.length ? { type: "doc", content: newDesc } : undefined
 
@@ -55,7 +55,7 @@ function packComment(
     visScope: v.visScope,
     storageState: v.storageState,
     content: tiptapContent,
-    summary: commonPack.getSummary(liuDesc, v.files),
+    summary: commonPack.getSummary(thusDesc, v.files),
     desc,
     images,
     files: v.files,

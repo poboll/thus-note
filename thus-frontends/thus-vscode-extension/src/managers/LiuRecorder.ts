@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { AuthenticationManager } from './AuthenticationManager';
-import liuInfo from '~/utils/liu-info';
+import liuInfo from '~/utils/thus-info';
 import time from '~/utils/basic/time';
 import { i18n } from '~/locales/i18n';
 import { SimpleEventBus } from '~/utils/event-bus/simple-event-bus';
@@ -8,11 +8,11 @@ import type { SyncSetAPI } from '~/types/types-req';
 import type { LiuContent } from '~/types/types-atom';
 import ider from '~/utils/ider';
 import APIs from '~/requests/APIs';
-import liuReq from '~/requests/liu-req';
+import liuReq from '~/requests/thus-req';
 import { Logger } from '~/utils/Logger';
 import { LiuStatusBar } from './LiuStatusBar';
 import { showErrMsg } from '~/utils/show-msg';
-import liuEnv from '~/utils/liu-env';
+import liuEnv from '~/utils/thus-env';
 import { languageIdToSupported } from './tools/lowlight-related';
 
 const MIN_3 = time.MINUTE * 3
@@ -244,15 +244,15 @@ export class LiuRecorder {
     const now = time.getTime()
 
     // 3.1 package codeBlock
-    const liuDesc: LiuContent[] = []
+    const thusDesc: LiuContent[] = []
     if(codeBlock) {
-      liuDesc.push(codeBlock)
+      thusDesc.push(codeBlock)
     }
  
     // 3.2 package desc
     text = text.replace(/\n/g, " ")
     if(text) {
-      liuDesc.push({
+      thusDesc.push({
         type: "paragraph",
         content: [
           {
@@ -267,7 +267,7 @@ export class LiuRecorder {
     const thread: SyncSetAPI.LiuUploadThread = {
       first_id,
       spaceId: authStatus.personal_space_id,
-      liuDesc,
+      thusDesc,
       editedStamp: now,
       oState: "OK",
       createdStamp: now,

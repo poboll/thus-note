@@ -19,7 +19,7 @@ const props = defineProps({
 const fontColor = computed(() => {
   const ideType = props.ideType
   if(ideType === "cnb.cool") return "var(--liu-cnb-cool-font)"
-  if(ideType === "github.dev") return "var(--liu-github-font)"
+  if(ideType === "github.dev") return "var(--thus-github-font)"
   if(ideType === "vscode.dev") return "var(--liu-vscode-font)"
   if(ideType === "gitpod.io") return "var(--liu-gitpod-font)"
   if(ideType === "stackblitz.com") return "var(--liu-stackblitz-font)"
@@ -39,7 +39,7 @@ const ideName = computed(() => {
 
   <div class="state-badge-container">
 
-    <div class="liu-no-user-select tct-state-box" :style="{
+    <div class="thus-no-user-select tct-state-box" :style="{
       'color': fontColor,
     }">
 

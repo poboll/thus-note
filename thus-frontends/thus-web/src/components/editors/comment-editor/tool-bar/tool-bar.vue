@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import liuUtil from '~/utils/liu-util';
+import liuUtil from '~/utils/thus-util';
 import type { ToolBarEmits } from "./tools/types"
 import { toolbarProps } from './tools/types';
 import { useFormatClear } from '../../tools/useFormatClear';
@@ -36,7 +36,7 @@ const cha = inject(deviceChaKey)
   <div class="cem-toolbar" :class="{ 'cem-toolbar_translateY': isToolbarTranslateY }">
     <div class="cemt-main" :class="{ 'cemt-main_show': !isToolbarTranslateY }">
       <!-- 图片 -->
-      <div class="liu-hover liu-hover_first cemt-item" 
+      <div class="thus-hover thus-hover_first cemt-item" 
         :class="{ 'cemt-item_first_above': located === 'popup' }"
         style="margin-inline-start: -5px;" 
         :aria-label="t('editor.image')"
@@ -46,7 +46,7 @@ const cha = inject(deviceChaKey)
       </div>
 
       <!-- 文件 -->
-      <div class="liu-hover cemt-item" :aria-label="t('editor.attachment')"
+      <div class="thus-hover cemt-item" :aria-label="t('editor.attachment')"
         :class="{ 'cemt-item_above': located === 'popup' }"
         @click.stop="onTapFile"
       >
@@ -54,7 +54,7 @@ const cha = inject(deviceChaKey)
       </div>
 
       <!-- 清除样式 -->
-      <div class="liu-hover cemt-item cemt-format-clear"
+      <div class="thus-hover cemt-item cemt-format-clear"
         :class="{ 
           'cemt-format-clear_show': showFormatClear,
           'cemt-item_above': located === 'popup'
@@ -71,14 +71,14 @@ const cha = inject(deviceChaKey)
     </div>
     <div class="cemt-footer">
 
-      <div class="liu-no-user-select cemtf-tip" v-if="cha?.isPC"
+      <div class="thus-no-user-select cemtf-tip" v-if="cha?.isPC"
         :class="{ 'cemtf-tip_show': !isToolbarTranslateY }"
       >
         <span>{{ liuUtil.getHelpTip('Mod_Enter') }}</span>
       </div>
 
       <!-- 完成 -->
-      <div class="liu-no-user-select cemtf-submit-btn" 
+      <div class="thus-no-user-select cemtf-submit-btn" 
         :class="{ 'cemtf-submit_disabled': !canSubmit }"
         v-show="showSubmitBtn"
         @click.stop="onTapFinishBtn"

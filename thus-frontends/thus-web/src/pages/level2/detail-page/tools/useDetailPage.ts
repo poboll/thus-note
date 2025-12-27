@@ -1,9 +1,9 @@
 import { reactive, watch } from "vue"
 import type { DpData } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { RouteLocationNormalizedLoaded } from "vue-router"
 import typeCheck from "~/utils/basic/type-check"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 export function useDetailPage() {
 
@@ -21,7 +21,7 @@ export function useDetailPage() {
 function listenRouteChange(
   dpData: DpData,
 ) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const { list } = dpData
 
   const toCheck = (r: RouteLocationNormalizedLoaded) => {

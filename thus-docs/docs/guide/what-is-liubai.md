@@ -1,5 +1,5 @@
 ---
-description: "留白是什么？"
+description: "如是是什么？"
 ---
 
 # 什么是如是？

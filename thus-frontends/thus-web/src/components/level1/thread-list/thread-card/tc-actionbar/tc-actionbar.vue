@@ -6,7 +6,7 @@ import type { SpaceType } from "~/types/types-basic"
 import type { PropType } from "vue";
 import type { TcaEmit } from "./tools/types"
 import { computed } from 'vue';
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 
 const props = defineProps({
   spaceType: {
@@ -67,47 +67,47 @@ const default_color = "var(--main-code)"
   <div class="tca-container">
 
     <!-- 收藏 -->
-    <div v-if="spaceType === 'ME' && isMine" class="liu-hover tca-item" @click.stop="$emit('tapcollect')">
-      <div class="liu-no-user-select tca-icon-box">
+    <div v-if="spaceType === 'ME' && isMine" class="thus-hover tca-item" @click.stop="$emit('tapcollect')">
+      <div class="thus-no-user-select tca-icon-box">
         <svg-icon v-show="!myFavorite" name="star" class="tca-icon_star" :color="default_color"></svg-icon>
         <svg-icon v-show="myFavorite" name="collected" class="tca-icon_collected"></svg-icon>
       </div>
     </div>
 
     <!-- emoji -->
-    <div v-else class="liu-hover tca-item">
-      <div class="liu-no-user-select tca-icon-box">
+    <div v-else class="thus-hover tca-item">
+      <div class="thus-no-user-select tca-icon-box">
         <span v-if="theEmoji">{{ theEmoji }}</span>
         <svg-icon v-else name="emoji" class="tca-icon_emoji" :color="default_color"></svg-icon>
       </div>
-      <div v-if="emojiNum > 0" class="liu-no-user-select tcb-text tcb-text_adjusted">
+      <div v-if="emojiNum > 0" class="thus-no-user-select tcb-text tcb-text_adjusted">
         <span>{{ emojiShow }}</span>
       </div>
     </div>
 
     <!-- tag -->
-    <div class="liu-hover tca-item" @click.stop="$emit('newoperate', 'tag')">
-      <div class="liu-no-user-select tca-icon-box">
+    <div class="thus-hover tca-item" @click.stop="$emit('newoperate', 'tag')">
+      <div class="thus-no-user-select tca-icon-box">
         <svg-icon name="tag" class="tca-icon_tag" :color="default_color"></svg-icon>
       </div>
     </div>
 
     <!-- state -->
-    <div class="liu-hover tca-item" @click.stop="$emit('newoperate', 'state')">
-      <div class="liu-no-user-select tca-icon-box">
+    <div class="thus-hover tca-item" @click.stop="$emit('newoperate', 'state')">
+      <div class="thus-no-user-select tca-icon-box">
         <svg-icon name="priority_400" class="tca-icon_state" :color="default_color"></svg-icon>
       </div>
     </div>
 
     <!-- comment if commentNum > 0 -->
-    <div v-if="commentNum > 0" class="liu-hover tca-item"
+    <div v-if="commentNum > 0" class="thus-hover tca-item"
       style="margin-inline-end: 4px;"
       @click.stop="$emit('tapcomment')"
     >
-      <div class="liu-no-user-select tca-icon-box">
+      <div class="thus-no-user-select tca-icon-box">
         <svg-icon name="comment" class="tca-icon_comment" :color="default_color"></svg-icon>
       </div>
-      <div class="liu-no-user-select tcb-text tcb-text_adjusted">
+      <div class="thus-no-user-select tcb-text tcb-text_adjusted">
         <span>{{ commentShow }}</span>
       </div>
     </div>
@@ -117,18 +117,18 @@ const default_color = "var(--main-code)"
       <div class="tca-more-box" :class="{ 'tca-more-box_show': showMore }">
 
         <!-- comment if commentNum < 1 -->
-        <div v-if="commentNum < 1" class="liu-hover tca-item"
+        <div v-if="commentNum < 1" class="thus-hover tca-item"
           style="margin-inline-end: 8px;"
           @click.stop="$emit('tapcomment')"
         >
-          <div class="liu-no-user-select tca-icon-box">
+          <div class="thus-no-user-select tca-icon-box">
             <svg-icon name="comment" class="tca-icon_comment" :color="default_color"></svg-icon>
           </div>
         </div>
 
         <!-- share -->
-        <div class="liu-hover tca-item" @click.stop="$emit('tapshare')">
-          <div class="liu-no-user-select tca-icon-box">
+        <div class="thus-hover tca-item" @click.stop="$emit('tapshare')">
+          <div class="thus-no-user-select tca-icon-box">
             <svg-icon name="share" class="tca-icon" :color="default_color"></svg-icon>
           </div>
         </div>

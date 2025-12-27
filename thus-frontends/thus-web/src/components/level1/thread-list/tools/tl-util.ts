@@ -3,7 +3,7 @@ import type { TlAtom, TlData, TlViewType } from "./types"
 import { i18n } from '~/locales'
 import dateTool from "~/utils/basic/date-tool"
 import time from "~/utils/basic/time"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 
 // 将 ThreadShow 转为 thread-list 的格式
 function threadShowsToList(

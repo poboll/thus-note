@@ -1,7 +1,7 @@
 import { watch } from "vue";
 import { CloudEventBus } from "./CloudEventBus";
 import time from "../basic/time";
-import type { LiuTimeout } from "../basic/type-tool";
+import type { ThusTimeout } from "../basic/type-tool";
 import localCache from "../system/local-cache";
 import type { 
   UploadTaskParam,
@@ -13,14 +13,14 @@ import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import { storeToRefs } from "pinia";
 import { handleUploadTasks } from "./upload-tasks"
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore";
-import liuEnv from "../liu-env";
+import liuEnv from "../thus-env";
 import { clearDraftInstantly } from "./tools/clear-draft-instantly";
 
 const MIN_5 = 5 * time.MINUTE
 
 class LocalToCloud {
 
-  private static triggerTimeout: LiuTimeout
+  private static triggerTimeout: ThusTimeout
   private static lastStartToUpload: number | undefined
 
   static init() {

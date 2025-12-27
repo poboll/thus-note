@@ -5,11 +5,11 @@ import { nextTick, onBeforeUnmount, ref, toRef, watch } from "vue"
 import type { ComponentPublicInstance, Ref } from "vue"
 import cui from "~/components/custom-ui"
 import { 
-  type RouteAndLiuRouter, 
-  useRouteAndLiuRouter,
+  type RouteAndThusRouter, 
+  useRouteAndThusRouter,
 } from "~/routes/liu-router"
-import liuApi from "~/utils/liu-api"
-import liuUtil from "~/utils/liu-util"
+import liuApi from "~/utils/thus-api"
+import liuUtil from "~/utils/thus-util"
 import reg_exp from "~/config/regular-expressions"
 
 // 为每个 "浏览态" 的链接添加 监听器
@@ -181,7 +181,7 @@ async function whenTapUrlScheme(
 async function whenTapLink(
   a: HTMLLinkElement,
   url: string, 
-  rr: RouteAndLiuRouter,
+  rr: RouteAndThusRouter,
 ) {
   const dataLink = a.getAttribute("data-link")
   const linkType = getLinkType(url, dataLink)
@@ -210,7 +210,7 @@ function initEditorLink(
   props: EditorCoreProps,
   ecRef: Ref<ComponentPublicInstance | undefined>
 ) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const contentRef = toRef(props, "content")
 
   const onTapLink = (e: MouseEvent) => {

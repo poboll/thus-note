@@ -1,7 +1,7 @@
 import { ref } from "vue"
 import { useWindowSize } from "~/hooks/useVueUse"
 import cfg from "~/config"
-import { useLiuWatch } from "~/hooks/useLiuWatch"
+import { useThusWatch } from "~/hooks/useThusWatch"
 import type { KbListEmits2, KbListProps } from "../../../tools/types"
 import { useScrollViewElement } from "~/hooks/elements/useScrollViewElement"
 
@@ -17,7 +17,7 @@ export function useKvColumn(
     if(h < 100) h = 100
     columnHeight.value = h
   }
-  useLiuWatch(height, _cal)
+  useThusWatch(height, _cal)
 
   handleScrollView(props, emits)
 

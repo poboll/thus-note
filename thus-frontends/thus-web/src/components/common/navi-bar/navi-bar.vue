@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import cfg from "~/config"
-import { useRouteAndLiuRouter } from "~/routes/liu-router";
+import { useRouteAndThusRouter } from "~/routes/liu-router";
 import { useI18n } from "vue-i18n";
 import { naviBarProps, type NaviBarEmit } from "./tools/types"
 
-const { router } = useRouteAndLiuRouter()
+const { router } = useRouteAndThusRouter()
 defineProps(naviBarProps)
 defineEmits<NaviBarEmit>()
 
@@ -17,18 +17,18 @@ const { t } = useI18n()
 </script>
 <template>
 
-  <div class="liu-frosted-glass nb-container">
+  <div class="thus-frosted-glass nb-container">
 
     <div class="nb-box">
       <!-- back -->
-      <div class="liu-hover nbb-normal" @click.stop="onTapBack"
+      <div class="thus-hover nbb-normal" @click.stop="onTapBack"
         style="margin-inline-start: -6px;"
       >
         <SvgIcon class="nb-icon" name="arrow-back700"></SvgIcon>
       </div>
 
       <!-- title -->
-      <div class="liu-no-user-select nb-title">
+      <div class="thus-no-user-select nb-title">
         <span v-if="title">{{ title }}</span>
         <span v-else-if="titleKey">{{ t(titleKey) }}</span>
         <span v-else-if="placeholderKey">{{ t(placeholderKey) }}</span>
@@ -36,7 +36,7 @@ const { t } = useI18n()
 
       <!-- add -->
       <div v-if="showAdd" 
-        class="liu-hover nbb-normal"
+        class="thus-hover nbb-normal"
         style="margin-inline-end: -10px;"
         @click="$emit('tapadd')"
       >
@@ -44,7 +44,7 @@ const { t } = useI18n()
       </div>
       <!-- Confirm Button -->
       <div v-if="confirmKey"
-        class="liu-hover nbb-confirm"
+        class="thus-hover nbb-confirm"
         @click="$emit('tapconfirm')"
       >
         <span>{{ t(confirmKey) }}</span>
@@ -115,7 +115,7 @@ const { t } = useI18n()
   color: var(--primary-color);
 }
 
-/** the container query below is following `@container liu-mc-container` in style.css */
+/** the container query below is following `@container thus-mc-container` in style.css */
 
 @container nb-container (min-width: 460px) {
   .nb-container > .nb-box {

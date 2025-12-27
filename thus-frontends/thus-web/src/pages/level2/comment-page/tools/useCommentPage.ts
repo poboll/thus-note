@@ -1,8 +1,8 @@
 import { onDeactivated, reactive, watch } from "vue"
 import type { CpData } from "./types"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import type { RouteLocationNormalizedLoaded } from "vue-router"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import valTool from "~/utils/basic/val-tool"
 
 export function useCommentPage() {
@@ -19,7 +19,7 @@ export function useCommentPage() {
 function listenRouteChange(
   dpData: CpData,
 ) {
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const { list } = dpData
 
   onDeactivated(() => {

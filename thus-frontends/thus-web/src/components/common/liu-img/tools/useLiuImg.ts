@@ -1,6 +1,6 @@
 import { computed, ref, useTemplateRef, type CSSProperties } from "vue";
 import type { LiuImgEmits, LiuImgProps, LiuImgStyles } from "./types";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 import valTool from "~/utils/basic/val-tool";
 import type { LiuImgData } from "~/types/types-view";
 

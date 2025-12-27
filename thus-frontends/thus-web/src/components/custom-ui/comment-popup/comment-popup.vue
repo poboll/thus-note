@@ -2,7 +2,7 @@
 import { initCommentPopup } from "./tools/useCommentPopup"
 import CommentCard from "~/components/level2/comment-card/comment-card.vue";
 import CommentEditor from "~/components/editors/comment-editor/comment-editor.vue";
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import { useI18n } from "vue-i18n";
 import { useCpDropZone } from "./tools/useCpDropZone"
 import { defineAsyncComponent } from "vue"
@@ -55,7 +55,7 @@ const onTapTopFooterBtn = () => {
         shortcut="Esc"
         :distance="4"
       >
-        <div class="liu-hover cp-close-box" @click="onTapCancel">
+        <div class="thus-hover cp-close-box" @click="onTapCancel">
           <svg-icon name="close" class="cp-close-svg"
             :color="icon_color"
           ></svg-icon>
@@ -64,7 +64,7 @@ const onTapTopFooterBtn = () => {
       
 
       <div class="cp-top-footer">
-        <div class="liu-no-user-select cemtf-submit-btn" 
+        <div class="thus-no-user-select cemtf-submit-btn" 
           :class="{ 'cemtf-submit_disabled': !cpData.canSubmit }"
           v-show="cpData.rightTopBtn"
           @click.stop="onTapTopFooterBtn"

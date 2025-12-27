@@ -1,5 +1,5 @@
 import type { PropType } from "vue"
-import type { LiuTimeout } from "~/utils/basic/type-tool"
+import type { ThusTimeout } from "~/utils/basic/type-tool"
 
 type CustomBtnType = "main" | "other" | "transparent" | "pure"
 type CustomBtnSize = "normal" | "mini" | "common"
@@ -16,8 +16,8 @@ export interface CustomBtnProps {
 export interface CustomBtnData {
   enableLoading: boolean
   showLoading: boolean
-  showingTimeout: LiuTimeout
-  closingTimeout: LiuTimeout
+  showingTimeout: ThusTimeout
+  closingTimeout: ThusTimeout
   loadingColor?: string
 }
 

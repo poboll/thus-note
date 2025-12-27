@@ -11,7 +11,7 @@ import type {
 } from "./types-basic"
 import type { 
   LiuContent, 
-  LiuRemindMe, 
+  ThusRemindMe, 
   TagView, 
   LiuStateConfig,
   CollectionInfoType,
@@ -22,7 +22,7 @@ import type {
   AiCharacter,
   LiuIDEType,
 } from "./types-atom"
-import type { LiuFileStore, LiuImageStore } from "./index"
+import type { ThusFileStore, ThusImageStore } from "./index"
 import type { TipTapJSONContent } from "./types-editor"
 import type { EmojiData } from "./types-content"
 import type { 
@@ -57,13 +57,13 @@ export interface WorkspaceLocalTable extends BaseLocalTable {
   oState: OState
   owner: string
   name?: string
-  avatar?: LiuImageStore
+  avatar?: ThusImageStore
   config?: WorkspaceConfig
 }
 
 export interface MemberLocalTable extends BaseLocalTable {
   name?: string
-  avatar?: LiuImageStore
+  avatar?: ThusImageStore
   spaceId: string
   user: string
   oState: OState_3
@@ -86,14 +86,14 @@ export interface ContentLocalTable extends BaseLocalTable {
   storageState: StorageState
 
   title?: string
-  liuDesc?: LiuContent[]
-  images?: LiuImageStore[]
-  files?: LiuFileStore[]
+  thusDesc?: LiuContent[]
+  images?: ThusImageStore[]
+  files?: ThusFileStore[]
 
   calendarStamp?: number
   remindStamp?: number
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   emojiData: EmojiData
   parentThread?: string
   parentComment?: string
@@ -140,12 +140,12 @@ export interface DraftLocalTable extends BaseLocalTable {
   storageState?: StorageState
   
   title?: string
-  liuDesc?: TipTapJSONContent[]
-  images?: LiuImageStore[]
-  files?: LiuFileStore[]
+  thusDesc?: TipTapJSONContent[]
+  images?: ThusImageStore[]
+  files?: ThusFileStore[]
 
   whenStamp?: number
-  remindMe?: LiuRemindMe
+  remindMe?: ThusRemindMe
   tagIds?: string[]
   stateId?: string
   stateStamp?: number

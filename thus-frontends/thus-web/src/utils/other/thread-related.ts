@@ -1,7 +1,7 @@
 import { useWorkspaceStore } from "~/hooks/stores/useWorkspaceStore";
 import time from "../basic/time";
 import ider from "../basic/ider";
-import liuEnv from "../liu-env";
+import liuEnv from "../thus-env";
 import type { ContentLocalTable } from "~/types/types-table";
 import type { LiuContent } from "~/types/types-atom";
 
@@ -19,7 +19,7 @@ export function getDefaultThread(
 
   // 2. package new thread
   const now = time.getTime()
-  const liuDesc: LiuContent[] = [
+  const thusDesc: LiuContent[] = [
     { 
       content: [{ type: "text", text: inputTxt }], 
       type: "paragraph",
@@ -38,7 +38,7 @@ export function getDefaultThread(
     visScope: "DEFAULT",
     storageState: canISync ? "WAIT_UPLOAD" : "LOCAL",
     aiReadable: "Y",
-    liuDesc,
+    thusDesc,
 
     emojiData: { total: 0, system: [] },
 

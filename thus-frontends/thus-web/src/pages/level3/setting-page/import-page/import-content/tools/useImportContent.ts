@@ -1,10 +1,10 @@
 import { onDeactivated, ref, useTemplateRef } from "vue"
 import type { Ref } from "vue"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import type JSZip from "jszip"
 import cui from "~/components/custom-ui"
 import type { 
-  LiuJSZip,
+  ThusJSZip,
   ImportedAtom,
   ImportedAtom2,
 } from "./types"
@@ -12,7 +12,7 @@ import { parseOurJson } from "./our-json"
 import checker from "~/utils/other/checker"
 import valTool from "~/utils/basic/val-tool"
 import { loadIntoDB } from "./load-into-db"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import cfg from "~/config"
 import { getJSZip } from "../../../tools/get-jszip"
 
@@ -22,7 +22,7 @@ interface IcCtx {
 
 export function useImportContent() {
 
-  const { router } = useRouteAndLiuRouter()
+  const { router } = useRouteAndThusRouter()
   const list = ref<ImportedAtom2[]>([])
   const oursFileEl = useTemplateRef<HTMLInputElement>("oursFileEl")
   const ctx: IcCtx = {
@@ -100,9 +100,9 @@ async function loadZip(f: File, ctx: IcCtx) {
   let tmpAtom: ImportedAtom = {}
   const atoms: ImportedAtom[] = []
 
-  const sortedResults: LiuJSZip[] = []
+  const sortedResults: ThusJSZip[] = []
   results.forEach((relativePath, file) => {
-    const obj: LiuJSZip = {
+    const obj: ThusJSZip = {
       relativePath,
       file
     }

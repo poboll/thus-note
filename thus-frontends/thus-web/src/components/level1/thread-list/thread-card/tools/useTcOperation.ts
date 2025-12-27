@@ -1,7 +1,7 @@
 // 处理点击赞、收藏、评论分享等按钮
 
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
-import type { RouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
+import type { RouteAndThusRouter } from "~/routes/liu-router"
 import type { ThreadShow } from "~/types/types-content"
 import type { TcProps, TcEmits } from "./types"
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore"
@@ -18,7 +18,7 @@ import { createTagsFromTagShows } from "~/utils/system/tag-related"
 
 interface TcoCtx {
   props: TcProps
-  rr: RouteAndLiuRouter
+  rr: RouteAndThusRouter
   tsStore: ThreadShowStore
   wStore: WorkspaceStore
   emits: TcEmits
@@ -30,7 +30,7 @@ export function useTcOperation(
 ) {
 
   const wStore = useWorkspaceStore()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
   const tsStore = useThreadShowStore()
 
   const ctx: TcoCtx = {

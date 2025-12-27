@@ -1,11 +1,11 @@
 import { watch, reactive, onActivated } from "vue";
 import threadController from "~/utils/controllers/thread-controller/thread-controller";
 import type { TdData, TdProps, TdEmit, TdCtx } from "./types";
-import type { LiuTimeout } from "~/utils/basic/type-tool";
-import liuEnv from "~/utils/liu-env";
+import type { ThusTimeout } from "~/utils/basic/type-tool";
+import liuEnv from "~/utils/thus-env";
 import { CloudMerger } from "~/utils/cloud/CloudMerger";
 import type { SyncGet_ThreadData } from "~/types/cloud/sync-get/types";
-import liuUtil from "~/utils/liu-util";
+import liuUtil from "~/utils/thus-util";
 
 export function useThreadDetail(props: TdProps, emit: TdEmit) {
 
@@ -48,7 +48,7 @@ export function useThreadDetail(props: TdProps, emit: TdEmit) {
 }
 
 
-let emitTimeout: LiuTimeout
+let emitTimeout: ThusTimeout
 function emitThreadShow(
   ctx: TdCtx,
   instantly = false,

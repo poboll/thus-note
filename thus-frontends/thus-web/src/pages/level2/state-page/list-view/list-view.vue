@@ -9,7 +9,7 @@ import { useI18n } from 'vue-i18n';
 import { useKanbanColumns } from '../tools/useKanbanColumns';
 import type { MenuItem } from '~/components/common/liu-menu/tools/types';
 import LvColumn from "./lv-column/lv-column.vue";
-import liuApi from '~/utils/liu-api';
+import liuApi from '~/utils/thus-api';
 import { useListView } from "./tools/useListView"
 import middleBridge from '~/utils/middle-bridge';
 
@@ -111,7 +111,7 @@ const showScrollbarProperty = middleBridge.canShowScrollbarProperty()
 
           <!--状态标题 -->
           <div class="lv-state-box">
-            <div class="liu-no-user-select lv-state"
+            <div class="thus-no-user-select lv-state"
               :style="{ 
                 'color': item.colorShow,
               }"
@@ -133,22 +133,22 @@ const showScrollbarProperty = middleBridge.canShowScrollbarProperty()
 
             <!-- 更多 -->
             <!-- 原本有一个属性: :container="'#lv-column-header_' + item.id" -->
-            <LiuMenu
+            <ThusMenu
               :menu="MORE_ITEMS"
               placement="bottom-end"
               @tapitem="(event1: MenuItem, event2: number) => onTapMoreMenuItem(item.id, event1, event2)"
               @menushow="() => onMenuShow(item.id)"
               @menuhide="() => onMenuHide(item.id)"
             >
-              <div class="liu-hover lvch-btn">
+              <div class="thus-hover lvch-btn">
                 <svg-icon name="more" class="lvch-svg" 
                   :color="iconColor"
                 ></svg-icon>
               </div>
-            </LiuMenu>
+            </ThusMenu>
           
             <!-- 添加动态 -->
-            <div class="liu-hover lvch-btn"
+            <div class="thus-hover lvch-btn"
               @click="onTapAddThread(item.id)"
             >
               <svg-icon name="add" class="lvch-svg" 

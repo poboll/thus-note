@@ -20,7 +20,7 @@ interface LiuEnv {
   }
 }
 
-declare const LIU_ENV: LiuEnv
+declare const THUS_ENV: LiuEnv
 
 // document from wxpay: https://pay.weixin.qq.com/docs/merchant/apis/jsapi-payment/jsapi-transfer-payment.html
 // document from miniprogram: https://developers.weixin.qq.com/miniprogram/dev/component/web-view.html

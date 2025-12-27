@@ -2,13 +2,13 @@ import { reactive, watch, useTemplateRef, inject } from "vue"
 import type { BnbData } from "./types"
 import { useLayoutStore } from "~/views/useLayoutStore"
 import { storeToRefs } from "pinia"
-import { useRouteAndLiuRouter } from "~/routes/liu-router"
+import { useRouteAndThusRouter } from "~/routes/liu-router"
 import { useWindowSize, useResizeObserver, useDebounceFn } from "~/hooks/useVueUse"
 import { usePrefix } from "~/hooks/useCommon"
 import cfg from "~/config";
 import cui from '~/components/custom-ui';
 import { deviceChaKey } from "~/utils/provide-keys"
-import liuUtil from "~/utils/liu-util"
+import liuUtil from "~/utils/thus-util"
 import { useGlobalStateStore } from "~/hooks/stores/useGlobalStateStore"
 
 export function useBottomNaviBar() {
@@ -53,7 +53,7 @@ function initFunctions(
   bnbData: BnbData,
 ) {
   const layoutStore = useLayoutStore()
-  const rr = useRouteAndLiuRouter()
+  const rr = useRouteAndThusRouter()
 
   const onTapSearch = () => {
     cui.showSearchEditor({ type: "search" })
@@ -103,7 +103,7 @@ function listenToResize() {
 function listenToContext(
   bnbData: BnbData
 ) {
-  const { route } = useRouteAndLiuRouter()
+  const { route } = useRouteAndThusRouter()
   const layoutStore = useLayoutStore()
   const { sidebarWidth, sidebarStatus } = storeToRefs(layoutStore)
   const { width} = useWindowSize()
