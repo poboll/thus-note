@@ -1,37 +1,32 @@
 <script setup lang="ts">
 import RingLoader from "~/components/loaders/ring-loader/ring-loader.vue";
-import type { SmsStatus } from "~/types/types-view"
-import type { SmsButtonEmit } from "./tools/types"
-import { useSmsButton } from "./tools/useSmsButton"
-import { useI18n } from 'vue-i18n';
+import type { SmsStatus } from "~/types/types-view";
+import type { SmsButtonEmit } from "./tools/types";
+import { useSmsButton } from "./tools/useSmsButton";
+import { useI18n } from "vue-i18n";
 
-const status = defineModel<SmsStatus>("status", { required: true })
-const emit = defineEmits<SmsButtonEmit>()
+const status = defineModel<SmsStatus>({ required: true });
+const emit = defineEmits<SmsButtonEmit>();
 
-const {
-  sec,
-  onTapButton,
-} = useSmsButton(status, emit)
+const { sec, onTapButton } = useSmsButton(status, emit);
 
-const { t } = useI18n()
-
+const { t } = useI18n();
 </script>
 <template>
-  <div class="thus-no-user-select sms-button" 
-    :class="{ 
+  <div
+    class="thus-no-user-select sms-button"
+    :class="{
       'sms-button_disabled': status !== 'can_tap',
       'sms-button_loading': status === 'loading',
     }"
     @click.stop="onTapButton"
   >
     <RingLoader v-if="status === 'loading'" :size="20"></RingLoader>
-    <span v-else-if="status === 'can_tap'">{{ t('login.send_sms') }}</span>
+    <span v-else-if="status === 'can_tap'">{{ t("login.send_sms") }}</span>
     <span v-else-if="status === 'counting'">{{ sec }}</span>
   </div>
-
 </template>
 <style lang="scss" scoped>
-
 .sms-button {
   max-height: 60px;
   display: flex;
@@ -44,7 +39,7 @@ const { t } = useI18n()
   background-color: var(--card-bg);
   border: 1.4px solid var(--line-bottom);
   color: var(--primary-color);
-  transition: .15s;
+  transition: 0.15s;
   cursor: pointer;
   border-radius: 8px;
 }
@@ -59,7 +54,7 @@ const { t } = useI18n()
   cursor: default;
 }
 
-@media(hover: hover) {
+@media (hover: hover) {
   .sms-button:hover {
     background-color: var(--card-hover);
   }
@@ -71,5 +66,4 @@ const { t } = useI18n()
     font-size: var(--mini-font);
   }
 }
-
 </style>

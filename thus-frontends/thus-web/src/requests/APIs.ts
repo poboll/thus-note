@@ -3,25 +3,28 @@ import liuEnv from "~/utils/thus-env"
 const env = liuEnv.getEnv()
 const d = env.API_DOMAIN ?? ""
 
+// 确保 API_DOMAIN 以 / 结尾
+const apiDomain = d.endsWith('/') ? d : d + '/'
+
 export default {
-  TIME: d + `hello-world`,
-  LOGIN: d + `user-login`,
-  LOGOUT: d + `user-settings`,
-  USER_ENTER: d + `user-settings`,
-  USER_LATEST: d + `user-settings`,
-  USER_SET: d + `user-settings`,
-  USER_MEMBERSHIP: d + `user-settings`,
-  WECHAT_BIND: d + `user-settings`,
-  SUBSCRIBE_PLAN: d + `subscribe-plan`,
-  REQUEST_REFUND: d + `subscribe-plan`,
-  UPLOAD_FILE: d + `file-set`,
-  SYNC_SET: d + `sync-set`,
-  SYNC_GET: d + `sync-get`,
-  SYNC_OPERATE: d + `sync-operate`,
-  OPEN_CONNECT: d + `open-connect`,
-  PAYMENT_ORDER: d + `payment-order`,
-  SERVICE_POLY: d + `service-poly`,
-  BIND_DATA: d + `user-settings`,
-  AUTHORIZE: d + `user-settings`,
-  AI_CONSOLE: d + `user-settings`,
+  TIME: apiDomain + `hello-world`,
+  LOGIN: apiDomain + `user-login`,
+  LOGOUT: apiDomain + `user-settings`,
+  USER_ENTER: apiDomain + `user-settings`,
+  USER_LATEST: apiDomain + `user-settings`,
+  USER_SET: apiDomain + `user-settings`,
+  USER_MEMBERSHIP: apiDomain + `user-settings`,
+  WECHAT_BIND: apiDomain + `user-settings`,
+  SUBSCRIBE_PLAN: apiDomain + `subscribe-plan`,
+  REQUEST_REFUND: apiDomain + `subscribe-plan`,
+  UPLOAD_FILE: apiDomain + `file-set`,
+  SYNC_SET: apiDomain + `sync-set`,
+  SYNC_GET: apiDomain + `sync-get`,
+  SYNC_OPERATE: apiDomain + `sync-operate`,
+  OPEN_CONNECT: apiDomain + `open-connect`,
+  PAYMENT_ORDER: apiDomain + `payment-order`,
+  SERVICE_POLY: apiDomain + `service-poly`,
+  BIND_DATA: apiDomain + `user-settings`,
+  AUTHORIZE: apiDomain + `user-settings`,
+  AI_CONSOLE: apiDomain + `user-settings`,
 }

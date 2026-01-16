@@ -1,31 +1,25 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { useWechatBind } from './tools/useWechatBind';
-import AgreeBox from '~/components/common/agree-box/agree-box.vue';
+import { useI18n } from "vue-i18n";
+import { useWechatBind } from "./tools/useWechatBind";
+import AgreeBox from "~/components/common/agree-box/agree-box.vue";
 
-const { 
-  wbData,
-  onTapBtn1,
-  onTapBtn2,
-} = useWechatBind()
+const { wbData, onTapBtn1, onTapBtn2 } = useWechatBind();
 
-const { t } = useI18n()
-
+const { t } = useI18n();
 </script>
 <template>
   <div class="thus-simple-page">
-
     <div class="thus-mc-container">
-
       <PlaceholderView :p-state="wbData.pageState"></PlaceholderView>
 
-      <div v-show="wbData.pageState < 0" 
+      <div
+        v-show="wbData.pageState < 0"
         class="thus-no-user-select thus-mc-box"
       >
-
         <div class="ap-icon-box">
-          <svg-icon v-if="wbData.status === 'bound' || wbData.status === 'logged'"
-            name="emojis-clapping_hands_color_default" 
+          <svg-icon
+            v-if="wbData.status === 'bound' || wbData.status === 'logged'"
+            name="emojis-clapping_hands_color_default"
             class="ap-icon"
             :cover-fill-stroke="false"
           ></svg-icon>
@@ -33,55 +27,84 @@ const { t } = useI18n()
         </div>
 
         <div class="ap-title">
-          <span v-if="wbData.status === 'bound'">{{ t('login.bound') }}</span>
-          <span v-else-if="wbData.status === 'logged'">{{ t('login.logged') }}</span>
-          <span v-else-if="wbData.status === 'logout' || wbData.status === 'wxmini-login'">{{ t('login.wechat_login') }}</span>
-          <span v-else>{{ t('login.bind_wechat') }}</span>
+          <span v-if="wbData.status === 'bound'">{{ t("login.bound") }}</span>
+          <span v-else-if="wbData.status === 'logged'">{{
+            t("login.logged")
+          }}</span>
+          <span
+            v-else-if="
+              wbData.status === 'logout' || wbData.status === 'wxmini-login'
+            "
+            >{{ t("login.wechat_login") }}</span
+          >
+          <span v-else>{{ t("login.bind_wechat") }}</span>
         </div>
 
-        <div class="ap-mobile-virtual" 
+        <div
+          class="ap-mobile-virtual"
           v-if="wbData.status === 'logout' || wbData.status === 'wxmini-login'"
         ></div>
 
         <div class="ap-btn-container">
-
-          <div v-if="wbData.status === 'logout' || wbData.status === 'wxmini-login'" class="ap-mobile-agree">
-            <AgreeBox v-model:agree="wbData.agreeRule" be-center
+          <div
+            v-if="
+              wbData.status === 'logout' || wbData.status === 'wxmini-login'
+            "
+            class="ap-mobile-agree"
+          >
+            <AgreeBox
+              v-model="wbData.agreeRule"
+              be-center
               :shaking-num="wbData.agreeShakingNum"
             ></AgreeBox>
           </div>
 
           <!-- Main Button -->
           <custom-btn class="ap-btn ap-ok-btn" @click="onTapBtn1">
-            <span v-if="wbData.status === 'logout' || wbData.status === 'wxmini-login'">{{ t('login.wechat_one_login') }}</span>
-            <span v-else-if="wbData.status === 'waiting'">{{ t('login.bind_instantly') }}</span>
-            <span v-else-if="wbData.status === 'logged' && wbData.pageName === 'wechat-bind'">{{ t('login.lets_chat') }}</span>
-            <span v-else>{{ t('common.back') }}</span>
+            <span
+              v-if="
+                wbData.status === 'logout' || wbData.status === 'wxmini-login'
+              "
+              >{{ t("login.wechat_one_login") }}</span
+            >
+            <span v-else-if="wbData.status === 'waiting'">{{
+              t("login.bind_instantly")
+            }}</span>
+            <span
+              v-else-if="
+                wbData.status === 'logged' && wbData.pageName === 'wechat-bind'
+              "
+              >{{ t("login.lets_chat") }}</span
+            >
+            <span v-else>{{ t("common.back") }}</span>
           </custom-btn>
 
           <!-- Secondary Button -->
-          <custom-btn v-if="wbData.status === 'logout'" 
-            type="pure" class="ap-btn" @click="onTapBtn2"
+          <custom-btn
+            v-if="wbData.status === 'logout'"
+            type="pure"
+            class="ap-btn"
+            @click="onTapBtn2"
           >
-            <span>{{ t('login.other_way') }}</span>
+            <span>{{ t("login.other_way") }}</span>
           </custom-btn>
-
         </div>
 
-        <div v-if="wbData.status === 'logout' || wbData.status === 'wxmini-login'" class="ap-desktop-agree">
-          <AgreeBox v-model:agree="wbData.agreeRule" be-center
+        <div
+          v-if="wbData.status === 'logout' || wbData.status === 'wxmini-login'"
+          class="ap-desktop-agree"
+        >
+          <AgreeBox
+            v-model="wbData.agreeRule"
+            be-center
             :shaking-num="wbData.agreeShakingNum"
           ></AgreeBox>
         </div>
-
       </div>
-
     </div>
-
   </div>
 </template>
 <style scoped lang="scss">
-
 .thus-mc-box {
   display: flex;
   flex-direction: column;
@@ -105,7 +128,7 @@ const { t } = useI18n()
   .ap-div-icon {
     width: 100px;
     height: 100px;
-    background-image: url('/images/third-party/wechat.png');
+    background-image: url("/images/third-party/wechat.png");
     background-size: contain;
   }
 }
@@ -157,7 +180,6 @@ const { t } = useI18n()
 
 /** for wide screen */
 @media screen and (min-width: 590px) {
-
   .ap-icon-box {
     margin-block-end: min(20%, 100px);
   }
@@ -198,6 +220,4 @@ const { t } = useI18n()
     margin-block-end: 0;
   }
 }
-
-
 </style>

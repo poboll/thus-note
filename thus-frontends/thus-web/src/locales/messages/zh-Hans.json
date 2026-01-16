@@ -1,7 +1,7 @@
 {
   "hello": {
     "appName": "如是",
-  "login_title": "登录 - 如是"
+    "login_title": "登录 - 如是"
   },
   "common": {
     "confirm": "确认",
@@ -198,8 +198,12 @@
   "login": {
     "email": "Email",
     "email_ph": "你的邮箱地址",
+    "password_ph": "请输入密码",
     "phone_ph": "请输入手机号",
     "third_party": "通过第三方",
+    "use_password_login": "使用密码登录",
+    "use_code_login": "使用验证码登录",
+    "password_required": "请输入密码",
     "continue_with_wechat": "使用微信登录",
     "continue_with_google": "使用 Google 登录",
     "continue_with_github": "使用 GitHub 登录",

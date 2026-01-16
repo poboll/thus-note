@@ -1,66 +1,59 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import type { MenuItem } from "./tools/types"
-import { useThusMenu } from './tools/useThusMenu'
-import { liumenu_props } from "./tools/types"
-import type { SimpleFunc } from "~/utils/basic/type-tool"
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import type { MenuItem } from "./tools/types";
+import { useThusMenu } from "./tools/useLiuMenu";
+import { liumenu_props } from "./tools/types";
+import type { SimpleFunc } from "~/utils/basic/type-tool";
 // 【待完善项】因为是 Menu 选单，应该可以用 Keyboard 的上下键来选择
 
-const props = defineProps(liumenu_props)
+const props = defineProps(liumenu_props);
 const emit = defineEmits<{
-  "tapitem": [item: MenuItem, index: number]
-  "menushow": []
-  "menuhide": []
-}>()
+  tapitem: [item: MenuItem, index: number];
+  menushow: [];
+  menuhide: [];
+}>();
 
-const showMask = ref(false)
-const hasIcon = computed(() => props.menu.some(v => !!v.iconName))
-const defaultColor = "var(--main-normal)"
-const { t } = useI18n()
-const { 
-  maskEl,
-  connectMaskEl,
-  disconnectMaskEl,
-  onTouchEndMask,
-} = useThusMenu(props)
+const showMask = ref(false);
+const hasIcon = computed(() => props.menu.some((v) => !!v.iconName));
+const defaultColor = "var(--main-normal)";
+const { t } = useI18n();
+const { maskEl, connectMaskEl, disconnectMaskEl, onTouchEndMask } =
+  useThusMenu(props);
 
 const onTapItem = (item: MenuItem, index: number, hide: SimpleFunc) => {
-  if(props.hasCheckbox && item.disabled) {
-    return
-  } 
-  emit("tapitem", item, index)
-  if(props.autoHideAfterTappingItem) {
-    hide()
+  if (props.hasCheckbox && item.disabled) {
+    return;
   }
-}
+  emit("tapitem", item, index);
+  if (props.autoHideAfterTappingItem) {
+    hide();
+  }
+};
 
 const onMenuShow = (e: any) => {
-  emit("menushow")
-  if(props.allowMask) showMask.value = true
-  connectMaskEl()
-}
+  emit("menushow");
+  if (props.allowMask) showMask.value = true;
+  connectMaskEl();
+};
 
 const onMenuHide = () => {
-  emit("menuhide")
-  if(props.allowMask) showMask.value = false
-  disconnectMaskEl()
-}
-
-
+  emit("menuhide");
+  if (props.allowMask) showMask.value = false;
+  disconnectMaskEl();
+};
 </script>
 <template>
-
   <Teleport v-if="allowMask && showMask" to="body">
-    <div 
+    <div
       ref="maskEl"
-      class="lm-mask" 
+      class="lm-mask"
       @click.stop.prevent="() => {}"
       @touchend.stop.prevent="onTouchEndMask"
     />
   </Teleport>
 
-  <VDropdown 
+  <VDropdown
     :showTriggers="showTriggers"
     :hideTriggers="hideTriggers"
     :placement="placement"
@@ -69,35 +62,36 @@ const onMenuHide = () => {
     @show="onMenuShow"
     @hide="onMenuHide"
   >
-
     <template #default>
       <div @click.stop.prevent="() => {}">
         <slot></slot>
       </div>
     </template>
-    
+
     <template #popper="{ hide }">
-      <div class="menu-container"
+      <div
+        class="menu-container"
         :style="{ 'min-width': minWidthStr ? minWidthStr : undefined }"
       >
-
         <template v-for="(item, index) in menu" :key="item.text_key">
-        
-          <div class="menu-item"
+          <div
+            class="menu-item"
             :class="{ 'menu-item_disabled': item.disabled }"
             @click="onTapItem(item, index, hide)"
           >
-          
             <div v-if="hasIcon" class="mi-icon-box">
-              <SvgIcon v-if="item.iconName" :name="item.iconName"
+              <SvgIcon
+                v-if="item.iconName"
+                :name="item.iconName"
                 class="mi-icon"
                 :color="item.color ? item.color : defaultColor"
               ></SvgIcon>
             </div>
-  
-            <div class="mi-title"
+
+            <div
+              class="mi-title"
               :class="{ 'mi-title_long': hasIcon || hasCheckbox }"
-              :style="{ 'color': item.color ? item.color : defaultColor }"
+              :style="{ color: item.color ? item.color : defaultColor }"
             >
               <span>{{ t(item.text_key) }}</span>
             </div>
@@ -110,29 +104,25 @@ const onMenuHide = () => {
               :circleSize="10.6"
               checked-color="var(--cool-bg)"
             ></ThusCheckbox>
-
           </div>
-        
         </template>
-
 
         <div class="menu-footer" v-if="moreLink">
           <a class="menu-footer-link" :href="moreLink" target="_blank">
-            <SvgIcon name="info" class="menu-info-icon"
+            <SvgIcon
+              name="info"
+              class="menu-info-icon"
               color="var(--main-note)"
             ></SvgIcon>
-            <span>{{ t('common.learn_more') }}</span>
+            <span>{{ t("common.learn_more") }}</span>
           </a>
         </div>
-
       </div>
     </template>
-
   </VDropdown>
 </template>
 
 <style lang="scss" scoped>
-
 .lm-mask {
   position: fixed;
   width: 100vw;
@@ -143,11 +133,9 @@ const onMenuHide = () => {
   z-index: v-bind("maskZIndex");
   cursor: auto;
 }
-
 </style>
 
 <style lang="scss">
-
 .menu-container {
   max-width: 90vw;
   display: flex;
@@ -163,7 +151,7 @@ const onMenuHide = () => {
     margin-bottom: 4px;
     border: 0;
     border-radius: 4px;
-    transition: .15s;
+    transition: 0.15s;
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -177,16 +165,16 @@ const onMenuHide = () => {
       width: 100%;
       height: 100%;
       content: "";
-      transition: .15s;
+      transition: 0.15s;
       opacity: 0;
     }
 
     &:hover::before {
-      opacity: .07;
+      opacity: 0.07;
     }
 
     &:active::before {
-      opacity: .11;
+      opacity: 0.11;
     }
 
     .mi-icon-box {
@@ -219,11 +207,10 @@ const onMenuHide = () => {
     .mi-title_long {
       padding-inline-end: 8px;
     }
-
   }
 
   .menu-item_disabled {
-    opacity: .6;
+    opacity: 0.6;
     cursor: not-allowed;
   }
 
@@ -246,17 +233,15 @@ const onMenuHide = () => {
     height: 16px;
     margin-inline-end: 4px;
   }
-
 }
 
-@media(hover: hover) {
+@media (hover: hover) {
   .menu-container {
     .menu-footer-link:hover {
       text-decoration: underline;
     }
   }
 }
-
 
 /** 覆盖原 floating-vue 的 css */
 .v-popper--theme-liu-menu {
@@ -274,9 +259,5 @@ const onMenuHide = () => {
   .v-popper__arrow-inner {
     border-color: var(--card-bg);
   }
-
 }
-
-
-
 </style>

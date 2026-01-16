@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import SmsButton from '~/components/common/sms-button/sms-button.vue';
-import AgreeBox from '~/components/common/agree-box/agree-box.vue';
-import { useI18n } from 'vue-i18n';
+import SmsButton from "~/components/common/sms-button/sms-button.vue";
+import AgreeBox from "~/components/common/agree-box/agree-box.vue";
+import { useI18n } from "vue-i18n";
 import { useLpMain } from "./tools/useLpMain";
-import { type LpmEmit, lpmProps } from "./tools/types"
+import { type LpmEmit, lpmProps } from "./tools/types";
 
-const props = defineProps(lpmProps)
-const emit = defineEmits<LpmEmit>()
+const props = defineProps(lpmProps);
+const emit = defineEmits<LpmEmit>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 const {
   lpSelectsEl,
   lpEmailInput,
   lpPhoneInput,
   lpSmsInput,
+  lpPasswordInput,
   lpmData,
   onTapSelect,
   onEmailEnter,
@@ -23,48 +24,68 @@ const {
   onTapFinishForSMS,
   onTapThirdParty,
   onToggleEmailPhone,
-} = useLpMain(props, emit)
-
+  onToggleEmailLoginMethod,
+} = useLpMain(props, emit);
 </script>
 <template>
-
   <!-- Big Title: Login -->
   <div class="thus-no-user-select lpm-title">
-    <span>{{ t('common.login') }}</span>
+    <span>{{ t("common.login") }}</span>
   </div>
 
   <div class="lpm-selects" ref="lpSelectsEl">
-
     <!-- Email or Phone -->
-    <div class="thus-no-user-select lpms-item lps-item-1" 
+    <div
+      class="thus-no-user-select lpms-item lps-item-1"
       @click.stop="onTapSelect(1)"
       :class="{ 'lpms-item_active': lpmData.current === 1 }"
     >
-      <span v-if="lpmData.btnOne === 'phone'">{{ t('login.login_with_phone') }}</span>
-      <span v-else>{{ t('login.login_with_email') }}</span>
+      <span v-if="lpmData.btnOne === 'phone'">{{
+        t("login.login_with_phone")
+      }}</span>
+      <span v-else>{{ t("login.login_with_email") }}</span>
     </div>
 
     <!-- Third Party -->
-    <div class="thus-no-user-select lpms-item lps-item-2" 
-      @click.stop="onTapSelect(2)" 
+    <div
+      class="thus-no-user-select lpms-item lps-item-2"
+      @click.stop="onTapSelect(2)"
       :class="{ 'lpms-item_active': lpmData.current === 2 }"
     >
-      <span>{{ t('login.third_party') }}</span>
+      <span>{{ t("login.third_party") }}</span>
     </div>
 
     <!-- Indicator -->
-    <div v-if="lpmData.indicatorData.width !== '0px'" class="lpms-indicator"></div>
-
+    <div
+      v-if="lpmData.indicatorData.width !== '0px'"
+      class="lpms-indicator"
+    ></div>
   </div>
 
   <!-- email view -->
-  <div class="lp-view" v-liu-show="lpmData.current === 1 && lpmData.btnOne === 'email'">
-
-    <input class="lp-email-input" type="email" 
-      :placeholder="t('login.email_ph')" 
+  <div
+    class="lp-view"
+    v-liu-show="lpmData.current === 1 && lpmData.btnOne === 'email'"
+  >
+    <input
+      class="lp-email-input"
+      type="email"
+      :placeholder="t('login.email_ph')"
       v-model="lpmData.emailVal"
       id="login-email"
       ref="lpEmailInput"
+      @keyup.enter.exact="onEmailEnter"
+    />
+
+    <!-- Password Input for Password Login -->
+    <input
+      v-if="lpmData.emailLoginMethod === 'password'"
+      class="lp-password-input"
+      type="password"
+      :placeholder="t('login.password_ph')"
+      v-model="lpmData.passwordVal"
+      id="login-password"
+      ref="lpPasswordInput"
       @keyup.enter.exact="onEmailEnter"
     />
 
@@ -74,30 +95,46 @@ const {
       :is-loading="isSendingEmail"
       @click="onEmailEnter"
     >
-      <span>{{ t('common.confirm') }}</span>
+      <span>{{
+        lpmData.emailLoginMethod === "password"
+          ? t("common.login")
+          : t("common.confirm")
+      }}</span>
       <span v-show="!isSendingEmail"> ↵</span>
     </CustomBtn>
 
-    <AgreeBox v-model:agree="lpmData.agreeRule"
+    <AgreeBox
+      v-model="lpmData.agreeRule"
       class="lpm-rule-box"
-      :shaking-num="lpmData.agreeShakingNum"
+      :shakingNum="lpmData.agreeShakingNum"
     ></AgreeBox>
+
+    <!-- Toggle between Password and Verification Code Login -->
+    <div v-if="lpmData.emailEnabled" class="thus-no-user-select lpm-change-box">
+      <div class="lpm-change-btn" @click.stop="onToggleEmailLoginMethod">
+        <span v-if="lpmData.emailLoginMethod === 'code'">{{
+          t("login.use_password_login")
+        }}</span>
+        <span v-else>{{ t("login.use_code_login") }}</span>
+      </div>
+    </div>
 
     <div v-if="lpmData.phoneEnabled" class="thus-no-user-select lpm-change-box">
       <div class="lpm-change-btn" @click.stop="onToggleEmailPhone">
-        <span>{{ t('login.turn_into_phone') }}</span>
+        <span>{{ t("login.turn_into_phone") }}</span>
       </div>
     </div>
-  
   </div>
 
   <!-- phone view -->
-  <div class="lp-view" 
+  <div
+    class="lp-view"
     v-liu-show="lpmData.current === 1 && lpmData.btnOne === 'phone'"
   >
-
-    <input class="lp-phone-input" type="tel" 
-      :placeholder="t('login.phone_ph')" 
+    <input
+      class="lp-phone-input"
+      type="tel"
+      :placeholder="t('login.phone_ph')"
       v-model="lpmData.phoneVal"
       id="login-phone"
       ref="lpPhoneInput"
@@ -106,7 +143,9 @@ const {
     />
 
     <div class="lp-sms-bar">
-      <input class="lp-sms-input" type="text" 
+      <input
+        class="lp-sms-input"
+        type="text"
         :placeholder="t('login.sms_ph')"
         id="login-sms"
         v-model="lpmData.smsVal"
@@ -115,10 +154,10 @@ const {
         maxlength="6"
       />
 
-      <SmsButton v-model:status="lpmData.smsStatus"
+      <SmsButton
+        v-model="lpmData.smsStatus"
         @click="onTapGettingSMSCode"
       ></SmsButton>
-
     </div>
 
     <CustomBtn
@@ -127,69 +166,73 @@ const {
       :is-loading="isLoggingByPhone"
       @click="onTapFinishForSMS"
     >
-      <span>{{ t('common.confirm') }}</span>
+      <span>{{ t("common.confirm") }}</span>
       <span v-show="!isLoggingByPhone"> ↵</span>
     </CustomBtn>
 
-    <AgreeBox v-model:agree="lpmData.agreeRule"
+    <AgreeBox
+      v-model="lpmData.agreeRule"
       class="lpm-rule-box"
-      :shaking-num="lpmData.agreeShakingNum"
+      :shakingNum="lpmData.agreeShakingNum"
     ></AgreeBox>
 
     <div v-if="lpmData.emailEnabled" class="thus-no-user-select lpm-change-box">
       <div class="lpm-change-btn" @click.stop="onToggleEmailPhone">
-        <span>{{ t('login.turn_into_email') }}</span>
+        <span>{{ t("login.turn_into_email") }}</span>
       </div>
     </div>
-  
   </div>
 
   <!-- third-party view -->
 
   <div class="lp-view" v-liu-show="lpmData.current === 2">
-
     <!-- wechat -->
-    <div v-if="lpmData.wechatEnabled"
-      class="thus-no-user-select thus-hover lpv-btn" 
+    <div
+      v-if="lpmData.wechatEnabled"
+      class="thus-no-user-select thus-hover lpv-btn"
       @click.stop="onTapThirdParty('wechat')"
     >
       <div class="lpv-icon">
         <div class="lpv-icon-div"></div>
       </div>
       <div class="lpv-text">
-        <span>{{ t('login.continue_with_wechat') }}</span>
+        <span>{{ t("login.continue_with_wechat") }}</span>
       </div>
     </div>
 
     <!-- google -->
-    <div v-if="lpmData.googleEnabled"
-      class="thus-no-user-select thus-hover lpv-btn" 
+    <div
+      v-if="lpmData.googleEnabled"
+      class="thus-no-user-select thus-hover lpv-btn"
       @click.stop="onTapThirdParty('google')"
     >
       <div class="lpv-icon">
-        <svg-icon name="logos-google-color" 
+        <svg-icon
+          name="logos-google-color"
           :cover-fill-stroke="false"
           class="lpv-svg-icon"
         ></svg-icon>
       </div>
       <div class="lpv-text">
-        <span>{{ t('login.continue_with_google') }}</span>
+        <span>{{ t("login.continue_with_google") }}</span>
       </div>
     </div>
 
     <!-- github -->
-    <div v-if="lpmData.githubEnabled"
-      class="thus-no-user-select thus-hover lpv-btn" 
+    <div
+      v-if="lpmData.githubEnabled"
+      class="thus-no-user-select thus-hover lpv-btn"
       @click.stop="onTapThirdParty('github')"
     >
       <div class="lpv-icon">
-        <svg-icon name="logos-github" 
+        <svg-icon
+          name="logos-github"
           color="var(--main-text)"
           class="lpv-svg-icon"
         ></svg-icon>
       </div>
       <div class="lpv-text">
-        <span>{{ t('login.continue_with_github') }}</span>
+        <span>{{ t("login.continue_with_github") }}</span>
       </div>
     </div>
 
@@ -207,18 +250,15 @@ const {
     </div> -->
 
     <div class="lpm-rule-box-2">
-      <AgreeBox v-model:agree="lpmData.agreeRule"
-        :shaking-num="lpmData.agreeShakingNum"
-        be-center
+      <AgreeBox
+        v-model="lpmData.agreeRule"
+        :shakingNum="lpmData.agreeShakingNum"
+        :beCenter="true"
       ></AgreeBox>
     </div>
-
   </div>
-
-
 </template>
 <style scoped lang="scss">
-
 .lpm-title {
   font-size: var(--big-word-style);
   font-weight: 600;
@@ -237,14 +277,14 @@ const {
   font-size: var(--desc-font);
   font-weight: 700;
   color: var(--main-code);
-  transition: .15s;
+  transition: 0.15s;
   cursor: pointer;
   margin-inline-end: 16px;
   box-sizing: border-box;
 }
 
 .lpms-item_active {
-  color: var(--primary-color); 
+  color: var(--primary-color);
 }
 
 .lpms-indicator {
@@ -255,10 +295,9 @@ const {
   height: 3px;
   background-color: var(--primary-color);
   border-radius: 6px;
-  transition: .3s;
+  transition: 0.3s;
   pointer-events: none;
 }
-
 
 .lp-view {
   width: 100%;
@@ -275,7 +314,9 @@ const {
   position: relative;
 }
 
-.lp-email-input, .lp-phone-input {
+.lp-email-input,
+.lp-phone-input,
+.lp-password-input {
   box-sizing: border-box;
   width: 100%;
   padding: 16px 24px;
@@ -290,10 +331,11 @@ const {
     color: var(--main-note);
   }
 
-  /** 消除自动填入时的样式，参考 
-  * https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied
-  **/
-  &:-webkit-autofill, &:-webkit-autofill:focus {
+  /** 消除自动填入时的样式，参考
+   * https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied
+   **/
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus {
     transition: background-color 0s 600000s, color 0s 600000s;
     -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset;
   }
@@ -333,7 +375,8 @@ const {
     color: var(--main-note);
   }
 
-  &:-webkit-autofill, &:-webkit-autofill:focus {
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus {
     transition: background-color 0s 600000s, color 0s 600000s;
     -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset;
   }
@@ -358,9 +401,8 @@ const {
   color: var(--primary-color);
   cursor: pointer;
   padding-block-end: 12px;
-  transition: .15s;
+  transition: 0.15s;
 }
-
 
 .lpm-rule-box-2 {
   width: 100%;
@@ -369,11 +411,10 @@ const {
   position: relative;
 }
 
-
-.lp-email-btn, .lp-phone-finish-btn {
+.lp-email-btn,
+.lp-phone-finish-btn {
   white-space: pre-wrap;
 }
-
 
 .lpv-btn {
   width: 100%;
@@ -406,7 +447,7 @@ const {
   .lpv-icon-div {
     width: 27px;
     height: 27px;
-    background-image: url('/images/third-party/wechat.png');
+    background-image: url("/images/third-party/wechat.png");
     background-size: contain;
   }
 }
@@ -418,19 +459,15 @@ const {
   text-align: center;
 }
 
-@media(hover: hover) {
+@media (hover: hover) {
   .lpm-change-btn:hover {
-    opacity: .75;
+    opacity: 0.75;
   }
 }
-
 
 // @media screen and (max-width: 590px) {
 //   .lpm-title {
 //     font-size: var(--head-font);
 //   }
 // }
-
-
-
 </style>
