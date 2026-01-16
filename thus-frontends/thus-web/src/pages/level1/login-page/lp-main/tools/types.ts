@@ -1,6 +1,8 @@
 import type { SmsStatus } from "~/types/types-view"
 import type { LoginByThirdParty } from "../../tools/types"
 
+export type EmailLoginMethod = "code" | "password"
+
 export interface LpmData {
   current: number
   showEmailSubmit: boolean
@@ -8,6 +10,7 @@ export interface LpmData {
   emailVal: string
   phoneVal: string
   smsVal: string
+  passwordVal: string
   indicatorData: {
     width: string
     left: string
@@ -21,6 +24,7 @@ export interface LpmData {
   agreeShakingNum: number
   emailEnabled: boolean
   phoneEnabled: boolean
+  emailLoginMethod: EmailLoginMethod
 }
 
 export interface LpmProps {
@@ -46,6 +50,7 @@ export const lpmProps = {
 
 export interface LpmEmit {
   (evt: "submitemail", email: string): void
+  (evt: "submitpassword", email: string, password: string): void
   (evt: "requestsmscode", phone: string): void
   (evt: "submitsmscode", phone: string, code: string): void
   (evt: "tapthirdparty", thirdParty: LoginByThirdParty): void

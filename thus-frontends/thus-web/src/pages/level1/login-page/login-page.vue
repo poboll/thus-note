@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import LpMain from "./lp-main/lp-main.vue"
-import LpCode from "./lp-code/lp-code.vue"
+import LpMain from "./lp-main/lp-main.vue";
+import LpCode from "./lp-code/lp-code.vue";
 import LpAccounts from "./lp-accounts/lp-accounts.vue";
 import OpenWithBrowser from "./open-with-browser/open-with-browser.vue";
-import { useLoginPage } from "./tools/useLoginPage"
-import { useI18n } from 'vue-i18n';
+import { useLoginPage } from "./tools/useLoginPage";
+import { useI18n } from "vue-i18n";
 
-const { t } = useI18n()
-const { 
+const { t } = useI18n();
+const {
   lpData,
   showBackBtn,
   onEmailSubmitted,
+  onSubmitPassword,
   onSubmitCode,
   onBackFromCode,
   onTapLoginViaThirdParty,
@@ -18,44 +19,42 @@ const {
   onTapBack,
   onTapRequestSmsCode,
   onTapFinishForPhone,
-} = useLoginPage()
-
+} = useLoginPage();
 </script>
 <template>
-
   <!-- 顶部: 返回导航栏 -->
   <div class="lp-navi-bar">
-
-
     <div class="lpn-box" v-liu-show="showBackBtn">
-
       <!-- 返回按钮 -->
-      <div class="thus-no-user-select thus-hover lpn-back" @click.stop="onTapBack">
+      <div
+        class="thus-no-user-select thus-hover lpn-back"
+        @click.stop="onTapBack"
+      >
         <div class="lpn-back-icon">
-          <svg-icon name="arrow-back700" class="lpn-back-svg" 
+          <svg-icon
+            name="arrow-back700"
+            class="lpn-back-svg"
             color="var(--main-normal)"
           ></svg-icon>
         </div>
-        <span>{{ t('common.back') }}</span>
+        <span>{{ t("common.back") }}</span>
       </div>
-
     </div>
-
   </div>
 
-
   <!-- 主体 -->
-  <div class="lp-body" 
-    v-if="lpData.enable"
-  >
-
+  <div class="lp-body" v-if="lpData.enable">
     <!-- 顶部占位 -->
     <div class="lp-virtual lp-virtual-first"></div>
 
     <!-- 主页 -->
-    <div class="lp-container lp-container_main" v-liu-show="lpData.view === 'main'">
+    <div
+      class="lp-container lp-container_main"
+      v-liu-show="lpData.view === 'main'"
+    >
       <LpMain
         @submitemail="onEmailSubmitted"
+        @submitpassword="onSubmitPassword"
         @requestsmscode="onTapRequestSmsCode"
         @submitsmscode="onTapFinishForPhone"
         @tapthirdparty="onTapLoginViaThirdParty"
@@ -67,7 +66,8 @@ const {
 
     <!-- 输入验证码页 -->
     <div class="lp-container" v-liu-show="lpData.view === 'code'">
-      <LpCode :email="lpData.email"
+      <LpCode
+        :email="lpData.email"
         :clear-code-num="lpData.clearCodeNum"
         @submitcode="onSubmitCode"
         @back="onBackFromCode"
@@ -77,25 +77,22 @@ const {
 
     <!-- 选择账号页 -->
     <div class="lp-container" v-liu-show="lpData.view === 'accounts'">
-      <LpAccounts 
+      <LpAccounts
         :accounts="lpData.accounts"
         :is-shown="lpData.view === 'accounts'"
         :is-selecting-account="lpData.isSelectingAccount"
         @confirm="onSelectedAnAccount"
       ></LpAccounts>
     </div>
-    
+
     <!-- 底部占位，形成上下对称 -->
     <div class="lp-virtual"></div>
-
   </div>
 
   <!-- 使用浏览器打开的提示 -->
   <open-with-browser v-if="lpData.openWithBrowser"></open-with-browser>
-
 </template>
 <style scoped lang="scss">
-
 .lp-navi-bar {
   width: 100%;
   height: 90px;
@@ -156,7 +153,7 @@ const {
 .lp-virtual {
   width: 100%;
   height: 90px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .lp-virtual-first {
@@ -174,5 +171,4 @@ const {
   max-width: 450px;
   margin-block-start: -50px;
 }
-
 </style>

@@ -20,6 +20,7 @@ export function useLpMain(
   const lpEmailInput = ref<HTMLInputElement>()
   const lpPhoneInput = ref<HTMLInputElement>()
   const lpSmsInput = ref<HTMLInputElement>()
+  const lpPasswordInput = ref<HTMLInputElement>()
   const lpmData = reactive<LpmData>({
     current: 2,
     showEmailSubmit: false,
@@ -27,6 +28,7 @@ export function useLpMain(
     emailVal: "",
     phoneVal: "",
     smsVal: "",
+    passwordVal: "",
     indicatorData: {
       width: "0px",
       left: "0px",
@@ -40,23 +42,24 @@ export function useLpMain(
     agreeShakingNum: 0,
     emailEnabled: loginWays.includes("email"),
     phoneEnabled: loginWays.includes("phone"),
+    emailLoginMethod: "code",
   })
 
   const onTapSelect = async (newIndex: number) => {
     // 1. switch
     const oldIndex = lpmData.current
-    if(oldIndex === newIndex) return
+    if (oldIndex === newIndex) return
     lpmData.current = newIndex
 
     // 2. warning tip about duplicated accounts
-    if(lpmData.current === 1) {
+    if (lpmData.current === 1) {
       const res = await cui.showModal({
         title: "⚠️",
         content_key: "login.tip_1",
         confirm_key: "login.tip_2",
         isTitleEqualToEmoji: true,
       })
-      if(res.confirm) {
+      if (res.confirm) {
         lpmData.current = oldIndex
       }
     }
@@ -64,13 +67,13 @@ export function useLpMain(
 
   const calculateIndicator = () => {
     const parentEl = lpSelectsEl.value
-    if(!parentEl) return
+    if (!parentEl) return
     const newIndex = lpmData.current
     const q = `.lps-item-${newIndex}`
     const childEl = parentEl.querySelector(q)
-    if(!childEl) return
+    if (!childEl) return
     const info = liuUtil.getIndicatorLeftAndWidth(parentEl, childEl)
-    if(!info) return
+    if (!info) return
     lpmData.indicatorData = info
   }
 
@@ -97,31 +100,50 @@ export function useLpMain(
 
   // 监听输入是否符合
   watch(() => lpmData.emailVal, () => checkEmailInput(lpmData))
+  watch(() => lpmData.passwordVal, () => checkEmailAndPasswordInput(lpmData))
   watch(() => lpmData.phoneVal, () => checkPhoneAndSmsCodeInput(lpmData))
   watch(() => lpmData.smsVal, () => checkPhoneAndSmsCodeInput(lpmData))
 
   const _makeElBlur = (el: HTMLInputElement | undefined) => {
-    if(!el) return
+    if (!el) return
     el.blur()
   }
 
   const onEmailEnter = () => {
-    if(props.isSendingEmail) return
-    if(!lpmData.showEmailSubmit) return
-    if(!lpmData.agreeRule) {
+    if (props.isSendingEmail) return
+    if (!lpmData.showEmailSubmit) return
+    if (!lpmData.agreeRule) {
       lpmData.agreeShakingNum++
       return
     }
     const email = lpmData.emailVal.trim().toLowerCase()
-    emit("submitemail", email)
+
+    // 根据登录方式选择不同的处理
+    if (lpmData.emailLoginMethod === "password") {
+      // 密码登录
+      const password = lpmData.passwordVal
+      if (!password) {
+        cui.showModal({
+          title: "⚠️",
+          content_key: "login.password_required",
+          isTitleEqualToEmoji: true,
+          showCancel: false,
+        })
+        return
+      }
+      emit("submitpassword", email, password)
+    } else {
+      // 验证码登录
+      emit("submitemail", email)
+    }
     _makeElBlur(lpEmailInput.value)
   }
 
   const _toRequestSMSCode = (phone: string) => {
-    if(props.isLoggingByPhone || props.isSendingEmail) {
+    if (props.isLoggingByPhone || props.isSendingEmail) {
       return false
     }
-    if(!lpmData.agreeRule) {
+    if (!lpmData.agreeRule) {
       lpmData.agreeShakingNum++
       return false
     }
@@ -133,10 +155,10 @@ export function useLpMain(
   const onPhoneEnter = () => {
     const val = lpmData.phoneVal.trim()
     const res1 = liuUtil.check.isAllNumber(val, 11)
-    if(!res1) return
-    if(lpmData.smsStatus !== "can_tap") return
+    if (!res1) return
+    if (lpmData.smsStatus !== "can_tap") return
     const res2 = _toRequestSMSCode(`86_${val}`)
-    if(!res2) return
+    if (!res2) return
     _makeElBlur(lpPhoneInput.value)
     lpSmsInput.value?.focus()
   }
@@ -145,7 +167,7 @@ export function useLpMain(
     // 1. checking out phone number
     const val = lpmData.phoneVal.trim()
     const res1 = liuUtil.check.isAllNumber(val, 11)
-    if(!res1) {
+    if (!res1) {
       cui.showModal({
         title: "🫣",
         content_key: "login.err_10",
@@ -161,9 +183,9 @@ export function useLpMain(
 
   const onSmsEnter = () => {
     checkPhoneAndSmsCodeInput(lpmData)
-    if(!lpmData.showPhoneSubmit) return
-    if(props.isLoggingByPhone || props.isSendingEmail) return
-    if(!lpmData.agreeRule) {
+    if (!lpmData.showPhoneSubmit) return
+    if (props.isLoggingByPhone || props.isSendingEmail) return
+    if (!lpmData.agreeRule) {
       lpmData.agreeShakingNum++
       return
     }
@@ -180,14 +202,14 @@ export function useLpMain(
   // listen to smsSendingNum from login-page
   const smsSendingNum = toRef(props, "smsSendingNum")
   watch(smsSendingNum, (newV, oldV) => {
-    if(newV > oldV) {
+    if (newV > oldV) {
       lpmData.smsStatus = "counting"
     }
   })
 
 
   const onTapThirdParty = (thirdParty: LoginByThirdParty) => {
-    if(!lpmData.agreeRule) {
+    if (!lpmData.agreeRule) {
       lpmData.agreeShakingNum++
       return
     }
@@ -200,12 +222,21 @@ export function useLpMain(
     calculateIndicator()
   }
 
-  
+  const onToggleEmailLoginMethod = async () => {
+    lpmData.emailLoginMethod = lpmData.emailLoginMethod === "code" ? "password" : "code"
+    // 清空密码输入
+    lpmData.passwordVal = ""
+    await nextTick()
+    calculateIndicator()
+  }
+
+
   return {
     lpSelectsEl,
     lpEmailInput,
     lpPhoneInput,
     lpSmsInput,
+    lpPasswordInput,
     lpmData,
     onTapSelect,
     onEmailEnter,
@@ -215,6 +246,7 @@ export function useLpMain(
     onTapFinishForSMS,
     onTapThirdParty,
     onToggleEmailPhone,
+    onToggleEmailLoginMethod,
   }
 }
 
@@ -224,9 +256,27 @@ function checkEmailInput(
   const oldSubmit = lpmData.showEmailSubmit
   const emailVal = lpmData.emailVal
   const val = emailVal.trim()
-  
+
   const newSubmit = liuUtil.check.isEmail(val)
-  if(oldSubmit !== newSubmit) {
+  if (oldSubmit !== newSubmit) {
+    lpmData.showEmailSubmit = newSubmit
+  }
+}
+
+function checkEmailAndPasswordInput(
+  lpmData: LpmData,
+) {
+  const oldSubmit = lpmData.showEmailSubmit
+  const emailVal = lpmData.emailVal
+  const passwordVal = lpmData.passwordVal
+  const email = emailVal.trim()
+  const password = passwordVal.trim()
+
+  const emailValid = liuUtil.check.isEmail(email)
+  const passwordValid = password.length >= 6
+
+  const newSubmit = emailValid && passwordValid
+  if (oldSubmit !== newSubmit) {
     lpmData.showEmailSubmit = newSubmit
   }
 }
@@ -237,7 +287,7 @@ function checkPhoneAndSmsCodeInput(
   const phoneVal = lpmData.phoneVal
   const val = phoneVal.trim()
   const res1 = liuUtil.check.isAllNumber(val, 11)
-  if(!res1) {
+  if (!res1) {
     lpmData.showPhoneSubmit = false
     return
   }
@@ -245,7 +295,7 @@ function checkPhoneAndSmsCodeInput(
   const smsVal = lpmData.smsVal
   const val2 = smsVal.trim()
   const res2 = liuUtil.check.isAllNumber(val2, 6)
-  if(!res2) {
+  if (!res2) {
     lpmData.showPhoneSubmit = false
     return
   }
