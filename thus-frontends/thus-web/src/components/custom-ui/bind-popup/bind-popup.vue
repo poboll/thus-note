@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SmsButton from '~/components/common/sms-button/sms-button.vue';
-import { useI18n } from 'vue-i18n';
-import { initBindPopup } from './tools/useBindPopup';
+import SmsButton from "~/components/common/sms-button/sms-button.vue";
+import { useI18n } from "vue-i18n";
+import { initBindPopup } from "./tools/useBindPopup";
 
 const {
   emailInputRef,
@@ -14,27 +14,30 @@ const {
   onEnterFromFirstInput,
   onEnterFromSecondInput,
   onTapGettingCode,
-} = initBindPopup()
+} = initBindPopup();
 
-const { t } = useI18n()
-
+const { t } = useI18n();
 </script>
 <template>
-
-  <div v-if="bpData.enable" class="bp-container"
+  <div
+    v-if="bpData.enable"
+    class="bp-container"
     :class="{ 'bp-container_show': bpData.show }"
   >
     <div class="bp-bg"></div>
     <div class="bp-box" :class="{ 'bp-box_show': bpData.show }">
-
       <!-- title + close button -->
       <div class="bp-first-bar">
         <div class="thus-no-user-select bp-title">
-          <span v-if="bpData.bindType === 'email'">{{ t('bind.email_title') }}</span>
-          <span v-else>{{ t('bind.phone_title') }}</span>
+          <span v-if="bpData.bindType === 'email'">{{
+            t("bind.email_title")
+          }}</span>
+          <span v-else>{{ t("bind.phone_title") }}</span>
         </div>
         <div class="bp-close" @click.stop="onTapClose">
-          <svg-icon name="close" color="var(--main-normal)"
+          <svg-icon
+            name="close"
+            color="var(--main-normal)"
             class="bp-close-svg"
           ></svg-icon>
         </div>
@@ -42,12 +45,13 @@ const { t } = useI18n()
 
       <!-- compliance tip -->
       <div v-if="bpData.compliance" class="thus-no-user-select bp-compliance">
-        <span>{{ t('bind.compliance') }}</span>
+        <span>{{ t("bind.compliance") }}</span>
       </div>
 
       <div class="bp-bar">
-        <input v-if="bpData.bindType === 'email'" 
-          class="bp-input bp-first-input" 
+        <input
+          v-if="bpData.bindType === 'email'"
+          class="bp-input bp-first-input"
           :placeholder="t('bind.email_ph')"
           type="email"
           v-model="bpData.firstInputVal"
@@ -55,7 +59,9 @@ const { t } = useI18n()
           @keyup.enter.exact="onEnterFromFirstInput"
           ref="emailInputRef"
         />
-        <input v-else class="bp-input bp-first-input" 
+        <input
+          v-else
+          class="bp-input bp-first-input"
           :placeholder="t('bind.phone_ph')"
           type="tel"
           v-model="bpData.firstInputVal"
@@ -66,14 +72,16 @@ const { t } = useI18n()
         />
       </div>
 
-      <div class="thus-no-user-select bp-err" 
+      <div
+        class="thus-no-user-select bp-err"
         :class="{ 'bp-err_show': bpData.firstErr }"
       >
         <span>{{ bpData.firstErr ?? " " }}</span>
       </div>
 
       <div class="bp-bar">
-        <input class="bp-input bp-second-input" 
+        <input
+          class="bp-input bp-second-input"
           :placeholder="t('bind.code_ph')"
           type="text"
           v-model="bpData.secondInputVal"
@@ -83,13 +91,14 @@ const { t } = useI18n()
           ref="secondInputRef"
         />
 
-        <SmsButton v-model:status="bpData.sendCodeStatus"
+        <SmsButton
+          v-model="bpData.sendCodeStatus"
           @click="onTapGettingCode"
         ></SmsButton>
-
       </div>
 
-      <div class="thus-no-user-select bp-err" 
+      <div
+        class="thus-no-user-select bp-err"
         :class="{ 'bp-err_show': bpData.secondErr }"
       >
         <span v-if="bpData.secondErr">{{ bpData.secondErr }}</span>
@@ -101,21 +110,19 @@ const { t } = useI18n()
         :is-loading="bpData.btnLoading"
         @click="onTapSubmit"
       >
-        <span>{{ t('common.confirm') }}</span>
+        <span>{{ t("common.confirm") }}</span>
       </CustomBtn>
 
-      <div class="thus-no-user-select bp-err bp-err_btn" 
+      <div
+        class="thus-no-user-select bp-err bp-err_btn"
         :class="{ 'bp-err_show': bpData.btnErr }"
       >
         <span>{{ bpData.btnErr ?? " " }}</span>
       </div>
-
     </div>
   </div>
-
 </template>
 <style scoped lang="scss">
-
 .bp-container {
   width: 100%;
   height: 100vh;
@@ -188,7 +195,7 @@ const { t } = useI18n()
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: .15s;
+  transition: 0.15s;
   cursor: pointer;
   flex: none;
 
@@ -225,7 +232,8 @@ const { t } = useI18n()
     color: var(--main-note);
   }
 
-  &:-webkit-autofill, &:-webkit-autofill:focus {
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus {
     transition: background-color 0s 600000s, color 0s 600000s;
     -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset;
   }
@@ -233,7 +241,6 @@ const { t } = useI18n()
   &::selection {
     background-color: var(--select-bg);
   }
-  
 }
 
 .bp-first-input {
@@ -251,7 +258,7 @@ const { t } = useI18n()
   padding-inline-start: 16px;
   box-sizing: border-box;
   opacity: 0;
-  transition: .3s;
+  transition: 0.3s;
   color: var(--thus-state-3);
   font-size: var(--mini-font);
   max-height: 0;
@@ -281,15 +288,14 @@ const { t } = useI18n()
   letter-spacing: 1px;
 }
 
-
 .bp-finish-btn {
   white-space: pre-wrap;
   margin-block-start: 20px;
 }
 
-@media(hover: hover) {
+@media (hover: hover) {
   .bp-close:hover {
-    opacity: .75;
+    opacity: 0.75;
   }
 }
 
@@ -309,11 +315,5 @@ const { t } = useI18n()
   .bp-input {
     font-size: var(--btn-font);
   }
-
-
-
 }
-
-
-
 </style>

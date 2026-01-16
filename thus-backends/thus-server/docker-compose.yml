@@ -1,0 +1,25 @@
+services:
+  redis:
+    image: redis:7.0-alpine
+    container_name: thus-note-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - thus-note-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  thus-note-network:
+    driver: bridge

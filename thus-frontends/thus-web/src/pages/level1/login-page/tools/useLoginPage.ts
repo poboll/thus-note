@@ -1,41 +1,41 @@
 import type { LpData, LoginByThirdParty } from "./types";
 import type { BoolFunc, ThusTimeout } from "~/utils/basic/type-tool";
 import cui from "~/components/custom-ui";
-import { 
-  fetchInitLogin, 
-  fetchSubmitEmail, 
-  fetchEmailCode, 
+import {
+  fetchInitLogin,
+  fetchSubmitEmail,
+  fetchEmailCode,
   fetchUsersSelect,
   fetchScanLogin,
   fetchRequestSMSCode,
   fetchPhoneCode,
 } from "../../tools/requests";
 import { getClientKey } from "../../tools/common-tools"
-import { 
-  handle_google, 
+import {
+  handle_google,
   handle_github,
   handle_wechat,
 } from "./handle-tap-oauth";
 import time from "~/utils/basic/time"
 import { encryptTextWithRSA, afterFetchingLogin } from "../../tools/common-utils"
 import { loadGoogleIdentityService } from "./handle-gis"
-import { 
-  isEverythingOkay, 
-  showContactDev, 
-  showDisableTip, 
-  showEmojiTip, 
-  showErrMsg, 
+import {
+  isEverythingOkay,
+  showContactDev,
+  showDisableTip,
+  showEmojiTip,
+  showErrMsg,
   showOtherTip,
 } from "../../tools/show-msg"
 import { useLoginStore } from "./useLoginStore";
 import { storeToRefs } from "pinia";
 import { useThusWatch } from "~/hooks/useThusWatch";
 import { useRouteAndThusRouter, type RouteAndThusRouter } from "~/routes/liu-router";
-import { 
-  onActivated, 
-  onDeactivated, 
-  toRef, 
-  watch, 
+import {
+  onActivated,
+  onDeactivated,
+  toRef,
+  watch,
   reactive,
   type WatchStopHandle,
   computed,
@@ -93,7 +93,7 @@ export function useLoginPage() {
 
   // 等待 init 返回结果，并作简单的防抖节流
   const _waitInitLogin = async () => {
-    if(hasTap) return false
+    if (hasTap) return false
     hasTap = true
     await initPromise
     hasTap = false
@@ -102,8 +102,8 @@ export function useLoginPage() {
 
   const onEmailSubmitted = async (email: string) => {
     const pass = await _waitInitLogin()
-    if(!pass) return
-    
+    if (!pass) return
+
     toSubmitEmailAddress(email, lpData)
   }
 
@@ -114,7 +114,7 @@ export function useLoginPage() {
 
   const onTapLoginViaThirdParty = async (tp: LoginByThirdParty) => {
     const pass = await _waitInitLogin()
-    if(!pass) return
+    if (!pass) return
 
     whenTapLoginViaThirdParty(rr, tp, lpData)
   }
@@ -132,8 +132,8 @@ export function useLoginPage() {
 
   const showBackBtn = computed(() => {
     const v = lpData.view
-    if(v === "main") return false
-    if(v === "accounts") return false
+    if (v === "main") return false
+    if (v === "accounts") return false
     return true
   })
 
@@ -141,7 +141,7 @@ export function useLoginPage() {
 
   const onTapRequestSmsCode = async (phone: string) => {
     const pass = await _waitInitLogin()
-    if(!pass) return
+    if (!pass) return
     toRequestSMSCode(phone, lpData)
   }
 
@@ -149,10 +149,17 @@ export function useLoginPage() {
     toSubmitPhoneAndCode(rr, phone, code, lpData)
   }, 1000)
 
+  const onSubmitPassword = useThrottleFn(async (email: string, password: string) => {
+    const pass = await _waitInitLogin()
+    if (!pass) return
+    toSubmitEmailAndPassword(rr, email, password, lpData)
+  }, 1000)
+
   return {
     lpData,
     showBackBtn,
     onEmailSubmitted,
+    onSubmitPassword,
     onSubmitCode,
     onBackFromCode: () => runBackFromCode(lpData),
     onTapLoginViaThirdParty,
@@ -172,10 +179,10 @@ function initGoTo(
     const q1 = q.goto
     let goto: string | undefined
 
-    if(valTool.isStringWithVal(q1)) {
+    if (valTool.isStringWithVal(q1)) {
       goto = q1
     }
-    
+
     localCache.setOnceData("goto", goto)
   })
 }
@@ -186,16 +193,16 @@ function checkIfRedirectToA2HS(
   rr: RouteAndThusRouter,
 ) {
   const res0 = liuEnv.hasBackend()
-  if(!res0) return
+  if (!res0) return
 
   const res1 = liuUtil.check.isJustAppSetup()
-  if(!res1) return
+  if (!res1) return
 
   const res2 = liuApi.canIUse.isRunningStandalone()
-  if(res2) return
+  if (res2) return
 
   const res3 = liuApi.canIUse.canAddToHomeScreenInSafari()
-  if(!res3) return
+  if (!res3) return
 
   rr.router.push({ name: "a2hs", query: { fr: "login" } })
 }
@@ -232,24 +239,24 @@ function listenRouteAndLastLogged(
     lpData.lastLogged = 0
 
     // 2. clear timeout
-    if(timeout) {
+    if (timeout) {
       clearTimeout(timeout)
       timeout = undefined
     }
 
     // 3. reload if it's still in login page
-    if(!checkRoute) return
+    if (!checkRoute) return
     const name3 = rr.route.name
-    if(!valTool.isStringWithVal(name3)) return
+    if (!valTool.isStringWithVal(name3)) return
     const inLoginPage = name3.startsWith("login")
-    if(inLoginPage) {
+    if (inLoginPage) {
       console.log("去 reload......")
       liuApi.route.reload()
     }
   }
 
   const _setTimeout = () => {
-    if(timeout) clearTimeout(timeout)
+    if (timeout) clearTimeout(timeout)
     timeout = setTimeout(() => {
       console.warn("5s 到期............")
       timeout = undefined
@@ -258,13 +265,13 @@ function listenRouteAndLastLogged(
   }
 
   const _checkRoute = (routeName: string) => {
-    if(routeName === "login" && !lpData.enable) {
+    if (routeName === "login" && !lpData.enable) {
       lpData.enable = true
       return
     }
 
-    if(routeName !== "login") {
-      if(lpData.enable) {
+    if (routeName !== "login") {
+      if (lpData.enable) {
         lpData.enable = false
         lpData.view = "main"
       }
@@ -275,19 +282,19 @@ function listenRouteAndLastLogged(
   }
 
   const _toListen = () => {
-    if(watchStop) watchStop()
+    if (watchStop) watchStop()
     watchStop = watch([lastLogged, rr.route], (
       [newLastLogged, newRoute]
     ) => {
       const newName = newRoute.name
-      if(!valTool.isStringWithVal(newName)) return
+      if (!valTool.isStringWithVal(newName)) return
 
       _checkRoute(newName)
 
-      if(!newLastLogged || newLastLogged <= 0) return
+      if (!newLastLogged || newLastLogged <= 0) return
 
       const isInLoginPage = newName.startsWith("login")
-      if(isInLoginPage) {
+      if (isInLoginPage) {
         // console.log("当前还在 login 相关页中，去新增三秒延迟以避免卡死")
         _setTimeout()
       }
@@ -314,16 +321,16 @@ function handleBack(
   const vi = lpData.view
 
   // 已在选择账号了，不支持返回
-  if(vi === "accounts") return
+  if (vi === "accounts") return
 
   // 在输入 email 验证码页，返回到 main
-  if(vi === "code") {
+  if (vi === "code") {
     runBackFromCode(lpData)
     return
   }
 
   // [TODO] 剩下的，返回到 home
-  
+
 }
 
 
@@ -337,31 +344,31 @@ async function toSelectAnAccount(
 
   // 1. 获取 userId
   const item = lpData.accounts[idx]
-  if(!item) return
+  if (!item) return
   const userId = item.user_id
-  if(!userId) return
+  if (!userId) return
 
   // 1.5 判断是否可再登录
-  if(!canLoginUsingLastLogged(lpData)) return
+  if (!canLoginUsingLastLogged(lpData)) return
 
   // 2. 获取 multi 相关的参数
-  const { 
-    multi_credential: m1, 
+  const {
+    multi_credential: m1,
     multi_credential_id: m2,
     state,
   } = lpData
-  if(!m1 || !m2 || !state) return
+  if (!m1 || !m2 || !state) return
 
   // 3. 获取 enc_client_key
   const { enc_client_key } = getClientKey()
-  if(!enc_client_key) return
+  if (!enc_client_key) return
 
-  if(lpData.isSelectingAccount) return
+  if (lpData.isSelectingAccount) return
   lpData.isSelectingAccount = true
   const res = await fetchUsersSelect(userId, m1, m2, state, enc_client_key)
   lpData.isSelectingAccount = false
   const res2 = await afterFetchingLogin(rr, res)
-  if(res2) {
+  if (res2) {
     cui.showLoading({ title_key: "login.logging2" })
     lpData.lastLogged = time.getTime()
   }
@@ -372,9 +379,9 @@ function canLoginUsingLastLogged(
   lpData: LpData,
 ) {
   const s = lpData.lastLogged
-  if(!s) return true
+  if (!s) return true
   const isWithin = time.isWithinMillis(s, 6 * time.SECOND)
-  if(isWithin) return false
+  if (isWithin) return false
   return true
 }
 
@@ -382,13 +389,13 @@ async function toRequestSMSCode(
   phone: string,
   lpData: LpData,
 ) {
-  if(!isEverythingOkay(lpData.initCode)) return
+  if (!isEverythingOkay(lpData.initCode)) return
   const { state, publicKey } = lpData
-  if(!state || !publicKey) return
-  if(lpData.isLoggingByPhone) return
+  if (!state || !publicKey) return
+  if (lpData.isLoggingByPhone) return
 
   const enc_phone = await encryptTextWithRSA(publicKey, phone)
-  if(!enc_phone) {
+  if (!enc_phone) {
     console.warn("加密 phone 失败......")
     return
   }
@@ -400,10 +407,10 @@ async function toRequestSMSCode(
   lpData.smsSendingNum++
 
   const { code } = res
-  if(code === "U0011") {
+  if (code === "U0011") {
     showFollowToGetPermission()
   }
-  else if(code !== "0000") {
+  else if (code !== "0000") {
     showErrMsg("login", res)
   }
 
@@ -416,20 +423,20 @@ async function toSubmitEmailAddress(
   email: string,
   lpData: LpData,
 ) {
-  if(!isEverythingOkay(lpData.initCode)) return
+  if (!isEverythingOkay(lpData.initCode)) return
   const { state, lastSendEmail = 1, publicKey } = lpData
-  if(!state || !publicKey) return
-  if(lpData.isSendingEmail) return
+  if (!state || !publicKey) return
+  if (lpData.isSendingEmail) return
 
   const now = time.getTime()
   const sec = (now - lastSendEmail) / time.SECOND
-  
+
   let canSubmit = false
-  if(email !== lpData.email) canSubmit = true
-  else if(sec > 20) canSubmit = true    // 等 20s 就好，21~60s 去检查状态
+  if (email !== lpData.email) canSubmit = true
+  else if (sec > 20) canSubmit = true    // 等 20s 就好，21~60s 去检查状态
 
   // 如果不允许提交，直接切换到 "code" view
-  if(!canSubmit) {
+  if (!canSubmit) {
     lpData.view = "code"
     return
   }
@@ -438,7 +445,7 @@ async function toSubmitEmailAddress(
   liuConsole.sendMessage(`user submit email: ${email}`)
 
   const enc_email = await encryptTextWithRSA(publicKey, email)
-  if(!enc_email) {
+  if (!enc_email) {
     console.warn("加密 email 失败......")
     return
   }
@@ -453,26 +460,26 @@ async function toSubmitEmailAddress(
 
   const { code, errMsg } = res
 
-  if(code === "U0006") {
+  if (code === "U0006") {
     showFollowToGetPermission()
     return
   }
-  if(code === "E4003" && errMsg === "last_event: bounced") {
+  if (code === "E4003" && errMsg === "last_event: bounced") {
     showEmojiTip("login.err_3", "😭")
     return
   }
-  if(code === "U0004" || code === "U0003") {
+  if (code === "U0004" || code === "U0003") {
     console.warn("发送 email 出现关于 state 的异常")
     console.log(code)
     console.log(" ")
     showOtherTip("login.err_5", true)
     return
   }
-  if(code === "U0005" || (code >= "E5001" && code < "E6000")) {
+  if (code === "U0005" || (code >= "E5001" && code < "E6000")) {
     showContactDev("login.err_9", "🫥")
     return
   }
-  if(code === "E4003" && errMsg === "last_event: complained") {
+  if (code === "E4003" && errMsg === "last_event: complained") {
     showEmojiTip("login.err_2", "🥲")
   }
 
@@ -489,10 +496,10 @@ async function showFollowToGetPermission() {
     confirm_key: "notification.to_follow",
     isTitleEqualToEmoji: true,
   })
-  if(!res.confirm) return
+  if (!res.confirm) return
   cui.previewImage({
-    imgs: [{ 
-      src: "/images/official-qrcode.jpg", 
+    imgs: [{
+      src: "/images/official-qrcode.jpg",
       id: "whatever",
       h2w: "1",
       width: 250,
@@ -511,25 +518,25 @@ async function toSubmitPhoneAndCode(
   lpData: LpData,
 ) {
   const { state, publicKey } = lpData
-  if(!state || !publicKey) return
+  if (!state || !publicKey) return
 
   // 0. 判断是否可再登录
-  if(!canLoginUsingLastLogged(lpData)) return
-  if(isAfterFetchingLogin) return
+  if (!canLoginUsingLastLogged(lpData)) return
+  if (isAfterFetchingLogin) return
 
   // 1. 获取加密的 phone
   const enc_phone = await encryptTextWithRSA(publicKey, phone)
-  if(!enc_phone) {
+  if (!enc_phone) {
     console.warn("fail to encrypt phone")
     return
   }
 
   // 2. 获取 enc_client_key
   const { enc_client_key } = getClientKey()
-  if(!enc_client_key) return
+  if (!enc_client_key) return
 
   // 3. to login
-  if(lpData.isLoggingByPhone) return
+  if (lpData.isLoggingByPhone) return
   lpData.isLoggingByPhone = true
   const res = await fetchPhoneCode(enc_phone, code, state, enc_client_key)
   lpData.isLoggingByPhone = false
@@ -540,7 +547,7 @@ async function toSubmitPhoneAndCode(
   const res4 = await afterFetchingLogin(rr, res)
   isAfterFetchingLogin = false
 
-  if(res4) {
+  if (res4) {
     cui.showLoading({ title_key: "login.logging2" })
     lpData.lastLogged = time.getTime()
   }
@@ -553,25 +560,25 @@ async function toSubmitEmailAndCode(
   lpData: LpData,
 ) {
   const { email, state, publicKey } = lpData
-  if(!state || !publicKey || !email) return
+  if (!state || !publicKey || !email) return
 
   // 0. 判断是否可再登录
-  if(!canLoginUsingLastLogged(lpData)) return
-  if(isAfterFetchingLogin) return
+  if (!canLoginUsingLastLogged(lpData)) return
+  if (isAfterFetchingLogin) return
 
   // 1. 获取加密的 email
   const enc_email = await encryptTextWithRSA(publicKey, email)
-  if(!enc_email) {
+  if (!enc_email) {
     console.warn("加密 email 失败......")
     return
   }
 
   // 2. 获取 enc_client_key
   const { enc_client_key } = getClientKey()
-  if(!enc_client_key) return
+  if (!enc_client_key) return
 
   // 3. 去登录
-  if(lpData.isSubmittingEmailCode) return
+  if (lpData.isSubmittingEmailCode) return
   lpData.isSubmittingEmailCode = true
   const res = await fetchEmailCode(enc_email, code, state, enc_client_key)
   lpData.isSubmittingEmailCode = false
@@ -581,9 +588,61 @@ async function toSubmitEmailAndCode(
   const res4 = await afterFetchingLogin(rr, res)
   isAfterFetchingLogin = false
 
-  if(res4) {
+  if (res4) {
     cui.showLoading({ title_key: "login.logging2" })
     lpData.lastLogged = time.getTime()
+  }
+}
+
+
+async function toSubmitEmailAndPassword(
+  rr: RouteAndThusRouter,
+  email: string,
+  password: string,
+  lpData: LpData,
+) {
+  // 0. 判断是否可再登录
+  if (!canLoginUsingLastLogged(lpData)) return
+  if (isAfterFetchingLogin) return
+
+  // 1. 去登录
+  if (lpData.isSendingEmail) return
+  lpData.isSendingEmail = true
+
+  // 调用后端密码登录API（直接发送明文，不加密）
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+
+    const result = await res.json()
+    lpData.isSendingEmail = false
+
+    // 2. 登录后处理
+    isAfterFetchingLogin = true
+    const res4 = await afterFetchingLogin(rr, result)
+    isAfterFetchingLogin = false
+
+    if (res4) {
+      cui.showLoading({ title_key: "login.logging2" })
+      lpData.lastLogged = time.getTime()
+    }
+  } catch (error) {
+    lpData.isSendingEmail = false
+    console.error("密码登录失败:", error)
+    cui.showModal({
+      title: "❌",
+      content_key: "login.err_9",
+      isTitleEqualToEmoji: true,
+      showCancel: false,
+    })
   }
 }
 
@@ -594,16 +653,16 @@ function listenLoginStore(lpData: LpData) {
 
   const whenViewChange = () => {
     const _v = view.value
-    if(!_v) return
+    if (!_v) return
 
     const data = loginStore.getData()
     lpData.view = _v
 
-    if(_v === "code") {
+    if (_v === "code") {
       lpData.email = data.email
       lpData.lastSendEmail = time.getTime()
     }
-    else if(_v === "accounts") {
+    else if (_v === "accounts") {
       lpData.accounts = data.accounts
       lpData.multi_credential = data.multi_credential
       lpData.multi_credential_id = data.multi_credential_id
@@ -621,18 +680,18 @@ function whenTapLoginViaThirdParty(
 ) {
   const { initCode } = lpData
   const isOkay = isEverythingOkay(initCode)
-  if(!isOkay) return
+  if (!isOkay) return
 
-  if(tp === "wechat") {
+  if (tp === "wechat") {
     whenTapWeChat(rr, lpData)
   }
-  else if(tp === "github") {
+  else if (tp === "github") {
     handle_github(lpData)
   }
-  else if(tp === "google") {
+  else if (tp === "google") {
     handle_google(lpData)
   }
-  else if(tp === "apple") {
+  else if (tp === "apple") {
 
   }
 }
@@ -643,37 +702,37 @@ async function whenTapWeChat(
 ) {
   // 0. check out if wechat login is available
   const appid = lpData.wxGzhAppid
-  if(!appid) {
+  if (!appid) {
     showDisableTip("WeChat")
     return
   }
 
   // 1. go OAuth if it is in wechat environment
   const cha = liuApi.getCharacteristic()
-  if(cha.isWeChat) {
+  if (cha.isWeChat) {
     handle_wechat(lpData)
     return
   }
 
   // 2. show qr code to scan for logging in
   const state = lpData.state
-  if(!state) return
+  if (!state) return
   const res2 = await cui.showQRCodePopup({ bindType: "wx_gzh_scan", state })
   console.log("res2: ")
   console.log(res2)
-  const { 
+  const {
     resultType,
     credential,
     credential_2,
   } = res2
-  if(resultType !== "plz_check") return
-  if(!credential || !credential_2) return
-  if(!canLoginUsingLastLogged(lpData)) return
-  if(isAfterFetchingLogin) return
+  if (resultType !== "plz_check") return
+  if (!credential || !credential_2) return
+  if (!canLoginUsingLastLogged(lpData)) return
+  if (isAfterFetchingLogin) return
 
   // 3. get enc_client_key
   const { enc_client_key } = getClientKey()
-  if(!enc_client_key) return
+  if (!enc_client_key) return
 
   // 4. login via scan-login
   cui.showLoading({ title_key: "login.ready_to_login" })
@@ -686,7 +745,7 @@ async function whenTapWeChat(
   isAfterFetchingLogin = true
   const res5 = await afterFetchingLogin(rr, res4)
   isAfterFetchingLogin = false
-  if(res5) {
+  if (res5) {
     cui.showLoading({ title_key: "login.logging2" })
     lpData.lastLogged = time.getTime()
   }
@@ -707,7 +766,7 @@ function toGetLoginInitData(
     const data = res?.data
 
     lpData.initCode = code
-    if(!data || !data.publicKey) {
+    if (!data || !data.publicKey) {
       a(false)
       return
     }
@@ -728,13 +787,13 @@ function toGetLoginInitData(
     const initStamp = lpData.initStamp ?? 0
     const now = time.getTime()
     const diff = now - initStamp
-    if(diff > MIN_5) {
+    if (diff > MIN_5) {
       initPromise = new Promise(_request)
       return
     }
 
     const { enc_client_key } = localCache.getOnceData()
-    if(!enc_client_key) {
+    if (!enc_client_key) {
       initPromise = new Promise(_request)
       return
     }
