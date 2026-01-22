@@ -88,6 +88,7 @@ async function createSpace(
     stateConfig: v.space_stateConfig,
     config: v.space_config,
   }
+
   try {
     await db.workspaces.put(data)
   }

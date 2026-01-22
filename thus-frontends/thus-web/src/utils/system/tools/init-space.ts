@@ -89,11 +89,10 @@ async function whenRouteChange(
 
 
   // 1. get workspace from db
-  const g1 = { infoType: "ME", owner: userId }
+  // Use compound index [infoType+owner] with array format for Dexie compound keys
   const t1 = performance.now()
-  const mySpace = await db.workspaces.get(g1)
-  
-  
+  const mySpace = await db.workspaces.where("[infoType+owner]").equals(["ME", userId]).first()
+
   if(!mySpace) return
   if(store.spaceId === mySpace._id) return
 

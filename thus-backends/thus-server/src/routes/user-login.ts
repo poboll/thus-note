@@ -4,6 +4,8 @@ import { UserStatus } from '../models/User';
 import { JWTUtils } from '../utils/jwt';
 import { successResponse, errorResponse } from '../types/api.types';
 import User from '../models/User';
+import Space, { SpaceType, SpaceStatus } from '../models/Space';
+import Member, { MemberStatus } from '../models/Member';
 import { getRedisClient } from '../config/redis';
 import { EmailService } from '../services/emailService';
 import { SMSService } from '../services/smsService';
@@ -16,6 +18,92 @@ const router = Router();
 const CODE_EXPIRE_TIME = 5 * 60;
 // 验证码长度
 const CODE_LENGTH = 6;
+
+/**
+ * 获取或创建用户的 spaceMemberList
+ * 如果用户没有任何 space，则创建一个默认的个人空间
+ */
+async function getOrCreateSpaceMemberList(userId: Types.ObjectId) {
+  // 查找用户的所有成员记录
+  let members = await Member.find({
+    userId,
+    status: MemberStatus.OK
+  }).exec();
+
+  // 如果没有成员记录，创建默认的个人空间
+  if (members.length === 0) {
+    // 创建个人空间
+    const space = new Space({
+      ownerId: userId,
+      spaceType: SpaceType.ME,
+      status: SpaceStatus.OK,
+    });
+    await space.save();
+
+    // 创建成员记录
+    const member = new Member({
+      spaceId: space._id,
+      userId,
+      status: MemberStatus.OK,
+    });
+    await member.save();
+
+    members = [member];
+  }
+
+  // 获取所有相关的空间信息
+  const spaceIds = members.map(m => m.spaceId);
+  const spaces = await Space.find({ _id: { $in: spaceIds } }).exec();
+  const spaceMap = new Map(spaces.map(s => [s._id.toString(), s]));
+
+  // 构建 spaceMemberList
+  const spaceMemberList = members.map(member => {
+    const space = spaceMap.get(member.spaceId.toString());
+    return {
+      memberId: member._id.toString(),
+      member_name: member.name,
+      member_avatar: member.avatar,
+      member_oState: member.status,
+      member_config: member.config,
+      member_notification: member.notification,
+      spaceId: member.spaceId.toString(),
+      spaceType: space?.spaceType || SpaceType.ME,
+      space_oState: space?.status || SpaceStatus.OK,
+      space_owner: space?.ownerId.toString() || userId.toString(),
+      space_name: space?.name,
+      space_avatar: space?.avatar,
+      space_stateConfig: space?.stateConfig,
+      space_tagList: space?.tagList,
+      space_config: space?.config,
+    };
+  });
+
+  return spaceMemberList;
+}
+
+/**
+ * 生成登录成功响应
+ */
+async function generateLoginResponse(user: any) {
+  // 生成令牌
+  const tokenPair = await JWTUtils.generateTokenPair(user._id);
+
+  // 获取或创建 spaceMemberList
+  const spaceMemberList = await getOrCreateSpaceMemberList(user._id);
+
+  // 生成 serial_id
+  const serial_id = crypto.randomBytes(16).toString('hex');
+
+  return {
+    userId: user._id.toString(),
+    token: tokenPair.accessToken,
+    serial_id,
+    spaceMemberList,
+    email: user.email,
+    theme: user.settings?.theme || 'system',
+    language: user.settings?.language || 'system',
+  };
+}
 
 /**
  * 生成随机验证码
@@ -272,20 +360,21 @@ async function handleEmailCodeLogin(req: Request, res: Response) {
   user.lastLoginAt = new Date();
   await user.save();
 
-  // 生成令牌
-  const tokenPair = await JWTUtils.generateTokenPair(user._id);
+  // 解密并存储 client_key（用于后续加密通信）
+  if (enc_client_key && privateKey) {
+    const clientKey = await decryptWithRSA(enc_client_key, privateKey);
+    if (clientKey) {
+      // 存储 client_key 到 Redis，关联用户 ID，有效期 7 天
+      const clientKeyRedisKey = `client_key:${user._id.toString()}`;
+      await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+      console.log(`✅ 已存储用户 ${user._id} 的 client_key`);
+    }
+  }
 
-  return res.json(
-    successResponse({
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-      },
-      ...tokenPair,
-    })
-  );
+  // 生成登录响应
+  const loginData = await generateLoginResponse(user);
+
+  return res.json(successResponse(loginData));
 }
 
 /**
@@ -421,20 +510,21 @@ async function handleSMSCodeLogin(req: Request, res: Response) {
   user.lastLoginAt = new Date();
   await user.save();
 
-  // 生成令牌
-  const tokenPair = await JWTUtils.generateTokenPair(user._id);
+  // 解密并存储 client_key（用于后续加密通信）
+  if (enc_client_key && privateKey) {
+    const clientKey = await decryptWithRSA(enc_client_key, privateKey);
+    if (clientKey) {
+      // 存储 client_key 到 Redis，关联用户 ID，有效期 7 天
+      const clientKeyRedisKey = `client_key:${user._id.toString()}`;
+      await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+      console.log(`✅ 已存储用户 ${user._id} 的 client_key (短信登录)`);
+    }
+  }
 
-  return res.json(
-    successResponse({
-      user: {
-        id: user._id,
-        username: user.username,
-        phone: user.phone,
-        avatar: user.avatar,
-      },
-      ...tokenPair,
-    })
-  );
+  // 生成登录响应
+  const loginData = await generateLoginResponse(user);
+
+  return res.json(successResponse(loginData));
 }
 
 /**
@@ -482,20 +572,10 @@ async function handleUserSelect(req: Request, res: Response) {
   user.lastLoginAt = new Date();
   await user.save();
 
-  // 生成令牌
-  const tokenPair = await JWTUtils.generateTokenPair(user._id);
+  // 生成登录响应
+  const loginData = await generateLoginResponse(user);
 
-  return res.json(
-    successResponse({
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-      },
-      ...tokenPair,
-    })
-  );
+  return res.json(successResponse(loginData));
 }
 
 export default router;

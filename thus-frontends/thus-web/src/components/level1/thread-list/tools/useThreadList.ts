@@ -368,9 +368,19 @@ async function loadCloud(
 ) {
   // 1. check if we need to load from cloud
   const hasLogin = localCache.hasLoginWithBackend()
-  if(!hasLogin) return
+  if(!hasLogin) {
+    // 如果没有登录，确保设置 hasReachedBottom
+    if(opt2.startIndex === 0 && opt2.threadShows.length < MIN_THREADS) {
+      ctx.tlData.hasReachedBottom = true
+    }
+    return
+  }
   const nStore = useNetworkStore()
   if(nStore.level < 1) {
+    // 如果网络不可用，确保设置 hasReachedBottom
+    if(opt2.startIndex === 0 && opt2.threadShows.length < MIN_THREADS) {
+      ctx.tlData.hasReachedBottom = true
+    }
     return
   }
 
@@ -392,7 +402,13 @@ async function loadCloud(
   // console.log("loadCloud opt3: ")
   // console.log(opt3)
   const res1 = await CloudMerger.request(opt3, { delay, maxStackNum: 4 })
-  if(!res1) return
+  if(!res1) {
+    // 如果请求失败，确保设置 hasReachedBottom
+    if(opt2.startIndex === 0 && opt2.threadShows.length < MIN_THREADS) {
+      ctx.tlData.hasReachedBottom = true
+    }
+    return
+  }
 
   // 4. get ids for checking contents
   const ids = CloudMerger.getIdsForCheckingContents(

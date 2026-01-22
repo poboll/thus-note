@@ -88,7 +88,7 @@ class CloudMerger {
     const url = APIs.SYNC_GET
     const opt = {
       operateType: "general_sync",
-      plz_enc_atoms: atoms,
+      atoms: atoms, // 使用 atoms 替代 plz_enc_atoms，避免被自动加密
     }
     const res1 = await liuReq.request<Res_SyncGet_Client>(url, opt)
 
@@ -101,6 +101,7 @@ class CloudMerger {
 
     // 2. if error happens
     if(code1 !== "0000" || !results) {
+      console.warn("CloudMerger: sync-get 请求失败或返回数据为空", { code1, hasResults: !!results })
       list.forEach(v => {
         if(!v.timeout) return
         clearTimeout(v.timeout)

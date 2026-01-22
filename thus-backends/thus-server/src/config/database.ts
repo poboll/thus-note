@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 /**
  * MongoDB连接配置
  */
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-const DB_NAME = process.env.DB_NAME || 'thus-note';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/thus-note';
+const DB_NAME = process.env.DB_NAME;
 
 /**
  * 连接选项

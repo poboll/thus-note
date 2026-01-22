@@ -60,11 +60,21 @@ async function request<
 ): Promise<ThusRqReturn<T>> {
 
   const b = await _getBody(body)
+  const p = localCache.getPreference()
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json"
+  }
+
+  // 将 token 和 serial 添加到请求头
+  if(p.token && p.serial) {
+    headers["x-liu-token"] = p.token
+    headers["x-liu-serial"] = p.serial
+  }
+
   const init: RequestInit = {
     method: opt?.method ?? "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers,
     body: b,
   }
 

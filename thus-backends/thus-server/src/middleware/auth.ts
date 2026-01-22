@@ -28,15 +28,29 @@ export const authMiddleware = async (
 ): Promise<void> => {
   try {
     // 从Authorization头获取令牌
+    let token: string | undefined;
+
+    // 方式1: 从 Authorization 头获取（标准方式）
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7); // 移除"Bearer "前缀
+    }
+
+    // 方式2: 从 x-liu-token 头获取（前端兼容方式）
+    if (!token) {
+      const xLiuToken = req.headers['x-liu-token'];
+      if (xLiuToken) {
+        token = xLiuToken;
+      }
+    }
+
+    // 如果两种方式都没有提供令牌，返回401
+    if (!token) {
       res.status(401).json(
         errorResponse('UNAUTHORIZED', '未提供认证令牌')
       );
       return;
     }
-
-    const token = authHeader.substring(7); // 移除"Bearer "前缀
 
     // 验证令牌
     const payload = JWTUtils.verifyToken(token);
