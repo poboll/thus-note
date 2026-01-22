@@ -37,16 +37,23 @@ app.component("CustomBtn", CustomBtn)
 app.component("liu-switch", LiuSwitch)
 app.component("LiuImg", LiuImg)
 app.component("liu-checkbox", LiuCheckbox)
+app.component("ThusCheckbox", LiuCheckbox)
 app.component("PlaceholderView", PlaceholderView)
 app.component("NaviBar", NaviBar)
 app.component("NaviVirtual", NaviVirtual)
 app.component("liu-menu", defineAsyncComponent(() =>
   import("./components/common/liu-menu/liu-menu.vue")
 ))
+app.component("ThusMenu", defineAsyncComponent(() =>
+  import("./components/common/liu-menu/liu-menu.vue")
+))
 app.component("FloatingActionButton", defineAsyncComponent(() =>
   import("./components/level1/floating-action-button/floating-action-button.vue")
 ))
 app.component("liu-tooltip", defineAsyncComponent(() =>
+  import("./components/common/liu-tooltip/liu-tooltip.vue")
+))
+app.component("LiuTooltip", defineAsyncComponent(() =>
   import("./components/common/liu-tooltip/liu-tooltip.vue")
 ))
 app.component("vue-draggable-resizable", VueDraggableResizable)
@@ -66,6 +73,9 @@ app.use(FloatingVue, {
     },
     'liu-tooltip': {
       $extend: "tooltip",
+    },
+    'checkout': {
+      $extend: "dropdown",
     }
   }
 })

@@ -61,9 +61,10 @@ const ThreadSchema = new Schema<IThread>(
     },
     title: {
       type: String,
-      required: true,
+      required: false,  // 改为可选，因为前端笔记可能没有标题
       trim: true,
       maxlength: 200,
+      default: '',  // 默认为空字符串
     },
     description: {
       type: String,

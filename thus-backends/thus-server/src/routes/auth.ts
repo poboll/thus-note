@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import { OAuthProvider, UserStatus } from '../models/User';
 import { MemberStatus } from '../models/Member';
-import { SpaceStatus } from '../models/Space';
+import { SpaceType, SpaceStatus } from '../models/Space';
 import { JWTUtils } from '../utils/jwt';
 import { PasswordUtil } from '../utils/password';
 import { verifyCode, VerificationCodeType, saveVerificationCode } from '../utils/verificationCode';
@@ -406,6 +406,8 @@ router.post('/email', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
+    console.log('🔐 登录请求:', { email, passwordLength: password?.length });
+
     if (!email || !password) {
       return res.status(400).json(
         errorResponse('BAD_REQUEST', '缺少邮箱或密码')
@@ -414,6 +416,9 @@ router.post('/email', async (req: Request, res: Response) => {
 
     // 查找用户（需要包含password字段）
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+
+    console.log('👤 查找用户结果:', user ? `找到用户 ${user._id}` : '用户不存在');
+    console.log('🔑 用户密码哈希存在:', !!user?.password);
 
     // 如果用户不存在，返回提示
     if (!user) {
@@ -424,12 +429,15 @@ router.post('/email', async (req: Request, res: Response) => {
 
     // 验证密码
     if (!user.password) {
+      console.log('❌ 用户没有密码');
       return res.status(401).json(
         errorResponse('UNAUTHORIZED', '邮箱或密码错误')
       );
     }
 
     const isValidPassword = await PasswordUtil.comparePassword(password, user.password);
+    console.log('🔒 密码验证结果:', isValidPassword ? '成功' : '失败');
+
     if (!isValidPassword) {
       return res.status(401).json(
         errorResponse('UNAUTHORIZED', '邮箱或密码错误')
@@ -460,6 +468,52 @@ router.post('/email', async (req: Request, res: Response) => {
       userId: user._id,
       status: MemberStatus.OK,
     }).populate('spaceId');
+
+    // 如果用户没有空间，创建默认空间
+    if (members.length === 0) {
+      console.log('🏗️ 用户没有空间，创建默认空间...');
+
+      // 创建个人空间
+      const defaultSpace = new Space({
+        ownerId: user._id,
+        spaceType: SpaceType.ME,
+        status: SpaceStatus.OK,
+        name: '个人空间',
+        description: '默认的个人空间',
+        stateConfig: {},
+        config: {},
+        tagList: [],
+      });
+
+      await defaultSpace.save();
+      console.log(`  ✅ 创建空间: ${defaultSpace._id}`);
+
+      // 创建成员记录
+      const defaultMember = new Member({
+        spaceId: defaultSpace._id,
+        userId: user._id,
+        status: MemberStatus.OK,
+        name: user.username,
+        avatar: user.avatar,
+        config: {},
+        notification: {
+          email: true,
+          push: true,
+        },
+      });
+
+      await defaultMember.save();
+      console.log(`  ✅ 创建成员: ${defaultMember._id}`);
+
+      // 重新查询成员列表以获取完整的 populate 信息
+      members.length = 0; // 清空数组
+      const allMembers = await Member.find({
+        userId: user._id,
+        status: MemberStatus.OK,
+      }).populate('spaceId');
+      members.push(...allMembers);
+      console.log(`  ✅ 重新查询成员列表，共 ${members.length} 个成员`);
+    }
 
     // 格式化空间成员列表以匹配前端的 ThusSpaceAndMember 接口
     const spaceMemberList = members
