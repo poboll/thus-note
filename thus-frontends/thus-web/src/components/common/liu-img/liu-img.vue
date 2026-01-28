@@ -6,6 +6,9 @@ import type {
   LiuImgEmits,
 } from "./tools/types"
 import { useLiuImg } from './tools/useLiuImg';
+import { computed } from "vue";
+import localCache from "~/utils/system/local-cache";
+import liuEnv from "~/utils/thus-env";
 
 const props = defineProps({
   src: {
@@ -58,6 +61,27 @@ const {
   onImgLoaded,
 } = useLiuImg(props, emits)
 
+const realSrc = computed(() => {
+  const s = props.src
+  if(!s) return ""
+  
+  // Check if it is a local file API url
+  // e.g. http://localhost:3000/api/files/...
+  const env = liuEnv.getEnv()
+  const d = env.API_DOMAIN ?? ""
+  
+  // Basic check: if it contains /api/files/ and matches our domain
+  if(s.includes("/api/files/") && (s.startsWith(d) || s.startsWith("/"))) {
+    const p = localCache.getPreference()
+    if(p.token) {
+      const sep = s.includes("?") ? "&" : "?"
+      return `${s}${sep}token=${p.token}`
+    }
+  }
+  
+  return s
+})
+
 </script>
 <template>
 
@@ -83,7 +107,7 @@ const {
       :style="imgStyles"
       :width="width ? width : undefined"
       :height="height ? height: undefined"
-      :src="src" 
+      :src="realSrc" 
       :loading="loading"
       :draggable="draggable"
       @load="onImgLoaded" 

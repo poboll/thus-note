@@ -40,8 +40,13 @@ export const authMiddleware = async (
     if (!token) {
       const xLiuToken = req.headers['x-liu-token'];
       if (xLiuToken) {
-        token = xLiuToken;
+        token = xLiuToken as string;
       }
+    }
+
+    // 方式3: 从 Query String 获取（文件下载/预览兼容方式）
+    if (!token && req.query.token) {
+      token = req.query.token as string;
     }
 
     // 如果两种方式都没有提供令牌，返回401

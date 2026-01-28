@@ -10,6 +10,7 @@ import APIs from "~/requests/APIs"
 import type { FileSetAPI } from "~/requests/req-types"
 import type { LiuUploadTask } from "~/types/types-atom"
 import { uploadViaQiniu } from "./tools/upload-via-qiniu"
+import { uploadViaLocal } from "./tools/upload-via-local"
 import liuReq from "~/requests/thus-req"
 import type { 
   UploadFileAtom, 
@@ -275,8 +276,11 @@ async function handleAnAtom(
   }
 
   let uploadRes: UploadFileRes | undefined
-  if(cs === "qiniu") {
+  if((cs as any) === "qiniu") {
     uploadRes = await uploadViaQiniu(rut, files, _whenAFileCompleted)
+  }
+  else if((cs as any) === "local") {
+    uploadRes = await uploadViaLocal(files, _whenAFileCompleted)
   }
   else if(cs === "aliyun_oss") {
 
@@ -498,9 +502,18 @@ export async function handleFiles(tasks: UploadTaskLocalTable[]) {
   list = list.filter(v => v.files.length > 0)
   if(list.length < 1) return true
 
-  // 5. get upload token
-  const res4 = await getUploadToken()
-  if(!res4) return false
+  // 5. get upload token (Bypass for Local)
+  // const res4 = await getUploadToken()
+  // if(!res4) return false
+  // For local server, we Mock the token response
+  resUploadToken = {
+    cloudService: "local",
+    uploadToken: "local-token",
+    prefix: "",
+    bucket: "local",
+    region: "local",
+    domain: "http://localhost:3000"
+  } as any
 
   // 6. handle atoms
   const res5 = await handleUploadFileAtoms(list)

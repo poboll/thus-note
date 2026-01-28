@@ -250,6 +250,9 @@ export namespace FileSetAPI {
 
 export interface Res_WebhookQiniu {
   cloud_url: string
+  key?: string
+  hash?: string
+  size?: number
 }
 
 

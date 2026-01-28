@@ -1,4 +1,6 @@
-import { inject, onDeactivated, ref, watch } from "vue"
+import { inject, onDeactivated, ref, watch, type Ref } from "vue"
+import type { Editor } from "@tiptap/vue-3"
+import { uploadViaLocal } from "~/utils/cloud/upload-tasks/tools/upload-via-local"
 import type { ImageShow, ThusFileStore, ThusImageStore } from "~/types"
 import imgHelper from "~/utils/files/img-helper"
 import liuUtil from "~/utils/thus-util"
@@ -12,14 +14,15 @@ import { onLiuActivated } from "~/hooks/useCommon"
 
 export function useCeFile(
   ceData: CeData,
+  editor: Ref<Editor | undefined>,
 ) {
   const covers = ref<ImageShow[]>([])
 
   // 监听文件拖动掉落
-  listenFilesDrop(ceData)
+  listenFilesDrop(ceData, editor)
 
   // 监听文件黏贴上来
-  listenDocumentPaste(ceData)
+  listenDocumentPaste(ceData, editor)
 
   // 监听逻辑数据改变，去响应视图
   watch(() => ceData.images, (newImages) => {
@@ -33,7 +36,7 @@ export function useCeFile(
   }
 
   const onImageChange = (files: File[]) => {
-    handleFiles(ceData, files)
+    handleFiles(ceData, files, editor)
   }
 
   const onClearCover = (index: number) => {
@@ -88,13 +91,14 @@ function whenCoversSorted(
 // 处理文件掉落
 function listenFilesDrop(
   ceData: CeData,
+  editor: Ref<Editor | undefined>,
 ) {
   const dropFiles = inject(mvFileKey)
   watch(() => dropFiles?.value, async (files) => {
     if(!files?.length) return
     console.log("listenFilesDrop 接收到掉落的文件............")
     console.log(files)
-    await handleFiles(ceData, files)
+    await handleFiles(ceData, files, editor)
     if(!dropFiles?.value) return
     dropFiles.value = []
   })
@@ -103,6 +107,7 @@ function listenFilesDrop(
 // 全局监听 "黏贴事件"
 function listenDocumentPaste(
   ceData: CeData,
+  editor: Ref<Editor | undefined>,
 ) {
   const gs = useGlobalStateStore()
   const whenPaste = (e: ClipboardEvent) => {
@@ -112,7 +117,7 @@ function listenDocumentPaste(
     const fileList = e.clipboardData?.files
     if(!fileList || fileList.length < 1) return
     const files = liuUtil.getArrayFromFileList(fileList)
-    handleFiles(ceData, files)
+    handleFiles(ceData, files, editor)
   }
   
   onLiuActivated(() => {
@@ -128,12 +133,13 @@ function listenDocumentPaste(
 async function handleFiles(
   ceData: CeData,
   files: File[],
+  editor: Ref<Editor | undefined>,
 ) {
   const fileLength = files.length
   const imgFiles = liuUtil.getOnlyImageFiles(files)
   const imgLength = imgFiles.length
   if(imgFiles.length > 0) {
-    handleImages(ceData, imgFiles)
+    handleImages(ceData, imgFiles, editor)
     if(imgLength >= fileLength) return
   }
 
@@ -182,6 +188,7 @@ async function handleOtherFiles(
 async function handleImages(
   ceData: CeData,
   imgFiles: File[],
+  editor: Ref<Editor | undefined>,
 ) {
 
   ceData.images = ceData.images ?? []
@@ -194,16 +201,66 @@ async function handleImages(
     return
   }
 
+  // 1. Process Images (Exif, Compress, MetaData) - Restore Cover Logic
   const res0 = await imgHelper.extractExif(imgFiles)
   const res1 = await imgHelper.compress(imgFiles)
   const res2 = await imgHelper.getMetaDataFromFiles(res1, res0)
 
-  // console.log("liu image store[]: ")
-  // console.log(res2)
-  // console.log(" ")
-
-  res2.forEach((v, i) => {
-    if(i < canPushNum) ceData.images?.push(v)
+  // 2. DO NOT add to ceData.images yet - wait for upload to complete first
+  console.log(`📤 [handleImages] Starting uploads for ${res2.length} images (NOT adding to ceData.images yet)`)
+  
+  // 3. Upload & Insert into Editor (Inline)
+  // Track upload completion with promises
+  const uploadPromises: Promise<ThusImageStore | null>[] = []
+  
+  res2.forEach((imgStore, idx) => {
+    console.log(`📤 [${idx}] Starting upload for image: id=${imgStore.id}, name=${imgStore.name}`)
+    const uploadPromise = new Promise<ThusImageStore | null>((resolve) => {
+      uploadViaLocal([imgStore] as any, (fileId, res) => {
+        console.log(`📥 [${idx}] Upload callback: fileId=${fileId}, success=${res.code === '0000'}`)
+        if (res.code === "0000" && res.data?.cloud_url) {
+            const url = res.data.cloud_url
+            
+            // CRITICAL: Set cloud_url on the imgStore object
+            imgStore.cloud_url = url
+            console.log(`✅ Set cloud_url for image ${fileId}:`, url)
+            
+            // Insert into editor
+            if (editor.value && !editor.value.isDestroyed) {
+                try {
+                    (editor.value.chain().focus() as any).setImage({ src: url }).run()
+                } catch (err) {
+                    console.error("Editor Insert Failed:", err)
+                }
+            }
+            
+            // Return the imgStore with cloud_url set
+            resolve(imgStore)
+        } else {
+            console.error("Upload failed for file", fileId, res)
+            resolve(null)
+        }
+      })
+    })
+    uploadPromises.push(uploadPromise)
   })
 
+  // Wait for all uploads to complete
+  const uploadedImages = await Promise.all(uploadPromises)
+  console.log(`✅ All ${uploadPromises.length} image uploads completed`)
+  
+  // 4. NOW add successfully uploaded images to ceData.images (with cloud_url set)
+  const successfulImages = uploadedImages.filter((img): img is ThusImageStore => img !== null)
+  console.log(`📸 Adding ${successfulImages.length} successfully uploaded images to ceData.images`)
+  
+  if (!ceData.images) ceData.images = []
+  successfulImages.forEach((img, i) => {
+    if (i < canPushNum) {
+      console.log(`📸 Adding image to ceData.images: id=${img.id}, name=${img.name}, cloud_url=${img.cloud_url}`)
+      ceData.images?.push(img)
+    }
+  })
+  
+  console.log(`📸 ceData.images now has ${ceData.images?.length} images with cloud_url:`, 
+    ceData.images?.map(img => ({ id: img.id, name: img.name, hasCloudUrl: !!img.cloud_url })))
 }

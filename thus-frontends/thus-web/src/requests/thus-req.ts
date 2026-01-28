@@ -9,6 +9,10 @@ import {
   handleBeforeFetching,
   handleAfterFetching,
 } from "./tools/req-funcs"
+import { useErrorHandler } from "~/hooks/useErrorHandler"
+
+// 初始化错误处理器
+const { showError } = useErrorHandler()
 
 async function _getBody<U extends Record<string, any>>(
   body?: U,
@@ -103,41 +107,72 @@ async function request<
       errMsg2 = errMsg.toLowerCase()
     }
 
+    let errorResult: ThusRqReturn<T>
+
     if(errName === "TimeoutError") {
-      return { code: "F0002" }
+      errorResult = { code: "F0002" }
     }
-    if(errName === "AbortError") {
-      return { code: "F0003" }
+    else if(errName === "AbortError") {
+      errorResult = { code: "F0003" }
     }
-    if(errName === "TypeError") {
+    else if(errName === "TypeError") {
 
       // 当后端整个 Shut Down 时，可能抛出这个错误
       // 欠费时，也可能抛出这个错误
       if(errMsg2.includes("failed to fetch")) {
-        return { code: "B0001" }
+        errorResult = { code: "B0001" }
+      }
+      else {
+        errorResult = { code: "C0001" }
       }
       
     }
+    else {
+      errorResult = { code: "C0001" }
+    }
 
-    return { code: "C0001" }
+    // 显示错误弹窗
+    showError(errorResult)
+    return errorResult
   }
 
   if(!res) {
     console.warn("thus-req fail: ")
     console.log(res)
     console.log(" ")
-    return { code: "C0001" }
+    const errorResult = { code: "C0001" }
+    showError(errorResult)
+    return errorResult
   }
 
   const status = res.status
 
+  // Token Expired / Unauthorized
+  if(status === 401) {
+    console.warn("Token expired or unauthorized")
+    localCache.clearPreference() // Clear token/serial only
+    // Don't clear Dexie here to protect user data
+    
+    // Redirect to login if not already there
+    if(!window.location.pathname.startsWith("/login")) {
+      window.location.href = "/login"
+    }
+    const errorResult = { code: "C0002", errMsg: "Login expired" }
+    showError(errorResult)
+    return errorResult
+  }
+
   // Laf 底层异常
   if(status === 500) {
-    return { code: "B0500" }
+    const errorResult = { code: "B0500" }
+    showError(errorResult)
+    return errorResult
   }
   // 其他错误皆视为后端在维护中
   if(status > 500 && status < 600) {
-    return { code: `B0001` }
+    const errorResult = { code: `B0001` }
+    showError(errorResult)
+    return errorResult
   }
 
   const res2 = await res.json() as ThusRqReturn<T>
@@ -145,9 +180,16 @@ async function request<
   if(res2.data) {
     const newData = await handleAfterFetching(res2.data)
     if(!newData) {
-      return { code: "E4009", errMsg: "decrypt error on local client" }
+      const errorResult = { code: "E4009", errMsg: "decrypt error on local client" }
+      showError(errorResult)
+      return errorResult
     }
     res2.data = newData
+  }
+
+  // 如果返回的code不是0000，也显示错误
+  if(res2.code && res2.code !== '0000') {
+    showError(res2)
   }
 
   return res2

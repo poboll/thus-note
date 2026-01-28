@@ -64,3 +64,22 @@ Thumbs.db
 
 # Private config files
 project.private.config.json
+
+# Uploads directory (user uploaded files)
+uploads/
+thus-backends/thus-server/uploads/
+
+# Cache files
+.cache/
+*.cache
+
+# Backend logs
+thus-backends/thus-server/logs/
+thus-backends/thus-server/*.log
+
+# Frontend build artifacts
+thus-frontends/thus-web/dist/
+thus-frontends/thus-web/analysis.html
+
+# Claude settings
+.claude/

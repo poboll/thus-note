@@ -19,6 +19,7 @@ export interface JWTPayload {
   type: TokenType;
   iat?: number;
   exp?: number;
+  jti?: string;
 }
 
 /**
@@ -56,6 +57,7 @@ export class JWTUtils {
       {
         userId: userId.toString(),
         type: TokenType.REFRESH,
+        jti: crypto.randomBytes(16).toString('hex'),
       } as JWTPayload,
       JWT_SECRET,
       { expiresIn: JWT_REFRESH_EXPIRES } as SignOptions

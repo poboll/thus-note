@@ -5,8 +5,8 @@ export function useSettingMore() {
   const { prefix } = usePrefix()
 
   const _env = liuEnv.getEnv()
-  const serviceTermsLink = _env.SERVICE_TERMS_LINK ?? "/"
-  const privacyPolicyLink = _env.PRIVACY_POLICY_LINK ?? "/"
+  const serviceTermsLink = "/terms"
+  const privacyPolicyLink = "/privacy"
 
   return {
     prefix,

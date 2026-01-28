@@ -404,6 +404,20 @@
     "database_blocked_1": "我们对本地数据库进行了升级，请关闭浏览器再重新打开；若问题持续出现，请联系客服。",
     "database_blocked_2": "我们对本地数据库进行了升级，请关闭应用再重新打开；若问题持续出现，请联系客服。"
   },
+  "error": {
+    "network_title": "网络错误",
+    "auth_title": "认证错误",
+    "validation_title": "验证错误",
+    "business_title": "错误",
+    "unknown_title": "未知错误",
+    "code": "错误代码",
+    "retry": "重试",
+    "network_message": "网络连接失败，请检查你的网络连接",
+    "auth_message": "认证失败，请重新登录",
+    "validation_message": "输入验证失败，请检查你的输入",
+    "business_message": "操作失败，请稍后再试",
+    "unknown_message": "发生未知错误，请稍后再试"
+  },
   "setting": {
     "membership": "会员",
     "accounts": "帐号",

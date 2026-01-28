@@ -82,6 +82,8 @@ async function getRawData(task: UploadTaskLocalTable) {
 function whenThreadPost(c: ContentLocalTable) {
   if(c.oState === "DELETED") return
 
+  console.log(`🔍 [whenThreadPost] Content images:`, JSON.stringify(c.images, null, 2))
+
   const uploadThread: LiuUploadThread = {
     first_id: c.first_id,
     spaceId: c.spaceId,
@@ -112,6 +114,8 @@ function whenThreadPost(c: ContentLocalTable) {
     aiChatId: c.aiChatId,
     aiReadable: c.aiReadable,
   }
+  
+  console.log(`✅ [whenThreadPost] Upload thread images:`, JSON.stringify(uploadThread.images, null, 2))
   return uploadThread
 }
 
@@ -401,6 +405,10 @@ export async function packSyncSetAtoms(tasks: UploadTaskLocalTable[]) {
     const v = tasks[i]
     const atom = await organizeAtom(v)
     if(atom) {
+      // Log images in thread-post atoms
+      if(atom.taskType === "thread-post" && atom.thread) {
+        console.log(`🔍 [packSyncSetAtoms] thread-post atom images:`, JSON.stringify(atom.thread.images, null, 2))
+      }
       atoms.push(atom)
     }
     else {

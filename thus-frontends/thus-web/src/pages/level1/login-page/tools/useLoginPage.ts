@@ -609,6 +609,23 @@ async function toSubmitEmailAndPassword(
   if (lpData.isSendingEmail) return
   lpData.isSendingEmail = true
 
+  // 1.1 生成 client_key（用于后续加密通信）
+  const aesKey = await liuUtil.crypto.createKeyWithAES()
+  if (!aesKey) {
+    lpData.isSendingEmail = false
+    console.error("生成 AES 密钥失败")
+    cui.showModal({
+      title: "❌",
+      content_key: "login.err_9",
+      isTitleEqualToEmoji: true,
+      showCancel: false,
+    })
+    return
+  }
+
+  // 1.2 存储 client_key 到 onceData（登录成功后会转移到 preference）
+  localCache.setOnceData("client_key", aesKey)
+
   // 调用后端密码登录API（直接发送明文，不加密）
   try {
     const res = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/email`, {
@@ -619,6 +636,7 @@ async function toSubmitEmailAndPassword(
       body: JSON.stringify({
         email: email,
         password: password,
+        client_key: aesKey,  // 发送 client_key 给后端
       }),
     })
 
