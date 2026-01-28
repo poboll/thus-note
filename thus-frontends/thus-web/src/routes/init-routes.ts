@@ -41,6 +41,7 @@ const AuthorizePage = () => import("../pages/level3/authorize-page/authorize-pag
 const CotPage = () => import("../pages/level4/cot-page/cot-page.vue")
 const AiConsolePage = () => import("../pages/level4/ai-console-page/ai-console-page.vue")
 const CropperPage = () => import("../pages/level4/cropper-page/cropper-page.vue")
+const AdminPanel = () => import("../pages/admin-panel/admin-panel.vue")
 
 export const routes: Array<RouteRecordRaw> = [
   /*************** 公共页面（不区分工作区） ***************/
@@ -634,6 +635,43 @@ export const routes: Array<RouteRecordRaw> = [
     },
     name: "collaborative-past",
     meta: {}
+  },
+  {
+    path: "/terms",
+    component: () => import("~/pages/level1/terms/terms.vue"),
+    meta: {
+      inApp: false,
+    }
+  },
+  {
+    path: "/privacy",
+    component: () => import("~/pages/level1/privacy/privacy.vue"),
+    meta: {
+      inApp: false,
+    }
+  },
+  /***************** Dashboard Aliases (Fix 404) ****************/
+  {
+    path: "/dashboard/settings",
+    redirect: "/settings"
+  },
+  {
+    path: "/dashboard/profile",
+    redirect: "/mine"
+  },
+  {
+    path: "/dashboard",
+    redirect: "/"
+  },
+  /***************** Admin Panel ****************/
+  {
+    path: "/admin",
+    component: AdminPanel,
+    name: "admin",
+    meta: {
+      inApp: false,
+      hasViceView: false,
+    }
   },
   /***************** the rest of routes, redirect to root ****************/
   {

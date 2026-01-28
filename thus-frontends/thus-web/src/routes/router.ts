@@ -79,6 +79,14 @@ router.beforeEach((to, from) => {
       return { name: "index" }
     }
   }
+
+  // 管理员面板路由守卫
+  // 访问 /admin 页面需要管理员权限
+  // 管理员权限在 admin-panel 组件内部验证
+  // 这里只检查是否已登录
+  if(toName === "admin" && !hasLogin) {
+    return { name: "login", query: { goto: "/admin" } }
+  }
   
 })
 

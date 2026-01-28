@@ -88,7 +88,7 @@ class CloudMerger {
     const url = APIs.SYNC_GET
     const opt = {
       operateType: "general_sync",
-      atoms: atoms, // 使用 atoms 替代 plz_enc_atoms，避免被自动加密
+      plz_enc_atoms: atoms, // 使用 plz_enc_atoms 启用加密
     }
     const res1 = await liuReq.request<Res_SyncGet_Client>(url, opt)
 

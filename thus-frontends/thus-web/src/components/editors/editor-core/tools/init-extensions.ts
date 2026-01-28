@@ -8,12 +8,14 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import HorizontalRule from "@tiptap/extension-horizontal-rule"
 import Code from '@tiptap/extension-code'
 import Link from '@tiptap/extension-link'
+import Image from '@tiptap/extension-image'
 import Heading from '@tiptap/extension-heading'
 import { wrappingInputRule, nodeInputRule, Extension } from "@tiptap/core"
 import type { TipTapEditor } from "~/types/types-editor"
 import type { EditorCoreProps, EditorCoreEmits } from "./types"
 import { linkToTextPlugin } from "../link-to-text/link-to-text"
 import CodeBlockComponent from '../code-block-component/code-block-component.vue'
+import ImageComponent from '../image-component/image-component.vue'
 import { createVirtualCursor } from 'prosemirror-virtual-cursor'
 import { useI18n } from 'vue-i18n'
 import { initLowlight } from '~/utils/other/lowlight-related'
@@ -127,6 +129,14 @@ export function initExtensions(
     }),
     CustomHardBreak,
     CustomHorizontalRule,
+    Image.extend({
+        addNodeView() {
+            return VueNodeViewRenderer(ImageComponent as any)
+        },
+    }).configure({
+        inline: true,
+        allowBase64: true,
+    }),
     TaskList.configure({
       HTMLAttributes: {
         class: "liu-tasklist"

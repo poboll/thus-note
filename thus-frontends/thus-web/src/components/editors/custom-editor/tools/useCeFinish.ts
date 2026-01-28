@@ -42,7 +42,7 @@ export function useCeFinish(ctx: CepContext) {
   spaceTypeRef = spaceRefs.spaceType as Ref<SpaceType>
   member = spaceRefs.memberId
 
-  const toFinish: CepToPost = (focusRequired: boolean) => {
+  const toFinish: CepToPost = async (focusRequired: boolean) => {
     // 1. check out context
     const { ceData } = ctx
     if(!member.value) return
@@ -57,7 +57,6 @@ export function useCeFinish(ctx: CepContext) {
       }
     }
     
-
     // 3. to update or release
     const { threadEdited } = ceData
     if(threadEdited) toUpdate(ctx)
@@ -201,6 +200,11 @@ function _getThreadData(
   const { storageState, aiReadable } = ceData
   const images = liuUtil.getRawList(ceData.images)
   const files = liuUtil.getRawList(ceData.files)
+  
+  console.log(`📝 [_getThreadData] Creating thread with ${images?.length || 0} images from ceData`)
+  console.log(`   ceData.images:`, ceData.images?.map(img => ({ id: img.id, name: img.name, hasCloudUrl: !!img.cloud_url })))
+  console.log(`   Processed images:`, images?.map(img => ({ id: img.id, name: img.name, hasCloudUrl: !!img.cloud_url })))
+  
   const remindMe = liuUtil.toRawData(ceData.remindMe)
   const calendarStamp = liuUtil.getCalendarStamp(ceData.whenStamp, remindMe)
   const whenStamp = ceData.whenStamp ? liuUtil.formatStamp(ceData.whenStamp) : undefined

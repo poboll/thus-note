@@ -31,6 +31,7 @@ export interface ITask extends Document {
   description?: string;
   priority: TaskPriority;
   status: TaskStatus;
+  category?: string;
   dueDate?: Date;
   completedAt?: Date;
   tags: string[];
@@ -39,6 +40,8 @@ export interface ITask extends Document {
     completed: boolean;
     completedAt?: Date;
   }>;
+  allowAnonymous: boolean;
+  requireLogin: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -101,6 +104,11 @@ const TaskSchema = new Schema<ITask>(
       default: TaskStatus.TODO,
       index: true,
     },
+    category: {
+      type: String,
+      default: 'default',
+      index: true,
+    },
     dueDate: {
       type: Date,
       index: true,
@@ -114,6 +122,16 @@ const TaskSchema = new Schema<ITask>(
     subtasks: {
       type: [SubtaskSchema],
       default: [],
+    },
+    allowAnonymous: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    requireLogin: {
+      type: Boolean,
+      default: true,
+      required: true,
     },
   },
   {

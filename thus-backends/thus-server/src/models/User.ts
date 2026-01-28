@@ -43,6 +43,7 @@ export interface IOAuthAccount {
 export interface IFile {
   _id: Types.ObjectId;
   name: string;
+  storedFilename?: string;
   size: number;
   mimetype: string;
   url: string;
@@ -124,6 +125,10 @@ const FileSchema = new Schema<IFile>(
       type: String,
       required: true,
       trim: true,
+    },
+    storedFilename: {
+      type: String,
+      required: false,
     },
     size: {
       type: Number,

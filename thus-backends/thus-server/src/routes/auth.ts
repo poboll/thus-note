@@ -14,6 +14,7 @@ import Space from '../models/Space';
 import { authMiddleware } from '../middleware/auth';
 import { sendEmail } from '../utils/email';
 import { sendSMS } from '../utils/sms';
+import { getRedisClient } from '../config/redis';
 
 const router = Router();
 
@@ -404,9 +405,9 @@ router.post('/wechat/mini', async (req: Request, res: Response) => {
  */
 router.post('/email', async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, client_key: frontendClientKey } = req.body;
 
-    console.log('🔐 登录请求:', { email, passwordLength: password?.length });
+    console.log('🔐 登录请求:', { email, passwordLength: password?.length, hasClientKey: !!frontendClientKey });
 
     if (!email || !password) {
       return res.status(400).json(
@@ -454,6 +455,34 @@ router.post('/email', async (req: Request, res: Response) => {
     // 更新最后登录时间
     user.lastLoginAt = new Date();
     await user.save();
+
+    // 处理 client_key（用于加密通信）
+    const redisClient = getRedisClient();
+    const clientKeyRedisKey = `client_key:${user._id.toString()}`;
+    
+    if (frontendClientKey) {
+      // 前端发送了 client_key，直接使用（这是纯 base64 的 AES 密钥）
+      // 存储格式：client_key_<base64_aes_key>
+      const clientKeyToStore = `client_key_${frontendClientKey}`;
+      await redisClient.set(clientKeyRedisKey, clientKeyToStore, 'EX', 7 * 24 * 60 * 60);
+      console.log(`✅ 使用前端发送的 client_key 并存储到 Redis`);
+    } else {
+      // 前端没有发送 client_key，检查是否已有
+      let existingClientKey = await redisClient.get(clientKeyRedisKey);
+      
+      if (!existingClientKey) {
+        // 生成新的 client_key（32字节的随机字符串，Base64编码）
+        const crypto = require('crypto');
+        const randomBytes = crypto.randomBytes(32);
+        const clientKey = `client_key_${randomBytes.toString('base64')}`;
+        
+        // 存储到 Redis，有效期 7 天
+        await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+        console.log(`✅ 为用户 ${user._id} 生成并存储了新的 client_key`);
+      } else {
+        console.log(`✅ 用户 ${user._id} 已有 client_key，继续使用`);
+      }
+    }
 
     // 生成令牌
     const tokenPair = await JWTUtils.generateTokenPair(user._id);

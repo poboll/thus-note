@@ -22,7 +22,7 @@ export function useLpMain(
   const lpSmsInput = ref<HTMLInputElement>()
   const lpPasswordInput = ref<HTMLInputElement>()
   const lpmData = reactive<LpmData>({
-    current: 2,
+    current: 1, // 默认显示邮箱/手机登录（第一个tab）
     showEmailSubmit: false,
     showPhoneSubmit: false,
     emailVal: "",
@@ -36,13 +36,13 @@ export function useLpMain(
     wechatEnabled: loginWays.includes("wechat"),
     googleEnabled: loginWays.includes("google"),
     githubEnabled: loginWays.includes("github"),
-    btnOne: loginWays.includes("phone") ? "phone" : "email",
+    btnOne: "email", // 默认显示邮箱登录
     smsStatus: "can_tap",
     agreeRule: false,
     agreeShakingNum: 0,
     emailEnabled: loginWays.includes("email"),
     phoneEnabled: loginWays.includes("phone"),
-    emailLoginMethod: "code",
+    emailLoginMethod: "password", // 默认使用密码登录
   })
 
   const onTapSelect = async (newIndex: number) => {
@@ -99,8 +99,22 @@ export function useLpMain(
   watch(width, _debounce)
 
   // 监听输入是否符合
-  watch(() => lpmData.emailVal, () => checkEmailInput(lpmData))
+  watch(() => lpmData.emailVal, () => {
+    if (lpmData.emailLoginMethod === "password") {
+      checkEmailAndPasswordInput(lpmData)
+    } else {
+      checkEmailInput(lpmData)
+    }
+  })
   watch(() => lpmData.passwordVal, () => checkEmailAndPasswordInput(lpmData))
+  watch(() => lpmData.emailLoginMethod, () => {
+    // 切换登录方式时重新验证
+    if (lpmData.emailLoginMethod === "password") {
+      checkEmailAndPasswordInput(lpmData)
+    } else {
+      checkEmailInput(lpmData)
+    }
+  })
   watch(() => lpmData.phoneVal, () => checkPhoneAndSmsCodeInput(lpmData))
   watch(() => lpmData.smsVal, () => checkPhoneAndSmsCodeInput(lpmData))
 

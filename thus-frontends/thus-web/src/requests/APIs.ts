@@ -17,7 +17,7 @@ export default {
   WECHAT_BIND: apiDomain + `user-settings`,
   SUBSCRIBE_PLAN: apiDomain + `subscribe-plan`,
   REQUEST_REFUND: apiDomain + `subscribe-plan`,
-  UPLOAD_FILE: apiDomain + `file-set`,
+  UPLOAD_FILE: apiDomain + `api/files/upload`,
   SYNC_SET: apiDomain + `sync-set`,
   SYNC_GET: apiDomain + `sync-get`,
   SYNC_OPERATE: apiDomain + `sync-operate`,

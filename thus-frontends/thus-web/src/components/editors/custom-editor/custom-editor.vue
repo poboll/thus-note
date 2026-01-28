@@ -51,7 +51,7 @@ const {
   onClearCover,
   onCoversSorted,
   onFileChange,
-} = useCeFile(ceData)
+} = useCeFile(ceData, editor)
 const {
   tagShows,
   onTapClearTag,

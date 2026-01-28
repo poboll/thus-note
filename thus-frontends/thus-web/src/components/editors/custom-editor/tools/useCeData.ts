@@ -58,9 +58,17 @@ export function useCeData(
   memberIdRef = wRefs.memberId
 
   // 监听用户操作 images 的变化，去存储到 IndexedDB 上
+  // IMPORTANT: Only save when images have cloud_url (upload completed)
   watch(() => ceData.images, (newV) => {
-    toAutoChange(ctx, true)
-    checkCanSubmit(ceData)
+    // Check if all images have cloud_url before saving
+    const allImagesHaveCloudUrl = newV?.every(img => img.cloud_url) ?? true
+    if (allImagesHaveCloudUrl) {
+      console.log(`💾 [useCeData] Images changed and all have cloud_url, saving...`)
+      toAutoChange(ctx, true)
+      checkCanSubmit(ceData)
+    } else {
+      console.log(`⏳ [useCeData] Images changed but some don't have cloud_url yet, skipping save`)
+    }
   }, { deep: true })
 
   // 监听用户操作 files 的变化，去存储到 IndexedDB 上
@@ -428,6 +436,11 @@ async function toSave(ctx: CesCtx) {
   const files = _getStoragedFiles<ThusFileStore>(ceData, "files")
   const remindMe = liuUtil.toRawData(ceData.remindMe)
   const tagIds = liuUtil.toRawData(ceData.tagIds)
+
+  console.log(`💾 [toSave] Saving draft with ${images?.length || 0} images`)
+  if (images && images.length > 0) {
+    console.log(`   Images:`, images.map(img => ({ id: img.id, name: img.name, hasCloudUrl: !!img.cloud_url })))
+  }
 
   // checking out oState for local situation
   const ss = ceData.storageState

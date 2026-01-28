@@ -5,12 +5,23 @@ import type { Cloud_ImageStore, Cloud_FileStore } from "~/types/types-cloud"
 export function imagesFromStoreToCloud(
   local_list?: ThusImageStore[]
 ) {
-  if(!local_list) return
+  if(!local_list) {
+    console.log(`🔍 [imagesFromStoreToCloud] local_list is undefined`)
+    return
+  }
+
+  console.log(`🔍 [imagesFromStoreToCloud] Processing ${local_list.length} images:`)
+  local_list.forEach((img, idx) => {
+    console.log(`  Image ${idx}: id=${img.id}, cloud_url=${img.cloud_url ? 'EXISTS' : 'MISSING'}`)
+  })
 
   const cloud_list: Cloud_ImageStore[] = []
   for(let i=0; i<local_list.length; i++) {
     const v = local_list[i]
-    if(!v.cloud_url) continue
+    if(!v.cloud_url) {
+      console.warn(`⚠️ [imagesFromStoreToCloud] Skipping image ${v.id} - no cloud_url`)
+      continue
+    }
     const obj: Cloud_ImageStore = {
       id: v.id,
       name: v.name,
@@ -27,6 +38,8 @@ export function imagesFromStoreToCloud(
     }
     cloud_list.push(obj)
   }
+  
+  console.log(`✅ [imagesFromStoreToCloud] Converted ${cloud_list.length} images with cloud_url`)
   return cloud_list
 }
 

@@ -21,36 +21,144 @@ export enum ThreadStatus {
 }
 
 /**
- * 线程接口
+ * oState 状态枚举（与前端一致）
+ */
+export enum OState {
+  OK = 'OK',
+  DELETED = 'DELETED',
+  ONLY_LOCAL = 'ONLY_LOCAL',
+}
+
+/**
+ * AI可读状态
+ */
+export type AiReadable = 'Y' | 'N';
+
+/**
+ * 图片数据接口
+ */
+export interface ThreadImage {
+  id: string;
+  name?: string;
+  url?: string;
+  blurhash?: string;
+  width?: number;
+  height?: number;
+  h2w?: string;
+  lastModified?: number;
+  mimeType?: string;
+  cloud_url?: string;
+  cloud_id?: string;
+}
+
+/**
+ * 文件数据接口
+ */
+export interface ThreadFile {
+  id: string;
+  name: string;
+  suffix?: string;
+  size?: number;
+  url?: string;
+  cloud_url?: string;
+  cloud_id?: string;
+  lastModified?: number;
+  mimeType?: string;
+}
+
+/**
+ * emoji数据接口
+ */
+export interface EmojiData {
+  total: number;
+  system?: Array<{ value: string; num: number }>;
+  items?: Array<{ value: string; num: number }>;
+}
+
+/**
+ * 线程接口 - 完整匹配前端 LiuUploadThread 格式
  */
 export interface IThread extends Document {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
+  spaceId?: Types.ObjectId;  // 工作区ID
+  
+  // 前端原始ID（用于同步）
+  first_id?: string;
+  
   type: ThreadType;
   title: string;
-  description?: string;
-  tags: string[];
+  description?: string;  // 纯文本描述（用于搜索）
+  
+  // 富文本内容（TipTap JSON格式）
+  thusDesc?: any[];
+  
+  // 媒体文件
+  images?: ThreadImage[];
+  files?: ThreadFile[];
+  
+  // 时间戳
+  editedStamp?: number;
+  createdStamp?: number;
+  removedStamp?: number;
+  calendarStamp?: number;
+  remindStamp?: number;
+  whenStamp?: number;
+  pinStamp?: number;
+  stateStamp?: number;
+  
+  // 提醒设置
+  remindMe?: any;
+  
+  // 状态
+  oState: OState;
   status: ThreadStatus;
+  
+  // 标签
+  tags: string[];
+  tagIds?: string[];
+  tagSearched?: string[];
+  
+  // 状态ID
+  stateId?: string;
+  
+  // 表情数据
+  emojiData?: EmojiData;
+  
+  // 配置
+  config?: any;
+  
+  // AI相关
+  aiChatId?: string;
+  aiReadable?: AiReadable;
+  
   isPublic: boolean;
   settings: {
     color?: string;
     icon?: string;
     sort?: number;
+    showCountdown?: boolean;
   };
   createdAt: Date;
   updatedAt: Date;
   lastModifiedAt: Date;
 }
 
-/**
- * 线程Schema
- */
 const ThreadSchema = new Schema<IThread>(
   {
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      index: true,
+    },
+    spaceId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Space',
+      index: true,
+    },
+    first_id: {
+      type: String,
       index: true,
     },
     type: {
@@ -61,20 +169,88 @@ const ThreadSchema = new Schema<IThread>(
     },
     title: {
       type: String,
-      required: false,  // 改为可选，因为前端笔记可能没有标题
+      required: false,
       trim: true,
-      maxlength: 200,
-      default: '',  // 默认为空字符串
+      maxlength: 500,
+      default: '',
     },
     description: {
       type: String,
       trim: true,
-      maxlength: 1000,
+      maxlength: 10000,
+    },
+    thusDesc: {
+      type: Schema.Types.Mixed,
+      default: [],
+    },
+    images: {
+      type: [{
+        id: String,
+        name: String,
+        url: String,
+        blurhash: String,
+        width: Number,
+        height: Number,
+        h2w: String,
+        lastModified: Number,
+        mimeType: String,
+        cloud_url: String,
+        cloud_id: String,
+      }],
+      default: [],
+    },
+    files: {
+      type: [{
+        id: String,
+        name: String,
+        suffix: String,
+        size: Number,
+        url: String,
+        cloud_url: String,
+        cloud_id: String,
+        lastModified: Number,
+        mimeType: String,
+      }],
+      default: [],
+    },
+    editedStamp: Number,
+    createdStamp: Number,
+    removedStamp: Number,
+    calendarStamp: Number,
+    remindStamp: Number,
+    whenStamp: Number,
+    pinStamp: Number,
+    stateStamp: Number,
+    remindMe: Schema.Types.Mixed,
+    oState: {
+      type: String,
+      enum: Object.values(OState),
+      default: OState.OK,
     },
     tags: {
       type: [String],
       default: [],
       index: true,
+    },
+    tagIds: {
+      type: [String],
+      default: [],
+    },
+    tagSearched: {
+      type: [String],
+      default: [],
+    },
+    stateId: String,
+    emojiData: {
+      type: Schema.Types.Mixed,
+      default: { total: 0, system: [] },
+    },
+    config: Schema.Types.Mixed,
+    aiChatId: String,
+    aiReadable: {
+      type: String,
+      enum: ['Y', 'N'],
+      default: 'Y',
     },
     status: {
       type: String,
@@ -93,6 +269,7 @@ const ThreadSchema = new Schema<IThread>(
         type: Number,
         default: 0,
       },
+      showCountdown: Boolean,
     },
     lastModifiedAt: {
       type: Date,

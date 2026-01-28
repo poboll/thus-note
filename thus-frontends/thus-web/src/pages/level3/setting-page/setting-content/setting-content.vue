@@ -5,11 +5,14 @@ import { useI18n } from "vue-i18n";
 import { useSettingContent } from "./tools/useSettingContent";
 import { useWindowSize } from '~/hooks/useVueUse';
 import cfg from '~/config';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { chooseAvatar } from '~/hooks/shared/chooseAvatar';
 
 const { t } = useI18n()
 const { width: windowWidth } = useWindowSize()
+
+// Local storage settings
+const useCloudStorage = ref(false)
 
 // 判断屏幕尺寸，决定当前机型的图标
 // 若小于等于 650px，显示成手机，否则显示成浏览器窗口
@@ -220,6 +223,44 @@ const iconColor = "var(--main-normal)"
         </div>
 
 
+      </div>
+
+      <!-- Storage Management (Hidden for normal users) -->
+      <div v-if="data.openDebug" class="thus-no-user-select sc-title">
+        <span>Storage</span>
+      </div>
+      <div v-if="data.openDebug" class="sc-box">
+        <!-- Storage Location -->
+        <div class="thus-no-user-select thus-hover sc-bar">
+          <div class="scb-hd">
+            <span>Location</span>
+          </div>
+          <div class="scb-footer">
+            <div class="scb-footer-text">
+              <span>Local Server (uploads/)</span>
+            </div>
+            <div class="scb-footer-icon">
+              <svg-icon class="scbf-svg-icon"
+                name="cloud"
+                :color="iconColor"
+              ></svg-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud Sync Toggle -->
+        <div class="thus-no-user-select thus-hover sc-bar"
+          @click.stop="useCloudStorage = !useCloudStorage"
+        >
+          <div class="scb-hd">
+            <span>Cloud Sync</span>
+          </div>
+          <div class="scb-footer">
+            <liu-switch :checked="useCloudStorage" 
+              @change="useCloudStorage = $event.checked"
+            ></liu-switch>
+          </div>
+        </div>
       </div>
 
       <!-- Community -->

@@ -5,7 +5,6 @@ import { successResponse, errorResponse } from '../types/api.types';
 import Thread from '../models/Thread';
 import Content from '../models/Content';
 import Comment from '../models/Comment';
-import User from '../models/User';
 import Member from '../models/Member';
 import { getRedisClient } from '../config/redis';
 import { EncryptionUtil } from '../utils/encryption';
@@ -25,6 +24,8 @@ async function decryptLiuEncAtoms(liu_enc_atoms: { cipherText: string; iv: strin
     const clientKeyRedisKey = `client_key:${userId}`;
     const clientKey = await redisClient.get(clientKeyRedisKey);
 
+    console.log(`🔑 [解密] 用户 ${userId} 的 client_key:`, clientKey ? `${clientKey.substring(0, 30)}...` : '不存在');
+
     if (!clientKey) {
       console.warn(`⚠️ 用户 ${userId} 的 client_key 不存在，无法解密`);
       return null;
@@ -32,6 +33,10 @@ async function decryptLiuEncAtoms(liu_enc_atoms: { cipherText: string; iv: strin
 
     // 2. client_key 格式是 "client_key_<base64_aes_key>"，需要提取 base64 部分
     const aesKey = clientKey.replace('client_key_', '');
+    console.log(`🔑 [解密] 提取的 aesKey:`, aesKey.substring(0, 20) + '...');
+    console.log(`🔑 [解密] aesKey 长度:`, aesKey.length);
+    console.log(`🔑 [解密] cipherText 长度:`, liu_enc_atoms.cipherText.length);
+    console.log(`🔑 [解密] iv:`, liu_enc_atoms.iv);
 
     // 3. 使用 AES-GCM 解密
     const decryptedStr = EncryptionUtil.decryptAESGCM(
@@ -40,10 +45,13 @@ async function decryptLiuEncAtoms(liu_enc_atoms: { cipherText: string; iv: strin
       aesKey
     );
 
+    console.log(`🔑 [解密] 解密成功，明文长度:`, decryptedStr.length);
+
     // 4. 解析 JSON（前端加密的是 LiuPlainText 格式）
     const liuPlainText = JSON.parse(decryptedStr);
 
     // 5. 验证 pre 前缀（前端会在加密时添加 client_key 的前5位作为校验）
+    console.log(`🔑 [解密] pre 校验: liuPlainText.pre=${liuPlainText.pre}, expected=${aesKey.substring(0, 5)}`);
     if (liuPlainText.pre !== aesKey.substring(0, 5)) {
       console.warn(`⚠️ 解密校验失败: pre=${liuPlainText.pre}, expected=${aesKey.substring(0, 5)}`);
       return null;
@@ -56,6 +64,7 @@ async function decryptLiuEncAtoms(liu_enc_atoms: { cipherText: string; iv: strin
 
   } catch (error: any) {
     console.error(`❌ 解密 liu_enc_atoms 失败:`, error.message);
+    console.error(`❌ 错误堆栈:`, error.stack);
     return null;
   }
 }
@@ -290,36 +299,31 @@ router.post('/set', authMiddleware, async (req: Request, res: Response) => {
 
 /**
  * 获取线程列表
- *
- * 注意：前端期望的是 LiuDownloadContent 格式的数据
- * 原始 LAF 云函数使用 Content 表，其中 infoType: 'THREAD' 表示线程
- *
- * 当前实现：查询 Thread 表，然后转换为 LiuDownloadContent 格式
  */
 async function getThreadList(userId: Types.ObjectId, atom: any) {
   const { taskId, viewType, spaceId, limit = 20, skip = 0 } = atom;
 
-  // 查询 Thread 表
   const query: any = { userId };
 
-  // 🔥 强制修复：完全忽略前端传递的 spaceId，确保能查到所有数据
-  // if (spaceId) {
-  //   query.spaceId = new Types.ObjectId(spaceId);
-  // }
-  if(query.spaceId) delete query.spaceId; // 双重保险
+  if (spaceId) {
+    try {
+      query.spaceId = new Types.ObjectId(spaceId);
+    } catch (e) {
+      console.warn(`⚠️ spaceId 格式无效: ${spaceId}`);
+    }
+  }
 
   console.log(`🔍 [DEBUG] getThreadList 查询条件:`, JSON.stringify(query));
 
-  // 处理不同的视图类型
   if (viewType === 'TRASH') {
-    query.status = 'deleted';
+    query.oState = 'DELETED';
   } else if (viewType === 'ARCHIVED') {
     query.status = 'archived';
   } else {
     query.status = 'active';
+    query.oState = { $ne: 'DELETED' };
   }
 
-  // 查询 Thread 表
   const threads = await Thread.find(query)
     .sort({ lastModifiedAt: -1 })
     .skip(skip)
@@ -328,7 +332,6 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
 
   console.log(`📝 getThreadList: userId=${userId}, spaceId=${spaceId}, viewType=${viewType}, 查询到 ${threads.length} 个线程`);
 
-  // 转换为前端期望的格式：ThusDownloadParcel[]
   const parcels = threads.map((thread: any) => {
     const threadObj = thread.toObject();
     const now = Date.now();
@@ -339,7 +342,7 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
       parcelType: 'content',
       content: {
         _id: threadObj._id.toString(),
-        first_id: threadObj._id.toString(),
+        first_id: threadObj.first_id || threadObj._id.toString(),
 
         isMine: true,
         author: {
@@ -350,45 +353,41 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
         spaceType: 'ME',
 
         infoType: 'THREAD',
-        oState: 'OK',
+        oState: threadObj.oState || 'OK',
         visScope: 'PUBLIC',
         storageState: 'CLOUD',
 
         title: threadObj.title || '',
-        // 修复：前端使用 content 字段，不是 children
-        thusDesc: threadObj.description ? [{
-          type: 'paragraph',
-          content: [{ type: 'text', text: threadObj.description }]
-        }] : [],
-        images: [],
-        files: [],
+        thusDesc: threadObj.thusDesc || [],
+        images: threadObj.images || [],
+        files: threadObj.files || [],
 
-        calendarStamp: 0,
-        remindStamp: 0,
-        whenStamp: 0,
-        remindMe: null,
-        emojiData: { total: 0, items: [] },
+        calendarStamp: threadObj.calendarStamp || 0,
+        remindStamp: threadObj.remindStamp || 0,
+        whenStamp: threadObj.whenStamp || 0,
+        remindMe: threadObj.remindMe || null,
+        emojiData: threadObj.emojiData || { total: 0, items: [] },
         parentThread: null,
         parentComment: null,
         replyToComment: null,
-        pinStamp: 0,
+        pinStamp: threadObj.pinStamp || 0,
 
-        createdStamp: threadObj.createdAt ? new Date(threadObj.createdAt).getTime() : now,
-        editedStamp: threadObj.updatedAt ? new Date(threadObj.updatedAt).getTime() : now,
-        removedStamp: 0,
+        createdStamp: threadObj.createdStamp || (threadObj.createdAt ? new Date(threadObj.createdAt).getTime() : now),
+        editedStamp: threadObj.editedStamp || (threadObj.updatedAt ? new Date(threadObj.updatedAt).getTime() : now),
+        removedStamp: threadObj.removedStamp || 0,
 
-        tagIds: threadObj.tags || [],
-        tagSearched: threadObj.tags || [],
-        stateId: null,
-        stateStamp: 0,
-        config: {},
+        tagIds: threadObj.tagIds || [],
+        tagSearched: threadObj.tagSearched || [],
+        stateId: threadObj.stateId || null,
+        stateStamp: threadObj.stateStamp || 0,
+        config: threadObj.config || {},
         search_title: threadObj.title || '',
         search_other: threadObj.description || '',
 
         levelOne: 0,
         levelOneAndTwo: 0,
         aiCharacter: null,
-        aiReadable: 1,
+        aiReadable: threadObj.aiReadable === 'N' ? 0 : 1,
         ideType: null,
         computingProvider: null,
         aiModel: null,
@@ -409,7 +408,7 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
 /**
  * 获取内容列表
  */
-async function getContentList(userId: Types.ObjectId, atom: any) {
+async function getContentList(_userId: Types.ObjectId, atom: any) {
   const { taskId, threadId, limit = 20, skip = 0 } = atom;
 
   if (!threadId) {
@@ -472,7 +471,7 @@ async function getThreadData(userId: Types.ObjectId, atom: any) {
 /**
  * 获取评论列表
  */
-async function getCommentList(userId: Types.ObjectId, atom: any) {
+async function getCommentList(_userId: Types.ObjectId, atom: any) {
   const { taskId, threadId, limit = 20, skip = 0 } = atom;
 
   if (!threadId) {
@@ -513,7 +512,6 @@ async function postThread(userId: Types.ObjectId, atom: any) {
     };
   }
 
-  // 从 thread 对象中提取所有字段
   const {
     first_id,
     title,
@@ -526,14 +524,28 @@ async function postThread(userId: Types.ObjectId, atom: any) {
     remindStamp,
     whenStamp,
     stateId,
+    stateStamp,
     images,
     files,
+    editedStamp,
+    createdStamp,
+    removedStamp,
+    pinStamp,
+    remindMe,
+    oState = 'OK',
+    tagIds,
+    tagSearched,
+    emojiData,
+    config,
+    aiChatId,
+    aiReadable,
   } = thread;
 
-  // 获取用户的默认 spaceId
+  console.log(`📸 postThread images:`, JSON.stringify(images, null, 2));
+  console.log(`📎 postThread files:`, JSON.stringify(files, null, 2));
+
   let finalSpaceId = spaceId;
 
-  // 如果传入的是字符串格式的 spaceId，直接使用
   if (finalSpaceId && typeof finalSpaceId === 'string') {
     try {
       finalSpaceId = new Types.ObjectId(finalSpaceId);
@@ -544,10 +556,8 @@ async function postThread(userId: Types.ObjectId, atom: any) {
     }
   }
 
-  // 如果没有有效的 spaceId，从 Member 表查找
   if (!finalSpaceId) {
     try {
-      // 查找用户的第一个成员记录
       const member = await Member.findOne({ userId }).exec();
       if (member) {
         finalSpaceId = member.spaceId;
@@ -560,13 +570,10 @@ async function postThread(userId: Types.ObjectId, atom: any) {
     }
   }
 
-  // 构建描述文本（从 thusDesc 中提取）
   let finalDescription = description;
   if (!finalDescription && thusDesc && Array.isArray(thusDesc)) {
-    // 从 thusDesc 中提取文本内容
     const textParts: string[] = [];
     for (const block of thusDesc) {
-      // 前端使用 content 字段，不是 children
       if (block.content && Array.isArray(block.content)) {
         for (const child of block.content) {
           if (child.text) {
@@ -574,7 +581,6 @@ async function postThread(userId: Types.ObjectId, atom: any) {
           }
         }
       }
-      // 兼容旧格式 children
       if (block.children && Array.isArray(block.children)) {
         for (const child of block.children) {
           if (child.text) {
@@ -589,10 +595,31 @@ async function postThread(userId: Types.ObjectId, atom: any) {
   const newThread = new Thread({
     userId,
     spaceId: finalSpaceId,
+    first_id: first_id || undefined,
     type,
     title: title || '',
     description: finalDescription || '',
+    thusDesc: thusDesc || [],
+    images: images || [],
+    files: files || [],
+    editedStamp,
+    createdStamp: createdStamp || Date.now(),
+    removedStamp,
+    calendarStamp,
+    remindStamp,
+    whenStamp,
+    pinStamp,
+    stateStamp,
+    remindMe,
+    oState: oState || 'OK',
     tags: tags || [],
+    tagIds: tagIds || [],
+    tagSearched: tagSearched || [],
+    stateId,
+    emojiData: emojiData || { total: 0, system: [] },
+    config,
+    aiChatId,
+    aiReadable: aiReadable || 'Y',
     status: 'active',
     isPublic: false,
   });
@@ -615,15 +642,22 @@ async function postThread(userId: Types.ObjectId, atom: any) {
 async function editThread(userId: Types.ObjectId, atom: any) {
   const { taskId, thread } = atom;
 
-  if (!thread || !thread.id) {
+  if (!thread || (!thread.id && !thread.first_id)) {
     return {
       code: 'E4000',
       taskId,
-      errMsg: 'thread.id是必需的',
+      errMsg: 'thread.id或first_id是必需的',
     };
   }
 
-  const existingThread = await Thread.findOne({ _id: thread.id, userId });
+  const query: any = { userId };
+  if (thread.id) {
+    query._id = thread.id;
+  } else if (thread.first_id) {
+    query.first_id = thread.first_id;
+  }
+
+  const existingThread = await Thread.findOne(query);
   if (!existingThread) {
     return {
       code: 'E4004',
@@ -632,10 +666,62 @@ async function editThread(userId: Types.ObjectId, atom: any) {
     };
   }
 
-  const { title, description, tags } = thread;
+  const {
+    title,
+    description,
+    tags,
+    thusDesc,
+    images,
+    files,
+    editedStamp,
+    calendarStamp,
+    remindStamp,
+    whenStamp,
+    remindMe,
+    stateId,
+    stateStamp,
+    tagIds,
+    tagSearched,
+    pinStamp,
+    aiReadable,
+    showCountdown,
+    removedStamp,
+  } = thread;
+
   if (title !== undefined) existingThread.title = title;
   if (description !== undefined) existingThread.description = description;
   if (tags !== undefined) existingThread.tags = tags;
+  if (thusDesc !== undefined) existingThread.thusDesc = thusDesc;
+  if (images !== undefined) existingThread.images = images;
+  if (files !== undefined) existingThread.files = files;
+  if (editedStamp !== undefined) existingThread.editedStamp = editedStamp;
+  if (calendarStamp !== undefined) existingThread.calendarStamp = calendarStamp;
+  if (remindStamp !== undefined) existingThread.remindStamp = remindStamp;
+  if (whenStamp !== undefined) existingThread.whenStamp = whenStamp;
+  if (remindMe !== undefined) existingThread.remindMe = remindMe;
+  if (stateId !== undefined) existingThread.stateId = stateId;
+  if (stateStamp !== undefined) existingThread.stateStamp = stateStamp;
+  if (tagIds !== undefined) existingThread.tagIds = tagIds;
+  if (tagSearched !== undefined) existingThread.tagSearched = tagSearched;
+  if (pinStamp !== undefined) existingThread.pinStamp = pinStamp;
+  if (aiReadable !== undefined) existingThread.aiReadable = aiReadable;
+  if (removedStamp !== undefined) existingThread.removedStamp = removedStamp;
+  if (showCountdown !== undefined) {
+    existingThread.settings = existingThread.settings || {};
+    (existingThread.settings as any).showCountdown = showCountdown;
+  }
+
+  if (!description && thusDesc && Array.isArray(thusDesc)) {
+    const textParts: string[] = [];
+    for (const block of thusDesc) {
+      if (block.content && Array.isArray(block.content)) {
+        for (const child of block.content) {
+          if (child.text) textParts.push(child.text);
+        }
+      }
+    }
+    existingThread.description = textParts.join(' ').trim();
+  }
 
   await existingThread.save();
 
@@ -651,7 +737,7 @@ async function editThread(userId: Types.ObjectId, atom: any) {
 async function deleteThread(userId: Types.ObjectId, atom: any) {
   const { taskId, thread } = atom;
 
-  if (!thread || !thread.id) {
+  if (!thread || (!thread.id && !thread.first_id)) {
     return {
       code: 'E4000',
       taskId,
@@ -659,7 +745,14 @@ async function deleteThread(userId: Types.ObjectId, atom: any) {
     };
   }
 
-  const existingThread = await Thread.findOne({ _id: thread.id, userId });
+  const query: any = { userId };
+  if (thread.id) {
+    query._id = thread.id;
+  } else if (thread.first_id) {
+    query.first_id = thread.first_id;
+  }
+
+  const existingThread = await Thread.findOne(query);
   if (!existingThread) {
     return {
       code: 'E4004',
@@ -668,7 +761,10 @@ async function deleteThread(userId: Types.ObjectId, atom: any) {
     };
   }
 
-  await (existingThread as any).softDelete();
+  existingThread.oState = 'DELETED' as any;
+  existingThread.removedStamp = thread.removedStamp || Date.now();
+  existingThread.status = 'deleted' as any;
+  await existingThread.save();
 
   return {
     code: '0000',
