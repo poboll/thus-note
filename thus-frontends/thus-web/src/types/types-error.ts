@@ -42,25 +42,25 @@ export const ERROR_CODES: Record<string, ErrorCodeConfig> = {
   '0000': { type: 'unknown', message: 'Success' },
   
   // Frontend Errors (F)
-  'F0002': { type: 'network', message: 'Request timeout' },
-  'F0003': { type: 'network', message: 'Request aborted' },
+  'F0002': { type: 'network', message: '请求超时，请检查网络连接' },
+  'F0003': { type: 'network', message: '请求已取消' },
   
   // Backend Errors (B)
-  'B0001': { type: 'network', message: 'Server unavailable' },
-  'B0500': { type: 'network', message: 'Internal server error' },
+  'B0001': { type: 'network', message: '无法连接到服务器，请检查网络或服务器地址' },
+  'B0500': { type: 'network', message: '服务器内部错误' },
   
   // Client Errors (C)
-  'C0001': { type: 'unknown', message: 'Unknown error' },
-  'C0002': { type: 'auth', message: 'Authentication failed' },
+  'C0001': { type: 'network', message: '网络连接失败，请检查网络设置或服务器地址' },
+  'C0002': { type: 'auth', message: '登录已过期，请重新登录' },
   
   // Business Logic Errors (E)
-  'E4009': { type: 'business', message: 'Decryption error' },
-  'E0002': { type: 'business', message: 'Not found' },
-  'E0003': { type: 'business', message: 'Internal server error' },
+  'E4009': { type: 'business', message: '数据解密失败' },
+  'E0002': { type: 'business', message: '资源不存在' },
+  'E0003': { type: 'business', message: '服务器内部错误' },
   
   // Validation Errors (V)
-  'V0001': { type: 'validation', message: 'Invalid input' },
-  'V0002': { type: 'validation', message: 'Missing required field' },
+  'V0001': { type: 'validation', message: '输入格式不正确' },
+  'V0002': { type: 'validation', message: '缺少必填字段' },
 } as const;
 
 /**

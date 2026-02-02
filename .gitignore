@@ -83,3 +83,6 @@ thus-frontends/thus-web/analysis.html
 
 # Claude settings
 .claude/
+
+# Kiro workflow directory
+.spec-workflow/

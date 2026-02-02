@@ -187,9 +187,13 @@ async function request<
     res2.data = newData
   }
 
-  // 如果返回的code不是0000，也显示错误
+  // 如果返回的code不是0000，也显示错误（但排除一些正常的业务code）
   if(res2.code && res2.code !== '0000') {
-    showError(res2)
+    // 排除一些正常的业务响应code，不显示错误弹窗
+    const normalCodes = ['U0001', 'U0002', 'U0003', 'U0004', 'U0005', 'U0006', 'U0007', 'U0008', 'U0009', 'U0010', 'U0011']
+    if(!normalCodes.includes(res2.code)) {
+      showError(res2)
+    }
   }
 
   return res2

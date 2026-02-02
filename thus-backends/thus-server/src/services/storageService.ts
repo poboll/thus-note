@@ -63,7 +63,7 @@ export class LocalStorageService implements IStorageService {
   /**
    * 上传文件到本地
    */
-  async upload(file: Buffer, filename: string, mimetype: string): Promise<StorageResult> {
+  async upload(file: Buffer, filename: string, _mimetype: string): Promise<StorageResult> {
     try {
       // 生成唯一文件名
       const ext = path.extname(filename);
