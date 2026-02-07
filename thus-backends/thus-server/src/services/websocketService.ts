@@ -1,9 +1,10 @@
 import { Server as SocketIOServer } from 'socket.io';
 import { Server as HTTPServer } from 'http';
 import { verify } from 'jsonwebtoken';
-import { JWT_SECRET } from '../config';
 import { errorResponse } from '../types/api.types';
 import { logger } from '../config/logger';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 /**
  * WebSocket服务类

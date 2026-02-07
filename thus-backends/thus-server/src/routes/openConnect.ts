@@ -13,22 +13,22 @@ const router = Router();
  */
 router.post('/', authMiddleware, async (req: Request, res: Response) => {
   try {
-    const userId = req.userId!;
+    const userId = req.userId!.toString();
     const { operateType, memberId, oauth_code } = req.body;
 
     switch (operateType) {
       case 'get-wechat':
         return await handleGetWeChatStatus(userId, res);
-      
+
       case 'bind-wechat':
         return await handleBindWeChat(userId, oauth_code, res);
-      
+
       case 'unbind-wechat':
         return await handleUnbindWeChat(userId, res);
-      
+
       case 'get-wechat-qrcode':
         return await handleGetWeChatQRCode(userId, req, res);
-      
+
       default:
         return res.status(400).json(
           errorResponse('BAD_REQUEST', `不支持的操作类型: ${operateType}`)

@@ -15,10 +15,10 @@ export enum AIModel {
 /**
  * AI 使用记录接口
  */
-export interface IAIUsage extends Document {
+export interface IAIUsage {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
-  model: AIModel;
+  model: string;
   operationType: 'chat' | 'completion' | 'embedding';
   inputTokens?: number;
   outputTokens?: number;
@@ -28,12 +28,13 @@ export interface IAIUsage extends Document {
   response?: string;
   metadata?: any; // 额外的元数据
   createdAt: Date;
+  updatedAt?: Date;
 }
 
 /**
  * AI 使用记录Schema
  */
-const AIUsageSchema = new Schema<IAIUsage>(
+const AIUsageSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -92,6 +93,7 @@ AIUsageSchema.index({ createdAt: -1 });
 /**
  * AI 使用记录模型
  */
-const AIUsageModel: Model<IAIUsage> = mongoose.models.AIUsage || mongoose.model<IAIUsage>('AIUsage', AIUsageSchema);
+type AIUsageDocument = Document & IAIUsage;
+const AIUsageModel = mongoose.models.AIUsage || mongoose.model<AIUsageDocument>('AIUsage', AIUsageSchema);
 
 export default AIUsageModel;

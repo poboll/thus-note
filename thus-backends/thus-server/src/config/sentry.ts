@@ -12,8 +12,8 @@ export function initSentry() {
       tracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || '0.1'),
       profilesSampleRate: parseFloat(process.env.SENTRY_PROFILES_SAMPLE_RATE || '0.1'),
       integrations: [
-        new Sentry.Integrations.Http({ tracing: true }),
-        new Sentry.Integrations.Express(),
+        Sentry.httpIntegration(),
+        Sentry.expressIntegration(),
       ],
     });
   }

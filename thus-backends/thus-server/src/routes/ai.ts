@@ -362,7 +362,7 @@ async function callAIService(
     const actualModel = modelMapping[model] || modelMapping[AIModelType.GPT_3_5_TURBO];
 
     // 调用AI服务
-    const aiResult = await aiService.callAI(messages, actualModel as AIModel, temperature, maxTokens);
+    const aiResult = await aiService.callAI(messages, actualModel as any, temperature, maxTokens);
 
     return {
       content: aiResult.content,
@@ -418,8 +418,8 @@ async function saveAIUsage(
 /**
  * 将 AIModelType 转换为 AIModel
  */
-function actualModelTypeToAIModel(modelType: AIModelType): AIModel {
-  const mapping: Record<AIModelType, AIModel> = {
+function actualModelTypeToAIModel(modelType: AIModelType): string {
+  const mapping: Record<AIModelType, string> = {
     [AIModelType.GPT_4]: 'gpt-4',
     [AIModelType.GPT_3_5_TURBO]: 'gpt-3.5-turbo',
     [AIModelType.CLAUDE_3]: 'claude-3-sonnet-20240229',

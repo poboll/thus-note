@@ -43,7 +43,7 @@ export class ExportService {
       updatedAt: thread.updatedAt.toISOString(),
     }));
 
-    const parser = new Parser({ unwind: ['tags'] });
+    const parser = new Parser();
     const csv = parser.parse(data);
 
     return Buffer.from(csv, 'utf8');

@@ -108,8 +108,8 @@ export class MonitorService {
   /**
    * 获取Prometheus指标
    */
-  static getMetrics(): string {
-    return register.metrics();
+  static async getMetrics(): Promise<string> {
+    return await register.metrics();
   }
 }
 

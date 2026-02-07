@@ -112,10 +112,11 @@ export function passResponse<T>(result: PassResult<T>): ApiResponse<T> {
       data: result.data,
     };
   } else {
+    const errResult = result as CommonPass;
     return {
-      code: result.err.code,
-      errMsg: result.err.errMsg,
-      showMsg: result.err.showMsg,
+      code: errResult.err.code,
+      errMsg: errResult.err.errMsg,
+      showMsg: errResult.err.showMsg,
     };
   }
 }

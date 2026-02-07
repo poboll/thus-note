@@ -53,7 +53,7 @@ export const adminAuthMiddleware = async (
     }
 
     // 将用户信息添加到请求对象
-    req.userId = decoded.userId;
+    req.userId = decoded.userId as any;
     (req as any).user = user;
     (req as any).isAdmin = true;
 
@@ -100,7 +100,7 @@ export const optionalAdminAuthMiddleware = async (
       return;
     }
 
-    req.userId = decoded.userId;
+    req.userId = decoded.userId as any;
     (req as any).user = user;
     (req as any).isAdmin = user.role === UserRole.ADMIN;
 

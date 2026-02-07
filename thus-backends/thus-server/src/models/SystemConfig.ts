@@ -520,7 +520,7 @@ interface ISystemConfigModel extends Model<ISystemConfig> {
 /**
  * SystemConfig 模型
  */
-const SystemConfig: ISystemConfigModel = mongoose.models.SystemConfig || 
-  mongoose.model<ISystemConfig, ISystemConfigModel>('SystemConfig', SystemConfigSchema);
+const SystemConfig = (mongoose.models.SystemConfig ||
+  mongoose.model<ISystemConfig, ISystemConfigModel>('SystemConfig', SystemConfigSchema)) as ISystemConfigModel;
 
 export default SystemConfig;

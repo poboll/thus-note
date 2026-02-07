@@ -42,7 +42,9 @@ export class SearchService {
     // 创建笔记索引
     await this.client.createIndex('threads', {
       primaryKey: '_id',
-      displayedAttributes: ['title', 'type', 'status', 'tags', 'createdAt', 'updatedAt'],
+    });
+    const threadsIndex = this.client.index('threads');
+    await threadsIndex.updateSettings({
       searchableAttributes: ['title', 'content', 'tags'],
       filterableAttributes: ['type', 'status', 'userId', 'tags'],
       sortableAttributes: ['createdAt', 'updatedAt'],
@@ -51,7 +53,9 @@ export class SearchService {
     // 创建内容索引
     await this.client.createIndex('contents', {
       primaryKey: '_id',
-      displayedAttributes: ['threadId', 'version', 'createdAt'],
+    });
+    const contentsIndex = this.client.index('contents');
+    await contentsIndex.updateSettings({
       searchableAttributes: ['content'],
       filterableAttributes: ['threadId', 'userId'],
       sortableAttributes: ['createdAt'],
@@ -60,7 +64,9 @@ export class SearchService {
     // 创建评论索引
     await this.client.createIndex('comments', {
       primaryKey: '_id',
-      displayedAttributes: ['threadId', 'contentId', 'content', 'createdAt'],
+    });
+    const commentsIndex = this.client.index('comments');
+    await commentsIndex.updateSettings({
       searchableAttributes: ['content'],
       filterableAttributes: ['threadId', 'userId'],
       sortableAttributes: ['createdAt'],
