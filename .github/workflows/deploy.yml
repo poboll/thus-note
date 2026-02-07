@@ -15,10 +15,12 @@ on:
       - 'thus-frontends/thus-web/**'
       - 'thus-backends/thus-server/**'
       - '.github/workflows/deploy.yml'
+      - 'pnpm-lock.yaml'
+      - 'package.json'
 
 # 环境变量
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
   PNPM_VERSION: '9'
 
 jobs:
