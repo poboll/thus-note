@@ -1,0 +1,312 @@
+name: Build and Release
+
+# 触发条件
+on:
+  # 手动触发
+  workflow_dispatch:
+
+  # 推送到 main 分支或标签时自动触发
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+    paths:
+      - 'thus-frontends/thus-web/**'
+      - 'thus-backends/thus-server/**'
+      - '.github/workflows/deploy.yml'
+
+# 环境变量
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '9'
+
+jobs:
+  build-and-release:
+    name: 构建并发布 Release
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. 设置 Node.js 环境
+      - name: 🔧 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # 3. 设置 pnpm
+      - name: 🔧 设置 pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      # 4. 缓存依赖
+      - name: 📦 缓存依赖
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pnpm-store
+            **/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-pnpm-
+
+      # 5. 安装根目录依赖
+      - name: 📦 安装根目录依赖
+        run: |
+          echo "📦 安装根目录依赖..."
+          pnpm install --frozen-lockfile
+
+      # 6. 安装并构建前端
+      - name: 🏗️ 构建前端
+        run: |
+          echo "📦 安装前端依赖..."
+          cd thus-frontends/thus-web
+          pnpm install --frozen-lockfile
+
+          echo "🏗️ 构建前端..."
+          pnpm build
+
+          echo "✅ 前端构建完成!"
+          ls -lh dist/
+
+      # 7. 安装并构建后端
+      - name: 🏗️ 构建后端
+        run: |
+          echo "📦 安装后端依赖..."
+          cd thus-backends/thus-server
+          pnpm install --frozen-lockfile
+
+          echo "🏗️ 编译 TypeScript..."
+          pnpm build
+
+          echo "✅ 后端构建完成!"
+          ls -lh dist/
+
+      # 8. 准备发布包
+      - name: 📦 准备发布包
+        run: |
+          echo "📦 创建发布目录..."
+          mkdir -p release-package/frontend
+          mkdir -p release-package/backend
+
+          # 复制前端构建产物
+          echo "📋 复制前端文件..."
+          cp -r thus-frontends/thus-web/dist/* release-package/frontend/
+
+          # 复制后端构建产物和必要文件
+          echo "📋 复制后端文件..."
+          cp -r thus-backends/thus-server/dist release-package/backend/
+          cp thus-backends/thus-server/package.json release-package/backend/
+          cp thus-backends/thus-server/pnpm-lock.yaml release-package/backend/
+          cp thus-backends/thus-server/ecosystem.config.js release-package/backend/ || true
+          cp thus-backends/thus-server/.env.example release-package/backend/
+
+          # 创建后端必要的目录
+          echo "📁 创建后端目录..."
+          mkdir -p release-package/backend/logs
+          mkdir -p release-package/backend/pids
+          mkdir -p release-package/backend/uploads
+
+          # 创建部署说明文件
+          echo "📝 创建部署说明..."
+          cat > release-package/README.md << 'EOFREADME'
+          # Thus-Note 生产环境部署包
+
+          ## 包含内容
+
+          - frontend/ - 前端静态文件 (Vue 3)
+          - backend/ - 后端 Node.js 代码
+
+          ## 部署步骤
+
+          ### 1. 上传到服务器
+
+          将整个压缩包上传到服务器并解压:
+
+          tar -xzf thus-note-*.tar.gz
+          cd thus-note-*
+
+          ### 2. 部署前端
+
+          上传前端文件到网站根目录:
+          cp -r frontend/* /www/wwwroot/thus.caiths.com/frontend/
+
+          ### 3. 部署后端
+
+          上传后端文件:
+          cp -r backend/* /www/wwwroot/thus.caiths.com/backend/
+          cd /www/wwwroot/thus.caiths.com/backend
+
+          配置环境变量 (首次部署):
+          cp .env.example .env
+          nano .env
+
+          安装生产依赖:
+          pnpm install --production
+
+          启动服务 (使用 PM2):
+          pm2 start ecosystem.config.js
+          pm2 save
+          pm2 startup
+
+          ### 4. 配置 Nginx
+
+          在宝塔面板配置 Nginx 反向代理，参考项目中的 deploy/nginx.conf
+
+          ### 5. 申请 SSL 证书
+
+          在宝塔面板申请 Let's Encrypt 免费证书
+
+          ## 验证部署
+
+          - 访问: https://thus.caiths.com
+          - 健康检查: https://thus.caiths.com/health
+
+          ## 详细文档
+
+          完整部署文档: https://github.com/poboll/thus-note/blob/main/deploy/DEPLOYMENT.md
+
+          ## 环境要求
+
+          - Node.js >= 18
+          - MongoDB >= 5.0
+          - Redis >= 6.0
+          - pnpm >= 8
+
+          ## 环境变量配置
+
+          编辑 .env 文件:
+
+          NODE_ENV=production
+          PORT=3000
+          MONGODB_URI=mongodb://用户:密码@127.0.0.1:27017/thus-note?authSource=admin
+          REDIS_HOST=127.0.0.1
+          REDIS_PASSWORD=你的Redis密码
+          JWT_SECRET=生成一个强随机密钥
+
+          EOFREADME
+
+          echo "✅ 发布包准备完成!"
+          du -sh release-package/*
+
+      # 9. 创建压缩包
+      - name: 📦 创建压缩包
+        run: |
+          # 获取版本号和时间戳
+          VERSION=$(date +%Y%m%d-%H%M%S)
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          fi
+
+          PACKAGE_NAME="thus-note-${VERSION}.tar.gz"
+
+          echo "📦 打包: $PACKAGE_NAME"
+          cd release-package
+          tar -czf ../$PACKAGE_NAME .
+          cd ..
+
+          # 计算 SHA256
+          sha256sum $PACKAGE_NAME > ${PACKAGE_NAME}.sha256
+
+          echo "✅ 打包完成!"
+          ls -lh $PACKAGE_NAME*
+
+          # 保存文件名供后续步骤使用
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # 10. 上传构建产物
+      - name: 📤 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: thus-note-${{ env.VERSION }}
+          path: |
+            ${{ env.PACKAGE_NAME }}
+            ${{ env.PACKAGE_NAME }}.sha256
+          retention-days: 90
+
+      # 11. 创建 Release (仅在推送标签或 main 分支时)
+      - name: 🎉 创建 GitHub Release
+        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          body: |
+            ## 🎉 Thus-Note 发布 ${{ env.VERSION }}
+
+            ### 📦 下载
+
+            下载压缩包并上传到服务器:
+
+            1. 下载 `thus-note-${{ env.VERSION }}.tar.gz`
+            2. 上传到服务器并解压
+            3. 按照压缩包内的 `README.md` 进行部署
+
+            ### 📝 部署说明
+
+            完整部署文档: [DEPLOYMENT.md](https://github.com/poboll/thus-note/blob/main/deploy/DEPLOYMENT.md)
+
+            ### ✅ 验证 SHA256
+
+            ```bash
+            sha256sum -c thus-note-${{ env.VERSION }}.tar.gz.sha256
+            ```
+
+            ### 🗂️ 包含内容
+
+            - ✅ 前端静态文件 (Vue 3)
+            - ✅ 后端 Node.js 代码 (TypeScript 编译)
+            - ✅ PM2 配置文件
+            - ✅ 环境变量模板
+            - ✅ 部署说明文档
+
+            ### 💾 环境要求
+
+            - Node.js >= 18
+            - MongoDB >= 5.0
+            - Redis >= 6.0
+            - pnpm >= 8
+
+            ---
+
+            **提交**: ${{ github.sha }}
+            **分支**: ${{ github.ref }}
+            **构建时间**: ${{ github.event.head_commit.timestamp }}
+          files: |
+            ${{ env.PACKAGE_NAME }}
+            ${{ env.PACKAGE_NAME }}.sha256
+          draft: false
+          prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 12. 构建总结
+      - name: 📊 构建总结
+        if: always()
+        run: |
+          echo "================================"
+          echo "📊 构建总结"
+          echo "================================"
+          echo "✅ 版本: ${{ env.VERSION }}"
+          echo "✅ 包名: ${{ env.PACKAGE_NAME }}"
+          echo "✅ 大小: $(ls -lh ${{ env.PACKAGE_NAME }} | awk '{print $5}')"
+          echo ""
+          echo "📥 下载地址:"
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "  GitHub Release: https://github.com/${{ github.repository }}/releases/tag/${{ env.VERSION }}"
+            echo "  或通过 Actions 页面下载构建产物"
+          else
+            echo "  通过 Actions 页面下载构建产物"
+          fi
+          echo ""
+          echo "📚 部署文档:"
+          echo "  https://github.com/${{ github.repository }}/blob/main/deploy/DEPLOYMENT.md"
+          echo "================================"

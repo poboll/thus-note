@@ -86,3 +86,4 @@ thus-frontends/thus-web/analysis.html
 
 # Kiro workflow directory
 .spec-workflow/
+.kiro/

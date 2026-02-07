@@ -62,7 +62,7 @@
 
 ###  在线体验
 
-- **Web 应用**: [https://thus-note.example.com](https://thus-note.example.com) (开发中)
+- **Web 应用**: [https://thus.caiths.com](https://thus.caiths.com)
 - **使用文档**: [https://docs.thus-note.example.com](https://docs.thus-note.example.com) (开发中)
 
 ---
