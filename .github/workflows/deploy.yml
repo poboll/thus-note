@@ -205,15 +205,18 @@ jobs:
       # 9. 创建压缩包
       - name: 📦 创建压缩包
         run: |
-          # 获取版本号和时间戳
-          VERSION=$(date +%Y%m%d-%H%M%S)
+          # 获取版本号
           if [[ $GITHUB_REF == refs/tags/* ]]; then
+            # 如果是标签推送，使用标签名作为版本
             VERSION=${GITHUB_REF#refs/tags/}
+          else
+            # 否则从 package.json 读取版本号
+            VERSION="v$(node -p "require('./package.json').version")"
           fi
 
           PACKAGE_NAME="thus-note-${VERSION}.tar.gz"
 
-          echo "📦 打包: $PACKAGE_NAME"
+          echo "📦 打包: $PACKAGE_NAME (版本: $VERSION)"
           cd release-package
           tar -czf ../$PACKAGE_NAME .
           cd ..
@@ -290,7 +293,7 @@ jobs:
             ${{ env.PACKAGE_NAME }}
             ${{ env.PACKAGE_NAME }}.sha256
           draft: false
-          prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
