@@ -241,54 +241,141 @@ jobs:
             ${{ env.PACKAGE_NAME }}.sha256
           retention-days: 90
 
-      # 11. 创建 Release (仅在推送标签或 main 分支时)
+      # 11. 生成版本描述
+      - name: 📝 生成版本描述
+        run: |
+          echo "生成 Release 版本描述..."
+
+          # 获取上一个 tag（如果存在）
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          # 生成 Changelog
+          if [ -n "$PREV_TAG" ]; then
+            echo "## 📋 更新内容" > RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+
+            # 按类型分类提交
+            echo "### ✨ 新功能" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --grep="^feat" >> RELEASE_NOTES.md || echo "无" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+
+            echo "### 🐛 Bug 修复" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --grep="^fix" >> RELEASE_NOTES.md || echo "无" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+
+            echo "### 📚 文档更新" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --grep="^docs" >> RELEASE_NOTES.md || echo "无" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+
+            echo "### 🔧 其他改进" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --grep="^chore\|^refactor\|^perf\|^style" >> RELEASE_NOTES.md || echo "无" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+
+            echo "### 📊 完整提交记录" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h) - %an" --no-merges | head -20 >> RELEASE_NOTES.md
+          else
+            echo "## 🎉 首次发布" > RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "这是 Thus-Note 的首个正式版本！" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "### 主要特性" >> RELEASE_NOTES.md
+            echo "- ✅ Vue 3 前端应用" >> RELEASE_NOTES.md
+            echo "- ✅ Node.js + TypeScript 后端服务" >> RELEASE_NOTES.md
+            echo "- ✅ MongoDB 数据存储" >> RELEASE_NOTES.md
+            echo "- ✅ Redis 缓存支持" >> RELEASE_NOTES.md
+            echo "- ✅ AI 助手集成" >> RELEASE_NOTES.md
+            echo "- ✅ 多平台部署支持" >> RELEASE_NOTES.md
+          fi
+
+          echo "" >> RELEASE_NOTES.md
+          echo "---" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+
+          # 添加下载和部署说明（直接写入，不使用 sed 替换）
+          cat >> RELEASE_NOTES.md << EOFNOTES
+          ## 📦 下载与部署
+
+          ### 下载步骤
+
+          1. 下载压缩��：\`thus-note-${{ env.VERSION }}.tar.gz\`
+          2. 验证文件完整性：
+             \`\`\`bash
+             sha256sum -c thus-note-${{ env.VERSION }}.tar.gz.sha256
+             \`\`\`
+          3. 解压文件：
+             \`\`\`bash
+             tar -xzf thus-note-${{ env.VERSION }}.tar.gz
+             \`\`\`
+
+          ### 快速部署
+
+          **前端部署：**
+          \`\`\`bash
+          # 复制前端文件到网站目录
+          cp -r frontend/* /www/wwwroot/thus.caiths.com/frontend/
+          \`\`\`
+
+          **后端部署：**
+          \`\`\`bash
+          # 复制后端文件
+          cp -r backend/* /www/wwwroot/thus.caiths.com/backend/
+          cd /www/wwwroot/thus.caiths.com/backend
+
+          # 配置环境变量（首次部署）
+          cp .env.example .env
+          nano .env
+
+          # 安装生产依赖
+          pnpm install --production
+
+          # 使用 PM2 启动服务
+          pm2 start ecosystem.config.js
+          pm2 save
+          pm2 startup
+          \`\`\`
+
+          ### 📝 详细文档
+
+          完整部署文档：[DEPLOYMENT.md](https://github.com/poboll/thus-note/blob/main/deploy/DEPLOYMENT.md)
+
+          ### 💾 环境要求
+
+          - Node.js >= 18
+          - MongoDB >= 5.0
+          - Redis >= 6.0
+          - pnpm >= 8
+
+          ### 🗂️ 包含内容
+
+          - ✅ 前端静态文件 (Vue 3)
+          - ✅ 后端 Node.js 代码 (TypeScript 编译)
+          - ✅ PM2 配置文件
+          - ✅ 环境变量模板
+          - ✅ 部署说明文档
+
+          ---
+
+          **构建信息**
+          - 提交 SHA: ${{ github.sha }}
+          - 分支: ${{ github.ref }}
+          - 构建时间: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          EOFNOTES
+
+          cat RELEASE_NOTES.md
+          echo "✅ 版本描述生成完成!"
+
+      # 12. 创建 Release (仅在推送标签或 main 分支时)
       - name: 🎉 创建 GitHub Release
         if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}
           name: Release ${{ env.VERSION }}
-          body: |
-            ## 🎉 Thus-Note 发布 ${{ env.VERSION }}
-
-            ### 📦 下载
-
-            下载压缩包并上传到服务器:
-
-            1. 下载 `thus-note-${{ env.VERSION }}.tar.gz`
-            2. 上传到服务器并解压
-            3. 按照压缩包内的 `README.md` 进行部署
-
-            ### 📝 部署说明
-
-            完整部署文档: [DEPLOYMENT.md](https://github.com/poboll/thus-note/blob/main/deploy/DEPLOYMENT.md)
-
-            ### ✅ 验证 SHA256
-
-            ```bash
-            sha256sum -c thus-note-${{ env.VERSION }}.tar.gz.sha256
-            ```
-
-            ### 🗂️ 包含内容
-
-            - ✅ 前端静态文件 (Vue 3)
-            - ✅ 后端 Node.js 代码 (TypeScript 编译)
-            - ✅ PM2 配置文件
-            - ✅ 环境变量模板
-            - ✅ 部署说明文档
-
-            ### 💾 环境要求
-
-            - Node.js >= 18
-            - MongoDB >= 5.0
-            - Redis >= 6.0
-            - pnpm >= 8
-
-            ---
-
-            **提交**: ${{ github.sha }}
-            **分支**: ${{ github.ref }}
-            **构建时间**: ${{ github.event.head_commit.timestamp }}
+          body_path: RELEASE_NOTES.md
           files: |
             ${{ env.PACKAGE_NAME }}
             ${{ env.PACKAGE_NAME }}.sha256
@@ -297,7 +384,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 12. 构建总结
+      # 13. 构建总结
       - name: 📊 构建总结
         if: always()
         run: |
