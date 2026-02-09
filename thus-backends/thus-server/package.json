@@ -5,6 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "seed": "node scripts/seed-database.js",
+    "seed:clean": "node scripts/seed-database.js --clean",
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest",
