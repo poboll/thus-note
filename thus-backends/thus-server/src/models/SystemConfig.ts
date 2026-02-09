@@ -98,6 +98,19 @@ export interface ISMSConfig {
 }
 
 /**
+ * 邮箱配置接口
+ */
+export interface IEmailConfig {
+  enabled: boolean;
+  host: string;
+  port: number;
+  secure: boolean;
+  user: string;
+  pass: string;
+  from: string;
+}
+
+/**
  * 微信配置接口
  */
 export interface IWeChatConfig {
@@ -126,33 +139,49 @@ export interface IPoliciesConfig {
 }
 
 /**
+ * AI提供商配置接口
+ */
+export interface IAIProviderConfig {
+  enabled: boolean;
+  name: string;
+  baseUrl: string;
+  apiKey: string;
+  defaultModel: string;
+  models: string[];
+}
+
+/**
+ * AI功能配置接口
+ */
+export interface IAIConfig {
+  enabled: boolean;
+  autoTag: boolean;
+  autoSummary: boolean;
+  similarRecommend: boolean;
+  providers: IAIProviderConfig[];
+}
+
+/**
  * 系统配置接口
  */
 export interface ISystemConfig extends Document {
   _id: Types.ObjectId;
   
-  // 基础配置
   baseUrl: string;
   frontendUrl: string;
   
-  // 代理配置
   proxy?: {
     enabled: boolean;
     host?: string;
     port?: number;
   };
   
-  // 存储配置
   storage: IStorageConfig;
-  
-  // 短信配置
   sms: ISMSConfig;
-  
-  // 微信配置
+  email: IEmailConfig;
   wechat: IWeChatConfig;
-  
-  // 政策内容
   policies: IPoliciesConfig;
+  ai: IAIConfig;
   
   updatedAt: Date;
   updatedBy?: Types.ObjectId;
@@ -371,6 +400,15 @@ const SystemConfigSchema = new Schema<ISystemConfig>(
         provider: SMSProvider.TENCENT,
       }),
     },
+    email: {
+      enabled: { type: Boolean, default: false },
+      host: { type: String, default: '' },
+      port: { type: Number, default: 587 },
+      secure: { type: Boolean, default: false },
+      user: { type: String, default: '' },
+      pass: { type: String, default: '' },
+      from: { type: String, default: '' },
+    },
     wechat: {
       type: WeChatConfigSchema,
       default: () => ({
@@ -380,6 +418,30 @@ const SystemConfigSchema = new Schema<ISystemConfig>(
     policies: {
       type: PoliciesConfigSchema,
       default: () => ({}),
+    },
+    ai: {
+      enabled: { type: Boolean, default: true },
+      autoTag: { type: Boolean, default: true },
+      autoSummary: { type: Boolean, default: true },
+      similarRecommend: { type: Boolean, default: true },
+      providers: {
+        type: [{
+          enabled: { type: Boolean, default: true },
+          name: { type: String, required: true },
+          baseUrl: { type: String, required: true },
+          apiKey: { type: String, required: true },
+          defaultModel: { type: String, required: true },
+          models: { type: [String], default: [] },
+        }],
+        default: () => [{
+          enabled: true,
+          name: 'openai',
+          baseUrl: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1',
+          apiKey: process.env.OPENAI_API_KEY || '',
+          defaultModel: process.env.OPENAI_DEFAULT_MODEL || 'gpt-3.5-turbo',
+          models: [process.env.OPENAI_DEFAULT_MODEL || 'gpt-3.5-turbo'],
+        }],
+      },
     },
     updatedBy: {
       type: Schema.Types.ObjectId,

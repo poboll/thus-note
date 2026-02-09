@@ -1,7 +1,3 @@
-/**
- * AI服务配置
- */
-
 export interface AIConfig {
   openai: {
     apiKey: string;
@@ -19,22 +15,28 @@ export interface AIConfig {
   };
 }
 
-export const aiConfig: AIConfig = {
-  openai: {
-    apiKey: process.env.OPENAI_API_KEY || '',
-    baseURL: process.env.OPENAI_BASE_URL,
-    defaultModel: process.env.OPENAI_DEFAULT_MODEL || 'gpt-3.5-turbo',
+// Lazy proxy: reads process.env at access time (after dotenv.config)
+export const aiConfig: AIConfig = new Proxy({} as AIConfig, {
+  get(_target, prop: string) {
+    const configs: AIConfig = {
+      openai: {
+        apiKey: process.env.OPENAI_API_KEY || '',
+        baseURL: process.env.OPENAI_BASE_URL,
+        defaultModel: process.env.OPENAI_DEFAULT_MODEL || 'gpt-3.5-turbo',
+      },
+      anthropic: {
+        apiKey: process.env.ANTHROPIC_API_KEY || '',
+        baseURL: process.env.ANTHROPIC_BASE_URL,
+        defaultModel: process.env.ANTHROPIC_DEFAULT_MODEL || 'claude-3-sonnet-20240229',
+      },
+      gemini: {
+        apiKey: process.env.GEMINI_API_KEY || '',
+        defaultModel: process.env.GEMINI_DEFAULT_MODEL || 'gemini-pro',
+      },
+    };
+    return configs[prop as keyof AIConfig];
   },
-  anthropic: {
-    apiKey: process.env.ANTHROPIC_API_KEY || '',
-    baseURL: process.env.ANTHROPIC_BASE_URL,
-    defaultModel: process.env.ANTHROPIC_DEFAULT_MODEL || 'claude-3-sonnet-20240229',
-  },
-  gemini: {
-    apiKey: process.env.GEMINI_API_KEY || '',
-    defaultModel: process.env.GEMINI_DEFAULT_MODEL || 'gemini-pro',
-  },
-};
+});
 
 export const AI_MODELS = {
   GPT_4: 'gpt-4',

@@ -2,8 +2,10 @@ import SystemConfig, {
   ISystemConfig,
   IStorageConfig,
   ISMSConfig,
+  IEmailConfig,
   IWeChatConfig,
   IPoliciesConfig,
+  IAIConfig,
   StorageType,
   SMSProvider,
   S3Provider,
@@ -133,6 +135,32 @@ export class ConfigService {
     this.clearCache();
     
     logger.info(`短信配置已更新: ${smsConfig.provider}`);
+    return config;
+  }
+
+  static async updateEmailConfig(
+    emailConfig: IEmailConfig,
+    updatedBy?: Types.ObjectId
+  ): Promise<ISystemConfig> {
+    if (emailConfig.enabled) {
+      if (!emailConfig.host?.trim()) {
+        throw new ConfigValidationError('email.host', 'SMTP 主机不能为空');
+      }
+      if (!emailConfig.user?.trim()) {
+        throw new ConfigValidationError('email.user', 'SMTP 用户名不能为空');
+      }
+      if (!emailConfig.pass?.trim()) {
+        throw new ConfigValidationError('email.pass', 'SMTP 密码不能为空');
+      }
+    }
+
+    const config = await SystemConfig.updateConfig(
+      { email: emailConfig } as any,
+      updatedBy
+    );
+    this.clearCache();
+
+    logger.info('邮箱配置已更新');
     return config;
   }
 
@@ -350,6 +378,11 @@ export class ConfigService {
     return config.sms;
   }
 
+  static async getEmailConfig(): Promise<IEmailConfig> {
+    const config = await this.getConfig();
+    return config.email;
+  }
+
   /**
    * 获取微信配置
    */
@@ -380,6 +413,52 @@ export class ConfigService {
   static async getPrivacy(): Promise<{ content: string; version: string; lastUpdated: Date }> {
     const config = await this.getConfig();
     return config.policies.privacy;
+  }
+
+  /**
+   * 更新AI配置
+   */
+  static async updateAIConfig(
+    aiConfig: IAIConfig,
+    updatedBy?: Types.ObjectId
+  ): Promise<ISystemConfig> {
+    this.validateAIConfig(aiConfig);
+
+    const config = await SystemConfig.updateConfig(
+      { ai: aiConfig } as any,
+      updatedBy
+    );
+    this.clearCache();
+
+    logger.info('AI配置已更新');
+    return config;
+  }
+
+  /**
+   * 获取AI配置
+   */
+  static async getAIConfig(): Promise<IAIConfig> {
+    const config = await this.getConfig();
+    return config.ai;
+  }
+
+  private static validateAIConfig(config: IAIConfig): void {
+    if (config.providers && Array.isArray(config.providers)) {
+      for (const provider of config.providers) {
+        if (!provider.name || provider.name.trim() === '') {
+          throw new ConfigValidationError('ai.providers.name', '提供商名称不能为空');
+        }
+        if (!provider.baseUrl || provider.baseUrl.trim() === '') {
+          throw new ConfigValidationError('ai.providers.baseUrl', 'API地址不能为空');
+        }
+        if (!provider.apiKey || provider.apiKey.trim() === '') {
+          throw new ConfigValidationError('ai.providers.apiKey', 'API密钥不能为空');
+        }
+        if (!provider.defaultModel || provider.defaultModel.trim() === '') {
+          throw new ConfigValidationError('ai.providers.defaultModel', '默认模型不能为空');
+        }
+      }
+    }
   }
 }
 
