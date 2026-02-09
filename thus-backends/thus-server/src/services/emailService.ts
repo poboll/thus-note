@@ -1,22 +1,55 @@
 import * as nodemailer from 'nodemailer';
 import { emailConfig } from '../config/email';
+import { ConfigService } from './configService';
 
 /**
  * 邮件服务类
+ * 优先读取 DB 中的邮箱配置，DB 无配置或未启用时 fallback 到 env 配置
  */
 export class EmailService {
   private transporter: any;
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: emailConfig.host,
-      port: emailConfig.port,
-      secure: emailConfig.secure,
+    this.transporter = this.createTransporter(emailConfig);
+  }
+
+  private createTransporter(cfg: {
+    host: string;
+    port: number;
+    secure: boolean;
+    auth: { user: string; pass: string };
+  }) {
+    return nodemailer.createTransport({
+      host: cfg.host,
+      port: cfg.port,
+      secure: cfg.secure,
       auth: {
-        user: emailConfig.auth.user,
-        pass: emailConfig.auth.pass,
+        user: cfg.auth.user,
+        pass: cfg.auth.pass,
       },
     });
+  }
+
+  /**
+   * 从 DB 加载邮箱配置并刷新 transporter
+   * 若 DB 配置已启用且完整，则使用 DB 配置；否则保持 env 配置
+   */
+  private async ensureLatestConfig(): Promise<string> {
+    try {
+      const dbEmail = await ConfigService.getEmailConfig();
+      if(dbEmail.enabled && dbEmail.host && dbEmail.user && dbEmail.pass) {
+        this.transporter = this.createTransporter({
+          host: dbEmail.host,
+          port: dbEmail.port || 587,
+          secure: dbEmail.secure ?? false,
+          auth: { user: dbEmail.user, pass: dbEmail.pass },
+        });
+        return dbEmail.from || emailConfig.from;
+      }
+    } catch {
+      // DB 不可用时静默 fallback
+    }
+    return emailConfig.from;
   }
 
   /**
@@ -24,8 +57,9 @@ export class EmailService {
    */
   async sendVerificationCode(email: string, code: string): Promise<boolean> {
     try {
+      const from = await this.ensureLatestConfig();
       await this.transporter.sendMail({
-        from: emailConfig.from,
+        from,
         to: email,
         subject: '如是笔记 - 验证码',
         html: `
@@ -51,8 +85,9 @@ export class EmailService {
    */
   async sendWelcomeEmail(email: string, username: string): Promise<boolean> {
     try {
+      const from = await this.ensureLatestConfig();
       await this.transporter.sendMail({
-        from: emailConfig.from,
+        from,
         to: email,
         subject: '欢迎加入如是笔记',
         html: `
@@ -79,10 +114,11 @@ export class EmailService {
    */
   async sendPasswordResetEmail(email: string, resetToken: string): Promise<boolean> {
     try {
+      const from = await this.ensureLatestConfig();
       const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:5175'}/reset-password?token=${resetToken}`;
 
       await this.transporter.sendMail({
-        from: emailConfig.from,
+        from,
         to: email,
         subject: '如是笔记 - 密码重置',
         html: `
