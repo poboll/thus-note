@@ -66,6 +66,16 @@ export interface IUser extends Document {
   role: UserRole;
   oauthAccounts: IOAuthAccount[];
   files: IFile[];
+  subscription?: {
+    plan: string;
+    isOn: boolean;
+    expireStamp: number;
+    firstChargedStamp?: number;
+    chargeTimes?: number;
+    autoRecharge?: boolean;
+    isLifelong?: boolean;
+  };
+  credits: number;
   settings: {
     language: string;
     theme: string;
@@ -74,6 +84,11 @@ export interface IUser extends Document {
       email: boolean;
       push: boolean;
     };
+    aiEnabled: boolean;
+    aiTagCount: number;
+    aiTagStyle: 'concise' | 'detailed';
+    aiFavoriteTags: string[];
+    aiAutoTagMode: 'manual' | 'silent';
   };
   createdAt: Date;
   updatedAt: Date;
@@ -193,6 +208,19 @@ const UserSchema = new Schema<IUser>(
     },
     oauthAccounts: [OAuthAccountSchema],
     files: [FileSchema],
+    subscription: {
+      plan: { type: String, default: '' },
+      isOn: { type: Boolean, default: false },
+      expireStamp: { type: Number, default: 0 },
+      firstChargedStamp: { type: Number },
+      chargeTimes: { type: Number, default: 0 },
+      autoRecharge: { type: Boolean, default: false },
+      isLifelong: { type: Boolean, default: false },
+    },
+    credits: {
+      type: Number,
+      default: 0,
+    },
     settings: {
       language: {
         type: String,
@@ -215,6 +243,30 @@ const UserSchema = new Schema<IUser>(
           type: Boolean,
           default: true,
         },
+      },
+      aiEnabled: {
+        type: Boolean,
+        default: true,
+      },
+      aiTagCount: {
+        type: Number,
+        default: 5,
+        min: 3,
+        max: 10,
+      },
+      aiTagStyle: {
+        type: String,
+        enum: ['concise', 'detailed'],
+        default: 'concise',
+      },
+      aiFavoriteTags: {
+        type: [String],
+        default: [],
+      },
+      aiAutoTagMode: {
+        type: String,
+        enum: ['manual', 'silent'],
+        default: 'manual',
       },
     },
     lastLoginAt: Date,

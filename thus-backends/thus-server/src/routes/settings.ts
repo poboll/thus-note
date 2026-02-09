@@ -236,4 +236,48 @@ router.put('/timezone', authMiddleware, async (req: Request, res: Response) => {
   }
 });
 
+router.put('/ai', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+    const { aiEnabled, aiTagCount, aiTagStyle, aiFavoriteTags, aiAutoTagMode } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json(
+        errorResponse('NOT_FOUND', '用户不存在')
+      );
+    }
+
+    if (typeof aiEnabled === 'boolean') user.settings.aiEnabled = aiEnabled;
+    if (typeof aiTagCount === 'number' && aiTagCount >= 3 && aiTagCount <= 10) {
+      user.settings.aiTagCount = aiTagCount;
+    }
+    if (aiTagStyle === 'concise' || aiTagStyle === 'detailed') {
+      user.settings.aiTagStyle = aiTagStyle;
+    }
+    if (Array.isArray(aiFavoriteTags)) {
+      user.settings.aiFavoriteTags = aiFavoriteTags.filter(
+        (t: unknown) => typeof t === 'string' && t.length > 0
+      ).slice(0, 20);
+    }
+    if (aiAutoTagMode === 'manual' || aiAutoTagMode === 'silent') {
+      user.settings.aiAutoTagMode = aiAutoTagMode;
+    }
+
+    await user.save();
+
+    return res.json(successResponse({
+      aiEnabled: user.settings.aiEnabled,
+      aiTagCount: user.settings.aiTagCount,
+      aiTagStyle: user.settings.aiTagStyle,
+      aiFavoriteTags: user.settings.aiFavoriteTags,
+      aiAutoTagMode: user.settings.aiAutoTagMode,
+    }));
+  } catch (error: any) {
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '更新AI设置失败')
+    );
+  }
+});
+
 export default router;

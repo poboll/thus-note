@@ -23,6 +23,7 @@ import versionRouter from './routes/version';
 import wechatRouter from './routes/wechat';
 import openConnectRouter from './routes/openConnect';
 import adminRouter from './routes/admin';
+import subscribePlanRouter from './routes/subscribe-plan';
 import { securityHeaders, apiRateLimiter } from './middleware/security';
 import { logger } from './config/logger';
 import { MonitorService } from './services/monitorService';
@@ -132,6 +133,7 @@ app.use('/api/wechat', wechatRouter);
 app.use('/api/open-connect', openConnectRouter);
 app.use('/open-connect', openConnectRouter); // 前端兼容路由
 app.use('/api/admin', adminRouter);
+app.use('/subscribe-plan', subscribePlanRouter);
 
 // 静态文件服务（上传的文件）
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
