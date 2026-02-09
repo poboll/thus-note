@@ -2,7 +2,10 @@ import { Router, Request, Response } from 'express';
 import { authMiddleware } from '../middleware/auth';
 import { successResponse, errorResponse } from '../types/api.types';
 import { aiService } from '../services/aiService';
+import { aiConfig } from '../config/ai';
 import AIUsageModel, { AIModel } from '../models/AIUsage';
+import Thread from '../models/Thread';
+import User from '../models/User';
 
 const router = Router();
 
@@ -133,11 +136,11 @@ router.post('/summarize', authMiddleware, async (req: Request, res: Response) =>
     const messages: AIMessage[] = [
       {
         role: 'system',
-        content: '你是一个专业的内容总结助手，能够准确、简洁地总结长文本内容。',
+        content: '你是「如是」笔记系统的 AI 摘要助手。请用简洁、自然的语言总结笔记核心内容，保留关键信息和要点。输出纯文本，不使用 markdown 格式。',
       },
       {
         role: 'user',
-        content: `请将以下内容总结为${maxLength}字以内的摘要：\n\n${content}`,
+        content: `请将以下笔记内容总结为${maxLength}字以内的摘要：\n\n${content}`,
       },
     ];
 
@@ -325,6 +328,269 @@ router.post('/chat', authMiddleware, async (req: Request, res: Response) => {
 });
 
 /**
+ * AI自动标签
+ * POST /api/ai/auto-tag
+ */
+router.post('/auto-tag', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+    const { content, threadId, existingTags = [] } = req.body;
+
+    if (!content) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '内容不能为空')
+      );
+    }
+
+    const user = await User.findById(userId).select('settings');
+    const tagCount = user?.settings?.aiTagCount ?? 5;
+    const tagStyle = user?.settings?.aiTagStyle ?? 'concise';
+    const favoriteTags: string[] = user?.settings?.aiFavoriteTags ?? [];
+
+    const styleDesc = tagStyle === 'concise'
+      ? '每个标签 2-4 个字，精简凝练'
+      : '每个标签 4-8 个字，描述具体详细';
+
+    let favoriteHint = '';
+    if (favoriteTags.length > 0) {
+      favoriteHint = `\n7. 用户偏好标签供参考（可优先使用或生成风格相似的标签）：${favoriteTags.join('、')}`;
+    }
+
+    const messages: AIMessage[] = [
+      {
+        role: 'system',
+        content: `你是「如是」笔记系统的 AI 标签助手。你的任务是根据笔记内容生成精准、有层次的标签。
+
+规则：
+1. 生成 ${tagCount} 个标签，按相关度从高到低排列
+2. 标签应涵盖：主题领域、具体概念、内容类型（如"学习笔记""读书摘录""日常记录""灵感""待办"等）
+3. 标签语言与笔记内容一致（中文内容用中文标签，英文内容用英文标签，混合则两种都可）
+4. ${styleDesc}，避免过于宽泛（如"生活""其他"）
+5. 如果内容涉及技术，可用技术术语作标签（如"Vue3""Python""数据库"）
+6. 只返回 JSON 数组，如：["标签1","标签2","标签3"]，不要返回任何其他内容${favoriteHint}`,
+      },
+      {
+        role: 'user',
+        content: existingTags.length > 0
+          ? `用户已有标签：${existingTags.join('、')}\n\n请为以下笔记内容补充新标签（避免与已有标签重复或含义重叠）：\n\n${content.substring(0, 2000)}`
+          : `请为以下笔记内容生成标签：\n\n${content.substring(0, 2000)}`,
+      },
+    ];
+
+    const aiResponse = await callAIService(messages, AIModelType.GPT_3_5_TURBO, 0.3, 200);
+
+    let tags: string[] = [];
+    try {
+      const parsed = JSON.parse(aiResponse.content);
+      tags = Array.isArray(parsed) ? parsed.filter((t: unknown) => typeof t === 'string') : [];
+    } catch {
+      // 容错：尝试从文本中提取标签
+      tags = aiResponse.content
+        .replace(/[\[\]"']/g, '')
+        .split(/[,，、\n]/)
+        .map((t: string) => t.trim())
+        .filter((t: string) => t.length > 0 && t.length <= 20);
+    }
+
+    await saveAIUsage(userId, `auto-tag: ${content.substring(0, 100)}`, aiResponse, AIModelType.GPT_3_5_TURBO, AIPromptType.ANALYSIS);
+
+    return res.json(successResponse({
+      tags,
+      threadId: threadId || null,
+    }));
+  } catch (error: any) {
+    console.error('AI自动标签失败:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || 'AI自动标签失败')
+    );
+  }
+});
+
+/**
+ * AI相似笔记推荐
+ * POST /api/ai/similar
+ */
+router.post('/similar', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+    const { content, threadId, limit = 5 } = req.body;
+
+    if (!content) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '内容不能为空')
+      );
+    }
+
+    // 获取用户所有笔记的摘要用于匹配
+    const userThreads = await Thread.find({
+      userId,
+      oState: { $ne: 'DELETED' },
+      ...(threadId ? { _id: { $ne: threadId } } : {}),
+    })
+      .select('_id title firstText tagSearched')
+      .limit(50)
+      .lean();
+
+    if (userThreads.length === 0) {
+      return res.json(successResponse({ similar: [] }));
+    }
+
+    const threadSummaries = userThreads.map((t: any, i: number) =>
+      `[${i}] ${t.title || ''} ${(t.firstText || '').substring(0, 100)} 标签:${(t.tagSearched || []).join(',')}`
+    ).join('\n');
+
+    const messages: AIMessage[] = [
+      {
+        role: 'system',
+        content: `你是「如是」笔记系统的相似度分析助手。根据目标笔记内容，从候选列表中找出主题、领域或观点最相似的笔记。综合考虑内容语义、标签重叠和主题关联度。只返回 JSON 数组，包含候选编号（从0开始），按相似度降序排列。最多返回${limit}个。格式如：[0,3,1]。不要返回其他内容。`,
+      },
+      {
+        role: 'user',
+        content: `目标内容：\n${content.substring(0, 1000)}\n\n候选笔记列表：\n${threadSummaries}`,
+      },
+    ];
+
+    const aiResponse = await callAIService(messages, AIModelType.GPT_3_5_TURBO, 0.2, 200);
+
+    let similarIndices: number[] = [];
+    try {
+      const parsed = JSON.parse(aiResponse.content);
+      similarIndices = Array.isArray(parsed)
+        ? parsed.filter((i: unknown) => typeof i === 'number' && i >= 0 && i < userThreads.length)
+        : [];
+    } catch {
+      similarIndices = [];
+    }
+
+    const similar = similarIndices.slice(0, limit).map((idx: number) => ({
+      _id: userThreads[idx]._id,
+      title: (userThreads[idx] as any).title || '',
+      firstText: ((userThreads[idx] as any).firstText || '').substring(0, 200),
+      tags: (userThreads[idx] as any).tagSearched || [],
+    }));
+
+    return res.json(successResponse({ similar }));
+  } catch (error: any) {
+    console.error('AI相似推荐失败:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || 'AI相似推荐失败')
+    );
+  }
+});
+
+/**
+ * 批量为无标签笔记打标签
+ * POST /api/ai/batch-retag
+ */
+router.post('/batch-retag', authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+
+    const user = await User.findById(userId).select('settings');
+    const tagCount = user?.settings?.aiTagCount ?? 5;
+    const tagStyle = user?.settings?.aiTagStyle ?? 'concise';
+    const favoriteTags: string[] = user?.settings?.aiFavoriteTags ?? [];
+
+    const styleDesc = tagStyle === 'concise'
+      ? '每个标签 2-4 个字，精简凝练'
+      : '每个标签 4-8 个字，描述具体详细';
+
+    let favoriteHint = '';
+    if (favoriteTags.length > 0) {
+      favoriteHint = `\n7. 用户偏好标签供参考（可优先使用或生成风格相似的标签）：${favoriteTags.join('、')}`;
+    }
+
+    const untaggedThreads = await Thread.find({
+      userId,
+      oState: { $ne: 'DELETED' },
+      $or: [
+        { tagSearched: { $exists: false } },
+        { tagSearched: { $size: 0 } },
+        { tagSearched: null },
+      ],
+    })
+      .select('_id title thusDesc description')
+      .limit(50)
+      .lean();
+
+    if (untaggedThreads.length === 0) {
+      return res.json(successResponse({ tagged: 0, total: 0, results: [] }));
+    }
+
+    const results: Array<{ threadId: string; tags: string[] }> = [];
+
+    for (const thread of untaggedThreads) {
+      let content = '';
+      if (thread.title) content += thread.title + '\n';
+      if (thread.thusDesc && Array.isArray(thread.thusDesc)) {
+        for (const node of thread.thusDesc) {
+          if (node.text) content += node.text + '\n';
+        }
+      }
+      if (!content && (thread as any).description) {
+        content = (thread as any).description;
+      }
+
+      if (!content || content.trim().length < 10) continue;
+
+      const messages: AIMessage[] = [
+        {
+          role: 'system',
+          content: `你是「如是」笔记系统的 AI 标签助手。你的任务是根据笔记内容生成精准、有层次的标签。
+
+规则：
+1. 生成 ${tagCount} 个标签，按相关度从高到低排列
+2. 标签应涵盖：主题领域、具体概念、内容类型
+3. 标签语言与笔记内容一致
+4. ${styleDesc}
+5. 如果内容涉及技术，可用技术术语作标签
+6. 只返回 JSON 数组，如：["标签1","标签2","标签3"]${favoriteHint}`,
+        },
+        {
+          role: 'user',
+          content: `请为以下笔记内容生成标签：\n\n${content.substring(0, 2000)}`,
+        },
+      ];
+
+      try {
+        const aiResponse = await callAIService(messages, AIModelType.GPT_3_5_TURBO, 0.3, 200);
+        let tags: string[] = [];
+        try {
+          const parsed = JSON.parse(aiResponse.content);
+          tags = Array.isArray(parsed) ? parsed.filter((t: unknown) => typeof t === 'string') : [];
+        } catch {
+          tags = aiResponse.content
+            .replace(/[\[\]"']/g, '')
+            .split(/[,，、\n]/)
+            .map((t: string) => t.trim())
+            .filter((t: string) => t.length > 0 && t.length <= 20);
+        }
+
+        if (tags.length > 0) {
+          await Thread.findByIdAndUpdate(thread._id, {
+            tagSearched: tags,
+          });
+          results.push({ threadId: String(thread._id), tags });
+        }
+      } catch {
+        // skip failed threads
+      }
+    }
+
+    return res.json(successResponse({
+      tagged: results.length,
+      total: untaggedThreads.length,
+      results,
+    }));
+  } catch (error: any) {
+    console.error('批量打标签失败:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '批量打标签失败')
+    );
+  }
+});
+
+/**
  * 获取系统提示词
  */
 function getSystemPrompt(type: AIPromptType): string {
@@ -350,18 +616,18 @@ async function callAIService(
   maxTokens: number
 ): Promise<AIResponse> {
   try {
-    // 将AIModelType映射到实际的模型名称
+    const defaultModel = aiConfig.openai.defaultModel || 'gpt-3.5-turbo';
+
     const modelMapping: Record<AIModelType, string> = {
       [AIModelType.GPT_4]: 'gpt-4',
-      [AIModelType.GPT_3_5_TURBO]: 'gpt-3.5-turbo',
+      [AIModelType.GPT_3_5_TURBO]: defaultModel,
       [AIModelType.CLAUDE_3]: 'claude-3-sonnet-20240229',
       [AIModelType.GEMINI]: 'gemini-pro',
       [AIModelType.LOCAL]: 'local',
     };
 
-    const actualModel = modelMapping[model] || modelMapping[AIModelType.GPT_3_5_TURBO];
+    const actualModel = modelMapping[model] || defaultModel;
 
-    // 调用AI服务
     const aiResult = await aiService.callAI(messages, actualModel as any, temperature, maxTokens);
 
     return {

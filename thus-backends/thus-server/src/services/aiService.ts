@@ -2,18 +2,13 @@ import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { aiConfig, AIModel } from '../config/ai';
+import SystemConfig from '../models/SystemConfig';
 
-/**
- * AI消息接口
- */
 export interface AIMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
 }
 
-/**
- * AI响应接口
- */
 export interface AIResponse {
   content: string;
   model: string;
@@ -21,35 +16,68 @@ export interface AIResponse {
   cost?: number;
 }
 
-/**
- * AI服务类
- * 统一管理多个AI提供商的调用
- */
 export class AIService {
   private openai: OpenAI | null = null;
   private anthropic: Anthropic | null = null;
   private gemini: GoogleGenerativeAI | null = null;
 
   constructor() {
-    // 初始化OpenAI客户端
+    this.initFromEnv();
+  }
+
+  private initFromEnv(): void {
     if (aiConfig.openai.apiKey) {
       this.openai = new OpenAI({
         apiKey: aiConfig.openai.apiKey,
         baseURL: aiConfig.openai.baseURL,
       });
     }
-
-    // 初始化Anthropic客户端
     if (aiConfig.anthropic.apiKey) {
       this.anthropic = new Anthropic({
         apiKey: aiConfig.anthropic.apiKey,
         baseURL: aiConfig.anthropic.baseURL,
       });
     }
-
-    // 初始化Gemini客户端
     if (aiConfig.gemini.apiKey) {
       this.gemini = new GoogleGenerativeAI(aiConfig.gemini.apiKey);
+    }
+  }
+
+  async reloadProviders(): Promise<void> {
+    try {
+      const config = await SystemConfig.getConfig();
+      const providers = config.ai?.providers || [];
+
+      this.openai = null;
+      this.anthropic = null;
+      this.gemini = null;
+
+      for (const provider of providers) {
+        if (!provider.enabled) continue;
+
+        const name = provider.name.toLowerCase();
+        if (name.includes('openai') || name.includes('gpt')) {
+          this.openai = new OpenAI({
+            apiKey: provider.apiKey,
+            baseURL: provider.baseUrl,
+          });
+        } else if (name.includes('claude') || name.includes('anthropic')) {
+          this.anthropic = new Anthropic({
+            apiKey: provider.apiKey,
+            baseURL: provider.baseUrl,
+          });
+        } else if (name.includes('gemini') || name.includes('google')) {
+          this.gemini = new GoogleGenerativeAI(provider.apiKey);
+        }
+      }
+
+      // Fallback to env config if no DB providers loaded
+      if (!this.openai && !this.anthropic && !this.gemini) {
+        this.initFromEnv();
+      }
+    } catch (error) {
+      console.error('重新加载AI提供商失败，使用环境变量配置:', error);
+      this.initFromEnv();
     }
   }
 
@@ -67,9 +95,11 @@ export class AIService {
     }
 
     try {
-      // 过滤掉system消息，因为OpenAI的ChatCompletionMessageParam类型不支持system角色
-      // 实际上OpenAI是支持system角色的，但TypeScript类型定义可能有问题
-      // 我们使用类型断言来解决这个问题
+      // GPT-5+ uses Responses API
+      if (model.startsWith('gpt-5')) {
+        return this.callOpenAIResponses(messages, model, temperature, maxTokens);
+      }
+
       const completion = await this.openai.chat.completions.create({
         model,
         messages: messages as any,
@@ -86,6 +116,74 @@ export class AIService {
     } catch (error: any) {
       console.error('OpenAI调用失败:', error);
       throw new Error(`OpenAI调用失败: ${error.message}`);
+    }
+  }
+
+  private async callOpenAIResponses(
+    messages: AIMessage[],
+    model: string,
+    temperature: number,
+    maxTokens: number
+  ): Promise<AIResponse> {
+    if (!this.openai) throw new Error('OpenAI未配置');
+
+    const input = messages.map(m => ({
+      role: m.role as 'user' | 'assistant' | 'system',
+      content: m.content,
+    }));
+
+    try {
+      // Non-streaming first
+      const response = await this.openai.responses.create({
+        model,
+        input,
+        temperature,
+        max_output_tokens: maxTokens,
+        stream: false,
+      } as any);
+
+      const outputText = (response as any).output
+        ?.filter((item: any) => item.type === 'message')
+        ?.flatMap((item: any) => item.content || [])
+        ?.filter((part: any) => part.type === 'output_text')
+        ?.map((part: any) => part.text)
+        ?.join('') || '';
+
+      const usage = (response as any).usage || {};
+      const totalTokens = (usage.input_tokens || 0) + (usage.output_tokens || 0);
+
+      return {
+        content: outputText,
+        model,
+        tokensUsed: totalTokens,
+        cost: this.calculateCost(totalTokens, model),
+      };
+    } catch (nonStreamError: any) {
+      // Proxy may require streaming — collect streamed chunks
+      if (nonStreamError.message?.includes('Stream must be set to true') || nonStreamError.status === 400) {
+        const stream = await this.openai.responses.create({
+          model,
+          input,
+          temperature,
+          max_output_tokens: maxTokens,
+          stream: true,
+        } as any);
+
+        let outputText = '';
+        let totalTokens = 0;
+
+        for await (const event of stream as any) {
+          if (event.type === 'response.output_text.delta') {
+            outputText += event.delta || '';
+          } else if (event.type === 'response.completed') {
+            const usage = event.response?.usage || {};
+            totalTokens = (usage.input_tokens || 0) + (usage.output_tokens || 0);
+          }
+        }
+
+        return { content: outputText, model, tokensUsed: totalTokens, cost: this.calculateCost(totalTokens, model) };
+      }
+      throw nonStreamError;
     }
   }
 
@@ -204,5 +302,17 @@ export class AIService {
   }
 }
 
-// 导出单例
-export const aiService = new AIService();
+let _instance: AIService | null = null;
+
+export function getAIService(): AIService {
+  if (!_instance) {
+    _instance = new AIService();
+  }
+  return _instance;
+}
+
+export const aiService = new Proxy({} as AIService, {
+  get(_target, prop: string) {
+    return (getAIService() as any)[prop];
+  },
+});
