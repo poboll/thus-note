@@ -123,9 +123,9 @@ function openExternalBing(keyword: string) {
 }
 
 
-/************* 大同搜索 ************/
-function getDatongSearchLink(keyword: string) {
-  const url = new URL(thirdLink.DATONG_SEARCH)
+/************* 秘塔搜索 ************/
+function getMetasoSearchLink(keyword: string) {
+  const url = new URL(thirdLink.METASO_SEARCH)
   url.searchParams.append("q", keyword)
   return url.toString()
 }
@@ -240,7 +240,7 @@ export default {
   openBing,
   getBingSearchLink,
   openExternalBing,
-  getDatongSearchLink,
+  getMetasoSearchLink,
   openXhs,
   getXhsSearchLink,
   openExternalXhs,

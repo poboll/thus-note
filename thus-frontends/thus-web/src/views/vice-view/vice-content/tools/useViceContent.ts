@@ -101,7 +101,7 @@ function listenRouteChange(
 ) {
   const _env = liuEnv.getEnv()
   let located = ""
-  const { route } = ctx
+  const { route, router } = ctx
 
   const setNewIframeSrc = (val: string, otherData?: Record<string, any>) => {
     showView(ctx, "iframe", val, undefined, otherData)
@@ -126,9 +126,14 @@ function listenRouteChange(
     setNewIframeSrc(url)
   }
 
-  const openDatongSearch = (q: string) => {
-    const url = liuUtil.open.getDatongSearchLink(q)
-    setNewIframeSrc(url)
+  const openMetasoSearch = async (q: string) => {
+    // metaso.cn blocks being embedded by `Content-Security-Policy: frame-ancestors ...`.
+    // Fallback to opening in a new tab and then clear `outq` so vice-view won't keep trying.
+    const url = liuUtil.open.getMetasoSearchLink(q)
+    window.open(url, "_blank")
+
+    const newQuery = liuUtil.getDefaultRouteQuery(route)
+    await router.replaceWithNewQuery(route, newQuery)
   }
 
   const openGoogleSerach = (q: string) => {
@@ -217,7 +222,7 @@ function listenRouteChange(
     } = newQuery
 
     if(_hasVal(outq)) {
-      openDatongSearch(outq)
+      openMetasoSearch(outq)
     }
     else if(_hasVal(cid)) {
       showView(ctx, "thread", cid)

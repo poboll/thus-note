@@ -119,7 +119,7 @@ export const domainAllowed = [
   "n.cn",
   "onionai.so",
   "memfree.me",
-  "datong.info",
+  "metaso.cn",
 
   // about podcast
   "podcastogether.com",

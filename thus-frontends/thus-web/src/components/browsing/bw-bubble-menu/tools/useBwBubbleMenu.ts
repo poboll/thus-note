@@ -1,7 +1,7 @@
 
 import type { TipTapEditor } from '~/types/types-editor';
 import liuApi from "~/utils/thus-api"
-import { inject, ref, watch } from 'vue';
+import { inject, onUnmounted, ref, watch } from 'vue';
 import valTool from '~/utils/basic/val-tool';
 import cui from '~/components/custom-ui';
 import { useRouteAndThusRouter } from '~/routes/liu-router';
@@ -29,9 +29,17 @@ export function useBwBubbleMenu(
   const selectedIndex = ref(-1)
   const enable = ref(true)
 
+  // The bubble-menu DOM can disappear during route/layout updates.
+  // Avoid re-mounting it after the component is already unmounted.
+  let isUnmounted = false
+  onUnmounted(() => {
+    isUnmounted = true
+  })
+
   const _toCloseToolTip = async () => {
     enable.value = false
     await valTool.waitMilli(300)
+    if(isUnmounted) return
     enable.value = true
   }
 
@@ -105,7 +113,14 @@ export function useBwBubbleMenu(
   const onTapSearchOut = (e: Event) => {
     const text = _getSelectionText(opt.editor)
     if(text) {
-      liuUtil.open.openOutSearch(text, { rr })
+      // metaso.cn sends `Content-Security-Policy: frame-ancestors ...` which
+      // blocks being embedded in our vice-view iframe. Open in a new tab.
+      const url = liuUtil.open.getMetasoSearchLink(text)
+      const opened = window.open(url, "_blank")
+      if(!opened) {
+        liuApi.copyToClipboard(url)
+        cui.showSnackBar({ text: `Popup blocked. URL copied: ${url}` })
+      }
     }
     _toPickOneTool(2)
   }
