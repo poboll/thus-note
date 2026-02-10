@@ -50,9 +50,12 @@
         </header>
 
         <div class="main-content">
+          <!-- 系统概览 -->
+          <SystemOverview v-if="activeMenu === 'overview'" />
+
           <!-- 基础配置 -->
           <BaseConfig 
-            v-if="activeMenu === 'base'" 
+            v-else-if="activeMenu === 'base'" 
             :config="config"
             @save="saveBaseConfig"
             :saving="saving"
@@ -78,6 +81,16 @@
             :testing="testing"
           />
 
+          <!-- 邮箱配置 -->
+          <EmailConfig 
+            v-else-if="activeMenu === 'email'" 
+            :config="config"
+            @save="saveEmailConfig"
+            @test="testEmailConfig"
+            :saving="saving"
+            :testing="testing"
+          />
+
           <!-- 微信配置 -->
           <WeChatConfig 
             v-else-if="activeMenu === 'wechat'" 
@@ -95,6 +108,21 @@
             @save="savePolicies"
             :saving="saving"
           />
+
+          <!-- AI 配置 -->
+          <AIConfig 
+            v-else-if="activeMenu === 'ai'"
+            @message="showMessage"
+          />
+
+          <!-- 用户管理 -->
+          <UserManagement 
+            v-else-if="activeMenu === 'users'"
+            @message="showMessage"
+          />
+
+          <!-- 系统监控 -->
+          <SystemMonitor v-else-if="activeMenu === 'monitor'" />
         </div>
       </main>
     </template>
@@ -109,16 +137,27 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import localCache from '~/utils/system/local-cache';
+import SystemOverview from './components/SystemOverview.vue';
 import BaseConfig from './components/BaseConfig.vue';
 import StorageConfig from './components/StorageConfig.vue';
 import SMSConfig from './components/SMSConfig.vue';
+import EmailConfig from './components/EmailConfig.vue';
 import WeChatConfig from './components/WeChatConfig.vue';
 import PolicyEditor from './components/PolicyEditor.vue';
+import AIConfig from './components/AIConfig.vue';
+import UserManagement from './components/UserManagement.vue';
+import SystemMonitor from './components/SystemMonitor.vue';
 
 const router = useRouter();
 
 // 菜单项
 const menuItems = [
+  { 
+    id: 'overview', 
+    label: '系统概览',
+    icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>'
+  },
   { 
     id: 'base', 
     label: '基础配置',
@@ -135,6 +174,11 @@ const menuItems = [
     icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>'
   },
   { 
+    id: 'email', 
+    label: '邮箱配置',
+    icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>'
+  },
+  { 
     id: 'wechat', 
     label: '微信配置',
     icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.5.5.17 0 .33-.01.5-.02C9.17 15.03 9 14.05 9 13c0-3.87 3.13-7 7-7 1.05 0 2.03.17 2.98.5C18.03 3.69 14.64 1 10.5 1 5.81 1 2 4.03 2 8c0 2.21 1.08 4.18 2.78 5.53L4 17l3-1.8c1.09.52 2.29.8 3.5.8.17 0 .33-.01.5-.02-.33-.94-.5-1.95-.5-3 0-4.42 3.58-8 8-8-.97-2.31-3.13-4-5.5-4z"/></svg>'
@@ -144,9 +188,24 @@ const menuItems = [
     label: '政策编辑',
     icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
   },
+  { 
+    id: 'ai', 
+    label: 'AI 配置',
+    icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.07A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.93-6H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM9 14a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>'
+  },
+  { 
+    id: 'users', 
+    label: '用户管理',
+    icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>'
+  },
+  { 
+    id: 'monitor', 
+    label: '系统监控',
+    icon: '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>'
+  },
 ];
 
-const activeMenu = ref('base');
+const activeMenu = ref('overview');
 const config = ref<any>({});
 const loading = ref(false);
 const saving = ref(false);
@@ -175,7 +234,7 @@ const getApiUrl = () => {
 
 // 获取认证 token
 const getToken = () => {
-  return localStorage.getItem('x-liu-token') || '';
+  return localCache.getPreference().token || '';
 };
 
 // 验证管理员权限
@@ -191,7 +250,7 @@ const checkAdminAuth = async () => {
     
     if (result.code === '0000') {
       isAdmin.value = true;
-    } else if (result.code === 'E0003' || result.code === 'E0004') {
+    } else if (result.code === 'ADMIN_UNAUTHORIZED' || result.code === 'ADMIN_FORBIDDEN' || result.code === 'E0003' || result.code === 'E0004') {
       // 未授权或无权限
       isAdmin.value = false;
       showMessage('error', '您没有管理员权限');
@@ -355,6 +414,59 @@ const testSMSConfig = async (data: any, testPhone: string) => {
         'x-liu-token': getToken(),
       },
       body: JSON.stringify({ sms: data, testPhone }),
+    });
+    const result = await response.json();
+    
+    if (result.code === '0000' && result.data?.success) {
+      showMessage('success', result.data.message || '测试成功');
+    } else {
+      throw new Error(result.data?.message || result.errMsg || '测试失败');
+    }
+  } catch (err: any) {
+    showMessage('error', err.message || '测试失败');
+  } finally {
+    testing.value = false;
+  }
+};
+
+// 保存邮箱配置
+const saveEmailConfig = async (data: any) => {
+  saving.value = true;
+  try {
+    const response = await fetch(`${getApiUrl()}/api/admin/config/email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-liu-token': getToken(),
+      },
+      body: JSON.stringify({ email: data }),
+    });
+    const result = await response.json();
+    
+    if (result.code === '0000') {
+      showMessage('success', '邮箱配置已保存');
+      await refreshConfig();
+    } else {
+      throw new Error(result.errMsg || '保存失败');
+    }
+  } catch (err: any) {
+    showMessage('error', err.message || '保存失败');
+  } finally {
+    saving.value = false;
+  }
+};
+
+// 测试邮箱配置
+const testEmailConfig = async (data: any, testAddress: string) => {
+  testing.value = true;
+  try {
+    const response = await fetch(`${getApiUrl()}/api/admin/config/test/email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-liu-token': getToken(),
+      },
+      body: JSON.stringify({ email: data, testAddress }),
     });
     const result = await response.json();
     

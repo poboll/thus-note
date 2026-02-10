@@ -20,6 +20,7 @@ import { initAwake } from "./tools/initAwake";
 import limit from "~/utils/limit";
 import { initLayout } from "./tools/initLayout";
 import { initListenDexie } from "./tools/initListenDexie";
+import { initReminder } from "./tools/initReminder";
 
 // 监听和处理一些全局的事务，比如路由变化
 
@@ -70,6 +71,8 @@ export function useApp() {
   initAwake()
 
   initLayout()
+
+  initReminder()
 
   limit.init()
 
