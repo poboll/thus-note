@@ -20,6 +20,7 @@ import { initCeData } from "./tools/initCeData";
 import { useCeFinish } from "./tools/useCeFinish";
 import { useThreadShowStore } from "~/hooks/stores/useThreadShowStore";
 import { useCeTag } from "./tools/useCeTag";
+import { useAiAutoTag } from "./tools/useAiAutoTag";
 import EditingBubbleMenu from "../shared/editing-bubble-menu/editing-bubble-menu.vue";
 import { useI18n } from "vue-i18n";
 import { type CeEmits, ceProps } from "./tools/types";
@@ -58,6 +59,11 @@ const {
   onAddHashTag,
   onNewHashTags,
 } = useCeTag(ceData)
+
+const {
+  onAiAutoTag,
+  onSilentAutoTag,
+} = useAiAutoTag(ceData, editor, onNewHashTags, tagShows)
 
 
 const threadShowStore = useThreadShowStore()
@@ -181,6 +187,7 @@ usePhoneBound(props, ceData)
     @imagechange="onImageChange"
     @tapmore="onTapMore"
     @newhashtags="onNewHashTags"
+    @aiautotag="onAiAutoTag"
   ></ce-toolbar>
 
   <!-- 更多栏 -->

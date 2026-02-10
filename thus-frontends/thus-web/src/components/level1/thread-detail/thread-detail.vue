@@ -7,6 +7,7 @@ import { subscribeTdUpdate } from "./tools/subscribeTdUpdate"
 import type { WhatDetail, LocatedA } from '~/types/other/types-custom';
 import CommentEditor from "~/components/editors/comment-editor/comment-editor.vue"
 import CommentArea from '~/components/level2/comment-area/comment-area.vue';
+import TdAiPanel from "./td-ai-panel/td-ai-panel.vue";
 import type { TdEmit } from "./tools/types"
 
 const props = defineProps({
@@ -54,6 +55,12 @@ subscribeTdUpdate(tdData)
     @newoperate="(op) => receiveOperation(op, tdData.threadShow)"
     @requestfocus="onRequestFocus"
   ></ThreadCard>
+
+  <!-- AI Panel -->
+  <TdAiPanel
+    v-if="tdData.threadShow && tdData.state < 0"
+    :thread-show="tdData.threadShow"
+  ></TdAiPanel>
 
   <!-- 评论区 -->
   <div 

@@ -12,12 +12,14 @@ import localReq from "./req/local-req";
 import type { ThreadShowStore } from "~/hooks/stores/useThreadShowStore";
 import { storeToRefs } from "pinia";
 import { equipThreads } from "~/utils/controllers/equip/threads";
-import { getTagIdsParents } from "~/utils/system/tag-related";
+import { getTagIdsParents, addATag, formatTagText } from "~/utils/system/tag-related";
 import type { SpaceType } from "~/types/types-basic";
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
 import { resetBasicCeData } from "./some-funcs";
 import cui from "~/components/custom-ui";
 import liuEnv from "~/utils/thus-env";
+import aiReq from "~/requests/ai-req";
+import { searchLocal } from "~/utils/system/tag-related/search";
 
 // 本文件处理发表的逻辑
 
@@ -147,6 +149,7 @@ async function releaseAsync(
 
   // 3.1 emit
   ctx.emits("updated", newId)
+  trySilentAutoTag(newThread, newId)
 
   // 4. ignore if it's a local thread
   const storageState = newThread.storageState
@@ -321,8 +324,8 @@ async function updateAsync(
   const threadShows = await equipThreads([theThread])
   ctx.threadShowStore.setUpdatedThreadShows(threadShows, "edit")
 
-  // 5. emits to page
   ctx.emits("updated", threadId)
+  trySilentAutoTag(theThread, threadId)
 
   // 6. If it is a local post, check whether to go to thread-only_local
   const target_id = threadId
@@ -345,5 +348,55 @@ async function updateAsync(
     target_id,
     operateStamp,
   }, { speed: "instant" })
+}
+
+async function trySilentAutoTag(
+  thread: Partial<ContentLocalTable>,
+  threadId: string,
+) {
+  try {
+    const res = await aiReq.getAiSettings()
+    if(!res.ok || res.data?.aiAutoTagMode !== 'silent') return
+    if(!res.data?.aiEnabled) return
+
+    const desc = thread.thusDesc
+    if(!desc || !Array.isArray(desc)) return
+
+    const plainText = transferUtil.tiptapToText(desc)
+    if(!plainText || plainText.trim().length < 10) return
+
+    const existingTagIds = thread.tagIds ?? []
+    const existingTagNames = existingTagIds.map(id => {
+      const found = searchLocal(id)
+      return found.length > 0 ? found[0].text : ""
+    }).filter(t => t.length > 0)
+
+    const tagRes = await aiReq.autoTag(plainText, existingTagNames)
+    if(!tagRes.ok || !tagRes.data?.tags?.length) return
+
+    const newTagIds = [...existingTagIds]
+    for(const tagName of tagRes.data.tags) {
+      const found = searchLocal(tagName)
+      let tagId = found.length > 0 ? found[0].tagId : ""
+      if(!tagId) {
+        const formatted = formatTagText(tagName)
+        if(!formatted) continue
+        const addRes = await addATag({ text: formatted })
+        if(!addRes.isOk || !addRes.id) continue
+        tagId = addRes.id
+      }
+      if(newTagIds.includes(tagId)) continue
+      newTagIds.push(tagId)
+    }
+
+    if(newTagIds.length <= existingTagIds.length) return
+
+    const newTagSearched = getTagIdsParents(newTagIds)
+    await localReq.updateContent(threadId, {
+      tagIds: newTagIds,
+      tagSearched: newTagSearched,
+    })
+  }
+  catch { }
 }
 

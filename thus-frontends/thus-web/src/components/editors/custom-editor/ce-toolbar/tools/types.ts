@@ -6,6 +6,7 @@ export interface CetEmit {
   (evt: "imagechange", files: File[]): void
   (evt: "newhashtags", tagShows: TagShow[]): void
   (evt: "tapmore"): void
+  (evt: "aiautotag"): void
 }
 
 export interface CetProps {

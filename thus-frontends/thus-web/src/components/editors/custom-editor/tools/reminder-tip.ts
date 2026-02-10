@@ -14,18 +14,34 @@ export function checkIfReminderEnabled(
 ) {
   const sState = ceData.storageState
   if(sState === "LOCAL") {
+    requestBrowserNotificationPermission()
     checkIfShowCannotRemind()
     return
   }
 
   const { NOTIFICATION_PRIORITY: nPriority } = liuEnv.getEnv()
-  if(!nPriority || nPriority === "disable") return
+  if(!nPriority || nPriority === "disable") {
+    requestBrowserNotificationPermission()
+    return
+  }
 
   const hasBE = liuEnv.hasBackend()
-  if(!hasBE) return
+  if(!hasBE) {
+    requestBrowserNotificationPermission()
+    return
+  }
+
+  requestBrowserNotificationPermission()
 
   if(nPriority === "wx_gzh") {
     checkOutWxGzh(memberId)
+  }
+}
+
+function requestBrowserNotificationPermission() {
+  if(typeof Notification === "undefined") return
+  if(Notification.permission === "default") {
+    Notification.requestPermission()
   }
 }
 

@@ -4,6 +4,7 @@ import { useCeToolbar } from './tools/useCeToolbar';
 import { useCetInputElement } from "./tools/useCetInputElement";
 import type { CetEmit } from "./tools/types"
 import { cetProps } from './tools/types';
+import { ref } from 'vue';
 
 const props = defineProps(cetProps)
 const emit = defineEmits<CetEmit>()
@@ -23,6 +24,12 @@ const {
 
 const { t } = useI18n()
 const icon_color = "var(--main-normal)"
+const aiTagLoading = ref(false)
+
+const onTapAiTag = () => {
+  if(aiTagLoading.value) return
+  emit("aiautotag")
+}
 
 </script>
 <template>
@@ -41,6 +48,15 @@ const icon_color = "var(--main-normal)"
       :aria-label="t('editor.tag')"
     >
       <svg-icon name="tag" class="ceti-icon" :color="icon_color" />
+    </div>
+
+    <!-- AI 自动标签 -->
+    <div class="thus-hover cet-item"
+      @click.stop="onTapAiTag"
+      :class="{ 'cet-item_loading': aiTagLoading }"
+      aria-label="AI Auto Tag"
+    >
+      <svg-icon name="ai-tag" class="ceti-icon" :color="icon_color" />
     </div>
 
     <!-- 开启/关闭全屏 -->
@@ -185,6 +201,17 @@ const icon_color = "var(--main-normal)"
     visibility: visible;
     cursor: pointer;
     opacity: 1;
+  }
+
+  .cet-item_loading {
+    opacity: .5;
+    pointer-events: none;
+    animation: cet-pulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes cet-pulse {
+    0%, 100% { opacity: .5; }
+    50% { opacity: 1; }
   }
 
 }
