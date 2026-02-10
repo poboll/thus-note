@@ -184,14 +184,15 @@ onUnmounted(() => {
 <style scoped>
 .policy-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  background: var(--thus-bg, #f5f7fa);
 }
 
 .policy-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--card-bg, #fff);
+  color: var(--main-normal, #333);
   padding: 60px 20px 40px;
   text-align: center;
+  box-shadow: var(--card-shadow-2, 0 4px 20px rgba(0,0,0,0.06));
 }
 
 .header-content {
@@ -203,12 +204,12 @@ onUnmounted(() => {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0 0 16px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--main-normal, #333);
 }
 
 .policy-meta {
   font-size: 0.95rem;
-  opacity: 0.9;
+  color: var(--main-note, #999);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -243,19 +244,19 @@ onUnmounted(() => {
   position: sticky;
   top: 20px;
   height: fit-content;
-  background: white;
-  border-radius: 12px;
+  background: var(--card-bg, #fff);
+  border-radius: 24px;
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--card-shadow-2, 0 4px 20px rgba(0,0,0,0.06));
 }
 
 .toc-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: var(--main-normal, #333);
   margin: 0 0 16px;
   padding-bottom: 12px;
-  border-bottom: 2px solid #667eea;
+  border-bottom: 2px solid var(--main-normal, #333);
 }
 
 .toc-list {
@@ -271,42 +272,42 @@ onUnmounted(() => {
 .toc-item a {
   display: block;
   padding: 8px 12px;
-  color: #666;
+  color: var(--main-note, #999);
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 0.9rem;
   transition: all 0.2s ease;
 }
 
 .toc-item a:hover {
-  background: #f0f4ff;
-  color: #667eea;
+  background: var(--hover-bg, rgba(0,0,0,0.04));
+  color: var(--main-normal, #333);
 }
 
 .toc-item a.active {
-  background: #667eea;
-  color: white;
+  background: var(--main-normal, #333);
+  color: var(--card-bg, #fff);
 }
 
 .policy-content {
-  background: white;
-  border-radius: 12px;
+  background: var(--card-bg, #fff);
+  border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--card-shadow-2, 0 4px 20px rgba(0,0,0,0.06));
 }
 
 .loading-state,
 .error-state {
   text-align: center;
   padding: 60px 20px;
-  color: #666;
+  color: var(--main-note, #999);
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #f0f0f0;
-  border-top-color: #667eea;
+  border: 3px solid var(--hover-bg, rgba(0,0,0,0.06));
+  border-top-color: var(--main-normal, #333);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 16px;
@@ -319,31 +320,31 @@ onUnmounted(() => {
 .retry-btn {
   margin-top: 16px;
   padding: 10px 24px;
-  background: #667eea;
-  color: white;
+  background: var(--main-normal, #333);
+  color: var(--card-bg, #fff);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.95rem;
-  transition: background 0.2s;
+  transition: opacity 0.2s;
 }
 
 .retry-btn:hover {
-  background: #5a6fd6;
+  opacity: 0.85;
 }
 
 .content-body {
   line-height: 1.8;
-  color: #333;
+  color: var(--main-normal, #333);
 }
 
 .content-body :deep(h2) {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: var(--main-normal, #333);
   margin: 32px 0 16px;
   padding-top: 16px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--hover-bg, rgba(0,0,0,0.08));
 }
 
 .content-body :deep(h2:first-child) {
@@ -354,7 +355,7 @@ onUnmounted(() => {
 
 .content-body :deep(p) {
   margin: 12px 0;
-  color: #555;
+  color: var(--main-note, #666);
 }
 
 .content-body :deep(ul) {
@@ -364,7 +365,7 @@ onUnmounted(() => {
 
 .content-body :deep(li) {
   margin: 8px 0;
-  color: #555;
+  color: var(--main-note, #666);
 }
 
 .back-to-top {
@@ -373,23 +374,22 @@ onUnmounted(() => {
   right: 30px;
   width: 50px;
   height: 50px;
-  background: #667eea;
-  color: white;
+  background: var(--main-normal, #333);
+  color: var(--card-bg, #fff);
   border: none;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: var(--card-shadow-2, 0 4px 12px rgba(0,0,0,0.15));
   transition: all 0.3s ease;
   z-index: 100;
 }
 
 .back-to-top:hover {
-  background: #5a6fd6;
+  opacity: 0.85;
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
 }
 
 @media (max-width: 768px) {

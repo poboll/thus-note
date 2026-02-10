@@ -38,6 +38,12 @@ export interface SettingContentData {
   showA2HS: boolean
   documentationLink?: string
 
+  aiEnabled: boolean
+  aiTagCount: number
+  aiTagStyle: 'concise' | 'detailed'
+  aiFavoriteTags: string[]
+  aiAutoTagMode: 'manual' | 'silent'
+
   lastTapFooterStamp: number
   tapFooterNum: number
   

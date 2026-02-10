@@ -25,6 +25,7 @@ import {
 import valTool from "~/utils/basic/val-tool"
 import { useShowAddToHomeScreen } from "~/hooks/pwa/useA2HS"
 import liuReq from "~/requests/thus-req"
+import aiReq from "~/requests/ai-req"
 import APIs from "~/requests/APIs"
 import liuUtil from "~/utils/thus-util"
 import { useNetworkStore } from "~/hooks/stores/useNetworkStore"
@@ -58,12 +59,67 @@ export function useSettingContent() {
     contactLink,
     emailLink,
     showA2HS: false,
+    aiEnabled: false,
+    aiTagCount: 5,
+    aiTagStyle: 'concise',
+    aiFavoriteTags: [],
+    aiAutoTagMode: 'manual',
     lastTapFooterStamp: 0,
     tapFooterNum: 0,
   })
 
   const { toA2HS } = listenToA2HS(data)
   listenSystemStore(data)
+  loadAiSettings(data)
+
+  const onToggleAi = async (newVal: boolean) => {
+    data.aiEnabled = newVal
+    const res = await aiReq.updateAiSettings({ aiEnabled: newVal })
+    if(!res.ok) {
+      data.aiEnabled = !newVal
+      cui.showSnackBar({ text: "AI 设置更新失败" })
+    }
+  }
+
+  const onAiTagCountChange = async (val: number) => {
+    const old = data.aiTagCount
+    data.aiTagCount = val
+    const res = await aiReq.updateAiSettings({ aiTagCount: val })
+    if(!res.ok) {
+      data.aiTagCount = old
+      cui.showSnackBar({ text: "标签数量更新失败" })
+    }
+  }
+
+  const onAiTagStyleChange = async (val: 'concise' | 'detailed') => {
+    const old = data.aiTagStyle
+    data.aiTagStyle = val
+    const res = await aiReq.updateAiSettings({ aiTagStyle: val })
+    if(!res.ok) {
+      data.aiTagStyle = old
+      cui.showSnackBar({ text: "标签风格更新失败" })
+    }
+  }
+
+  const onAiFavoriteTagsChange = async (val: string[]) => {
+    const old = data.aiFavoriteTags
+    data.aiFavoriteTags = val
+    const res = await aiReq.updateAiSettings({ aiFavoriteTags: val })
+    if(!res.ok) {
+      data.aiFavoriteTags = old
+      cui.showSnackBar({ text: "偏好标签更新失败" })
+    }
+  }
+
+  const onAiAutoTagModeChange = async (val: 'manual' | 'silent') => {
+    const old = data.aiAutoTagMode
+    data.aiAutoTagMode = val
+    const res = await aiReq.updateAiSettings({ aiAutoTagMode: val })
+    if(!res.ok) {
+      data.aiAutoTagMode = old
+      cui.showSnackBar({ text: "打标模式更新失败" })
+    }
+  }
 
   const onToggleMobileDebug = (newV: boolean) => {
     data.mobileDebug = newV
@@ -134,6 +190,11 @@ export function useSettingContent() {
     onTapContact,
     onTapWxGzh,
     onTapFooter,
+    onToggleAi,
+    onAiTagCountChange,
+    onAiTagStyleChange,
+    onAiFavoriteTagsChange,
+    onAiAutoTagModeChange,
     version,
     appName,
     hasNewVersion,
@@ -273,6 +334,17 @@ function listenSystemStore(
     }
 
   }, { immediate: true })
+}
+
+async function loadAiSettings(data: SettingContentData) {
+  const res = await aiReq.getAiSettings()
+  if(res.ok && res.data) {
+    data.aiEnabled = res.data.aiEnabled
+    data.aiTagCount = res.data.aiTagCount
+    data.aiTagStyle = res.data.aiTagStyle
+    data.aiFavoriteTags = res.data.aiFavoriteTags
+    data.aiAutoTagMode = res.data.aiAutoTagMode
+  }
 }
 
 async function whenTapClearCache() {
