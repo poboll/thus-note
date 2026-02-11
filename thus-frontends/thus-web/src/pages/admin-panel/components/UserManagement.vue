@@ -13,13 +13,13 @@
         placeholder="搜索用户名、邮箱或手机号..."
         @input="debouncedFetch"
       />
-      <select v-model="filterStatus" class="filter-select" @change="fetchUsers">
+      <select v-model="filterStatus" class="filter-select" @change="onFilterChange">
         <option value="">全部状态</option>
         <option value="active">活跃</option>
         <option value="inactive">未激活</option>
         <option value="banned">已封禁</option>
       </select>
-      <select v-model="filterRole" class="filter-select" @change="fetchUsers">
+      <select v-model="filterRole" class="filter-select" @change="onFilterChange">
         <option value="">全部角色</option>
         <option value="admin">管理员</option>
         <option value="user">普通用户</option>
@@ -173,6 +173,10 @@ const fetchUsers = async (page = 1) => {
 const debouncedFetch = () => {
   if (debounceTimer) clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => fetchUsers(1), 400);
+};
+
+const onFilterChange = (_event: Event) => {
+  void fetchUsers(1);
 };
 
 const goPage = (page: number) => fetchUsers(page);
