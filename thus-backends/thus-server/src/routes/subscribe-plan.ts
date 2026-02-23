@@ -104,6 +104,43 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
       return res.json(successResponse({ credits: user.credits, added: pkg.amount }));
     }
 
+    if (operateType === 'buy_membership_with_credits') {
+      const { planId } = req.body;
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json(errorResponse('NOT_FOUND', '用户不存在'));
+      }
+
+      const requiredCredits = 100;
+      if ((user.credits ?? 0) < requiredCredits) {
+        return res.status(400).json(errorResponse('INSUFFICIENT_CREDITS', `积分不足，需要 ${requiredCredits} 积分`));
+      }
+
+      const now = Date.now();
+      const existingSub = user.subscription;
+      if (existingSub?.isOn && (existingSub.isLifelong || existingSub.expireStamp > now)) {
+        return res.status(400).json(errorResponse('ALREADY_SUBSCRIBED', '已有生效的订阅'));
+      }
+
+      user.credits = (user.credits ?? 0) - requiredCredits;
+      user.subscription = {
+        plan: planId || PLAN_DATA.id,
+        isOn: true,
+        expireStamp: now + YEAR_MS,
+        firstChargedStamp: now,
+        chargeTimes: 1,
+        autoRecharge: false,
+        isLifelong: false,
+      };
+      await user.save();
+
+      return res.json(successResponse({ 
+        subscription: user.subscription,
+        credits: user.credits,
+        deducted: requiredCredits,
+      }));
+    }
+
     if (operateType === 'cancel_and_refund') {
       const user = await User.findById(userId);
       if (!user) {

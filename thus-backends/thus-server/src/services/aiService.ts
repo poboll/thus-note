@@ -95,23 +95,30 @@ export class AIService {
     }
 
     try {
-      // GPT-5+ uses Responses API
-      if (model.startsWith('gpt-5')) {
-        return this.callOpenAIResponses(messages, model, temperature, maxTokens);
-      }
-
-      const completion = await this.openai.chat.completions.create({
-        model,
-        messages: messages as any,
-        temperature,
-        max_tokens: maxTokens,
+      const baseURL = (aiConfig.openai.baseURL || '').replace(/\/+$/, '');
+      const endpoint = `${baseURL}/chat/completions`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${aiConfig.openai.apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature,
+          max_tokens: maxTokens,
+        }),
       });
-
+      const data = await res.json() as any;
+      if (!res.ok) {
+        throw new Error(data?.error?.message || `HTTP ${res.status}`);
+      }
       return {
-        content: completion.choices[0]?.message?.content || '',
-        model: completion.model,
-        tokensUsed: completion.usage?.total_tokens || 0,
-        cost: this.calculateCost(completion.usage?.total_tokens || 0, model),
+        content: data.choices?.[0]?.message?.content || '',
+        model: data.model || model,
+        tokensUsed: data.usage?.total_tokens || 0,
+        cost: this.calculateCost(data.usage?.total_tokens || 0, model),
       };
     } catch (error: any) {
       console.error('OpenAI调用失败:', error);
@@ -201,15 +208,18 @@ export class AIService {
     }
 
     try {
-      // 使用类型断言来绕过TypeScript类型检查
+      const systemMsg = messages.find(m => m.role === 'system');
+      const nonSystemMsgs = messages.filter(m => m.role !== 'system');
+
       const completion = await this.anthropic.messages.create({
         model,
         max_tokens: maxTokens,
         temperature,
-        messages: messages.map(m => ({
-          role: m.role as any,
+        ...(systemMsg ? { system: systemMsg.content } : {}),
+        messages: nonSystemMsgs.map(m => ({
+          role: m.role as 'user' | 'assistant',
           content: m.content,
-        })) as any,
+        })),
       });
 
       return {

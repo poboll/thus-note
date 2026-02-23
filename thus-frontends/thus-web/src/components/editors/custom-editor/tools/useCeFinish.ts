@@ -12,7 +12,7 @@ import localReq from "./req/local-req";
 import type { ThreadShowStore } from "~/hooks/stores/useThreadShowStore";
 import { storeToRefs } from "pinia";
 import { equipThreads } from "~/utils/controllers/equip/threads";
-import { getTagIdsParents, addATag, formatTagText } from "~/utils/system/tag-related";
+import { getTagIdsParents, addATag, formatTagText, tagIdsToShows } from "~/utils/system/tag-related";
 import type { SpaceType } from "~/types/types-basic";
 import { LocalToCloud } from "~/utils/cloud/LocalToCloud";
 import { resetBasicCeData } from "./some-funcs";
@@ -366,18 +366,24 @@ async function trySilentAutoTag(
     if(!plainText || plainText.trim().length < 10) return
 
     const existingTagIds = thread.tagIds ?? []
-    const existingTagNames = existingTagIds.map(id => {
-      const found = searchLocal(id)
-      return found.length > 0 ? found[0].text : ""
-    }).filter(t => t.length > 0)
+    const { tagShows } = tagIdsToShows(existingTagIds)
+    const existingTagNames = tagShows.map(tag => tag.text)
 
     const tagRes = await aiReq.autoTag(plainText, existingTagNames)
     if(!tagRes.ok || !tagRes.data?.tags?.length) return
 
     const newTagIds = [...existingTagIds]
     for(const tagName of tagRes.data.tags) {
-      const found = searchLocal(tagName)
-      let tagId = found.length > 0 ? found[0].tagId : ""
+      const searchResults = searchLocal(tagName)
+      let tagId = ""
+      
+      for(const result of searchResults) {
+        if(result.text === tagName && result.tagId) {
+          tagId = result.tagId
+          break
+        }
+      }
+      
       if(!tagId) {
         const formatted = formatTagText(tagName)
         if(!formatted) continue
@@ -385,6 +391,7 @@ async function trySilentAutoTag(
         if(!addRes.isOk || !addRes.id) continue
         tagId = addRes.id
       }
+      
       if(newTagIds.includes(tagId)) continue
       newTagIds.push(tagId)
     }

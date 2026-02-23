@@ -44,6 +44,7 @@ const {
   onAiTagStyleChange,
   onAiFavoriteTagsChange,
   onAiAutoTagModeChange,
+  onBatchRetag,
   version,
   appName,
   hasNewVersion,
@@ -243,12 +244,15 @@ const iconColor = "var(--main-normal)"
       <div v-if="data.hasBackend" class="thus-no-user-select sc-title">
         <span>AI 功能</span>
       </div>
-      <div v-if="data.hasBackend" class="sc-box">
+      <div v-if="data.hasBackend" class="sc-box sc-ai-box">
+        
+        <!-- AI 智能辅助开关 -->
         <div class="thus-no-user-select thus-hover sc-bar"
           @click.stop="onToggleAi(!data.aiEnabled)"
         >
           <div class="scb-hd">
-            <span>AI 智能辅助</span>
+            <div class="scb-hd-title">AI 智能辅助</div>
+            <div class="scb-hd-desc">自动为笔记生成标签和摘要</div>
           </div>
           <div class="scb-footer">
             <liu-switch :checked="data.aiEnabled" 
@@ -257,48 +261,48 @@ const iconColor = "var(--main-normal)"
           </div>
         </div>
 
-        <!-- 以下配置项仅在 AI 开启时显示 -->
-        <template v-if="data.aiEnabled">
-
-          <!-- 标签数量 -->
-          <div class="thus-no-user-select sc-bar sc-bar-config">
-            <div class="scb-hd">
-              <span>标签数量</span>
-            </div>
-            <div class="scb-footer">
-              <select class="sc-select" 
+        <!-- AI 配置项（仅在 AI 开启时显示）-->
+        <div v-if="data.aiEnabled" class="sc-ai-config">
+          
+          <!-- 配置项网格 -->
+          <div class="sc-ai-grid">
+            
+            <!-- 标签数量 -->
+            <div class="sc-ai-item">
+              <div class="sc-ai-item-label">
+                <span>标签数量</span>
+              </div>
+              <select class="sc-ai-select" 
                 :value="data.aiTagCount"
                 @change="onAiTagCountChange(Number(($event.target as HTMLSelectElement).value))"
               >
                 <option v-for="n in 8" :key="n + 2" :value="n + 2">{{ n + 2 }} 个</option>
               </select>
             </div>
-          </div>
 
-          <!-- 标签风格 -->
-          <div class="thus-no-user-select sc-bar sc-bar-config">
-            <div class="scb-hd">
-              <span>标签风格</span>
+            <!-- 标签风格 -->
+            <div class="sc-ai-item">
+              <div class="sc-ai-item-label">
+                <span>标签风格</span>
+              </div>
+              <div class="sc-ai-btns">
+                <button class="sc-ai-btn"
+                  :class="{ 'sc-ai-btn_active': data.aiTagStyle === 'concise' }"
+                  @click.stop="onAiTagStyleChange('concise')"
+                >精简</button>
+                <button class="sc-ai-btn"
+                  :class="{ 'sc-ai-btn_active': data.aiTagStyle === 'detailed' }"
+                  @click.stop="onAiTagStyleChange('detailed')"
+                >详细</button>
+              </div>
             </div>
-            <div class="scb-footer sc-footer-btns">
-              <button class="sc-style-btn"
-                :class="{ 'sc-style-btn_active': data.aiTagStyle === 'concise' }"
-                @click.stop="onAiTagStyleChange('concise')"
-              >精简</button>
-              <button class="sc-style-btn"
-                :class="{ 'sc-style-btn_active': data.aiTagStyle === 'detailed' }"
-                @click.stop="onAiTagStyleChange('detailed')"
-              >详细</button>
-            </div>
-          </div>
 
-          <!-- 打标模式 -->
-          <div class="thus-no-user-select sc-bar sc-bar-config">
-            <div class="scb-hd">
-              <span>打标模式</span>
-            </div>
-            <div class="scb-footer">
-              <select class="sc-select"
+            <!-- 打标模式 -->
+            <div class="sc-ai-item">
+              <div class="sc-ai-item-label">
+                <span>打标模式</span>
+              </div>
+              <select class="sc-ai-select"
                 :value="data.aiAutoTagMode"
                 @change="onAiAutoTagModeChange(($event.target as HTMLSelectElement).value as 'manual' | 'silent')"
               >
@@ -306,23 +310,37 @@ const iconColor = "var(--main-normal)"
                 <option value="silent">保存时静默打标</option>
               </select>
             </div>
+
           </div>
 
-          <!-- 偏好标签 -->
-          <div class="thus-no-user-select sc-bar sc-bar-config sc-bar-tags">
-            <div class="scb-hd">
+          <!-- 偏好标签（全宽）-->
+          <div class="sc-ai-tags">
+            <div class="sc-ai-tags-label">
               <span>偏好标签</span>
             </div>
-            <div class="scb-footer sc-footer-input">
-              <input class="sc-tag-input"
-                v-model="favoriteTagsInput"
-                placeholder="用顿号分隔，如：技术、生活、读书"
-                @blur="onFavoriteTagsBlur"
-              />
+            <input class="sc-ai-tags-input"
+              v-model="favoriteTagsInput"
+              placeholder="用顿号分隔，如：技术、生活、读书"
+              @blur="onFavoriteTagsBlur"
+            />
+          </div>
+
+          <!-- 批量重新标签 -->
+          <div class="thus-no-user-select thus-hover sc-ai-action"
+            @click.stop="onBatchRetag"
+          >
+            <div class="sc-ai-action-text">
+              <span>批量重新标签</span>
+            </div>
+            <div class="sc-ai-action-icon">
+              <svg-icon
+                name="arrow-right2"
+                :color="iconColor"
+              ></svg-icon>
             </div>
           </div>
 
-        </template>
+        </div>
       </div>
 
       <!-- Storage Management (Hidden for normal users) -->
@@ -968,6 +986,201 @@ const iconColor = "var(--main-normal)"
 
   &:focus {
     border-color: var(--main-normal);
+  }
+}
+
+/* AI 功能区域样式 */
+.sc-ai-box {
+  overflow: visible;
+}
+
+.scb-hd-title {
+  font-size: var(--desc-font);
+  color: var(--main-normal);
+  font-weight: 700;
+  margin-block-end: 4px;
+}
+
+.scb-hd-desc {
+  font-size: var(--mini-font);
+  color: var(--main-note);
+  line-height: 1.4;
+}
+
+.sc-ai-config {
+  margin-block-start: 16px;
+  padding-block-start: 16px;
+  border-top: 1px solid var(--line-default);
+}
+
+.sc-ai-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-block-end: 16px;
+}
+
+.sc-ai-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sc-ai-item-label {
+  font-size: var(--btn-font);
+  color: var(--main-normal);
+  font-weight: 600;
+}
+
+.sc-ai-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--card-bg);
+  border: 1.5px solid var(--line-default);
+  border-radius: 10px;
+  padding: 10px 32px 10px 12px;
+  font-size: var(--btn-font);
+  color: var(--main-normal);
+  cursor: pointer;
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  transition: all .2s;
+
+  &:hover {
+    border-color: var(--main-note);
+  }
+
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(42, 104, 133, 0.1);
+  }
+}
+
+.sc-ai-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.sc-ai-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1.5px solid var(--line-default);
+  border-radius: 10px;
+  background: transparent;
+  font-size: var(--btn-font);
+  color: var(--main-note);
+  cursor: pointer;
+  transition: all .2s;
+  font-weight: 500;
+
+  &:hover {
+    border-color: var(--main-normal);
+    color: var(--main-normal);
+    background: rgba(42, 104, 133, 0.05);
+  }
+}
+
+.sc-ai-btn_active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 600;
+
+  &:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+    opacity: 0.9;
+  }
+}
+
+.sc-ai-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-block-end: 16px;
+}
+
+.sc-ai-tags-label {
+  font-size: var(--btn-font);
+  color: var(--main-normal);
+  font-weight: 600;
+}
+
+.sc-ai-tags-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--line-default);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: var(--btn-font);
+  color: var(--main-normal);
+  background: transparent;
+  outline: none;
+  transition: all .2s;
+  line-height: 1.5;
+
+  &::placeholder {
+    color: var(--main-note);
+    opacity: 0.6;
+  }
+
+  &:hover {
+    border-color: var(--main-note);
+  }
+
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(42, 104, 133, 0.1);
+  }
+}
+
+.sc-ai-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line-default);
+  cursor: pointer;
+  transition: all .2s;
+
+  &:hover {
+    border-color: var(--primary-color);
+    background: rgba(42, 104, 133, 0.05);
+  }
+}
+
+.sc-ai-action-text {
+  font-size: var(--desc-font);
+  color: var(--main-normal);
+  font-weight: 600;
+}
+
+.sc-ai-action-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .2s;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.sc-ai-action:hover .sc-ai-action-icon {
+  transform: translateX(3px);
+}
+
+@media screen and (max-width: 550px) {
+  .sc-ai-grid {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -121,6 +121,31 @@ export function useSettingContent() {
     }
   }
 
+  const onBatchRetag = async () => {
+    const res = await cui.showModal({
+      title: "批量重新标签",
+      content: "将使用 AI 为所有笔记重新生成标签，这可能需要一些时间。是否继续？",
+    })
+    if(!res.confirm) return
+
+    cui.showLoading({ title: "正在处理..." })
+    const tagRes = await aiReq.batchRetag()
+    cui.hideLoading()
+
+    if(!tagRes.ok) {
+      cui.showSnackBar({ text: tagRes.error || "批量打标失败" })
+      return
+    }
+
+    const { tagged = 0, total = 0 } = tagRes.data || {}
+    cui.showModal({
+      title: "✅",
+      content: `已为 ${tagged}/${total} 条笔记重新生成标签`,
+      showCancel: false,
+      isTitleEqualToEmoji: true,
+    })
+  }
+
   const onToggleMobileDebug = (newV: boolean) => {
     data.mobileDebug = newV
     localCache.setOnceData("mobile_debug", newV)
@@ -195,6 +220,7 @@ export function useSettingContent() {
     onAiTagStyleChange,
     onAiFavoriteTagsChange,
     onAiAutoTagModeChange,
+    onBatchRetag,
     version,
     appName,
     hasNewVersion,

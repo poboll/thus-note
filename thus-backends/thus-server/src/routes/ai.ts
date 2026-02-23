@@ -377,19 +377,21 @@ router.post('/auto-tag', authMiddleware, async (req: Request, res: Response) => 
       },
     ];
 
-    const aiResponse = await callAIService(messages, AIModelType.GPT_3_5_TURBO, 0.3, 200);
+    const aiResponse = await callAIService(messages, AIModelType.GPT_3_5_TURBO, 0.3, 500);
 
     let tags: string[] = [];
+    const rawContent = aiResponse.content.replace(/```[a-z]*\n?/g, '').replace(/```/g, '').trim();
     try {
-      const parsed = JSON.parse(aiResponse.content);
-      tags = Array.isArray(parsed) ? parsed.filter((t: unknown) => typeof t === 'string') : [];
+      const parsed = JSON.parse(rawContent);
+      tags = Array.isArray(parsed) ? parsed.filter((t: unknown) => typeof t === 'string').slice(0, tagCount) : [];
     } catch {
       // 容错：尝试从文本中提取标签
-      tags = aiResponse.content
-        .replace(/[\[\]"']/g, '')
+      tags = rawContent
+        .replace(/[\[\]"'`]/g, '')
         .split(/[,，、\n]/)
         .map((t: string) => t.trim())
-        .filter((t: string) => t.length > 0 && t.length <= 20);
+        .filter((t: string) => t.length > 0 && t.length <= 20)
+        .slice(0, tagCount);
     }
 
     await saveAIUsage(userId, `auto-tag: ${content.substring(0, 100)}`, aiResponse, AIModelType.GPT_3_5_TURBO, AIPromptType.ANALYSIS);
@@ -616,12 +618,12 @@ async function callAIService(
   maxTokens: number
 ): Promise<AIResponse> {
   try {
-    const defaultModel = aiConfig.openai.defaultModel || 'gpt-3.5-turbo';
+    const defaultModel = aiConfig.anthropic.defaultModel || aiConfig.openai.defaultModel || 'claude-sonnet-4-5-20250929';
 
     const modelMapping: Record<AIModelType, string> = {
-      [AIModelType.GPT_4]: 'gpt-4',
+      [AIModelType.GPT_4]: defaultModel,
       [AIModelType.GPT_3_5_TURBO]: defaultModel,
-      [AIModelType.CLAUDE_3]: 'claude-3-sonnet-20240229',
+      [AIModelType.CLAUDE_3]: defaultModel,
       [AIModelType.GEMINI]: 'gemini-pro',
       [AIModelType.LOCAL]: 'local',
     };

@@ -183,7 +183,18 @@ async function getAiSettings(): Promise<{ ok: boolean; data?: AiSettingsResponse
   }
 }
 
-export type { AiAutoTagResponse, AiSimilarItem, AiSimilarResponse, AiSummarizeResponse }
+interface AiBatchRetagResponse {
+  ok: boolean
+  tagged: number
+  total: number
+  results: Array<{ threadId: string; tags: string[] }>
+}
+
+async function batchRetag(): Promise<{ ok: boolean; data?: AiBatchRetagResponse; error?: string }> {
+  return _request<AiBatchRetagResponse>("api/ai/batch-retag", {})
+}
+
+export type { AiAutoTagResponse, AiSimilarItem, AiSimilarResponse, AiSummarizeResponse, AiBatchRetagResponse }
 
 export default {
   autoTag,
@@ -191,4 +202,5 @@ export default {
   summarize,
   updateAiSettings,
   getAiSettings,
+  batchRetag,
 }

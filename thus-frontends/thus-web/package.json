@@ -89,6 +89,7 @@
     "knip": "^5.62.0",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.89.2",
+    "sharp": "^0.34.5",
     "typescript": "~5.8.3",
     "user-agent-data-types": "^0.4.2",
     "vite": "^7.0.6",
