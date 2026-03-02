@@ -261,7 +261,6 @@ const iconColor = "var(--main-normal)"
           </div>
         </div>
 
-        <!-- AI 配置项（仅在 AI 开启时显示）-->
         <div v-if="data.aiEnabled" class="sc-ai-config">
           
           <!-- 配置项网格 -->
@@ -325,18 +324,27 @@ const iconColor = "var(--main-normal)"
             />
           </div>
 
-          <!-- 批量重新标签 -->
-          <div class="thus-no-user-select thus-hover sc-ai-action"
-            @click.stop="onBatchRetag"
-          >
-            <div class="sc-ai-action-text">
-              <span>批量重新标签</span>
+          <!-- 批量标签操作 -->
+          <div class="sc-ai-retag-group">
+            <div class="thus-no-user-select thus-hover sc-ai-action"
+              @click.stop="onBatchRetag(false)"
+            >
+              <div class="sc-ai-action-text">
+                <span>仅未标记笔记打标签</span>
+              </div>
+              <div class="sc-ai-action-icon">
+                <svg-icon name="arrow-right2" :color="iconColor"></svg-icon>
+              </div>
             </div>
-            <div class="sc-ai-action-icon">
-              <svg-icon
-                name="arrow-right2"
-                :color="iconColor"
-              ></svg-icon>
+            <div class="thus-no-user-select thus-hover sc-ai-action"
+              @click.stop="onBatchRetag(true)"
+            >
+              <div class="sc-ai-action-text">
+                <span>所有笔记重新打标签</span>
+              </div>
+              <div class="sc-ai-action-icon">
+                <svg-icon name="arrow-right2" :color="iconColor"></svg-icon>
+              </div>
             </div>
           </div>
 
@@ -1010,6 +1018,7 @@ const iconColor = "var(--main-normal)"
 .sc-ai-config {
   margin-block-start: 16px;
   padding-block-start: 16px;
+  padding-inline-start: 10px;
   border-top: 1px solid var(--line-default);
 }
 
@@ -1031,6 +1040,7 @@ const iconColor = "var(--main-normal)"
   color: var(--main-normal);
   font-weight: 600;
 }
+
 
 .sc-ai-select {
   appearance: none;
@@ -1138,11 +1148,18 @@ const iconColor = "var(--main-normal)"
   }
 }
 
+.sc-ai-retag-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-inline-start: 10px;
+}
+
 .sc-ai-action {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
+  padding: 12px 14px 12px 0;
   border-radius: 10px;
   border: 1.5px solid var(--line-default);
   cursor: pointer;
@@ -1177,14 +1194,11 @@ const iconColor = "var(--main-normal)"
 .sc-ai-action:hover .sc-ai-action-icon {
   transform: translateX(3px);
 }
-
 @media screen and (max-width: 550px) {
   .sc-ai-grid {
     grid-template-columns: 1fr;
   }
 }
-
-
 
 </style>
 <style>

@@ -1,64 +1,66 @@
 <template>
-  <div class="policy-page">
-    <!-- 页面头部 -->
-    <header class="policy-header">
-      <div class="header-content">
-        <h1 class="policy-title">服务协议</h1>
-        <p class="policy-meta">
-          <span class="version">版本 {{ policyData.version }}</span>
-          <span class="divider">|</span>
-          <span class="update-date">最后更新：{{ formatDate(policyData.lastUpdated) }}</span>
-        </p>
+  <div class="terms-root">
+
+    <!-- 顶部导航栏 -->
+    <header class="terms-nav">
+      <div class="terms-nav-inner">
+        <RouterLink to="/" class="nav-brand thus-no-user-select">
+          <img src="/favicon.svg" class="nav-logo" alt="如是" />
+          <span class="nav-title">如是</span>
+        </RouterLink>
+        <RouterLink to="/" class="nav-back thus-no-user-select">
+          <svg viewBox="0 -960 960 960" class="nav-back-icon">
+            <path fill="currentColor" d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/>
+          </svg>
+          <span>返回</span>
+        </RouterLink>
       </div>
     </header>
 
-    <div class="policy-container">
-      <!-- 目录导航 -->
-      <nav class="policy-toc" v-if="sections.length > 0">
-        <h3 class="toc-title">目录</h3>
-        <ul class="toc-list">
-          <li v-for="section in sections" :key="section.id" class="toc-item">
-            <a 
-              :href="`#${section.id}`" 
-              @click.prevent="scrollToSection(section.id)"
-              :class="{ active: activeSection === section.id }"
-            >
-              {{ section.title }}
-            </a>
-          </li>
-        </ul>
-      </nav>
+    <!-- 主内容区 -->
+    <main class="terms-main">
 
-      <!-- 政策内容 -->
-      <main class="policy-content">
-        <div v-if="loading" class="loading-state">
-          <div class="loading-spinner"></div>
-          <p>加载中...</p>
-        </div>
-        <div v-else-if="error" class="error-state">
-          <p>{{ error }}</p>
-          <button @click="fetchPolicy" class="retry-btn">重试</button>
-        </div>
-        <div v-else class="content-body" v-html="policyData.content"></div>
-      </main>
-    </div>
+      <!-- 加载中 -->
+      <div v-if="loading" class="terms-card state-card">
+        <div class="spinner"></div>
+        <p>加载中...</p>
+      </div>
 
-    <!-- 返回顶部按钮 -->
-    <button 
-      v-show="showBackToTop" 
-      class="back-to-top"
-      @click="scrollToTop"
-      aria-label="返回顶部"
-    >
-      <svg viewBox="0 0 24 24" width="24" height="24">
-        <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-      </svg>
-    </button>
+      <!-- 错误 -->
+      <div v-else-if="error" class="terms-card state-card">
+        <p class="error-text">{{ error }}</p>
+        <button class="retry-btn" @click="fetchPolicy">重试</button>
+      </div>
+
+      <!-- 内容 -->
+      <template v-else>
+        <div class="terms-card doc-header">
+          <h1 class="doc-title">服务协议</h1>
+          <p class="doc-meta">
+            <span>版本 {{ policyData.version }}</span>
+            <span class="meta-dot">·</span>
+            <span>最后更新：{{ formatDate(policyData.lastUpdated) }}</span>
+          </p>
+        </div>
+
+        <div
+          v-for="section in parsedSections"
+          :key="section.id"
+          :id="section.id"
+          class="terms-card section-card"
+        >
+          <h2 class="section-title">{{ section.title }}</h2>
+          <div class="section-body" v-html="section.html"></div>
+        </div>
+      </template>
+
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
 interface PolicyData {
   content: string;
@@ -66,9 +68,10 @@ interface PolicyData {
   lastUpdated: string;
 }
 
-interface Section {
+interface ParsedSection {
   id: string;
   title: string;
+  html: string;
 }
 
 const policyData = ref<PolicyData>({
@@ -76,336 +79,266 @@ const policyData = ref<PolicyData>({
   version: '1.0.0',
   lastUpdated: new Date().toISOString(),
 });
-
 const loading = ref(true);
 const error = ref('');
-const showBackToTop = ref(false);
-const activeSection = ref('');
 
-// 解析内容中的章节
-const sections = computed<Section[]>(() => {
+const parsedSections = computed<ParsedSection[]>(() => {
   const content = policyData.value.content;
-  const regex = /<h2[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h2>/gi;
-  const result: Section[] = [];
-  let match;
-  
-  while ((match = regex.exec(content)) !== null) {
-    result.push({
-      id: match[1],
-      title: match[2].trim(),
+  if (!content) return [];
+  const parts = content.split(/(?=<h2)/i);
+  return parts.reduce<ParsedSection[]>((acc, part) => {
+    const m = part.match(/<h2[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h2>/i);
+    if (!m) return acc;
+    acc.push({
+      id: m[1],
+      title: m[2].trim(),
+      html: part.replace(/<h2[^>]*>.*?<\/h2>/i, '').trim(),
     });
-  }
-  
-  return result;
+    return acc;
+  }, []);
 });
 
-// 格式化日期
 const formatDate = (dateStr: string) => {
   try {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('zh-CN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return new Date(dateStr).toLocaleDateString('zh-CN', {
+      year: 'numeric', month: 'long', day: 'numeric',
     });
   } catch {
     return dateStr;
   }
 };
 
-// 获取政策内容
 const fetchPolicy = async () => {
   loading.value = true;
   error.value = '';
-  
   try {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
-    const response = await fetch(`${baseUrl}/api/policies/terms`);
-    const result = await response.json();
-    
-    if (result.code === '0000' && result.data) {
+    const base = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${base}/api/policies/terms`);
+    const json = await res.json();
+    if (json.code === '0000' && json.data) {
       policyData.value = {
-        content: result.data.content,
-        version: result.data.version,
-        lastUpdated: result.data.lastUpdated,
+        content: json.data.content,
+        version: json.data.version,
+        lastUpdated: json.data.lastUpdated,
       };
     } else {
-      throw new Error(result.errMsg || '获取服务协议失败');
+      throw new Error(json.errMsg || '获取服务协议失败');
     }
-  } catch (err: any) {
-    error.value = err.message || '加载失败，请稍后重试';
+  } catch (e: any) {
+    error.value = e.message || '加载失败，请稍后重试';
   } finally {
     loading.value = false;
   }
 };
 
-// 滚动到指定章节
-const scrollToSection = (sectionId: string) => {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    activeSection.value = sectionId;
-  }
-};
-
-// 返回顶部
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-// 监听滚动
-const handleScroll = () => {
-  showBackToTop.value = window.scrollY > 300;
-  
-  // 更新当前活动章节
-  const scrollPosition = window.scrollY + 100;
-  for (const section of sections.value) {
-    const element = document.getElementById(section.id);
-    if (element) {
-      const { offsetTop, offsetHeight } = element;
-      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-        activeSection.value = section.id;
-        break;
-      }
-    }
-  }
-};
-
-onMounted(() => {
-  fetchPolicy();
-  window.addEventListener('scroll', handleScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+onMounted(fetchPolicy);
 </script>
 
 <style scoped>
-.policy-page {
+/* ── 根容器 ── */
+.terms-root {
   min-height: 100vh;
-  background: var(--thus-bg, #f5f7fa);
+  background-color: var(--bg-color, #eaecef);
 }
 
-.policy-header {
-  background: var(--card-bg, #fff);
-  color: var(--main-normal, #333);
-  padding: 60px 20px 40px;
-  text-align: center;
-  box-shadow: var(--card-shadow-2, 0 4px 20px rgba(0,0,0,0.06));
-}
-
-.header-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.policy-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 16px;
-  color: var(--main-normal, #333);
-}
-
-.policy-meta {
-  font-size: 0.95rem;
-  color: var(--main-note, #999);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-}
-
-.divider {
-  opacity: 0.5;
-}
-
-.policy-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 40px;
-}
-
-@media (max-width: 768px) {
-  .policy-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .policy-toc {
-    position: static !important;
-    margin-bottom: 20px;
-  }
-}
-
-.policy-toc {
+/* ══════════════════════════════════════
+   顶部导航栏
+══════════════════════════════════════ */
+.terms-nav {
   position: sticky;
-  top: 20px;
-  height: fit-content;
-  background: var(--card-bg, #fff);
-  border-radius: 24px;
-  padding: 24px;
-  box-shadow: var(--card-shadow-2, 0 4px 20px rgba(0,0,0,0.06));
+  top: 0;
+  z-index: 100;
+  background-color: var(--sidebar-bg, #fff);
+  border-bottom: 1.5px solid var(--line-default, #e2e3e4);
+  height: 56px;
+  display: flex;
+  align-items: center;
 }
 
-.toc-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--main-normal, #333);
-  margin: 0 0 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--main-normal, #333);
+.terms-nav-inner {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.toc-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.toc-item {
-  margin-bottom: 8px;
-}
-
-.toc-item a {
-  display: block;
-  padding: 8px 12px;
-  color: var(--main-note, #999);
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   text-decoration: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-.toc-item a:hover {
-  background: var(--hover-bg, rgba(0,0,0,0.04));
-  color: var(--main-normal, #333);
-}
-
-.toc-item a.active {
-  background: var(--main-normal, #333);
-  color: var(--card-bg, #fff);
-}
-
-.policy-content {
-  background: var(--card-bg, #fff);
-  border-radius: 24px;
-  padding: 40px;
-  box-shadow: var(--card-shadow-2, 0 4px 20px rgba(0,0,0,0.06));
-}
-
-.loading-state,
-.error-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--main-note, #999);
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--hover-bg, rgba(0,0,0,0.06));
-  border-top-color: var(--main-normal, #333);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 16px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.retry-btn {
-  margin-top: 16px;
-  padding: 10px 24px;
-  background: var(--main-normal, #333);
-  color: var(--card-bg, #fff);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
+  color: var(--main-normal, #3f4549);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
   transition: opacity 0.2s;
 }
 
-.retry-btn:hover {
-  opacity: 0.85;
+.nav-brand:hover { opacity: 0.75; }
+
+.nav-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
-.content-body {
-  line-height: 1.8;
-  color: var(--main-normal, #333);
+.nav-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--main-normal, #3f4549);
 }
 
-.content-body :deep(h2) {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--main-normal, #333);
-  margin: 32px 0 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--hover-bg, rgba(0,0,0,0.08));
-}
-
-.content-body :deep(h2:first-child) {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: none;
-}
-
-.content-body :deep(p) {
-  margin: 12px 0;
-  color: var(--main-note, #666);
-}
-
-.content-body :deep(ul) {
-  margin: 12px 0;
-  padding-left: 24px;
-}
-
-.content-body :deep(li) {
-  margin: 8px 0;
-  color: var(--main-note, #666);
-}
-
-.back-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  background: var(--main-normal, #333);
-  color: var(--card-bg, #fff);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
+.nav-back {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: var(--card-shadow-2, 0 4px 12px rgba(0,0,0,0.15));
-  transition: all 0.3s ease;
-  z-index: 100;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--navi-normal, #4f5559);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
 }
 
-.back-to-top:hover {
-  opacity: 0.85;
-  transform: translateY(-3px);
+.nav-back:hover {
+  background: rgba(42, 104, 133, 0.07);
+  color: var(--main-normal, #3f4549);
 }
 
-@media (max-width: 768px) {
-  .policy-title {
-    font-size: 1.8rem;
-  }
-  
-  .policy-content {
-    padding: 24px;
-  }
-  
-  .back-to-top {
-    bottom: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-  }
+.nav-back-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+   主内容区
+══════════════════════════════════════ */
+.terms-main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── 卡片基础 ── */
+.terms-card {
+  background: var(--card-bg, #fff);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow, 0 8px 20px -6px rgba(0, 0, 0, 0.08));
+  padding: 28px 32px;
+  box-sizing: border-box;
+}
+
+/* ── 文档标题卡片 ── */
+.doc-header {
+  padding: 32px 36px;
+}
+
+.doc-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--main-normal, #3f4549);
+  margin: 0 0 10px;
+  letter-spacing: 0.3px;
+}
+
+.doc-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--main-note, #ababab);
+  margin: 0;
+}
+
+.meta-dot { opacity: 0.5; }
+
+/* ── 章节卡片 ── */
+.section-card {
+  scroll-margin-top: 72px;
+  transition: box-shadow 0.2s;
+}
+
+.section-card:hover {
+  box-shadow: var(--card-shadow2-hover, 0 12px 24px -8px rgba(0, 0, 0, 0.12));
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--main-normal, #3f4549);
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-default, #e2e3e4);
+  letter-spacing: 0.3px;
+}
+
+.section-body {
+  line-height: 1.85;
+  color: var(--main-code, #686868);
+  font-size: 14px;
+}
+
+.section-body :deep(p)  { margin: 9px 0; }
+.section-body :deep(ul),
+.section-body :deep(ol) { margin: 8px 0; padding-left: 22px; }
+.section-body :deep(li) { margin: 6px 0; }
+
+/* ── 状态卡片 ── */
+.state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 60px 32px;
+  color: var(--main-note, #ababab);
+  font-size: 14px;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid var(--line-default, #e2e3e4);
+  border-top-color: var(--primary-color, #2a6885);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-text { margin: 0; color: #c0392b; }
+
+.retry-btn {
+  padding: 8px 22px;
+  background: var(--primary-color, #2a6885);
+  color: var(--on-primary, #fafafa);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s;
+}
+
+.retry-btn:hover { opacity: 0.85; }
+
+/* ══════════════════════════════════════
+   响应式
+══════════════════════════════════════ */
+@media (max-width: 680px) {
+  .terms-nav-inner { padding: 0 16px; }
+  .nav-title        { display: none; }
+  .terms-main       { padding: 16px 12px 48px; gap: 10px; }
+  .terms-card       { padding: 20px; }
+  .doc-header       { padding: 24px; }
+  .doc-title        { font-size: 1.35rem; }
 }
 </style>

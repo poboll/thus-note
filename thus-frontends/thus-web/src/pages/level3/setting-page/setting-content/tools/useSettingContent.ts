@@ -121,15 +121,18 @@ export function useSettingContent() {
     }
   }
 
-  const onBatchRetag = async () => {
+  const onBatchRetag = async (retagAll = false) => {
+    const modeText = retagAll
+      ? '将使用 AI 为所有笔记重新生成标签'
+      : '将使用 AI 为未标记的笔记生成标签'
     const res = await cui.showModal({
-      title: "批量重新标签",
-      content: "将使用 AI 为所有笔记重新生成标签，这可能需要一些时间。是否继续？",
+      title: "批量标签",
+      content: `${modeText}，这可能需要一些时间。是否继续？`,
     })
     if(!res.confirm) return
 
     cui.showLoading({ title: "正在处理..." })
-    const tagRes = await aiReq.batchRetag()
+    const tagRes = await aiReq.batchRetag(retagAll)
     cui.hideLoading()
 
     if(!tagRes.ok) {
@@ -140,7 +143,7 @@ export function useSettingContent() {
     const { tagged = 0, total = 0 } = tagRes.data || {}
     cui.showModal({
       title: "✅",
-      content: `已为 ${tagged}/${total} 条笔记重新生成标签`,
+      content: `已为 ${tagged}/${total} 条笔记生成标签`,
       showCancel: false,
       isTitleEqualToEmoji: true,
     })
