@@ -190,8 +190,8 @@ interface AiBatchRetagResponse {
   results: Array<{ threadId: string; tags: string[] }>
 }
 
-async function batchRetag(): Promise<{ ok: boolean; data?: AiBatchRetagResponse; error?: string }> {
-  return _request<AiBatchRetagResponse>("api/ai/batch-retag", {})
+async function batchRetag(retagAll = false): Promise<{ ok: boolean; data?: AiBatchRetagResponse; error?: string }> {
+  return _request<AiBatchRetagResponse>("api/ai/batch-retag", { retagAll })
 }
 
 export type { AiAutoTagResponse, AiSimilarItem, AiSimilarResponse, AiSummarizeResponse, AiBatchRetagResponse }

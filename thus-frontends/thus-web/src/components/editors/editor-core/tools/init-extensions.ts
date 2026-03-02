@@ -199,7 +199,10 @@ export function initExtensions(
     extensions.push(CustomHeading as any)
   }
   else {
-    
+    const CustomHeading = Heading.configure({
+      levels: [1],
+    })
+
     // 在编辑态时，才加载 virtualCursor 插件
     const virtualCursorPlugin = createVirtualCursor()
     const CustomEdit = Extension.create({
@@ -212,6 +215,7 @@ export function initExtensions(
       }
     })
 
+    extensions.push(CustomHeading as any)
     extensions.push(CustomEdit)
   }
 
