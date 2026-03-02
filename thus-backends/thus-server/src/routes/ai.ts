@@ -487,6 +487,7 @@ router.post('/similar', authMiddleware, async (req: Request, res: Response) => {
 router.post('/batch-retag', authMiddleware, async (req: Request, res: Response) => {
   try {
     const userId = req.userId!;
+    const { retagAll = false } = req.body;
 
     const user = await User.findById(userId).select('settings');
     const tagCount = user?.settings?.aiTagCount ?? 5;
@@ -502,26 +503,31 @@ router.post('/batch-retag', authMiddleware, async (req: Request, res: Response) 
       favoriteHint = `\n7. 用户偏好标签供参考（可优先使用或生成风格相似的标签）：${favoriteTags.join('、')}`;
     }
 
-    const untaggedThreads = await Thread.find({
+    const query: any = {
       userId,
       oState: { $ne: 'DELETED' },
-      $or: [
+    };
+
+    if (!retagAll) {
+      query.$or = [
         { tagSearched: { $exists: false } },
         { tagSearched: { $size: 0 } },
         { tagSearched: null },
-      ],
-    })
+      ];
+    }
+
+    const threads = await Thread.find(query)
       .select('_id title thusDesc description')
-      .limit(50)
+      .limit(retagAll ? 200 : 50)
       .lean();
 
-    if (untaggedThreads.length === 0) {
+    if (threads.length === 0) {
       return res.json(successResponse({ tagged: 0, total: 0, results: [] }));
     }
 
     const results: Array<{ threadId: string; tags: string[] }> = [];
 
-    for (const thread of untaggedThreads) {
+    for (const thread of threads) {
       let content = '';
       if (thread.title) content += thread.title + '\n';
       if (thread.thusDesc && Array.isArray(thread.thusDesc)) {
@@ -581,7 +587,7 @@ router.post('/batch-retag', authMiddleware, async (req: Request, res: Response) 
 
     return res.json(successResponse({
       tagged: results.length,
-      total: untaggedThreads.length,
+      total: threads.length,
       results,
     }));
   } catch (error: any) {
@@ -618,7 +624,7 @@ async function callAIService(
   maxTokens: number
 ): Promise<AIResponse> {
   try {
-    const defaultModel = aiConfig.anthropic.defaultModel || aiConfig.openai.defaultModel || 'claude-sonnet-4-5-20250929';
+    const defaultModel = aiConfig.openai.defaultModel || aiConfig.anthropic.defaultModel || 'deepseek-ai/DeepSeek-V3';
 
     const modelMapping: Record<AIModelType, string> = {
       [AIModelType.GPT_4]: defaultModel,

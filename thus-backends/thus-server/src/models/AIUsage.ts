@@ -19,7 +19,7 @@ export interface IAIUsage {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
   model: string;
-  operationType: 'chat' | 'completion' | 'embedding';
+  operationType: 'chat' | 'completion' | 'embedding' | 'writing' | 'summarization' | 'analysis' | 'translation' | 'code_generation' | 'question_answering';
   inputTokens?: number;
   outputTokens?: number;
   totalTokens?: number;
@@ -48,7 +48,7 @@ const AIUsageSchema = new Schema(
     },
     operationType: {
       type: String,
-      enum: ['chat', 'completion', 'embedding'],
+      enum: ['chat', 'completion', 'embedding', 'writing', 'summarization', 'analysis', 'translation', 'code_generation', 'question_answering'],
       required: true,
     },
     inputTokens: {

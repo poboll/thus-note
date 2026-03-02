@@ -56,18 +56,19 @@ export class AIService {
         if (!provider.enabled) continue;
 
         const name = provider.name.toLowerCase();
-        if (name.includes('openai') || name.includes('gpt')) {
-          this.openai = new OpenAI({
-            apiKey: provider.apiKey,
-            baseURL: provider.baseUrl,
-          });
-        } else if (name.includes('claude') || name.includes('anthropic')) {
+        if (name.includes('claude') || name.includes('anthropic')) {
           this.anthropic = new Anthropic({
             apiKey: provider.apiKey,
             baseURL: provider.baseUrl,
           });
         } else if (name.includes('gemini') || name.includes('google')) {
           this.gemini = new GoogleGenerativeAI(provider.apiKey);
+        } else {
+          // Treat all other providers as OpenAI-compatible (SiliconFlow, DeepSeek, etc.)
+          this.openai = new OpenAI({
+            apiKey: provider.apiKey,
+            baseURL: provider.baseUrl,
+          });
         }
       }
 
@@ -222,8 +223,11 @@ export class AIService {
         })),
       });
 
+      // Find the first text block (skip thinking blocks from extended thinking mode)
+      const textBlock = completion.content.find((b: any) => b.type === 'text');
+      const claudeText = textBlock?.text ?? '';
       return {
-        content: completion.content[0]?.type === 'text' ? completion.content[0].text : '',
+        content: claudeText,
         model: completion.model,
         tokensUsed: completion.usage?.input_tokens + completion.usage?.output_tokens || 0,
         cost: this.calculateCost(
@@ -280,15 +284,15 @@ export class AIService {
     temperature: number = 0.7,
     maxTokens: number = 1000
   ): Promise<AIResponse> {
-    // 根据模型选择对应的AI服务
-    if (model.startsWith('gpt')) {
+    if (model.startsWith('gpt') || model.startsWith('deepseek')) {
       return this.callOpenAI(messages, model, temperature, maxTokens);
     } else if (model.startsWith('claude')) {
       return this.callClaude(messages, model, temperature, maxTokens);
     } else if (model.startsWith('gemini')) {
       return this.callGemini(messages, model, temperature, maxTokens);
     } else {
-      throw new Error(`不支持的模型: ${model}`);
+      // Fallback: route unknown models to OpenAI-compatible endpoint
+      return this.callOpenAI(messages, model, temperature, maxTokens);
     }
   }
 
