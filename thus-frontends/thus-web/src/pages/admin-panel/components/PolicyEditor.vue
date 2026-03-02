@@ -166,10 +166,10 @@ const savePrivacy = () => {
 
 <style scoped>
 .config-section {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow-2);
 }
 
 .section-header {
@@ -180,11 +180,11 @@ const savePrivacy = () => {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .section-desc {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -193,14 +193,14 @@ const savePrivacy = () => {
   display: flex;
   gap: 8px;
   margin-bottom: 24px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--line-default);
   padding-bottom: 16px;
 }
 
 .tab-btn {
   padding: 10px 24px;
   background: transparent;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 6px;
   font-size: 0.95rem;
   cursor: pointer;
@@ -208,18 +208,18 @@ const savePrivacy = () => {
 }
 
 .tab-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .tab-btn.active {
-  background: #667eea;
-  border-color: #667eea;
-  color: white;
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--on-primary);
 }
 
 .editor-container {
-  border: 1px solid #eee;
+  border: 1px solid var(--line-default);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -229,8 +229,8 @@ const savePrivacy = () => {
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background: #f9fafb;
-  border-bottom: 1px solid #eee;
+  background: var(--card-hover);
+  border-bottom: 1px solid var(--line-default);
 }
 
 .form-group.inline {
@@ -242,21 +242,21 @@ const savePrivacy = () => {
 
 .form-label {
   font-weight: 500;
-  color: #333;
+  color: var(--main-text);
   white-space: nowrap;
 }
 
 .form-input.small {
   width: 100px;
   padding: 6px 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 4px;
   font-size: 0.9rem;
 }
 
 .meta-info {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--desc-color);
 }
 
 .editor-body {
@@ -283,14 +283,14 @@ const savePrivacy = () => {
   justify-content: flex-end;
   gap: 12px;
   padding: 16px 20px;
-  background: #f9fafb;
-  border-top: 1px solid #eee;
+  background: var(--card-hover);
+  border-top: 1px solid var(--line-default);
 }
 
 .btn-preview {
   padding: 10px 20px;
-  background: white;
-  border: 1px solid #ddd;
+  background: var(--card-bg);
+  border: 1px solid var(--line-default);
   border-radius: 6px;
   font-size: 0.95rem;
   cursor: pointer;
@@ -298,14 +298,14 @@ const savePrivacy = () => {
 }
 
 .btn-preview:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .btn-primary {
   padding: 10px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   border: none;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -325,22 +325,22 @@ const savePrivacy = () => {
 
 .preview-container {
   padding: 20px;
-  border-top: 1px solid #eee;
-  background: #fafafa;
+  border-top: 1px solid var(--line-default);
+  background: var(--card-hover);
 }
 
 .preview-container h4 {
   font-size: 1rem;
   font-weight: 600;
   margin: 0 0 16px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .preview-content {
   padding: 20px;
-  background: white;
+  background: var(--card-bg);
   border-radius: 8px;
-  border: 1px solid #eee;
+  border: 1px solid var(--line-default);
   line-height: 1.8;
 }
 
@@ -348,7 +348,7 @@ const savePrivacy = () => {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 24px 0 12px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .preview-content :deep(h2:first-child) {
@@ -357,7 +357,7 @@ const savePrivacy = () => {
 
 .preview-content :deep(p) {
   margin: 12px 0;
-  color: #555;
+  color: var(--main-normal);
 }
 
 .preview-content :deep(ul) {
@@ -367,6 +367,6 @@ const savePrivacy = () => {
 
 .preview-content :deep(li) {
   margin: 8px 0;
-  color: #555;
+  color: var(--main-normal);
 }
 </style>

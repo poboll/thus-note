@@ -212,10 +212,10 @@ const handleBatchRetag = async () => {
 
 <style scoped>
 .config-section {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow-2);
 }
 
 .section-header {
@@ -226,11 +226,11 @@ const handleBatchRetag = async () => {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .section-desc {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -242,10 +242,10 @@ const handleBatchRetag = async () => {
 .group-title {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #333;
+  color: var(--main-text);
   margin: 0 0 16px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .toggle-group {
@@ -261,7 +261,7 @@ const handleBatchRetag = async () => {
 }
 
 .toggle-row:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .toggle-row.compact {
@@ -277,12 +277,12 @@ const handleBatchRetag = async () => {
 
 .toggle-label {
   font-weight: 500;
-  color: #333;
+  color: var(--main-text);
 }
 
 .toggle-desc {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--desc-color);
 }
 
 .form-checkbox {
@@ -298,7 +298,7 @@ const handleBatchRetag = async () => {
 }
 
 .provider-card {
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--line-default);
   border-radius: 10px;
   margin-bottom: 16px;
   overflow: hidden;
@@ -306,13 +306,13 @@ const handleBatchRetag = async () => {
 
 .provider-header {
   padding: 14px 20px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e8e8e8;
+  background: var(--card-hover);
+  border-bottom: 1px solid var(--line-default);
 }
 
 .provider-name {
   font-weight: 600;
-  color: #333;
+  color: var(--main-text);
 }
 
 .provider-fields {
@@ -328,14 +328,14 @@ const handleBatchRetag = async () => {
   display: block;
   font-weight: 500;
   margin-bottom: 6px;
-  color: #333;
+  color: var(--main-text);
   font-size: 0.9rem;
 }
 
 .form-input {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 6px;
   font-size: 0.95rem;
   transition: border-color 0.2s;
@@ -344,7 +344,7 @@ const handleBatchRetag = async () => {
 
 .form-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary-color);
 }
 
 .btn-toggle-key {
@@ -353,21 +353,21 @@ const handleBatchRetag = async () => {
   bottom: 8px;
   padding: 4px 10px;
   font-size: 0.8rem;
-  background: #f0f0f0;
+  background: var(--line-default);
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .btn-toggle-key:hover {
-  background: #e0e0e0;
+  background: var(--other-btn-bg);
 }
 
 .form-actions {
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--line-default);
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -375,8 +375,8 @@ const handleBatchRetag = async () => {
 
 .btn-primary {
   padding: 12px 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -396,9 +396,9 @@ const handleBatchRetag = async () => {
 
 .btn-secondary {
   padding: 12px 32px;
-  background: white;
-  color: #667eea;
-  border: 1px solid #667eea;
+  background: var(--card-bg);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 500;
@@ -407,7 +407,7 @@ const handleBatchRetag = async () => {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #f0f2ff;
+  background: var(--select-bg);
 }
 
 .btn-secondary:disabled {
@@ -420,14 +420,14 @@ const handleBatchRetag = async () => {
   flex-direction: column;
   align-items: center;
   padding: 60px 0;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #e8e8e8;
-  border-top-color: #667eea;
+  border: 3px solid var(--line-default);
+  border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 12px;
