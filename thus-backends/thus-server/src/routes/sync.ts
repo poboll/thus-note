@@ -6,6 +6,8 @@ import Thread from '../models/Thread';
 import Content from '../models/Content';
 import Comment from '../models/Comment';
 import Member from '../models/Member';
+import Space from '../models/Space';
+import Collection from '../models/Collection';
 import { getRedisClient } from '../config/redis';
 import { EncryptionUtil } from '../utils/encryption';
 
@@ -141,6 +143,12 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
             result = await editComment(userId, atom);
           } else if (taskType === 'comment-delete') {
             result = await deleteComment(userId, atom);
+          } else if (taskType === 'workspace-tag') {
+            result = await updateWorkspaceTag(userId, atom);
+          } else if (taskType === 'workspace-state_config') {
+            result = await updateWorkspaceStateConfig(userId, atom);
+          } else if (taskType === 'collection-favorite') {
+            result = await postCollection(userId, atom);
           } else {
             console.log(`⚠️ 未知的 taskType: ${taskType}`);
             result = { code: '0000', taskId };
@@ -271,6 +279,12 @@ router.post('/set', authMiddleware, async (req: Request, res: Response) => {
           result = await editComment(userId, atom);
         } else if (taskType === 'comment-delete') {
           result = await deleteComment(userId, atom);
+        } else if (taskType === 'workspace-tag') {
+          result = await updateWorkspaceTag(userId, atom);
+        } else if (taskType === 'workspace-state_config') {
+          result = await updateWorkspaceStateConfig(userId, atom);
+        } else if (taskType === 'collection-favorite') {
+          result = await postCollection(userId, atom);
         } else {
           result = {
             code: 'E5001',
@@ -301,7 +315,7 @@ router.post('/set', authMiddleware, async (req: Request, res: Response) => {
  * 获取线程列表
  */
 async function getThreadList(userId: Types.ObjectId, atom: any) {
-  const { taskId, viewType, spaceId, limit = 20, skip = 0 } = atom;
+  const { taskId, viewType, spaceId, limit = 20, skip = 0, stateId, lastItemStamp } = atom;
 
   const query: any = { userId };
 
@@ -313,28 +327,66 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
     }
   }
 
-  console.log(`🔍 [DEBUG] getThreadList 查询条件:`, JSON.stringify(query));
+  let sort: any = { editedStamp: -1 };
 
   if (viewType === 'TRASH') {
     query.oState = 'DELETED';
   } else if (viewType === 'ARCHIVED') {
     query.status = 'archived';
+  } else if (viewType === 'TODAY_FUTURE') {
+    query.status = 'active';
+    query.oState = { $ne: 'DELETED' };
+    query.type = 'calendar';
+    const minStamp = lastItemStamp || (Date.now() - 86400000);
+    query.calendarStamp = { $gt: minStamp };
+    sort = { calendarStamp: 1 };
+  } else if (viewType === 'PAST') {
+    query.status = 'active';
+    query.oState = { $ne: 'DELETED' };
+    query.type = 'calendar';
+    const maxStamp = lastItemStamp || Date.now();
+    query.calendarStamp = { $lt: maxStamp };
+    sort = { calendarStamp: -1 };
   } else {
     query.status = 'active';
     query.oState = { $ne: 'DELETED' };
   }
 
+  if (stateId) {
+    query.stateId = stateId;
+  }
+
+  console.log(`🔍 [DEBUG] getThreadList 查询条件:`, JSON.stringify(query));
+
   const threads = await Thread.find(query)
-    .sort({ lastModifiedAt: -1 })
+    .sort(sort)
     .skip(skip)
     .limit(limit)
     .exec();
 
-  console.log(`📝 getThreadList: userId=${userId}, spaceId=${spaceId}, viewType=${viewType}, 查询到 ${threads.length} 个线程`);
+  console.log(`📝 getThreadList: userId=${userId}, spaceId=${spaceId}, viewType=${viewType}, stateId=${stateId}, 查询到 ${threads.length} 个线程`);
+
+  // 批量查询收藏记录
+  const threadIds = threads.map((t: any) => t._id.toString());
+  let favoriteMap: Record<string, any> = {};
+  if (threadIds.length > 0) {
+    try {
+      const favorites = await Collection.find({
+        user: userId,
+        content_id: { $in: threadIds },
+        forType: 'THREAD',
+        oState: 'OK',
+      }).exec();
+      favorites.forEach((fav: any) => {
+        favoriteMap[fav.content_id] = fav.toObject();
+      });
+    } catch (_e) {}
+  }
 
   const parcels = threads.map((thread: any) => {
     const threadObj = thread.toObject();
     const now = Date.now();
+    const myFav = favoriteMap[threadObj._id.toString()];
 
     return {
       id: threadObj._id.toString(),
@@ -343,7 +395,6 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
       content: {
         _id: threadObj._id.toString(),
         first_id: threadObj.first_id || threadObj._id.toString(),
-
         isMine: true,
         author: {
           space_id: threadObj.spaceId?.toString() || '',
@@ -351,17 +402,14 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
         },
         spaceId: threadObj.spaceId?.toString() || '',
         spaceType: 'ME',
-
         infoType: 'THREAD',
         oState: threadObj.oState || 'OK',
         visScope: 'PUBLIC',
         storageState: 'CLOUD',
-
         title: threadObj.title || '',
         thusDesc: threadObj.thusDesc || [],
         images: threadObj.images || [],
         files: threadObj.files || [],
-
         calendarStamp: threadObj.calendarStamp || 0,
         remindStamp: threadObj.remindStamp || 0,
         whenStamp: threadObj.whenStamp || 0,
@@ -371,11 +419,9 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
         parentComment: null,
         replyToComment: null,
         pinStamp: threadObj.pinStamp || 0,
-
         createdStamp: threadObj.createdStamp || (threadObj.createdAt ? new Date(threadObj.createdAt).getTime() : now),
         editedStamp: threadObj.editedStamp || (threadObj.updatedAt ? new Date(threadObj.updatedAt).getTime() : now),
         removedStamp: threadObj.removedStamp || 0,
-
         tagIds: threadObj.tagIds || [],
         tagSearched: threadObj.tagSearched || [],
         stateId: threadObj.stateId || null,
@@ -383,7 +429,6 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
         config: threadObj.config || {},
         search_title: threadObj.title || '',
         search_other: threadObj.description || '',
-
         levelOne: 0,
         levelOneAndTwo: 0,
         aiCharacter: null,
@@ -391,8 +436,9 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
         ideType: null,
         computingProvider: null,
         aiModel: null,
-
-        myFavorite: undefined,
+        myFavorite: myFav
+          ? { _id: myFav._id?.toString(), oState: myFav.oState, sortStamp: myFav.sortStamp, operateStamp: myFav.operateStamp, user: userId.toString(), first_id: myFav.first_id || myFav._id?.toString() }
+          : undefined,
         myEmoji: undefined,
       },
     };
@@ -408,28 +454,10 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
 /**
  * 获取内容列表
  */
-async function getContentList(_userId: Types.ObjectId, atom: any) {
-  const { taskId, threadId, limit = 20, skip = 0 } = atom;
-
-  if (!threadId) {
-    return {
-      code: 'E4000',
-      taskId,
-      errMsg: 'threadId是必需的',
-    };
-  }
-
-  const contents = await Content.find({ threadId })
-    .sort({ version: -1 })
-    .skip(skip)
-    .limit(limit)
-    .exec();
-
-  return {
-    code: '0000',
-    taskId,
-    list: contents,
-  };
+async function getContentList(userId: Types.ObjectId, atom: any) {
+  // content_list 语义等同于 thread_list（前端主列表加载入口）
+  // laf 原版实现：按 spaceId 查 Thread，附加 myFavorite 等共享数据
+  return getThreadList(userId, atom);
 }
 
 /**
@@ -877,6 +905,60 @@ async function deleteComment(userId: Types.ObjectId, atom: any) {
     code: '0000',
     taskId,
   };
+}
+
+async function updateWorkspaceTag(userId: Types.ObjectId, atom: any) {
+  const { taskId, tagList } = atom;
+  if (!Array.isArray(tagList)) {
+    return { code: 'E4000', taskId, errMsg: 'tagList 是必需的' };
+  }
+  const member = await Member.findOne({ userId }).exec();
+  if (!member?.spaceId) {
+    return { code: 'E4004', taskId, errMsg: '未找到空间' };
+  }
+  await Space.findByIdAndUpdate(member.spaceId, { $set: { tagList } });
+  return { code: '0000', taskId };
+}
+
+async function updateWorkspaceStateConfig(userId: Types.ObjectId, atom: any) {
+  const { taskId, stateConfig } = atom;
+  if (!stateConfig) {
+    return { code: 'E4000', taskId, errMsg: 'stateConfig 是必需的' };
+  }
+  const member = await Member.findOne({ userId }).exec();
+  if (!member?.spaceId) {
+    return { code: 'E4004', taskId, errMsg: '未找到空间' };
+  }
+  await Space.findByIdAndUpdate(member.spaceId, { $set: { stateConfig } });
+  return { code: '0000', taskId };
+}
+
+async function postCollection(userId: Types.ObjectId, atom: any) {
+  const { taskId, collection } = atom;
+  if (!collection?.content_id) {
+    return { code: 'E4000', taskId, errMsg: 'collection.content_id 是必需的' };
+  }
+  const { id, first_id, oState = 'OK', content_id, sortStamp, operateStamp } = collection;
+  const member = await Member.findOne({ userId }).exec();
+  const spaceId = member?.spaceId;
+  await Collection.findOneAndUpdate(
+    { user: userId, content_id, forType: 'THREAD' },
+    {
+      $set: {
+        first_id: first_id || id,
+        oState,
+        sortStamp: sortStamp || Date.now(),
+        operateStamp: operateStamp || Date.now(),
+        infoType: 'FAVORITE',
+        forType: 'THREAD',
+        spaceId,
+        user: userId,
+        content_id,
+      },
+    },
+    { upsert: true, new: true }
+  );
+  return { code: '0000', taskId };
 }
 
 export default router;
