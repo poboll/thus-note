@@ -213,10 +213,10 @@ onUnmounted(() => {
 
 <style scoped>
 .monitor-section {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow-2);
 }
 
 .section-header {
@@ -227,11 +227,11 @@ onUnmounted(() => {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .section-desc {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -243,7 +243,7 @@ onUnmounted(() => {
 }
 
 .monitor-card {
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--line-default);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -252,9 +252,9 @@ onUnmounted(() => {
   padding: 14px 20px;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #333;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e8e8e8;
+  color: var(--main-text);
+  background: var(--card-hover);
+  border-bottom: 1px solid var(--line-default);
 }
 
 .monitor-card-body {
@@ -309,7 +309,7 @@ onUnmounted(() => {
 }
 
 .conn-item:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .conn-dot {
@@ -325,7 +325,7 @@ onUnmounted(() => {
 .conn-status {
   margin-left: auto;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .mem-item {
@@ -341,19 +341,19 @@ onUnmounted(() => {
   justify-content: space-between;
   margin-bottom: 6px;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--main-normal);
 }
 
 .progress-bar {
   height: 10px;
-  background: #f0f0f0;
+  background: var(--line-default);
   border-radius: 5px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: var(--primary-color);
   border-radius: 5px;
   transition: width 0.5s ease;
 }
@@ -373,17 +373,17 @@ onUnmounted(() => {
 }
 
 .info-row:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .info-label {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
 }
 
 .info-value {
   font-weight: 600;
-  color: #333;
+  color: var(--main-text);
   font-size: 0.9rem;
 }
 
@@ -395,24 +395,24 @@ onUnmounted(() => {
 }
 
 .endpoint-row:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .ep-name {
   flex: 1;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--main-text);
 }
 
 .ep-time {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--main-normal);
   font-variant-numeric: tabular-nums;
 }
 
 .no-data {
   text-align: center;
-  color: #999;
+  color: var(--main-note);
   padding: 20px 0;
   margin: 0;
 }
@@ -422,14 +422,14 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 60px 0;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #e8e8e8;
-  border-top-color: #667eea;
+  border: 3px solid var(--line-default);
+  border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 12px;

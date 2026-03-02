@@ -251,10 +251,10 @@ onMounted(() => fetchUsers());
 
 <style scoped>
 .config-section {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow-2);
 }
 
 .section-header {
@@ -265,11 +265,11 @@ onMounted(() => fetchUsers());
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .section-desc {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -285,7 +285,7 @@ onMounted(() => fetchUsers());
   flex: 1;
   min-width: 200px;
   padding: 10px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 6px;
   font-size: 0.95rem;
   transition: border-color 0.2s;
@@ -293,15 +293,15 @@ onMounted(() => fetchUsers());
 
 .search-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary-color);
 }
 
 .filter-select {
   padding: 10px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 6px;
   font-size: 0.9rem;
-  background: white;
+  background: var(--card-bg);
   cursor: pointer;
 }
 
@@ -318,21 +318,21 @@ onMounted(() => fetchUsers());
 .user-table th {
   text-align: left;
   padding: 12px 14px;
-  background: #f8f9fa;
-  color: #555;
+  background: var(--card-hover);
+  color: var(--main-normal);
   font-weight: 600;
-  border-bottom: 2px solid #e8e8e8;
+  border-bottom: 2px solid var(--line-default);
   white-space: nowrap;
 }
 
 .user-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid #f0f0f0;
-  color: #333;
+  border-bottom: 1px solid var(--line-default);
+  color: var(--main-text);
 }
 
 .user-table tr:hover td {
-  background: #fafafa;
+  background: var(--card-hover);
 }
 
 .username-cell {
@@ -346,8 +346,8 @@ onMounted(() => fetchUsers());
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,16 +378,16 @@ onMounted(() => fetchUsers());
 
 .action-select {
   padding: 4px 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 4px;
   font-size: 0.8rem;
-  background: white;
+  background: var(--card-bg);
   cursor: pointer;
 }
 
 .empty-row {
   text-align: center;
-  color: #999;
+  color: var(--main-note);
   padding: 40px 0;
 }
 
@@ -398,13 +398,13 @@ onMounted(() => fetchUsers());
   gap: 16px;
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--line-default);
 }
 
 .page-btn {
   padding: 8px 18px;
-  background: #667eea;
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -413,7 +413,7 @@ onMounted(() => fetchUsers());
 }
 
 .page-btn:hover:not(:disabled) {
-  background: #5a6fd6;
+  background: var(--primary-color);
 }
 
 .page-btn:disabled {
@@ -422,7 +422,7 @@ onMounted(() => fetchUsers());
 }
 
 .page-info {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
 }
 
@@ -431,14 +431,14 @@ onMounted(() => fetchUsers());
   flex-direction: column;
   align-items: center;
   padding: 60px 0;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #e8e8e8;
-  border-top-color: #667eea;
+  border: 3px solid var(--line-default);
+  border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 12px;

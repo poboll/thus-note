@@ -211,10 +211,10 @@ const handleTest = () => {
 
 <style scoped>
 .config-section {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow-2);
 }
 
 .section-header {
@@ -225,11 +225,11 @@ const handleTest = () => {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .section-desc {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -246,14 +246,14 @@ const handleTest = () => {
   display: block;
   font-weight: 500;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .form-input,
 .form-select {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line-default);
   border-radius: 6px;
   font-size: 0.95rem;
   transition: border-color 0.2s;
@@ -262,12 +262,12 @@ const handleTest = () => {
 .form-input:focus,
 .form-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary-color);
 }
 
 .form-hint {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--desc-color);
   margin: 6px 0 0;
 }
 
@@ -297,15 +297,15 @@ const handleTest = () => {
 .form-actions {
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--line-default);
   display: flex;
   gap: 12px;
 }
 
 .btn-primary {
   padding: 12px 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -325,9 +325,9 @@ const handleTest = () => {
 
 .btn-secondary {
   padding: 12px 24px;
-  background: white;
-  color: #667eea;
-  border: 1px solid #667eea;
+  background: var(--card-bg);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 500;
@@ -336,7 +336,7 @@ const handleTest = () => {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #f0f4ff;
+  background: var(--select-bg);
 }
 
 .btn-secondary:disabled {
