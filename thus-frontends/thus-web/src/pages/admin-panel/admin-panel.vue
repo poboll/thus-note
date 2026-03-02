@@ -573,7 +573,7 @@ onMounted(async () => {
 .admin-panel {
   display: flex;
   min-height: 100vh;
-  background: #f5f7fa;
+  background: var(--bg-color);
 }
 
 .auth-loading,
@@ -584,41 +584,42 @@ onMounted(async () => {
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: #f5f7fa;
+  background: var(--bg-color);
 }
 
 .auth-loading p,
 .no-permission p {
   margin-top: 16px;
-  color: #666;
+  color: var(--main-normal);
   font-size: 1rem;
 }
 
 .no-permission h2 {
   margin-top: 16px;
-  color: #333;
+  color: var(--main-text);
   font-size: 1.5rem;
 }
 
 .loading-spinner {
   width: 48px;
   height: 48px;
-  border: 4px solid #e8e8e8;
-  border-top-color: #667eea;
+  border: 4px solid var(--line-default);
+  border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .admin-sidebar {
   width: 240px;
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-  color: white;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--line-default);
+  color: var(--main-text);
   flex-shrink: 0;
 }
 
 .sidebar-header {
   padding: 24px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--line-default);
 }
 
 .sidebar-title {
@@ -639,18 +640,19 @@ onMounted(async () => {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--main-normal);
   text-decoration: none;
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(42, 104, 133, 0.05);
+  color: var(--main-text);
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: rgba(42, 104, 133, 0.1);
+  border-left: 3px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 .nav-icon {
@@ -675,15 +677,15 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 32px;
-  background: white;
-  border-bottom: 1px solid #e8e8e8;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--line-default);
 }
 
 .page-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
-  color: #333;
+  color: var(--main-text);
 }
 
 .btn-refresh {
@@ -691,8 +693,8 @@ onMounted(async () => {
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: #667eea;
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -701,7 +703,7 @@ onMounted(async () => {
 }
 
 .btn-refresh:hover:not(:disabled) {
-  background: #5a6fd6;
+  background: var(--primary-hover);
 }
 
 .btn-refresh:disabled {

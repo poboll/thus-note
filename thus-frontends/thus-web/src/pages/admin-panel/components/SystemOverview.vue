@@ -169,10 +169,10 @@ onUnmounted(() => {
 
 <style scoped>
 .overview-section {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow-2);
 }
 
 .section-header {
@@ -183,11 +183,11 @@ onUnmounted(() => {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .section-desc {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -199,7 +199,7 @@ onUnmounted(() => {
 }
 
 .stat-card {
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--line-default);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -208,9 +208,9 @@ onUnmounted(() => {
   padding: 14px 20px;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #333;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e8e8e8;
+  color: var(--main-text);
+  background: var(--card-hover);
+  border-bottom: 1px solid var(--line-default);
 }
 
 .stat-card-body {
@@ -225,7 +225,7 @@ onUnmounted(() => {
 }
 
 .status-row:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .status-dot {
@@ -241,7 +241,7 @@ onUnmounted(() => {
 .status-text {
   margin-left: auto;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .stat-row {
@@ -252,37 +252,37 @@ onUnmounted(() => {
 }
 
 .stat-row:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .stat-label {
-  color: #666;
+  color: var(--main-normal);
   font-size: 0.9rem;
 }
 
 .stat-value {
   font-weight: 600;
-  color: #333;
+  color: var(--main-text);
   font-size: 0.95rem;
 }
 
 .stat-value.active { color: #10b981; }
 .stat-value.banned { color: #ef4444; }
-.stat-value.highlight { color: #667eea; }
+.stat-value.highlight { color: var(--primary-color); }
 
 .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 60px 0;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #e8e8e8;
-  border-top-color: #667eea;
+  border: 3px solid var(--line-default);
+  border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 12px;
@@ -295,14 +295,14 @@ onUnmounted(() => {
 .error-state {
   text-align: center;
   padding: 60px 0;
-  color: #666;
+  color: var(--main-normal);
 }
 
 .btn-retry {
   margin-top: 12px;
   padding: 8px 24px;
-  background: #667eea;
-  color: white;
+  background: var(--primary-color);
+  color: var(--on-primary);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -310,7 +310,7 @@ onUnmounted(() => {
 }
 
 .btn-retry:hover {
-  background: #5a6fd6;
+  background: var(--primary-color);
 }
 
 @media (max-width: 768px) {
