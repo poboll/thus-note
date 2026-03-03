@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./thus-frontends/thus-web/public/favicon.svg" width="120" alt="Thus-Note Logo">
+<img src="https://raw.githubusercontent.com/poboll/thus-note/main/thus-frontends/thus-web/public/favicon.svg" width="120" alt="Thus-Note Logo">
 
 # 如是 (Thus-Note)
 
@@ -722,34 +722,34 @@ pnpm docs:build
 
 <div align="center">
 
-  <img src="./assets/explore/add_calendar.gif" width="380" alt="添加日程安排">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/add_calendar.gif" width="380" alt="添加日程安排">
   <p>添加日程安排</p>
 
-  <img src="./assets/explore/three_assistants.gif" width="380" alt="AI 智能助手对话">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/three_assistants.gif" width="380" alt="AI 智能助手对话">
   <p>AI 智能助手对话</p>
 
-  <img src="./assets/explore/comment.gif" width="380" alt="卡片评论和补充">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/comment.gif" width="380" alt="卡片评论和补充">
   <p>卡片评论和补充</p>
 
-  <img src="./assets/explore/no_signal.gif" width="380" alt="离线模式正常使用">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/no_signal.gif" width="380" alt="离线模式正常使用">
   <p>离线模式正常使用</p>
 
-  <img src="./assets/explore/tap_more.gif" width="380" alt="原子化信息展开">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/tap_more.gif" width="380" alt="原子化信息展开">
   <p>原子化信息展开</p>
 
-  <img src="./assets/explore/calendar.gif" width="380" alt="日程视图浏览">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/calendar.gif" width="380" alt="日程视图浏览">
   <p>日程视图浏览</p>
 
-  <img src="./assets/explore/my_arrangement.gif" width="380" alt="AI 日程智能分析">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/my_arrangement.gif" width="380" alt="AI 日程智能分析">
   <p>AI 日程智能分析</p>
 
-  <img src="./assets/explore/drawing.gif" width="380" alt="AI 绘图功能">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/drawing.gif" width="380" alt="AI 绘图功能">
   <p>AI 绘图功能</p>
 
-  <img src="./assets/explore/multi_devices.gif" width="420" alt="多设备同步">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/multi_devices.gif" width="420" alt="多设备同步">
   <p>多设备同步</p>
 
-  <img src="./assets/explore/kanban.gif" width="420" alt="看板任务管理">
+  <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/explore/kanban.gif" width="420" alt="看板任务管理">
   <p>看板任务管理</p>
 
 </div>
@@ -950,7 +950,7 @@ pnpm install
 
 <div align="center">
   <a href="https://github.com/poboll/thus-note/discussions">
-    <img src="./assets/github.png" width="320" alt="GitHub Discussions" />
+    <img src="https://raw.githubusercontent.com/poboll/thus-note/main/assets/github.png" width="320" alt="GitHub Discussions" />
   </a>
 </div>
 
