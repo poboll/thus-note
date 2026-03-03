@@ -1,26 +1,26 @@
 <div align="center">
 
-  <img src="./thus-frontends/thus-web/public/favicon.svg" width="120" alt="Thus-Note Logo">
+<img src="./thus-frontends/thus-web/public/favicon.svg" width="120" alt="Thus-Note Logo">
 
-  <h1>如是 (Thus-Note)</h1>
+# 如是 (Thus-Note)
 
-  <p><strong>你的笔记 + 日程 + 待办清单 + 任务 with AI</strong></p>
+**你的笔记 + 日程 + 待办清单 + 任务 with AI**
 
-  <p><em>如是记录，真实自我</em></p>
+*如是记录，真实自我*
 
-  [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](./LICENSE)
-  [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
-  [![Vue](https://img.shields.io/badge/Vue-3.4-brightgreen)](https://vuejs.org/)
-  [![GitHub Stars](https://img.shields.io/github/stars/poboll/thus-note?style=social)](https://github.com/poboll/thus-note/stargazers)
-  [![GitHub Forks](https://img.shields.io/github/forks/poboll/thus-note?style=social)](https://github.com/poboll/thus-note/network/members)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](./LICENSE)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Vue](https://img.shields.io/badge/Vue-3.4-brightgreen)](https://vuejs.org/)
+[![GitHub Stars](https://img.shields.io/github/stars/poboll/thus-note?style=social)](https://github.com/poboll/thus-note/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/poboll/thus-note?style=social)](https://github.com/poboll/thus-note/network/members)
 
-  [![GitHub issues](https://img.shields.io/github/issues/poboll/thus-note)](https://github.com/poboll/thus-note/issues)
-  [![GitHub pull requests](https://img.shields.io/github/issues-pr/poboll/thus-note)](https://github.com/poboll/thus-note/pulls)
-  [![GitHub release](https://img.shields.io/github/release/poboll/thus-note)](https://github.com/poboll/thus-note/releases)
+[![GitHub issues](https://img.shields.io/github/issues/poboll/thus-note)](https://github.com/poboll/thus-note/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/poboll/thus-note)](https://github.com/poboll/thus-note/pulls)
+[![GitHub release](https://img.shields.io/github/release/poboll/thus-note)](https://github.com/poboll/thus-note/releases)
 
-  [![Code style: Biome](https://img.shields.io/badge/code%20style-biome-60a5fa)](https://biomejs.dev/)
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Code style: Biome](https://img.shields.io/badge/code%20style-biome-60a5fa)](https://biomejs.dev/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 </div>
 

@@ -209,21 +209,9 @@ async function handleImages(
     const imgStore = res2[i]
     ceData.images.push(imgStore)
     
-    // Insert preview into editor using blob URL
-    if(editor.value && !editor.value.isDestroyed && imgStore.arrayBuffer) {
-      try {
-        const blob = new Blob([imgStore.arrayBuffer], { type: imgStore.mimeType })
-        const blobUrl = URL.createObjectURL(blob)
-        
-        // Insert image at current cursor position
-        editor.value.chain().focus().insertContent({
-          type: 'image',
-          attrs: { src: blobUrl }
-        }).run()
-      } catch(err) {
-        console.error("Editor Insert Failed:", err)
-      }
-    }
+    // REMOVED: Automatic editor insertion to prevent duplicate display
+    // Images are now only shown in the gallery (editing-covers.vue)
+    // Users can manually insert images from the gallery if needed
   }
 
   // 3. Upload in background — update cloud_url on each image when done

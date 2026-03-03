@@ -224,7 +224,7 @@ export class AIService {
       });
 
       // Find the first text block (skip thinking blocks from extended thinking mode)
-      const textBlock = completion.content.find((b: any) => b.type === 'text');
+      const textBlock = completion.content.find((b): b is { type: 'text'; text: string } => b.type === 'text');
       const claudeText = textBlock?.text ?? '';
       return {
         content: claudeText,
