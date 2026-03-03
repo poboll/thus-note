@@ -217,7 +217,12 @@ async function handleImages(
       try {
         const blob = new Blob([imgStore.arrayBuffer], { type: imgStore.mimeType })
         const blobUrl = URL.createObjectURL(blob)
-        ;(editor.value.chain().focus() as any).setImage({ src: blobUrl }).run()
+        
+        // Insert image at current cursor position
+        editor.value.chain().focus().insertContent({
+          type: 'image',
+          attrs: { src: blobUrl }
+        }).run()
       } catch(err) {
         console.error("Editor Insert Failed:", err)
       }
