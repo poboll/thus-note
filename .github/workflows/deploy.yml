@@ -210,8 +210,11 @@ jobs:
             # 如果是标签推送，使用标签名作为版本
             VERSION=${GITHUB_REF#refs/tags/}
           else
-            # 否则从 package.json 读取版本号
-            VERSION="v$(node -p "require('./package.json').version")"
+            # 否则使用版本号+时间戳+短SHA
+            BASE_VERSION="v$(node -p "require('./package.json').version")"
+            TIMESTAMP=$(date -u +'%Y%m%d-%H%M%S')
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            VERSION="${BASE_VERSION}-${TIMESTAMP}-${SHORT_SHA}"
           fi
 
           PACKAGE_NAME="thus-note-${VERSION}.tar.gz"
