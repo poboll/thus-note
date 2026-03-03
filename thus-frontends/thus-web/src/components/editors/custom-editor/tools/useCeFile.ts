@@ -35,8 +35,8 @@ export function useCeFile(
     whenCoversSorted(newCovers, ceData)
   }
 
-  const onImageChange = (files: File[]) => {
-    handleFiles(ceData, files, editor)
+  const onImageChange = async (files: File[]) => {
+    await handleFiles(ceData, files, editor)
   }
 
   const onClearCover = (index: number) => {
@@ -96,8 +96,6 @@ function listenFilesDrop(
   const dropFiles = inject(mvFileKey)
   watch(() => dropFiles?.value, async (files) => {
     if(!files?.length) return
-    console.log("listenFilesDrop 接收到掉落的文件............")
-    console.log(files)
     await handleFiles(ceData, files, editor)
     if(!dropFiles?.value) return
     dropFiles.value = []
@@ -139,7 +137,7 @@ async function handleFiles(
   const imgFiles = liuUtil.getOnlyImageFiles(files)
   const imgLength = imgFiles.length
   if(imgFiles.length > 0) {
-    handleImages(ceData, imgFiles, editor)
+    await handleImages(ceData, imgFiles, editor)
     if(imgLength >= fileLength) return
   }
 
@@ -190,18 +188,17 @@ async function handleImages(
   imgFiles: File[],
   editor: Ref<Editor | undefined>,
 ) {
-
   ceData.images = ceData.images ?? []
   const hasLength = ceData.images.length
   let max_pic_num = limit.getLimit("thread_img")
-  if(max_pic_num <= 0) max_pic_num = 9
+  if(!max_pic_num || max_pic_num <= 0 || isNaN(max_pic_num)) max_pic_num = 9
   const canPushNum = max_pic_num - hasLength
   if(canPushNum <= 0) {
     limit.handleLimited("thread_img", max_pic_num)
     return
   }
 
-  // 1. Process Images (Exif, Compress, MetaData) - Restore Cover Logic
+  // 1. Process Images (Exif, Compress, MetaData)
   const res0 = await imgHelper.extractExif(imgFiles)
   const res1 = await imgHelper.compress(imgFiles)
   const res2 = await imgHelper.getMetaDataFromFiles(res1, res0)
@@ -211,7 +208,7 @@ async function handleImages(
   for(let i = 0; i < res2.length && i < canPushNum; i++) {
     const imgStore = res2[i]
     ceData.images.push(imgStore)
-
+    
     // Insert preview into editor using blob URL
     if(editor.value && !editor.value.isDestroyed && imgStore.arrayBuffer) {
       try {
