@@ -206,61 +206,30 @@ async function handleImages(
   const res1 = await imgHelper.compress(imgFiles)
   const res2 = await imgHelper.getMetaDataFromFiles(res1, res0)
 
-  // 2. DO NOT add to ceData.images yet - wait for upload to complete first
-  console.log(`📤 [handleImages] Starting uploads for ${res2.length} images (NOT adding to ceData.images yet)`)
-  
-  // 3. Upload & Insert into Editor (Inline)
-  // Track upload completion with promises
-  const uploadPromises: Promise<ThusImageStore | null>[] = []
-  
-  res2.forEach((imgStore, idx) => {
-    console.log(`📤 [${idx}] Starting upload for image: id=${imgStore.id}, name=${imgStore.name}`)
-    const uploadPromise = new Promise<ThusImageStore | null>((resolve) => {
-      uploadViaLocal([imgStore] as any, (fileId, res) => {
-        console.log(`📥 [${idx}] Upload callback: fileId=${fileId}, success=${res.code === '0000'}`)
-        if (res.code === "0000" && res.data?.cloud_url) {
-            const url = res.data.cloud_url
-            
-            // CRITICAL: Set cloud_url on the imgStore object
-            imgStore.cloud_url = url
-            console.log(`✅ Set cloud_url for image ${fileId}:`, url)
-            
-            // Insert into editor
-            if (editor.value && !editor.value.isDestroyed) {
-                try {
-                    (editor.value.chain().focus() as any).setImage({ src: url }).run()
-                } catch (err) {
-                    console.error("Editor Insert Failed:", err)
-                }
-            }
-            
-            // Return the imgStore with cloud_url set
-            resolve(imgStore)
-        } else {
-            console.error("Upload failed for file", fileId, res)
-            resolve(null)
-        }
-      })
-    })
-    uploadPromises.push(uploadPromise)
-  })
+  // 2. Add images to ceData.images IMMEDIATELY (with arrayBuffer, without cloud_url)
+  //    The sync pipeline's handleFiles() will upload them and set cloud_url later
+  for(let i = 0; i < res2.length && i < canPushNum; i++) {
+    const imgStore = res2[i]
+    ceData.images.push(imgStore)
 
-  // Wait for all uploads to complete
-  const uploadedImages = await Promise.all(uploadPromises)
-  console.log(`✅ All ${uploadPromises.length} image uploads completed`)
-  
-  // 4. NOW add successfully uploaded images to ceData.images (with cloud_url set)
-  const successfulImages = uploadedImages.filter((img): img is ThusImageStore => img !== null)
-  console.log(`📸 Adding ${successfulImages.length} successfully uploaded images to ceData.images`)
-  
-  if (!ceData.images) ceData.images = []
-  successfulImages.forEach((img, i) => {
-    if (i < canPushNum) {
-      console.log(`📸 Adding image to ceData.images: id=${img.id}, name=${img.name}, cloud_url=${img.cloud_url}`)
-      ceData.images?.push(img)
+    // Insert preview into editor using blob URL
+    if(editor.value && !editor.value.isDestroyed && imgStore.arrayBuffer) {
+      try {
+        const blob = new Blob([imgStore.arrayBuffer], { type: imgStore.mimeType })
+        const blobUrl = URL.createObjectURL(blob)
+        ;(editor.value.chain().focus() as any).setImage({ src: blobUrl }).run()
+      } catch(err) {
+        console.error("Editor Insert Failed:", err)
+      }
     }
-  })
-  
-  console.log(`📸 ceData.images now has ${ceData.images?.length} images with cloud_url:`, 
-    ceData.images?.map(img => ({ id: img.id, name: img.name, hasCloudUrl: !!img.cloud_url })))
+  }
+
+  // 3. Upload in background — update cloud_url on each image when done
+  for(const imgStore of ceData.images.slice(-res2.length)) {
+    uploadViaLocal([imgStore] as any, (fileId, res) => {
+      if(res.code === "0000" && res.data?.cloud_url) {
+        imgStore.cloud_url = res.data.cloud_url
+      }
+    })
+  }
 }
