@@ -88,3 +88,9 @@ thus-frontends/thus-web/analysis.html
 # Kiro workflow directory
 .spec-workflow/
 .kiro/
+
+# 项目状态文档（含敏感信息）
+PROJECT_STATUS_SUMMARY.md
+thus-backends/thus-server/EMAIL_SETUP_GUIDE.md
+deploy/test-email.sh
+deploy/update-server.sh
