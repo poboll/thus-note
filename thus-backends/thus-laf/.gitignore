@@ -1,4 +1,5 @@
 test-data.json
+node_modules/
 
 cloud-functions/debug-*
 cloud-functions/secret-*

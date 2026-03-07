@@ -89,8 +89,25 @@ thus-frontends/thus-web/analysis.html
 .spec-workflow/
 .kiro/
 
+# Cursor IDE artifacts
+.cursorrules
+.cursorignore
+
+# Backup files
+*.bak
+
+# Generated API docs
+thus-backends/thus-server/openapi.json
+
+# 文档和计划（不推送）
+plans/
+internal/
+
 # 项目状态文档（含敏感信息）
 PROJECT_STATUS_SUMMARY.md
 thus-backends/thus-server/EMAIL_SETUP_GUIDE.md
 deploy/test-email.sh
 deploy/update-server.sh
+
+# Ruff cache
+.ruff_cache/
