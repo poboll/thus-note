@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+// 强制加载 .env 文件
+dotenv.config({ path: path.join(__dirname, '../../.env') });
+
 /**
  * 邮件服务配置
  */

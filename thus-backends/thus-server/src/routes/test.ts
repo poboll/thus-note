@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { successResponse, errorResponse, ApiResponse } from '../types/api.types';
+import { emailService } from '../services/emailService';
 
 const router = Router();
 
@@ -58,6 +59,43 @@ router.get('/db-status', (req: Request, res: Response) => {
     redis: 'connected',
     timestamp: Date.now(),
   }));
+});
+
+/**
+ * 测试邮件发送
+ */
+router.post('/send-email', async (req: Request, res: Response) => {
+  try {
+    const { email, type = 'verification' } = req.body;
+    
+    if (!email) {
+      res.json(errorResponse('E0002', 'Email is required'));
+      return;
+    }
+
+    let result = false;
+    
+    if (type === 'verification') {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      result = await emailService.sendVerificationCode(email, code);
+    } else if (type === 'welcome') {
+      result = await emailService.sendWelcomeEmail(email, 'Test User');
+    } else if (type === 'reset') {
+      result = await emailService.sendPasswordResetEmail(email, 'test-token-123');
+    }
+
+    if (result) {
+      res.json(successResponse({ 
+        message: 'Email sent successfully', 
+        email,
+        type 
+      }));
+    } else {
+      res.json(errorResponse('E0003', 'Failed to send email'));
+    }
+  } catch (error: any) {
+    res.json(errorResponse('E0004', error.message || 'Internal server error'));
+  }
 });
 
 export default router;

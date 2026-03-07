@@ -27,6 +27,13 @@ export class EmailService {
         user: cfg.auth.user,
         pass: cfg.auth.pass,
       },
+      tls: {
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false
+      },
+      requireTLS: true,
+      debug: true,
+      logger: true
     });
   }
 
@@ -35,20 +42,7 @@ export class EmailService {
    * 若 DB 配置已启用且完整，则使用 DB 配置；否则保持 env 配置
    */
   private async ensureLatestConfig(): Promise<string> {
-    try {
-      const dbEmail = await ConfigService.getEmailConfig();
-      if(dbEmail.enabled && dbEmail.host && dbEmail.user && dbEmail.pass) {
-        this.transporter = this.createTransporter({
-          host: dbEmail.host,
-          port: dbEmail.port || 587,
-          secure: dbEmail.secure ?? false,
-          auth: { user: dbEmail.user, pass: dbEmail.pass },
-        });
-        return dbEmail.from || emailConfig.from;
-      }
-    } catch {
-      // DB 不可用时静默 fallback
-    }
+    // 临时禁用数据库配置，强制使用 .env 配置
     return emailConfig.from;
   }
 

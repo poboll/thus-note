@@ -30,7 +30,7 @@ import { logger } from './config/logger';
 import { MonitorService } from './services/monitorService';
 
 // 加载环境变量
-dotenv.config({ path: path.join(__dirname, '../.env') });
+dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
