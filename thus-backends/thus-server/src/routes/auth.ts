@@ -419,7 +419,7 @@ router.post('/wechat/unified', async (req: Request, res: Response) => {
     try {
       const jwt = require('jsonwebtoken');
       payload = jwt.verify(token, JWT_SECRET);
-    } catch (err) {
+    } catch (err: any) {
       return res.status(401).json(
         errorResponse('UNAUTHORIZED', 'JWT 验证失败')
       );
