@@ -1,13 +1,15 @@
 
 
 
-export type BindType = "ww_qynb" | "wx_gzh" | "wx_gzh_scan" | "one_off_pay"
+export type BindType = "ww_qynb" | "wx_gzh" | "wx_gzh_scan" | "one_off_pay" | "wx_unified"
 
 export interface QpParam {
   bindType: BindType
-  state?: string         // for login
+  state?: string
   fr?: string
-  order_id?: string      // for one-off pay
+  order_id?: string
+  wx_url?: string
+  poll_key?: string
 }
 
 export interface QpData {
@@ -22,6 +24,8 @@ export interface QpData {
   state?: string
   fr?: string
   reloadRotateDeg: number
+  wx_url?: string
+  poll_key?: string
 }
 
 export interface QpResult {

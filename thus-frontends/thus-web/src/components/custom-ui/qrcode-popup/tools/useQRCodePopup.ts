@@ -76,6 +76,8 @@ export function showQRCodePopup(param: QpParam) {
   qpData.loading = true
   qpData.state = param.state
   qpData.fr = param.fr
+  qpData.wx_url = param.wx_url
+  qpData.poll_key = param.poll_key
 
   const _wait = (a: QpResolver) => {
     _resolve = a
@@ -83,6 +85,11 @@ export function showQRCodePopup(param: QpParam) {
 
   if(bT === "one_off_pay" && !param.order_id) {
     console.warn("order_id is required while one-off pay")
+    return new Promise(_wait)
+  }
+
+  if(bT === "wx_unified" && (!param.wx_url || !param.poll_key)) {
+    console.warn("wx_url and poll_key are required for wx_unified")
     return new Promise(_wait)
   }
 
@@ -156,6 +163,12 @@ async function fetchData() {
     return
   }
 
+  // 2.5. login via wx unified (caiths-auth)
+  if(bT === "wx_unified") {
+    handle_wx_unified()
+    return
+  }
+
   // 3. show qrcode for one-off pay
   if(bT === "one_off_pay") {
     handle_one_off_pay()
@@ -184,6 +197,25 @@ function handle_one_off_pay() {
   const path = `/payment/${order_id}`
   qpData.qr_code = `${origin}${path}`
   qpData.loading = false
+}
+
+function handle_wx_unified() {
+  const wx_url = (qpData as any).wx_url
+  const poll_key = (qpData as any).poll_key
+  if(!wx_url || !poll_key) {
+    console.warn("wx_url or poll_key is required for wx_unified")
+    _over()
+    return
+  }
+  qpData.qr_code = wx_url
+  qpData.loading = false
+  
+  if(pollTimeout) clearTimeout(pollTimeout)
+  pollTimeout = setTimeout(() => {
+    check_wx_unified(poll_key)
+  }, SEC_3)
+  
+  startToListenToViewport(poll_key)
 }
 
 
@@ -338,6 +370,29 @@ async function fetch_scan_check(
   }, SEC_3)
 }
 
+
+async function check_wx_unified(poll_key: string) {
+  try {
+    const res = await fetch('http://localhost:4000/wx/poll', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ poll_key })
+    })
+    const data = await res.json()
+    
+    if(data.status === 'ok' && data.token) {
+      _over({ resultType: "plz_check", credential: data.token })
+      return
+    }
+  } catch(err) {
+    console.error('check_wx_unified error:', err)
+  }
+  
+  if(pollTimeout) clearTimeout(pollTimeout)
+  pollTimeout = setTimeout(() => {
+    check_wx_unified(poll_key)
+  }, SEC_3)
+}
 
 async function fetch_check_wechat(
   credential: string,

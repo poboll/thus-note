@@ -718,57 +718,52 @@ async function whenTapWeChat(
   rr: RouteAndThusRouter,
   lpData: LpData,
 ) {
-  // 0. check out if wechat login is available
-  const appid = lpData.wxGzhAppid
-  if (!appid) {
-    showDisableTip("WeChat")
-    return
-  }
-
-  // 1. go OAuth if it is in wechat environment
   const cha = liuApi.getCharacteristic()
   if (cha.isWeChat) {
     handle_wechat(lpData)
     return
   }
 
-  // 2. show qr code to scan for logging in
-  const state = lpData.state
-  if (!state) return
-  const res2 = await cui.showQRCodePopup({ bindType: "wx_gzh_scan", state })
-  console.log("res2: ")
-  console.log(res2)
-  const {
-    resultType,
-    credential,
-    credential_2,
-  } = res2
-  if (resultType !== "plz_check") return
-  if (!credential || !credential_2) return
   if (!canLoginUsingLastLogged(lpData)) return
   if (isAfterFetchingLogin) return
 
-  // 3. get enc_client_key
-  const { enc_client_key } = getClientKey()
-  if (!enc_client_key) return
+  try {
+    const authRes = await fetch('http://localhost:4000/wx/login')
+    const { wx_url, poll_key } = await authRes.json()
 
-  // 4. login via scan-login
-  cui.showLoading({ title_key: "login.ready_to_login" })
-  const res4 = await fetchScanLogin(credential, credential_2, enc_client_key)
-  // console.log("fetchScanLogin res4: ")
-  // console.log(res4)
-  // console.log(" ")
+    const res2 = await cui.showQRCodePopup({ 
+      bindType: "wx_unified",
+      wx_url,
+      poll_key
+    })
 
-  // 5. handle after fetching login
-  isAfterFetchingLogin = true
-  const res5 = await afterFetchingLogin(rr, res4)
-  isAfterFetchingLogin = false
-  if (res5) {
-    cui.showLoading({ title_key: "login.logging2" })
-    lpData.lastLogged = time.getTime()
-  }
-  else {
+    if (res2.resultType !== "plz_check") return
+    const token = res2.credential
+    if (!token) return
+
+    cui.showLoading({ title_key: "login.ready_to_login" })
+
+    const loginRes = await fetch(`${import.meta.env.VITE_API_DOMAIN}/api/auth/wechat/unified`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    })
+    const result = await loginRes.json()
+
+    isAfterFetchingLogin = true
+    const res5 = await afterFetchingLogin(rr, result)
+    isAfterFetchingLogin = false
+
+    if (res5) {
+      cui.showLoading({ title_key: "login.logging2" })
+      lpData.lastLogged = time.getTime()
+    } else {
+      cui.hideLoading()
+    }
+  } catch (error) {
+    console.error('WeChat unified login error:', error)
     cui.hideLoading()
+    showErrMsg("login", { code: "E5000", errMsg: "微信登录失败" })
   }
 }
 

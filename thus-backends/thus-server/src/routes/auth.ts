@@ -400,6 +400,119 @@ router.post('/wechat/mini', async (req: Request, res: Response) => {
 });
 
 /**
+ * 微信统一认证登录（通过 caiths-auth JWT）
+ * POST /api/auth/wechat/unified
+ */
+router.post('/wechat/unified', async (req: Request, res: Response) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '缺少认证令牌')
+      );
+    }
+
+    const JWT_SECRET = process.env.JWT_SECRET || 'caiths_jwt_secret_2026_shared_with_all_products_min_32_chars';
+    
+    let payload: any;
+    try {
+      const jwt = require('jsonwebtoken');
+      payload = jwt.verify(token, JWT_SECRET);
+    } catch (err) {
+      return res.status(401).json(
+        errorResponse('UNAUTHORIZED', 'JWT 验证失败')
+      );
+    }
+
+    const { open_id, union_id, nickname, avatar } = payload;
+    if (!open_id) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', 'JWT 缺少 open_id')
+      );
+    }
+
+    let user = await User.findOne({
+      'oauthAccounts.provider': OAuthProvider.WECHAT_GZH,
+      'oauthAccounts.providerId': open_id,
+    });
+
+    if (!user) {
+      user = new User({
+        username: nickname || `wx_${open_id.slice(-6)}`,
+        avatar: avatar,
+        status: UserStatus.ACTIVE,
+        oauthAccounts: [{
+          provider: OAuthProvider.WECHAT_GZH,
+          providerId: open_id,
+          name: nickname,
+          avatar: avatar,
+          linkedAt: new Date(),
+        }],
+      });
+      await user.save();
+    } else {
+      const oauthIndex = user.oauthAccounts.findIndex(
+        acc => acc.provider === OAuthProvider.WECHAT_GZH
+      );
+      if (oauthIndex !== -1) {
+        user.oauthAccounts[oauthIndex].name = nickname;
+        user.oauthAccounts[oauthIndex].avatar = avatar;
+        await user.save();
+      }
+    }
+
+    const tokenPair = await JWTUtils.generateTokenPair(user._id);
+
+    const members = await Member.find({
+      userId: user._id,
+      status: MemberStatus.OK,
+    }).populate('spaceId');
+
+    const spaceMemberList = members
+      .filter(member => member.spaceId && (member.spaceId as any).status === SpaceStatus.OK)
+      .map(member => {
+        const space = member.spaceId as any;
+        return {
+          memberId: member._id.toString(),
+          member_name: member.name,
+          member_avatar: member.avatar,
+          member_oState: member.status,
+          member_config: member.config,
+          member_notification: member.notification,
+          spaceId: space._id.toString(),
+          spaceType: space.spaceType,
+          space_oState: space.status,
+          space_owner: space.ownerId.toString(),
+          space_name: space.name,
+          space_avatar: space.avatar,
+          space_stateConfig: space.stateConfig,
+          space_tagList: space.tagList,
+          space_config: space.config,
+        };
+      });
+
+    return res.json({
+      code: "0000",
+      data: {
+        userId: user._id.toString(),
+        email: user.email,
+        token: tokenPair.accessToken,
+        serial_id: tokenPair.refreshToken,
+        theme: user.settings?.theme || "light",
+        language: user.settings?.language || "zh-Hans",
+        spaceMemberList,
+        open_id: open_id,
+      },
+    });
+  } catch (error: any) {
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '微信统一认证登录失败')
+    );
+  }
+});
+
+/**
  * 邮箱登录
  * POST /api/auth/email
  */
