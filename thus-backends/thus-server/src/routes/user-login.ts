@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { Types } from 'mongoose';
-import { UserStatus } from '../models/User';
+import { UserStatus, OAuthProvider } from '../models/User';
 import { JWTUtils } from '../utils/jwt';
 import { successResponse, errorResponse } from '../types/api.types';
 import User from '../models/User';
@@ -124,8 +124,8 @@ function generateVerificationCode(length: number): string {
 router.post('/', async (req: Request, res: Response) => {
   try {
     const { operateType } = req.body;
+    console.log('🔍 [user-login] Received request:', { operateType, body: req.body });
 
-    // 根据操作类型分发到不同的处理逻辑
     switch (operateType) {
       case 'init':
         return handleInit(req, res);
@@ -140,7 +140,14 @@ router.post('/', async (req: Request, res: Response) => {
       case 'github':
       case 'google':
       case 'wechat':
+      case 'wx_gzh_oauth':
         return handleOAuthLogin(req, res);
+      case 'wx_gzh_scan':
+        return handleWxGzhScan(req, res);
+      case 'scan_check':
+        return handleScanCheck(req, res);
+      case 'scan_login':
+        return handleScanLogin(req, res);
       case 'users_select':
         return handleUserSelect(req, res);
       default:
@@ -281,16 +288,11 @@ async function handleSendEmailCode(req: Request, res: Response) {
   await redisClient.setex(codeKey, CODE_EXPIRE_TIME, code);
   await redisClient.set(rateLimitKey, Date.now().toString(), 'EX', 60); // 60秒内只能发送一次
 
-  // 发送邮件
-  try {
-    const emailService = new EmailService();
-    await emailService.sendVerificationCode(email, code);
-  } catch (emailError: any) {
+  // 异步发送邮件（fire-and-forget），避免SMTP耗时导致前端超时
+  const emailService = new EmailService();
+  emailService.sendVerificationCode(email, code).catch((emailError: any) => {
     console.error('发送邮件失败:', emailError);
-    return res.status(500).json(
-      errorResponse('INTERNAL_ERROR', '发送验证码失败，请稍后再试')
-    );
-  }
+  });
 
   return res.json(
     successResponse({
@@ -533,17 +535,96 @@ async function handleSMSCodeLogin(req: Request, res: Response) {
 async function handleOAuthLogin(req: Request, res: Response) {
   const { operateType, oauth_code, state, enc_client_key, oauth_redirect_uri } = req.body;
 
-  // TODO: 实现OAuth流程
-  // 1. 使用oauth_code换取access_token
-  // 2. 获取用户信息
-  // 3. 查找或创建用户
-  // 4. 生成JWT令牌
+  if (operateType === 'wx_gzh_oauth') {
+    return handleWeChatOAuth(req, res, oauth_code, state, enc_client_key);
+  }
 
   return res.json(
     successResponse({
       message: `${operateType} OAuth功能待实现`,
     })
   );
+}
+
+async function handleWeChatOAuth(
+  req: Request, 
+  res: Response, 
+  code: string, 
+  state: string, 
+  enc_client_key: string
+) {
+  try {
+    const WECHAT_APPID = process.env.WECHAT_APPID;
+    const WECHAT_APP_SECRET = process.env.WECHAT_APP_SECRET;
+
+    if (!WECHAT_APPID || !WECHAT_APP_SECRET) {
+      return res.status(500).json(
+        errorResponse('CONFIG_ERROR', '微信配置未设置')
+      );
+    }
+
+    const tokenUrl = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${WECHAT_APPID}&secret=${WECHAT_APP_SECRET}&code=${code}&grant_type=authorization_code`;
+    const tokenResponse = await fetch(tokenUrl);
+    const tokenData = await tokenResponse.json() as any;
+
+    if (tokenData.errcode) {
+      return res.status(400).json(
+        errorResponse('WECHAT_ERROR', tokenData.errmsg || '微信授权失败')
+      );
+    }
+
+    const { access_token, openid } = tokenData;
+
+    const userInfoUrl = `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`;
+    const userInfoResponse = await fetch(userInfoUrl);
+    const userInfo = await userInfoResponse.json() as any;
+
+    if (userInfo.errcode) {
+      return res.status(400).json(
+        errorResponse('WECHAT_ERROR', userInfo.errmsg || '获取微信用户信息失败')
+      );
+    }
+
+    let user = await User.findOne({
+      'oauthAccounts.provider': OAuthProvider.WECHAT_GZH,
+      'oauthAccounts.providerId': openid,
+    });
+
+    if (!user) {
+      user = new User({
+        username: userInfo.nickname || `wx_${openid.slice(-6)}`,
+        avatar: userInfo.headimgurl,
+        status: UserStatus.ACTIVE,
+        oauthAccounts: [{
+          provider: OAuthProvider.WECHAT_GZH,
+          providerId: openid,
+          name: userInfo.nickname,
+          avatar: userInfo.headimgurl,
+          linkedAt: new Date(),
+        }],
+      });
+      await user.save();
+    } else {
+      const oauthIndex = user.oauthAccounts.findIndex(
+        acc => acc.provider === OAuthProvider.WECHAT_GZH
+      );
+      if (oauthIndex !== -1) {
+        user.oauthAccounts[oauthIndex].name = userInfo.nickname;
+        user.oauthAccounts[oauthIndex].avatar = userInfo.headimgurl;
+        user.lastLoginAt = new Date();
+        await user.save();
+      }
+    }
+
+    const loginData = await generateLoginResponse(user);
+    return res.json(successResponse(loginData));
+
+  } catch (error: any) {
+    console.error('WeChat OAuth error:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '微信登录失败')
+    );
+  }
 }
 
 /**
@@ -579,3 +660,184 @@ async function handleUserSelect(req: Request, res: Response) {
 }
 
 export default router;
+
+/**
+ * 处理微信公众号扫码登录 - 生成二维码
+ */
+async function handleWxGzhScan(req: Request, res: Response) {
+  try {
+    const { state } = req.body;
+    
+    const WECHAT_APPID = process.env.WECHAT_APPID;
+    if (!WECHAT_APPID) {
+      return res.status(500).json(
+        errorResponse('CONFIG_ERROR', '微信配置未设置')
+      );
+    }
+
+    // 生成扫码凭证
+    const credential = crypto.randomBytes(32).toString('hex');
+    
+    // 生成微信授权URL（服务号网页授权）
+    const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'https://auth.caiths.com';
+    const redirectUri = `${AUTH_SERVICE_URL}/wx/callback`;
+    const qrState = `${credential}:${state}`;
+    
+    const qr_code = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${WECHAT_APPID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=snsapi_userinfo&state=${qrState}#wechat_redirect`;
+    
+    // 存储凭证到 Redis，状态为 pending，30分钟过期
+    const redisClient = getRedisClient();
+    await redisClient.set(`wx_scan:${credential}`, JSON.stringify({ status: 'pending', createdAt: Date.now() }), 'EX', 1800);
+    
+    return res.json(
+      successResponse({
+        operateType: 'wx_gzh_scan',
+        qr_code,
+        credential,
+      })
+    );
+  } catch (error: any) {
+    console.error('handleWxGzhScan error:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '生成二维码失败')
+    );
+  }
+}
+
+/**
+ * 检查扫码状态
+ */
+async function handleScanCheck(req: Request, res: Response) {
+  try {
+    const { credential } = req.body;
+    
+    if (!credential) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '缺少凭证参数')
+      );
+    }
+    
+    const redisClient = getRedisClient();
+    const data = await redisClient.get(`wx_scan:${credential}`);
+    
+    if (!data) {
+      return res.json(
+        successResponse({
+          operateType: 'scan_check',
+          status: 'expired',
+        })
+      );
+    }
+    
+    const scanData = JSON.parse(data);
+    
+    if (scanData.status === 'scanned' && scanData.credential_2) {
+      return res.json(
+        successResponse({
+          operateType: 'scan_check',
+          status: 'plz_check',
+          credential_2: scanData.credential_2,
+        })
+      );
+    }
+    
+    return res.json(
+      successResponse({
+        operateType: 'scan_check',
+        status: 'pending',
+      })
+    );
+  } catch (error: any) {
+    console.error('handleScanCheck error:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '检查扫码状态失败')
+    );
+  }
+}
+
+/**
+ * 完成扫码登录
+ */
+async function handleScanLogin(req: Request, res: Response) {
+  try {
+    const { credential, credential_2, enc_client_key } = req.body;
+    
+    if (!credential || !credential_2) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '缺少必要参数')
+      );
+    }
+    
+    const redisClient = getRedisClient();
+    const data = await redisClient.get(`wx_scan:${credential}`);
+    
+    if (!data) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '凭证已过期')
+      );
+    }
+    
+    const scanData = JSON.parse(data);
+    
+    if (scanData.credential_2 !== credential_2) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '凭证验证失败')
+      );
+    }
+    
+    if (!scanData.openid) {
+      return res.status(400).json(
+        errorResponse('BAD_REQUEST', '用户信息不完整')
+      );
+    }
+    
+    // 查找或创建用户
+    let user = await User.findOne({
+      'oauthAccounts.provider': OAuthProvider.WECHAT_GZH,
+      'oauthAccounts.providerId': scanData.openid,
+    });
+    
+    if (!user) {
+      user = new User({
+        username: scanData.nickname || `wx_${scanData.openid.slice(-6)}`,
+        avatar: scanData.headimgurl,
+        status: UserStatus.ACTIVE,
+        oauthAccounts: [{
+          provider: OAuthProvider.WECHAT_GZH,
+          providerId: scanData.openid,
+          name: scanData.nickname,
+          avatar: scanData.headimgurl,
+          linkedAt: new Date(),
+        }],
+      });
+      await user.save();
+    } else {
+      user.lastLoginAt = new Date();
+      await user.save();
+    }
+    
+    // 删除已使用的凭证
+    await redisClient.del(`wx_scan:${credential}`);
+    
+    // 存储 client_key
+    if (enc_client_key) {
+      const privateKey = await redisClient.get(`rsa_private_key:${scanData.state}`);
+      if (privateKey) {
+        const clientKey = await decryptWithRSA(enc_client_key, privateKey);
+        if (clientKey) {
+          await redisClient.set(`client_key:${user._id.toString()}`, clientKey, 'EX', 7 * 24 * 60 * 60);
+        }
+      }
+    }
+    
+    const loginData = await generateLoginResponse(user);
+    return res.json(successResponse(loginData));
+    
+  } catch (error: any) {
+    console.error('handleScanLogin error:', error);
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', error.message || '扫码登录失败')
+    );
+  }
+}
+
