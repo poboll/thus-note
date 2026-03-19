@@ -56,6 +56,9 @@ let initPromise: Promise<boolean>
 // 避免 initPromise 还没 resolve 时，用户多次点击多次触发
 let hasTap = false
 
+// 防止微信登录重复触发
+let isWeChatLoginInProgress = false
+
 // constants
 const MIN_5 = 5 * time.MINUTE
 
@@ -726,10 +729,17 @@ async function whenTapWeChat(
 
   if (!canLoginUsingLastLogged(lpData)) return
   if (isAfterFetchingLogin) return
+  if (isWeChatLoginInProgress) return
+  
+  isWeChatLoginInProgress = true
 
   try {
-    const authRes = await fetch('http://localhost:4000/wx/login')
-    const { wx_url, poll_key } = await authRes.json()
+    const authServiceURL = liuEnv.getEnv().AUTH_SERVICE_URL || 'https://auth.caiths.com'
+    console.log('🔍 [WeChat Login] Calling auth service:', authServiceURL)
+    const authRes = await fetch(`${authServiceURL}/wx/login`)
+    const data = await authRes.json()
+    console.log('🔍 [WeChat Login] Auth service response:', data)
+    const { wx_url, poll_key } = data
 
     const res2 = await cui.showQRCodePopup({ 
       bindType: "wx_unified",
@@ -737,9 +747,15 @@ async function whenTapWeChat(
       poll_key
     })
 
-    if (res2.resultType !== "plz_check") return
+    if (res2.resultType !== "plz_check") {
+      isWeChatLoginInProgress = false
+      return
+    }
     const token = res2.credential
-    if (!token) return
+    if (!token) {
+      isWeChatLoginInProgress = false
+      return
+    }
 
     cui.showLoading({ title_key: "login.ready_to_login" })
 
@@ -753,6 +769,7 @@ async function whenTapWeChat(
     isAfterFetchingLogin = true
     const res5 = await afterFetchingLogin(rr, result)
     isAfterFetchingLogin = false
+    isWeChatLoginInProgress = false
 
     if (res5) {
       cui.showLoading({ title_key: "login.logging2" })
@@ -763,6 +780,7 @@ async function whenTapWeChat(
   } catch (error) {
     console.error('WeChat unified login error:', error)
     cui.hideLoading()
+    isWeChatLoginInProgress = false
     showErrMsg("login", { code: "E5000", errMsg: "微信登录失败" })
   }
 }
@@ -790,6 +808,8 @@ function toGetLoginInitData(
     lpData.wxGzhAppid = data.wxGzhAppid
     lpData.state = data.state
     lpData.initStamp = time.getTime()
+    
+    localCache.setOnceData("login_state", data.state)
 
     // google one-tap 登录后端流程已跑通
     loadGoogleIdentityService(rr, lpData)

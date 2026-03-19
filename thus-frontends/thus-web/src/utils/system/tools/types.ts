@@ -34,6 +34,9 @@ export interface LocalOnceData {
   // 前端用后端公钥加密前端的 aes 的结果
   enc_client_key?: string
 
+  // 登录会话的 state（用于后端验证）
+  login_state?: string
+
   // whether you want to open vConsole
   mobile_debug?: boolean
 

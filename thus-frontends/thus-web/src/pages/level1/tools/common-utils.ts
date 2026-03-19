@@ -80,7 +80,30 @@ export async function afterFetchingLogin(
     return false
   }
 
-  // 5. 去走登录流程
+  // 5. 保存 client_key 到服务器（用于微信登录）
+  const localCache = await import("~/utils/system/local-cache").then(m => m.default)
+  const onceData = localCache.getOnceData()
+  
+  if(onceData.enc_client_key && onceData.login_state && data.token) {
+    try {
+      const apiDomain = import.meta.env.VITE_API_DOMAIN || ''
+      await fetch(`${apiDomain}/api/user-login/save-client-key`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${data.token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          enc_client_key: onceData.enc_client_key,
+          state: onceData.login_state
+        })
+      })
+    } catch(e) {
+      console.warn('保存 client_key 失败:', e)
+    }
+  }
+
+  // 6. 去走登录流程
   const res2 = await loginer.toLogin(rr, data)
   return res2
 }

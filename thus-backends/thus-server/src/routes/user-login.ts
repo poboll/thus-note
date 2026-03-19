@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { authMiddleware } from "../middleware/auth";
 import { Types } from 'mongoose';
 import { UserStatus, OAuthProvider } from '../models/User';
 import { JWTUtils } from '../utils/jwt';
@@ -32,6 +33,9 @@ async function getOrCreateSpaceMemberList(userId: Types.ObjectId) {
 
   // 如果没有成员记录，创建默认的个人空间
   if (members.length === 0) {
+    // 获取用户信息以设置成员名称
+    const user = await User.findById(userId);
+    
     // 创建个人空间
     const space = new Space({
       ownerId: userId,
@@ -40,10 +44,11 @@ async function getOrCreateSpaceMemberList(userId: Types.ObjectId) {
     });
     await space.save();
 
-    // 创建成员记录
+    // 创建成员记录，设置名称
     const member = new Member({
       spaceId: space._id,
       userId,
+      name: user?.username,
       status: MemberStatus.OK,
     });
     await member.save();
@@ -840,4 +845,42 @@ async function handleScanLogin(req: Request, res: Response) {
     );
   }
 }
+
+/**
+ * 保存 client_key（用于微信登录后补充）
+ */
+async function handleSaveClientKey(req: Request, res: Response) {
+  const { enc_client_key, state } = req.body;
+  const userId = req.userId!;
+
+  if (!enc_client_key || !state) {
+    return res.status(400).json(
+      errorResponse('BAD_REQUEST', '缺少必要参数')
+    );
+  }
+
+  const redisClient = getRedisClient();
+  const privateKeyKey = `rsa_private_key:${state}`;
+  const privateKey = await redisClient.get(privateKeyKey);
+
+  if (!privateKey) {
+    return res.status(400).json(
+      errorResponse('BAD_REQUEST', '会话已过期')
+    );
+  }
+
+  const clientKey = await decryptWithRSA(enc_client_key, privateKey);
+  if (clientKey) {
+    const clientKeyRedisKey = `client_key:${userId.toString()}`;
+    await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+    console.log(`✅ 已存储用户 ${userId} 的 client_key`);
+    return res.json(successResponse({ message: 'client_key 已保存' }));
+  }
+
+  return res.status(500).json(
+    errorResponse('INTERNAL_ERROR', '解密失败')
+  );
+}
+
+router.post("/save-client-key", authMiddleware, handleSaveClientKey);
 
