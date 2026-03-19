@@ -87,7 +87,7 @@ export async function afterFetchingLogin(
   if(onceData.enc_client_key && onceData.login_state && data.token) {
     try {
       const apiDomain = import.meta.env.VITE_API_DOMAIN || ''
-      await fetch(`${apiDomain}/api/user-login/save-client-key`, {
+      await fetch(`${apiDomain}/user-login/save-client-key`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${data.token}`,
