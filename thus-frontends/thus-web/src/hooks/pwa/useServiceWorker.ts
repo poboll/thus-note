@@ -14,15 +14,21 @@ const MIN_15 = 15 * time.MINUTE
 let _updateSW: SimplePromise | undefined
 let _swUrl: string | undefined
 let _swRegistration: ServiceWorkerRegistration | undefined
+const isDev = import.meta.env.DEV
+
+function logSW(label: string, ...args: unknown[]) {
+  if (!isDev) return
+  console.debug(`[service-worker][dev] ${label}`, ...args)
+}
 
 // Reference: 
 // https://vite-pwa-org.netlify.app/guide/periodic-sw-updates.html#handling-edge-cases
 const _checkSW = async (r: ServiceWorkerRegistration) => {
-  console.warn("see service-worker status: ")
-  console.log("r.installing: ", r.installing)
-  console.log("r.waiting: ", r.waiting)
-  console.log("r.active: ", r.active)
-  console.log(" ")
+  logSW("registration status", {
+    installing: r.installing,
+    waiting: r.waiting,
+    active: r.active,
+  })
 
   const swUrl = _swUrl
   if(!swUrl) return
@@ -35,8 +41,8 @@ const _checkSW = async (r: ServiceWorkerRegistration) => {
   const { lastCheckSWStamp } = localCache.getOnceData()
   if (lastCheckSWStamp) {
     const isWithin = time.isWithinMillis(lastCheckSWStamp, SEC_10)
-    if (isWithin) {
-      console.log("too frequent to check out service worker")
+      if (isWithin) {
+      logSW("skip check: too frequent")
       return
     }
   }
@@ -51,14 +57,12 @@ const _checkSW = async (r: ServiceWorkerRegistration) => {
   })
 
   if (resp?.status === 200) {
-    console.time("r.update")
+    if (isDev) console.time("[service-worker][dev] update")
     await r.update()
-    console.timeEnd("r.update")
+    if (isDev) console.timeEnd("[service-worker][dev] update")
   }
   else {
-    console.warn("fail to fetch the result from service worker:")
-    console.log(resp)
-    console.log(" ")
+    logSW("failed to fetch worker asset", resp)
   }
 }
 
@@ -83,16 +87,14 @@ export function initServiceWorker() {
     }, MIN_15)
 
     r.addEventListener("updatefound", (evt) => {
-      console.warn("service-worker updatefound......")
-      console.log(evt)
+      logSW("updatefound", evt)
       const newWorker = r.installing
       if(!newWorker) return
-      const state1 = newWorker.state
-      console.log("newWorker.state: ", state1)
+      logSW("worker state", newWorker.state)
       
-      newWorker.addEventListener("statechange", (evt) => {
-        console.warn("newWorker statechange......")
-        console.log(newWorker.state)
+      newWorker.addEventListener("statechange", () => {
+        if (newWorker.state === "activating") return
+        logSW("worker state", newWorker.state)
       })
     })
   }
@@ -123,15 +125,13 @@ export function initServiceWorker() {
   const gStore = useGlobalStateStore()
 
   watch([offlineReady, needRefresh], ([newV1, newV2]) => {
-    console.log("offlineReady: ", newV1)
-    console.log("needRefresh: ", newV2)
-    console.log(" ")
+    logSW("register flags", { offlineReady: newV1, needRefresh: newV2 })
     gStore.setNewVersion(newV2)
   })
 
   window.addEventListener('beforeunload', (event) => {
     if(needRefresh.value) {
-      console.log("needRefresh is true, so we get to update the sw")
+      logSW("beforeunload triggers update")
       updateServiceWorker()
     }
   })
@@ -165,4 +165,3 @@ export function checkUpdateManually() {
 export function getSWRegistration() {
   return _swRegistration
 }
-

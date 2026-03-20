@@ -5,6 +5,31 @@ import type { LiuSystemEnv } from "./types"
 
 let _env: LiuSystemEnv | undefined
 
+const DEFAULT_DEV_AUTH_SERVICE_URL = "http://localhost:4000"
+const DEFAULT_PROD_AUTH_SERVICE_URL = "https://auth.caiths.com"
+
+function normalizeAuthServiceURL(
+  rawValue: string | undefined,
+  isDev: boolean,
+) {
+  const fallback = isDev
+    ? DEFAULT_DEV_AUTH_SERVICE_URL
+    : DEFAULT_PROD_AUTH_SERVICE_URL
+  const trimmedValue = rawValue?.trim()
+  if (!trimmedValue) return fallback
+
+  const candidate = /^https?:\/\//i.test(trimmedValue)
+    ? trimmedValue
+    : `${isDev ? "http" : "https"}://${trimmedValue}`
+
+  try {
+    return new URL(candidate).toString().replace(/\/$/, "")
+  }
+  catch {
+    return fallback
+  }
+}
+
 function getEnv(): LiuSystemEnv {
   if(_env) return _env
 
@@ -122,6 +147,9 @@ function getEnv(): LiuSystemEnv {
   const phoneBoundRequired = import.meta.env.VITE_PHONE_BOUND_REQUIRED
   const PHONE_BOUND_REQUIRED = phoneBoundRequired === "01"
 
+  // auth service
+  const AUTH_SERVICE_URL = import.meta.env.VITE_AUTH_SERVICE_URL
+
   _env = {
     DEV,
     API_DOMAIN,
@@ -191,6 +219,7 @@ function getEnv(): LiuSystemEnv {
     DONOT_USE_SYNC,
     LOGIN_WAYS,
     PHONE_BOUND_REQUIRED,
+    AUTH_SERVICE_URL,
   }
   return _env
 }
@@ -211,10 +240,16 @@ function canISync() {
   return true
 }
 
+function getAuthServiceURL() {
+  const env = getEnv()
+  return normalizeAuthServiceURL(env.AUTH_SERVICE_URL, env.DEV)
+}
+
 
 
 export default {
   getEnv,
   hasBackend,
   canISync,
+  getAuthServiceURL,
 }

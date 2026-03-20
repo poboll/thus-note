@@ -61,6 +61,43 @@ let isWeChatLoginInProgress = false
 
 // constants
 const MIN_5 = 5 * time.MINUTE
+const WECHAT_AUTH_RETRY_DELAYS = [0, 800, 1600]
+
+function waitFor(ms: number) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
+async function fetchJsonWithRetry<T>(
+  url: string,
+  init?: RequestInit,
+): Promise<T> {
+  let lastError: unknown
+
+  for (let i = 0; i < WECHAT_AUTH_RETRY_DELAYS.length; i++) {
+    const delay = WECHAT_AUTH_RETRY_DELAYS[i]
+    if (delay > 0) {
+      await waitFor(delay)
+    }
+
+    try {
+      const res = await fetch(url, init)
+      if (!res.ok) {
+        throw new Error(`Request failed with status ${res.status}`)
+      }
+      return await res.json() as T
+    }
+    catch (err) {
+      lastError = err
+      if (i < WECHAT_AUTH_RETRY_DELAYS.length - 1) {
+        console.warn("WeChat auth request failed, retrying...", err)
+      }
+    }
+  }
+
+  throw lastError ?? new Error("Failed to fetch auth service")
+}
 
 export function useLoginPage() {
 
@@ -734,12 +771,19 @@ async function whenTapWeChat(
   isWeChatLoginInProgress = true
 
   try {
-    const authServiceURL = liuEnv.getEnv().AUTH_SERVICE_URL || 'https://auth.caiths.com'
-    console.log('🔍 [WeChat Login] Calling auth service:', authServiceURL)
-    const authRes = await fetch(`${authServiceURL}/wx/login`)
-    const data = await authRes.json()
-    console.log('🔍 [WeChat Login] Auth service response:', data)
+    const authServiceURL = liuEnv.getAuthServiceURL()
+    const authLoginUrl = new URL("/wx/login", authServiceURL).toString()
+    if (import.meta.env.DEV) {
+      console.debug("[WeChat Login] auth service:", authServiceURL)
+    }
+    const data = await fetchJsonWithRetry<{ wx_url?: string, poll_key?: string }>(authLoginUrl)
+    if (import.meta.env.DEV) {
+      console.debug("[WeChat Login] auth service response:", data)
+    }
     const { wx_url, poll_key } = data
+    if (!wx_url || !poll_key) {
+      throw new Error("Invalid auth service response")
+    }
 
     const res2 = await cui.showQRCodePopup({ 
       bindType: "wx_unified",
@@ -764,6 +808,9 @@ async function whenTapWeChat(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token })
     })
+    if (!loginRes.ok) {
+      throw new Error(`Unified login failed with status ${loginRes.status}`)
+    }
     const result = await loginRes.json()
 
     isAfterFetchingLogin = true
