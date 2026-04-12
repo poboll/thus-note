@@ -116,4 +116,7 @@ export interface LiuSystemEnv {
   // others
   PHONE_BOUND_REQUIRED?: boolean
 
+  // auth service
+  AUTH_SERVICE_URL?: string
+
 }

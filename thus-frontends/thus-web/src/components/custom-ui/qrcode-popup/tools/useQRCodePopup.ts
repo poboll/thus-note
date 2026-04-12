@@ -31,6 +31,7 @@ import {
   usePageLeave, 
   useThrottleFn,
 } from "~/hooks/useVueUse";
+import liuEnv from "~/utils/thus-env";
 
 const SEC_3 = time.SECOND * 3
 const SEC_4 = time.SECOND * 4
@@ -373,7 +374,9 @@ async function fetch_scan_check(
 
 async function check_wx_unified(poll_key: string) {
   try {
-    const res = await fetch('http://localhost:4000/wx/poll', {
+    const authServiceURL = liuEnv.getAuthServiceURL()
+    const pollUrl = new URL("/wx/poll", authServiceURL).toString()
+    const res = await fetch(pollUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ poll_key })
