@@ -134,6 +134,7 @@ router.post('/github', async (req: Request, res: Response) => {
       data: {
         userId: user._id.toString(),
         email: user.email,
+        username: user.username,
         token: tokenPair.accessToken,
         serial_id: tokenPair.refreshToken,
         theme: user.settings?.theme || "light",
@@ -245,6 +246,7 @@ router.post('/google', async (req: Request, res: Response) => {
       data: {
         userId: user._id.toString(),
         email: user.email,
+        username: user.username,
         token: tokenPair.accessToken,
         serial_id: tokenPair.refreshToken,
         theme: user.settings?.theme || "light",
@@ -357,6 +359,7 @@ router.post('/wechat/gzh', async (req: Request, res: Response) => {
       data: {
         userId: user._id.toString(),
         email: user.email,
+        username: user.username,
         token: tokenPair.accessToken,
         serial_id: tokenPair.refreshToken,
         theme: user.settings?.theme || "light",
@@ -425,10 +428,18 @@ router.post('/wechat/unified', async (req: Request, res: Response) => {
       );
     }
 
-    const { open_id, union_id, nickname, avatar } = payload;
+    const open_id = payload.open_id || payload.openid;
+    const union_id = payload.union_id || payload.unionid;
+    const nickname = payload.nickname || payload.name;
+    const avatar = payload.avatar || payload.headimgurl;
+    
+    console.log('[WeChat Unified Auth] JWT payload:', JSON.stringify(payload, null, 2));
+    console.log('[WeChat Unified Auth] Extracted:', { open_id, union_id, nickname, avatar });
+    
     if (!open_id) {
+      console.error('[WeChat Unified Auth] JWT payload missing openid:', payload);
       return res.status(400).json(
-        errorResponse('BAD_REQUEST', 'JWT 缺少 open_id')
+        errorResponse('BAD_REQUEST', 'Token中缺少openid')
       );
     }
 
@@ -458,6 +469,12 @@ router.post('/wechat/unified', async (req: Request, res: Response) => {
       if (oauthIndex !== -1) {
         user.oauthAccounts[oauthIndex].name = nickname;
         user.oauthAccounts[oauthIndex].avatar = avatar;
+        if (nickname && !user.username) {
+          user.username = nickname;
+        }
+        if (avatar && !user.avatar) {
+          user.avatar = avatar;
+        }
         await user.save();
       }
     }
@@ -468,6 +485,18 @@ router.post('/wechat/unified', async (req: Request, res: Response) => {
       userId: user._id,
       status: MemberStatus.OK,
     }).populate('spaceId');
+    
+    if (members.length > 0 && nickname) {
+      for (const member of members) {
+        if (!member.name || member.name.startsWith('wx_')) {
+          member.name = nickname;
+          if (avatar) {
+            member.avatar = avatar;
+          }
+          await member.save();
+        }
+      }
+    }
 
     const spaceMemberList = members
       .filter(member => member.spaceId && (member.spaceId as any).status === SpaceStatus.OK)
@@ -497,6 +526,7 @@ router.post('/wechat/unified', async (req: Request, res: Response) => {
       data: {
         userId: user._id.toString(),
         email: user.email,
+        username: user.username,
         token: tokenPair.accessToken,
         serial_id: tokenPair.refreshToken,
         theme: user.settings?.theme || "light",
@@ -687,6 +717,7 @@ router.post('/email', async (req: Request, res: Response) => {
       data: {
         userId: user._id.toString(),
         email: user.email,
+        username: user.username,
         token: tokenPair.accessToken,
         serial_id: tokenPair.refreshToken,
         theme: user.settings?.theme || "light",
@@ -930,6 +961,7 @@ router.post('/verify-code', async (req: Request, res: Response) => {
       data: {
         userId: user._id.toString(),
         email: user.email,
+        username: user.username,
         token: tokenPair.accessToken,
         serial_id: tokenPair.refreshToken,
         theme: user.settings?.theme || "light",

@@ -62,31 +62,45 @@ export function handle_github(
   location.href = link
 }
 
-export function handle_wechat(
+export async function handle_wechat(
   lpData: LpData,
 ) {
   const appid = lpData.wxGzhAppid
-  if(!appid) return
+  if(!appid) {
+    showDisableTip("WeChat")
+    return
+  }
 
   const state = lpData.state
   if(!state) {
     showOtherTip("login.err_1")
     return
   }
-  localCache.setOnceData("wxGzhOAuthState", state)
 
-  const redirect_uri = location.origin + "/login-wechat"
+  try {
+    const response = await fetch('/user-login/wechat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        operateType: 'login',
+        state: state
+      })
+    })
 
-  const url = new URL(thirdLink.WX_GZH_OAUTH)
-  const sp = url.searchParams
-  sp.append("appid", appid)
-  sp.append("redirect_uri", redirect_uri)
-  sp.append("response_type", "code")
+    if (!response.ok) {
+      showOtherTip("login.err_1")
+      return
+    }
 
-  sp.append("scope", "snsapi_userinfo")
-  // sp.append("scope", "snsapi_base")
-
-  sp.append("state", state)
-  const link = url.toString() + `#wechat_redirect`
-  location.href = link
+    const data = await response.json()
+    if (data.code === 0 && data.data?.qr_code) {
+      location.href = data.data.qr_code
+    } else {
+      showOtherTip("login.err_1")
+    }
+  } catch (error) {
+    showOtherTip("login.err_1")
+  }
 }

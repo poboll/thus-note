@@ -5,7 +5,7 @@ import { successResponse, errorResponse } from '../types/api.types';
 import Thread from '../models/Thread';
 import Content from '../models/Content';
 import Comment from '../models/Comment';
-import Member from '../models/Member';
+import Member, { MemberStatus } from '../models/Member';
 import Space from '../models/Space';
 import Collection from '../models/Collection';
 import { getRedisClient } from '../config/redis';
@@ -586,7 +586,7 @@ async function postThread(userId: Types.ObjectId, atom: any) {
 
   if (!finalSpaceId) {
     try {
-      const member = await Member.findOne({ userId }).exec();
+      const member = await Member.findOne({ userId, status: MemberStatus.OK }).exec();
       if (member) {
         finalSpaceId = member.spaceId;
         console.log(`✅ 从 Member 表找到 spaceId: ${finalSpaceId}`);
@@ -912,7 +912,7 @@ async function updateWorkspaceTag(userId: Types.ObjectId, atom: any) {
   if (!Array.isArray(tagList)) {
     return { code: 'E4000', taskId, errMsg: 'tagList 是必需的' };
   }
-  const member = await Member.findOne({ userId }).exec();
+  const member = await Member.findOne({ userId, status: MemberStatus.OK }).exec();
   if (!member?.spaceId) {
     return { code: 'E4004', taskId, errMsg: '未找到空间' };
   }
@@ -925,7 +925,7 @@ async function updateWorkspaceStateConfig(userId: Types.ObjectId, atom: any) {
   if (!stateConfig) {
     return { code: 'E4000', taskId, errMsg: 'stateConfig 是必需的' };
   }
-  const member = await Member.findOne({ userId }).exec();
+  const member = await Member.findOne({ userId, status: MemberStatus.OK }).exec();
   if (!member?.spaceId) {
     return { code: 'E4004', taskId, errMsg: '未找到空间' };
   }
@@ -939,7 +939,7 @@ async function postCollection(userId: Types.ObjectId, atom: any) {
     return { code: 'E4000', taskId, errMsg: 'collection.content_id 是必需的' };
   }
   const { id, first_id, oState = 'OK', content_id, sortStamp, operateStamp } = collection;
-  const member = await Member.findOne({ userId }).exec();
+  const member = await Member.findOne({ userId, status: MemberStatus.OK }).exec();
   const spaceId = member?.spaceId;
   await Collection.findOneAndUpdate(
     { user: userId, content_id, forType: 'THREAD' },

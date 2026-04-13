@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import User from '../models/User';
 import Thread from '../models/Thread';
 import Content from '../models/Content';
+import { MemberStatus } from '../models/Member';
 import { successResponse, errorResponse } from '../types/api.types';
 import { logger } from '../config/logger';
 
@@ -97,7 +98,7 @@ router.post('/webhook', verifyWeChatSignature, async (req: Request, res: Respons
     const Member = (await import('../models/Member')).default;
     const Space = (await import('../models/Space')).default;
     
-    const member = await Member.findOne({ userId: user._id, status: 'active' });
+    const member = await Member.findOne({ userId: user._id, status: MemberStatus.OK });
     if (!member) {
       logger.warn(`WeChat webhook: No active space found for user: ${userId}`);
       return res.status(404).json(errorResponse('E0007', 'No active space found for user'));

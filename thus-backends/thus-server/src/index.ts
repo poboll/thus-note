@@ -9,6 +9,7 @@ import testRouter from './routes/test';
 import helloWorldRouter from './routes/hello-world';
 import authRouter from './routes/auth';
 import userLoginRouter from './routes/user-login';
+import wechatScanCallbackRouter from './routes/wechat-scan-callback';
 import userSettingsRouter from './routes/user-settings';
 import threadsRouter from './routes/threads';
 import contentsRouter from './routes/contents';
@@ -33,6 +34,7 @@ import { MonitorService } from './services/monitorService';
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // 安全中间件
@@ -118,6 +120,7 @@ app.use('/hello-world', helloWorldRouter); // 前端时间校准接口
 app.use('/api/auth', authRouter);
 app.use('/user-login', userLoginRouter); // 前端兼容路由
 app.use('/user-settings', userSettingsRouter); // 前端用户设置路由
+app.use('/api/wechat', wechatScanCallbackRouter);
 app.use('/sync-set', syncRouter); // 前端兼容路由
 app.use('/sync-get', syncRouter); // 前端兼容路由
 app.use('/api/threads', threadsRouter);
