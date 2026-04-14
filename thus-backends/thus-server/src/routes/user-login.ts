@@ -105,6 +105,7 @@ async function generateLoginResponse(user: any) {
     serial_id,
     spaceMemberList,
     email: user.email,
+    username: user.username,
     theme: user.settings?.theme || 'system',
     language: user.settings?.language || 'system',
   };
@@ -293,11 +294,17 @@ async function handleSendEmailCode(req: Request, res: Response) {
   await redisClient.setex(codeKey, CODE_EXPIRE_TIME, code);
   await redisClient.set(rateLimitKey, Date.now().toString(), 'EX', 60); // 60秒内只能发送一次
 
-  // 异步发送邮件（fire-and-forget），避免SMTP耗时导致前端超时
   const emailService = new EmailService();
-  emailService.sendVerificationCode(email, code).catch((emailError: any) => {
+  try {
+    await emailService.sendVerificationCode(email, code);
+  } catch (emailError: any) {
+    await redisClient.del(codeKey);
+    await redisClient.del(rateLimitKey);
     console.error('发送邮件失败:', emailError);
-  });
+    return res.status(500).json(
+      errorResponse('INTERNAL_ERROR', emailError?.message || '验证码发送失败')
+    );
+  }
 
   return res.json(
     successResponse({
@@ -883,4 +890,3 @@ async function handleSaveClientKey(req: Request, res: Response) {
 }
 
 router.post("/save-client-key", authMiddleware, handleSaveClientKey);
-

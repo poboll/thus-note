@@ -27,7 +27,9 @@ const { t } = useI18n()
     </div>
 
     <input class="lp-code-input"
-      maxlength="9"
+      maxlength="6"
+      inputmode="numeric"
+      pattern="[0-9]*"
       :placeholder="t('login.verification_code')" 
       v-model="lpcData.code"
       ref="lpCodeInput"

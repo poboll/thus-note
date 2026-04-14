@@ -31,6 +31,7 @@ export async function handleUser(
     subscription: d.subscription,
     updatedStamp: time.getTime(),
     email: d.email,
+    username: d.username,
     github_id: d.github_id,
     open_id: d.open_id,
   }
@@ -155,6 +156,7 @@ async function createUser(
     lastRefresh: t,
     subscription: d.subscription,
     email: d.email,
+    username: d.username,
     github_id: d.github_id,
     open_id: d.open_id,
   }

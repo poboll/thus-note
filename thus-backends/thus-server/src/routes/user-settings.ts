@@ -108,6 +108,7 @@ async function handleEnter(req: Request, res: Response, userId: any) {
 
   return res.json(successResponse({
     email: user.email,
+    username: user.username,
     theme: user.settings?.theme || 'system',
     language: user.settings?.language || 'system',
     spaceMemberList,

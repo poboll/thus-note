@@ -72,6 +72,7 @@ async function handleUser(
   const u: Partial<UserLocalTable> = {
     subscription: d.subscription,
     email: d.email,
+    username: d.username,
     github_id: d.github_id,
     open_id: d.open_id,
     updatedStamp: now,

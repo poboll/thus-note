@@ -53,6 +53,7 @@ export interface Res_UserLoginNormal {
 
   // 需要验证 email 时或只有一个 user 符合时
   email?: string
+  username?: string
 
   // 只有一个 user 符合时
   open_id?: string
@@ -97,6 +98,7 @@ export namespace UserSettingsAPI {
 
   export interface Res_Enter {
     email?: string
+    username?: string
     github_id?: number
     open_id?: string
     theme: LocalTheme

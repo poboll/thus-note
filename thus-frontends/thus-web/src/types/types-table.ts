@@ -43,6 +43,7 @@ export interface BaseLocalTable {
 export interface UserLocalTable extends BaseLocalTable {
   lastRefresh: number
   email?: string
+  username?: string
   github_id?: number
   open_id?: string
   subscription?: UserSubscription

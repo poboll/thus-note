@@ -150,15 +150,23 @@ async function request<
   // Token Expired / Unauthorized
   if(status === 401) {
     console.warn("Token expired or unauthorized")
-    localCache.clearPreference() // Clear token/serial only
-    // Don't clear Dexie here to protect user data
     
-    // Redirect to login if not already there
+    let backendErrMsg = "Login expired"
+    try {
+      const res2 = await res.json() as ThusRqReturn<T>
+      if(res2.errMsg) {
+        backendErrMsg = res2.errMsg
+      }
+    } catch(e) {
+      console.warn("Failed to parse 401 response body:", e)
+    }
+    
+    localCache.clearPreference()
+    
     if(!window.location.pathname.startsWith("/login")) {
       window.location.href = "/login"
     }
-    const errorResult = { code: "C0002", errMsg: "Login expired" }
-    showError(errorResult)
+    const errorResult = { code: "C0002", errMsg: backendErrMsg }
     return errorResult
   }
 
