@@ -92,6 +92,7 @@ thus-frontends/thus-web/analysis.html
 # Cursor IDE artifacts
 .cursorrules
 .cursorignore
+.cursor/
 
 # Backup files
 *.bak

@@ -49,7 +49,6 @@ const TokenSchema = new Schema<IToken>(
     expiresAt: {
       type: Date,
       required: true,
-      index: true,
     },
     isRevoked: {
       type: Boolean,

@@ -277,8 +277,6 @@ const UserSchema = new Schema<IUser>(
 );
 
 // 索引
-UserSchema.index({ email: 1 });
-UserSchema.index({ phone: 1 });
 UserSchema.index({ status: 1 });
 UserSchema.index({ createdAt: -1 });
 

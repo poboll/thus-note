@@ -34,7 +34,6 @@ const VerificationCodeSchema = new Schema<IVerificationCode>(
     phone: {
       type: String,
       required: true,
-      index: true,
     },
     code: {
       type: String,
@@ -56,7 +55,6 @@ const VerificationCodeSchema = new Schema<IVerificationCode>(
     expiresAt: {
       type: Date,
       required: true,
-      index: true,
     },
     verified: {
       type: Boolean,
