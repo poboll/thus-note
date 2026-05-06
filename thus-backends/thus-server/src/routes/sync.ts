@@ -3,13 +3,13 @@ import { Types } from 'mongoose';
 import { authMiddleware } from '../middleware/auth';
 import { successResponse, errorResponse } from '../types/api.types';
 import Thread from '../models/Thread';
-import Content from '../models/Content';
 import Comment from '../models/Comment';
 import Member, { MemberStatus } from '../models/Member';
 import Space from '../models/Space';
 import Collection from '../models/Collection';
 import { getRedisClient } from '../config/redis';
 import { EncryptionUtil } from '../utils/encryption';
+import { getUserClientKeyCandidates } from '../utils/clientKeyStore';
 
 const router = Router();
 
@@ -21,48 +21,45 @@ const router = Router();
  */
 async function decryptLiuEncAtoms(liu_enc_atoms: { cipherText: string; iv: string }, userId: string): Promise<any[] | null> {
   try {
-    // 1. 从 Redis 获取用户的 client_key
     const redisClient = getRedisClient();
-    const clientKeyRedisKey = `client_key:${userId}`;
-    const clientKey = await redisClient.get(clientKeyRedisKey);
+    const aesKeys = await getUserClientKeyCandidates(redisClient, userId);
 
-    console.log(`🔑 [解密] 用户 ${userId} 的 client_key:`, clientKey ? `${clientKey.substring(0, 30)}...` : '不存在');
+    console.log(`🔑 [解密] 用户 ${userId} 可用 client_key 数量:`, aesKeys.length);
 
-    if (!clientKey) {
+    if (aesKeys.length < 1) {
       console.warn(`⚠️ 用户 ${userId} 的 client_key 不存在，无法解密`);
       return null;
     }
 
-    // 2. client_key 格式是 "client_key_<base64_aes_key>"，需要提取 base64 部分
-    const aesKey = clientKey.replace('client_key_', '');
-    console.log(`🔑 [解密] 提取的 aesKey:`, aesKey.substring(0, 20) + '...');
-    console.log(`🔑 [解密] aesKey 长度:`, aesKey.length);
-    console.log(`🔑 [解密] cipherText 长度:`, liu_enc_atoms.cipherText.length);
-    console.log(`🔑 [解密] iv:`, liu_enc_atoms.iv);
+    for (const aesKey of aesKeys) {
+      try {
+        console.log(`🔑 [解密] 尝试 aesKey:`, aesKey.substring(0, 20) + '...');
+        console.log(`🔑 [解密] aesKey 长度:`, aesKey.length);
+        console.log(`🔑 [解密] cipherText 长度:`, liu_enc_atoms.cipherText.length);
+        console.log(`🔑 [解密] iv:`, liu_enc_atoms.iv);
 
-    // 3. 使用 AES-GCM 解密
-    const decryptedStr = EncryptionUtil.decryptAESGCM(
-      liu_enc_atoms.cipherText,
-      liu_enc_atoms.iv,
-      aesKey
-    );
+        const decryptedStr = EncryptionUtil.decryptAESGCM(
+          liu_enc_atoms.cipherText,
+          liu_enc_atoms.iv,
+          aesKey
+        );
 
-    console.log(`🔑 [解密] 解密成功，明文长度:`, decryptedStr.length);
+        const liuPlainText = JSON.parse(decryptedStr);
+        console.log(`🔑 [解密] pre 校验: liuPlainText.pre=${liuPlainText.pre}, expected=${aesKey.substring(0, 5)}`);
+        if (liuPlainText.pre !== aesKey.substring(0, 5)) {
+          console.warn(`⚠️ 解密校验失败: pre=${liuPlainText.pre}, expected=${aesKey.substring(0, 5)}`);
+          continue;
+        }
 
-    // 4. 解析 JSON（前端加密的是 LiuPlainText 格式）
-    const liuPlainText = JSON.parse(decryptedStr);
-
-    // 5. 验证 pre 前缀（前端会在加密时添加 client_key 的前5位作为校验）
-    console.log(`🔑 [解密] pre 校验: liuPlainText.pre=${liuPlainText.pre}, expected=${aesKey.substring(0, 5)}`);
-    if (liuPlainText.pre !== aesKey.substring(0, 5)) {
-      console.warn(`⚠️ 解密校验失败: pre=${liuPlainText.pre}, expected=${aesKey.substring(0, 5)}`);
-      return null;
+        const atoms = liuPlainText.data;
+        console.log(`✅ 成功解密 liu_enc_atoms，包含 ${Array.isArray(atoms) ? atoms.length : 0} 个 atoms`);
+        return Array.isArray(atoms) ? atoms : null;
+      } catch (error: any) {
+        console.warn(`⚠️ 当前 client_key 解密失败:`, error.message);
+      }
     }
 
-    // 6. 返回实际的数据
-    const atoms = liuPlainText.data;
-    console.log(`✅ 成功解密 liu_enc_atoms，包含 ${Array.isArray(atoms) ? atoms.length : 0} 个 atoms`);
-    return Array.isArray(atoms) ? atoms : null;
+    return null;
 
   } catch (error: any) {
     console.error(`❌ 解密 liu_enc_atoms 失败:`, error.message);
@@ -99,7 +96,9 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
         console.log(`✅ 解密成功，获取到 ${atomList.length} 个 atoms`);
       } else {
         console.warn(`⚠️ 解密失败，无法处理加密请求`);
-        return res.json(successResponse({ results: [] }));
+        return res.status(401).json(
+          errorResponse('UNAUTHORIZED', '加密会话已失效，请重新登录')
+        );
       }
     }
 
@@ -161,6 +160,8 @@ router.post('/', authMiddleware, async (req: Request, res: Response) => {
             console.log(`✅ getThreadList 返回:`, JSON.stringify(result, null, 2));
           } else if (taskType === 'content_list') {
             result = await getContentList(userId, atom);
+          } else if (taskType === 'check_contents') {
+            result = await getCheckContents(userId, atom);
           } else if (taskType === 'thread_data') {
             result = await getThreadData(userId, atom);
           } else if (taskType === 'comment_list') {
@@ -215,6 +216,8 @@ router.post('/get', authMiddleware, async (req: Request, res: Response) => {
           result = await getThreadList(userId, atom);
         } else if (taskType === 'content_list') {
           result = await getContentList(userId, atom);
+        } else if (taskType === 'check_contents') {
+          result = await getCheckContents(userId, atom);
         } else if (taskType === 'thread_data') {
           result = await getThreadData(userId, atom);
         } else if (taskType === 'comment_list') {
@@ -366,8 +369,26 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
 
   console.log(`📝 getThreadList: userId=${userId}, spaceId=${spaceId}, viewType=${viewType}, stateId=${stateId}, 查询到 ${threads.length} 个线程`);
 
+  const parcels = await buildThreadParcels(userId, threads);
+
+  return {
+    code: '0000',
+    taskId,
+    list: parcels,
+  };
+}
+
+async function buildThreadParcels(userId: Types.ObjectId, threads: any[]) {
+  if (threads.length < 1) {
+    return [];
+  }
+
   // 批量查询收藏记录
   const threadIds = threads.map((t: any) => t._id.toString());
+  const spaceIds = threads
+    .map((t: any) => t.spaceId?.toString())
+    .filter(Boolean);
+
   let favoriteMap: Record<string, any> = {};
   if (threadIds.length > 0) {
     try {
@@ -383,10 +404,27 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
     } catch (_e) {}
   }
 
+  const members = spaceIds.length > 0
+    ? await Member.find({
+        userId,
+        spaceId: { $in: spaceIds },
+        status: MemberStatus.OK,
+      }).exec()
+    : [];
+  const memberMap = new Map(members.map((member: any) => [member.spaceId.toString(), member]));
+
+  const spaces = spaceIds.length > 0
+    ? await Space.find({ _id: { $in: spaceIds } }).select('_id spaceType').exec()
+    : [];
+  const spaceTypeMap = new Map(spaces.map((space: any) => [space._id.toString(), space.spaceType]));
+
   const parcels = threads.map((thread: any) => {
     const threadObj = thread.toObject();
     const now = Date.now();
     const myFav = favoriteMap[threadObj._id.toString()];
+    const spaceIdStr = threadObj.spaceId?.toString() || '';
+    const member = memberMap.get(spaceIdStr);
+    const spaceType = spaceTypeMap.get(spaceIdStr) || 'ME';
 
     return {
       id: threadObj._id.toString(),
@@ -397,11 +435,15 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
         first_id: threadObj.first_id || threadObj._id.toString(),
         isMine: true,
         author: {
-          space_id: threadObj.spaceId?.toString() || '',
+          space_id: spaceIdStr,
           user_id: threadObj.userId?.toString() || '',
+          member_id: member?._id?.toString(),
+          member_name: member?.name,
+          member_avatar: member?.avatar,
+          member_oState: member?.status,
         },
-        spaceId: threadObj.spaceId?.toString() || '',
-        spaceType: 'ME',
+        spaceId: spaceIdStr,
+        spaceType,
         infoType: 'THREAD',
         oState: threadObj.oState || 'OK',
         visScope: 'PUBLIC',
@@ -444,11 +486,7 @@ async function getThreadList(userId: Types.ObjectId, atom: any) {
     };
   });
 
-  return {
-    code: '0000',
-    taskId,
-    list: parcels,
-  };
+  return parcels;
 }
 
 /**
@@ -460,18 +498,49 @@ async function getContentList(userId: Types.ObjectId, atom: any) {
   return getThreadList(userId, atom);
 }
 
+async function getCheckContents(userId: Types.ObjectId, atom: any) {
+  const { taskId, ids } = atom;
+
+  if (!Array.isArray(ids) || ids.length < 1) {
+    return {
+      code: '0000',
+      taskId,
+      list: [],
+    };
+  }
+
+  const validIds = ids.filter((id: string) => Types.ObjectId.isValid(id));
+  const threads = validIds.length > 0
+    ? await Thread.find({ userId, _id: { $in: validIds } }).exec()
+    : [];
+  const parcels = await buildThreadParcels(userId, threads);
+  const parcelMap = new Map(parcels.map(parcel => [parcel.id, parcel]));
+
+  return {
+    code: '0000',
+    taskId,
+    list: ids.map((id: string) => {
+      return parcelMap.get(id) || {
+        id,
+        status: 'not_found',
+        parcelType: 'content',
+      };
+    }),
+  };
+}
+
 /**
  * 获取线程数据
  */
 async function getThreadData(userId: Types.ObjectId, atom: any) {
-  const { taskId, threadId } = atom;
+  const { taskId, id, threadId = id } = atom;
 
   if (!threadId) {
     return {
       code: 'E4000',
       taskId,
       errMsg: 'threadId是必需的',
-    };
+      };
   }
 
   const thread = await Thread.findOne({ _id: threadId, userId });
@@ -480,19 +549,15 @@ async function getThreadData(userId: Types.ObjectId, atom: any) {
       code: 'E4004',
       taskId,
       errMsg: '线程不存在',
-    };
+      };
   }
 
-  const contents = await Content.find({ threadId })
-    .sort({ version: -1 })
-    .limit(10)
-    .exec();
+  const parcels = await buildThreadParcels(userId, [thread]);
 
   return {
     code: '0000',
     taskId,
-    thread,
-    contents,
+    list: parcels,
   };
 }
 
