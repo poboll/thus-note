@@ -49,7 +49,7 @@ export async function syncTasks(tasks: UploadTaskLocalTable[]) {
   const url = APIs.SYNC_SET
   const opt = {
     operateType: "general_sync",
-    plz_enc_atoms: atoms,  // 使用 plz_enc_atoms 启用加密
+    atoms,
   }
   console.log("sync-set opt atoms: ")
   console.log(atoms)
@@ -228,5 +228,4 @@ async function dataHasNewIds(
   const sStore = useSyncStore()
   sStore.afterSync(list)
 }
-
 

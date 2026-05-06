@@ -20,7 +20,7 @@ export async function clearDraftInstantly(draftId: string, userId: string) {
   }
   const opt2 = {
     operateType: "general_sync",
-    plz_enc_atoms: [atom],
+    atoms: [atom],
   }
 
   // 3. request
