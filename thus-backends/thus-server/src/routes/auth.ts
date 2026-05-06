@@ -15,6 +15,7 @@ import { authMiddleware } from '../middleware/auth';
 import { sendEmail } from '../utils/email';
 import { sendSMS } from '../utils/sms';
 import { getRedisClient } from '../config/redis';
+import { saveUserClientKey } from '../utils/clientKeyStore';
 
 const router = Router();
 
@@ -604,10 +605,7 @@ router.post('/email', async (req: Request, res: Response) => {
     const clientKeyRedisKey = `client_key:${user._id.toString()}`;
     
     if (frontendClientKey) {
-      // 前端发送了 client_key，直接使用（这是纯 base64 的 AES 密钥）
-      // 存储格式：client_key_<base64_aes_key>
-      const clientKeyToStore = `client_key_${frontendClientKey}`;
-      await redisClient.set(clientKeyRedisKey, clientKeyToStore, 'EX', 7 * 24 * 60 * 60);
+      await saveUserClientKey(redisClient, user._id.toString(), frontendClientKey);
       console.log(`✅ 使用前端发送的 client_key 并存储到 Redis`);
     } else {
       // 前端没有发送 client_key，检查是否已有
@@ -617,10 +615,8 @@ router.post('/email', async (req: Request, res: Response) => {
         // 生成新的 client_key（32字节的随机字符串，Base64编码）
         const crypto = require('crypto');
         const randomBytes = crypto.randomBytes(32);
-        const clientKey = `client_key_${randomBytes.toString('base64')}`;
-        
-        // 存储到 Redis，有效期 7 天
-        await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+        const clientKey = randomBytes.toString('base64');
+        await saveUserClientKey(redisClient, user._id.toString(), clientKey);
         console.log(`✅ 为用户 ${user._id} 生成并存储了新的 client_key`);
       } else {
         console.log(`✅ 用户 ${user._id} 已有 client_key，继续使用`);

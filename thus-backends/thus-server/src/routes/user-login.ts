@@ -12,6 +12,7 @@ import { EmailService } from '../services/emailService';
 import { SMSService } from '../services/smsService';
 import crypto from 'crypto';
 import { PasswordUtil } from '../utils/password';
+import { saveUserClientKey } from '../utils/clientKeyStore';
 
 const router = Router();
 
@@ -378,9 +379,7 @@ async function handleEmailCodeLogin(req: Request, res: Response) {
   if (enc_client_key && privateKey) {
     const clientKey = await decryptWithRSA(enc_client_key, privateKey);
     if (clientKey) {
-      // 存储 client_key 到 Redis，关联用户 ID，有效期 7 天
-      const clientKeyRedisKey = `client_key:${user._id.toString()}`;
-      await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+      await saveUserClientKey(redisClient, user._id.toString(), clientKey);
       console.log(`✅ 已存储用户 ${user._id} 的 client_key`);
     }
   }
@@ -528,9 +527,7 @@ async function handleSMSCodeLogin(req: Request, res: Response) {
   if (enc_client_key && privateKey) {
     const clientKey = await decryptWithRSA(enc_client_key, privateKey);
     if (clientKey) {
-      // 存储 client_key 到 Redis，关联用户 ID，有效期 7 天
-      const clientKeyRedisKey = `client_key:${user._id.toString()}`;
-      await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+      await saveUserClientKey(redisClient, user._id.toString(), clientKey);
       console.log(`✅ 已存储用户 ${user._id} 的 client_key (短信登录)`);
     }
   }
@@ -837,7 +834,7 @@ async function handleScanLogin(req: Request, res: Response) {
       if (privateKey) {
         const clientKey = await decryptWithRSA(enc_client_key, privateKey);
         if (clientKey) {
-          await redisClient.set(`client_key:${user._id.toString()}`, clientKey, 'EX', 7 * 24 * 60 * 60);
+          await saveUserClientKey(redisClient, user._id.toString(), clientKey);
         }
       }
     }
@@ -878,8 +875,7 @@ async function handleSaveClientKey(req: Request, res: Response) {
 
   const clientKey = await decryptWithRSA(enc_client_key, privateKey);
   if (clientKey) {
-    const clientKeyRedisKey = `client_key:${userId.toString()}`;
-    await redisClient.set(clientKeyRedisKey, clientKey, 'EX', 7 * 24 * 60 * 60);
+    await saveUserClientKey(redisClient, userId.toString(), clientKey);
     console.log(`✅ 已存储用户 ${userId} 的 client_key`);
     return res.json(successResponse({ message: 'client_key 已保存' }));
   }
