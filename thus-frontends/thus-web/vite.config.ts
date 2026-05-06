@@ -42,7 +42,7 @@ const vitePlugins: UserConfig['plugins'] = [
 
   // PWA
   VitePWA({
-    registerType: "prompt",
+    registerType: "autoUpdate",
     manifest: false,
     strategies: "injectManifest",
     srcDir: "src",

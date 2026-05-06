@@ -29,11 +29,13 @@ cleanupOutdatedCaches()
 self.addEventListener("install", (evt) => {
   console.log("[my service worker] install......")
   console.log(evt)
+  evt.waitUntil(self.skipWaiting())
 })
 
 self.addEventListener("activate", (evt) => {
   console.log("[my service worker] activate......")
   console.log(evt)
+  evt.waitUntil(self.clients.claim())
 })
 
 // to allow work offline
