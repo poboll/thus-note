@@ -16,7 +16,7 @@ function packLiuDesc(
   thusDesc: LiuContent[] | undefined,
   title?: string,
 ) {
-  let newDesc = thusDesc ? valTool.copyObject(thusDesc) : []
+  let newDesc = Array.isArray(thusDesc) ? valTool.copyObject(thusDesc) : []
   newDesc = addSomethingWhenBrowsing(newDesc)
 
   if(!title) return newDesc
@@ -45,7 +45,7 @@ function getSummary(
   files: ThusFileStore[] | undefined,
 ) {
   let text = ""
-  if(content && content.length > 0) {
+  if(Array.isArray(content) && content.length > 0) {
     text = listToText(content)
     text = text.replace(/\n/g, " ")
     text = text.trim()

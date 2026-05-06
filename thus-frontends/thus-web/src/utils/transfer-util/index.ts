@@ -44,6 +44,7 @@ function tiptapToText(
   list: TipTapJSONContent[],
   moreText?: boolean,
 ): string {
+  if(!Array.isArray(list)) return ""
   return listToText(list, "", moreText)
 }
 
@@ -62,7 +63,7 @@ function packSearchOther(
   let res = ""
 
   // 1. handle desc
-  if(list) {
+  if(Array.isArray(list)) {
     res = tiptapToText(list, true)
   }
 
@@ -88,7 +89,6 @@ export default {
   imagesFromStoreToCloud,
   filesFromStoreToCloud,
 }
-
 
 
 

@@ -36,6 +36,13 @@ async function getMySpaceIds(userId: string) {
   return list
 }
 
+async function getMemberByUserAndSpace(
+  userId: string,
+  spaceId: string,
+) {
+  return db.members.where("[user+spaceId]").equals([userId, spaceId]).first()
+}
+
 /** 防抖节流:
  *  目前仅判断启动时（routeChangeNum <= 2），是否多次触发 whenRouteChange
  * @return boolean 返回 true 表示允许继续执行，反之则相反
@@ -99,8 +106,7 @@ async function whenRouteChange(
   // 去查找我在该 workspace 的 member_id
   // 可能不存在，没有关系，就置入空字符串 "" 即可
   // 2. get member from db
-  const g2 = { spaceId: mySpace._id, user: userId }
-  const myMember = await db.members.get(g2)
+  const myMember = await getMemberByUserAndSpace(userId, mySpace._id)
 
   // 3. get user
   const myUser = await db.users.get(userId)
@@ -152,7 +158,7 @@ async function handleCollaborativeSpace(
   }
   
   // 1. 本地查找 workspace
-  const workspace = await db.workspaces.get({ _id: newSpaceId })
+  const workspace = await db.workspaces.get(newSpaceId)
   if(!workspace) {
     // TODO【待完善】去远端查找
     store.setDataAboutMe(opt)
@@ -161,8 +167,7 @@ async function handleCollaborativeSpace(
   opt.isCollaborative = workspace.infoType === "TEAM"
 
   // 2. 本地查找 member
-  const g = { spaceId: newSpaceId, user: userId }
-  const member = await db.members.get(g)
+  const member = await getMemberByUserAndSpace(userId, newSpaceId)
   opt.memberId = member?._id ?? ""
   opt.myMember = member
 

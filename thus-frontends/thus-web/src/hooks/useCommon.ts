@@ -58,7 +58,7 @@ export function useMyProfile() {
 
     const m = myMember.value
     if(!m) {
-      const myUser = await db.users.get({ _id: userId })
+      const myUser = await db.users.get(userId)
       if(!myUser) {
         myProfile.value = null
         return
